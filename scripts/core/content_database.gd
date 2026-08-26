@@ -11,6 +11,7 @@ var terrain_attunement: Dictionary = {}
 var keywords: Array = []
 var tutorial: Dictionary = {}
 var motion: Dictionary = {}
+var fusion_recipes: Array = []
 
 func load_all() -> bool:
     cards = _index_by_id(_load_json("res://data/core_set.json"))
@@ -25,6 +26,8 @@ func load_all() -> bool:
     tutorial = tut if tut is Dictionary else {}
     var mo = _load_json("res://data/creature_motion.json")
     motion = mo if mo is Dictionary else {}
+    var fr = _load_json("res://data/v2_fusion_recipes.json")
+    fusion_recipes = fr if fr is Array else []
     return not cards.is_empty() and not commanders.is_empty() and not decks.is_empty()
 
 func get_card(card_id: String) -> Dictionary:

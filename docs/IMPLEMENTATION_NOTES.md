@@ -123,3 +123,45 @@ binding constraint now, so that is the knob to reach for.
 ### Still open
 - The other six starter Commanders still share the "+1 Aether" passive.
 - Roughly 10% of matches are decided by the blunt "Final tiebreak" rule.
+
+## 2026-08-26 — V2 clarity prototype
+
+Built as a **parallel** system, not a mutation of V1. `MatchEngine` and its 98
+checks are untouched and still run; `MatchV2` is a separate simulation with its
+own 59 checks. Both are in `./tools_verify.sh`, so the Gate 9 comparison can be
+made from two working builds rather than from memory.
+
+- Simulation: `scripts/v2/match_v2.gd`, AI in `scripts/v2/simple_ai_v2.gd`
+- Presentation: `scripts/ui/v2/` (stage, card, screen)
+- Play it: `Godot --path . --scene res://scenes/v2/main_v2.tscn`
+
+### What V2 turns off
+Chapters, Seals, Wonder, passing, free Shape, shared territory, separate
+Attunement and the Sanctuary Ward are all absent — `test_no_v1_systems_are_active`
+asserts they cannot creep back in. The only win condition is breaking the Heart.
+
+### What replaced them
+Four mirrored lanes a side, each holding one Landscape, one Creature and one
+Place. Creatures never cross the front line; an attack travels to it and comes
+home. Aether capacity is the Sanctuary plus every built Landscape, so "build land
+-> get more magic" is a visible chain rather than a rule to memorise. The
+Landscape *is* the elemental requirement, so a card reads `PLAY ON: GROVE`
+instead of consulting an attunement meter.
+
+### Fusion
+`data/v2_fusion_recipes.json` holds the five prototype recipes (two Life, two
+Fire, one cross-element Ashbloom). Valid pairs wear a linked rune on the board
+and the COMBINE button names the recipe and its cost, so nothing has to be
+guessed.
+
+### A bug the playthrough harness caught
+The V2 screen blocked input while any animation was running. Four scripted
+matches deadlocked immediately: the screen sat in card-select mode forever. That
+would also have made the real game feel unresponsive. Animation now never gates
+input — the simulation has already resolved — and the scheduler compresses its
+queue if it falls more than about a beat behind the player, which is the
+"speed slightly after repeated actions" rule from the choreography doc.
+
+Anchors for attacks, spells and fusion are now resolved when drawing rather than
+when the event fired; capturing them at event time put a whole fusion in the
+wrong lane after a layout change.

@@ -33,6 +33,14 @@ step "full match driven through the UI"
 "$GODOT" --headless --path . --scene res://scenes/dev/ui_playthrough.tscn -- --matches=5 2>&1 | grep -E "UI PLAYTHROUGH|✗" || fail=1
 "$GODOT" --headless --path . --scene res://scenes/dev/ui_playthrough.tscn -- --matches=5 2>&1 | grep -q "UI PLAYTHROUGH PASS" || fail=1
 
+step "V2 prototype simulation"
+"$GODOT" --headless --path . --scene res://scenes/dev/tests_v2.tscn 2>&1 | grep -E "V2 TESTS|✗" || fail=1
+"$GODOT" --headless --path . --scene res://scenes/dev/tests_v2.tscn 2>&1 | grep -q "V2 TESTS PASS" || fail=1
+
+step "V2 match driven through the V2 screen"
+"$GODOT" --headless --path . --scene res://scenes/dev/ui_playthrough_v2.tscn -- --matches=3 2>&1 | grep -E "V2 UI PLAYTHROUGH|✗" || fail=1
+"$GODOT" --headless --path . --scene res://scenes/dev/ui_playthrough_v2.tscn -- --matches=3 2>&1 | grep -q "V2 UI PLAYTHROUGH PASS" || fail=1
+
 if [ "${1:-}" = "--balance" ]; then
   step "slice balance, both seatings (slow)"
   "$GODOT" --headless --path . --scene res://scenes/dev/balance.tscn -- --matches=200 2>&1 | grep -E "wins:|wins by|UNFINISHED"

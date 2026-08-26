@@ -173,11 +173,15 @@ func _draw_tile(pos: Vector2i, f: Font) -> void:
         if lm_tex != null:
             # Behind the creature, so the two can share a tile.
             _draw_sprite(lm_tex, rect, 0.86, -4.0)
-        else:
+        elif tile.get("creature") == null:
             var lc: Color = ArcanaTheme.owner_color(int(lm.get("owner", -1)))
             draw_string(f, Vector2(rect.position.x + 7, rect.position.y + rect.size.y - 24),
                 ArcanaTheme.fit("⌂ " + String(lm.get("name", "Landmark")), 10, rect.size.x - 14),
                 HORIZONTAL_ALIGNMENT_LEFT, -1, 10, lc)
+        else:
+            # A creature is on top; mark the landmark with a corner glyph only.
+            draw_string(f, Vector2(rect.position.x + 5, rect.position.y + rect.size.y - 5), "⌂",
+                HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.owner_color(int(lm.get("owner", -1))))
 
     # Creature chip.
     var unit = tile.get("creature")
@@ -214,6 +218,13 @@ func _draw_sprite(tex: Texture2D, tile_rect_in: Rect2, fill_ratio: float, y_offs
         tile_rect_in.position.y + (tile_rect_in.size.y - drawn.y) * 0.5 + y_offset)
     draw_texture_rect(tex, Rect2(pos, drawn), false)
 
+## The manifest's 48/64/96 canvases are a size language, so a small creature has
+## to render smaller than a dragon rather than both filling the tile equally.
+func _tier_fill(card_id: String) -> float:
+    if art == null: return 0.78
+    var tier: float = float(art.source_size(card_id, Vector2i(64, 64)).y)
+    return clampf(0.60 + 0.28 * (tier - 48.0) / 48.0, 0.58, 0.90)
+
 func _sanctuary_element(sanc: int) -> String:
     if engine == null or sanc < 0 or engine.players.size() <= sanc: return ""
     return engine.commander_element(sanc)
@@ -223,7 +234,7 @@ func _draw_unit(tile_rect_in: Rect2, unit: Dictionary, f: Font) -> void:
     var c: Color = ArcanaTheme.owner_color(owner)
     var sprite: Texture2D = art.creature(String(unit.get("card_id", ""))) if art != null else null
     if sprite != null:
-        _draw_sprite(sprite, tile_rect_in, 0.78, -3.0)
+        _draw_sprite(sprite, tile_rect_in, _tier_fill(String(unit.get("card_id", ""))), -3.0)
         _draw_stat_plate(tile_rect_in, unit, f, c)
         return
     var w: float = tile_rect_in.size.x - 16

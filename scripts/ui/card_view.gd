@@ -81,29 +81,37 @@ func _draw() -> void:
     draw_string(f, Vector2(gem.x - (7 if cost > 9 else 4), gem.y + 5), str(cost),
         HORIZONTAL_ALIGNMENT_LEFT, -1, 14, ArcanaTheme.TEXT)
 
-    draw_string(f, Vector2(rect.position.x + 8, rect.position.y + 42),
+    # Two layouts. With art the whole card tightens up; without it the rules keep
+    # their full four lines. ART_BIBLE: readability outranks art size.
+    var art_tex: Texture2D = art.card_art(card_id) if art != null else null
+    var name_y := 42.0
+    var type_y := 58.0
+    var rules_y := 76.0
+    var rules_lines := 4
+    if art_tex != null:
+        name_y = 34.0
+        type_y = 46.0
+        rules_y = 116.0
+        rules_lines = 2
+
+    draw_string(f, Vector2(rect.position.x + 8, rect.position.y + name_y),
         ArcanaTheme.fit(String(card.get("name", "")), 14, rect.size.x - 16),
         HORIZONTAL_ALIGNMENT_LEFT, -1, 14, dim)
-    draw_string(f, Vector2(rect.position.x + 8, rect.position.y + 58),
+    draw_string(f, Vector2(rect.position.x + 8, rect.position.y + type_y),
         String(card.get("type", "")).capitalize(), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT_DIM)
 
-    # Central art window. Rules text keeps its full space when there is no art,
-    # so readability never depends on production assets existing.
-    var rules_y := rect.position.y + 76
-    var art_tex: Texture2D = art.card_art(card_id) if art != null else null
+    var window := Rect2()
     if art_tex != null:
-        var window := Rect2(rect.position.x + 7, rect.position.y + 68, rect.size.x - 14, 58)
+        window = Rect2(rect.position.x + 7, rect.position.y + 50, rect.size.x - 14, 54)
         draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.16), Color(accent, 0.5), 5, 1), window)
         var src := Vector2(art_tex.get_width(), art_tex.get_height())
         if src.x > 0.0 and src.y > 0.0:
             var scale: float = min((window.size.x - 6.0) / src.x, (window.size.y - 6.0) / src.y)
             var drawn := src * scale
             draw_texture_rect(art_tex, Rect2(window.get_center() - drawn * 0.5, drawn), false)
-        rules_y = window.position.y + window.size.y + 13
 
-    draw_multiline_string(f, Vector2(rect.position.x + 8, rules_y),
-        String(card.get("rules", "")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 16, 11,
-        2 if art_tex != null else 4,
+    draw_multiline_string(f, Vector2(rect.position.x + 8, rect.position.y + rules_y),
+        String(card.get("rules", "")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 16, 11, rules_lines,
         ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
 
     # Stat line.
@@ -116,11 +124,19 @@ func _draw() -> void:
             "⌂ %d Presence" % int(card.get("presence", 1)),
             HORIZONTAL_ALIGNMENT_LEFT, -1, 12, dim)
 
+    if not playable:
+        # Sits over the bottom of the art window rather than fighting the rules.
+        var reason_baseline: float = rect.position.y + rect.size.y - 26.0
+        if art_tex != null:
+            var strip_y: float = window.position.y + window.size.y - 15.0
+            draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.86), Color(accent, 0.0), 3, 0),
+                Rect2(window.position.x + 1, strip_y, window.size.x - 2, 14))
+            reason_baseline = strip_y + 11.0
+        draw_string(f, Vector2(rect.position.x + 9, reason_baseline),
+            ArcanaTheme.fit(block_reason, 10, rect.size.x - 18),
+            HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.DANGER)
+
     if count > 1:
         draw_string(f, Vector2(rect.position.x + rect.size.x - 30, rect.position.y + rect.size.y - 10),
             "×%d" % count, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, ArcanaTheme.GOLD)
 
-    if not playable:
-        draw_string(f, Vector2(rect.position.x + 8, rect.position.y + rect.size.y - 26),
-            ArcanaTheme.fit(block_reason, 10, rect.size.x - 16),
-            HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.DANGER)

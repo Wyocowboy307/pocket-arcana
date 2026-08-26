@@ -35,6 +35,14 @@ ELEMENT = {
     },
 }
 
+# Corrections learned from reviewing real generations. Kept here so a prompt
+# rebuild never silently reverts them.
+MOTIF_OVERRIDE = {
+    # Antlers and twigs became noisy 1px detail that vanished at board scale.
+    "life_sproutling": ("leaves and sprouts only. Two big bold leaves are the whole "
+                        "silhouette — no antlers, no twigs, no thin branches"),
+}
+
 # The eight Phase-A references that lock the master look.
 PHASE_A = {
     "cmd_mossy_mae", "cmd_poppy_cinder",
@@ -48,10 +56,11 @@ def el(element, key):
     return ELEMENT.get(element, {}).get(key, "")
 
 
-def sprite_prompt(name, element, size, silhouette):
+def sprite_prompt(name, element, size, silhouette, card_id=None):
+    motifs = MOTIF_OVERRIDE.get(card_id, el(element, "motifs"))
     return (f"{BASE}, {el(element,'palette')}. "
             f"Subject: {name} — {silhouette}. "
-            f"Element motifs: {el(element,'motifs')}. "
+            f"Element motifs: {motifs}. "
             f"View: {WORLD_VIEW}. "
             f"Exactly {size[0]}x{size[1]} pixels, fully transparent background, "
             f"single centred object with nothing baked behind it, "
@@ -70,12 +79,20 @@ def terrain_prompt(tid, elements, size, description):
     else:
         blend = "Neutral ground with no element dominance."
         palette = "muted slate and soft stone greys"
+    # These clauses exist because the first pass produced framed, high-contrast
+    # plates that fought the creatures standing on them.
     return (f"{BASE}, {palette}. "
-            f"Seamless top-down terrain tile: {description}. {blend} "
-            f"Lower contrast than creatures so units stay readable on top. "
-            f"Keep the centre visually calm — a creature sprite sits there. "
-            f"Exactly {size[0]}x{size[1]} pixels, fills the whole tile edge to edge, "
-            f"opaque background. {NEGATIVE}.")
+            f"Flat overhead ground texture: {description}. {blend} "
+            f"This is BACKGROUND. Keep it low contrast, muted and quiet — much flatter "
+            f"and duller than a character sprite, so creatures stand out on top of it. "
+            f"Completely even flat lighting across the whole image: the edges must be "
+            f"exactly as bright as the middle. "
+            f"Absolutely no vignette, no darkened edges, no border, no frame, no outer "
+            f"rim, no shadow around the outside, no glow. "
+            f"Detail belongs near the corners and edges; keep the middle open and plain "
+            f"because a creature sprite is drawn on top of it. "
+            f"Fills the entire image edge to edge like a seamless repeating floor tile. "
+            f"Exactly {size[0]}x{size[1]} pixels, fully opaque. {NEGATIVE}.")
 
 
 def build():
@@ -106,7 +123,7 @@ def build():
                 "id": a["card_id"], "kind": kind, "element": a["element"],
                 "path": a["path"], "size": a["size"],
                 "phase": "A" if a["card_id"] in PHASE_A else "B",
-                "prompt": sprite_prompt(a["name"], a["element"], a["size"], a["silhouette"]),
+                "prompt": sprite_prompt(a["name"], a["element"], a["size"], a["silhouette"], a["card_id"]),
             })
 
     for t in MANIFEST["terrain"]:

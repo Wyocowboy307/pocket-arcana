@@ -1,0 +1,126 @@
+{
+  "assets": {
+    "fire_cinder_pup": {
+      "asset_id": "7256956f-9b39-4fd9-b375-8cc690487cb3",
+      "path": "assets/art/board/creatures/fire/fire_cinder_pup.png",
+      "size": [
+        48,
+        48
+      ],
+      "source_size": [
+        72,
+        72
+      ],
+      "kind": "creature",
+      "element": "fire",
+      "credits_used": 12
+    },
+    "life_sproutling": {
+      "asset_id": "cf7a2177-0df0-4a58-8086-97252248da1d",
+      "candidate_ids": [
+        "72cd4815-7dda-490e-aa4e-c07b7c928556",
+        "ed8ae1e9-0bd2-47c0-b33d-c52ac4ffbfb2",
+        "cf7a2177-0df0-4a58-8086-97252248da1d"
+      ],
+      "path": "assets/art/board/creatures/life/life_sproutling.png",
+      "picked": 2,
+      "size": [
+        48,
+        48
+      ],
+      "source_size": [
+        18,
+        18
+      ],
+      "kind": "creature",
+      "element": "life",
+      "credits_used": 36
+    },
+    "fire_blazewing_drake": {
+      "asset_id": "35f861a4-143a-4285-9388-496646bb9d2a",
+      "candidate_ids": [
+        "35f861a4-143a-4285-9388-496646bb9d2a",
+        "4b63039a-8a9d-40ff-8951-83f1f3a956db"
+      ],
+      "path": "assets/art/board/creatures/fire/fire_blazewing_drake.png",
+      "picked": 0,
+      "size": [
+        96,
+        96
+      ],
+      "source_size": [
+        78,
+        78
+      ],
+      "kind": "creature",
+      "element": "fire",
+      "credits_used": 24
+    },
+    "life_garden_dragon": {
+      "asset_id": "c515fdef-3b49-410a-a365-62e6e22185d5",
+      "candidate_ids": [
+        "c515fdef-3b49-410a-a365-62e6e22185d5",
+        "cb1a297f-e8fb-433e-867d-24dcb574ccbb"
+      ],
+      "path": "assets/art/board/creatures/life/life_garden_dragon.png",
+      "picked": 0,
+      "size": [
+        96,
+        96
+      ],
+      "source_size": [
+        124,
+        124
+      ],
+      "kind": "creature",
+      "element": "life",
+      "credits_used": 24
+    },
+    "cinder": {
+      "asset_id": "71ae93a8-cc19-4c72-b9af-07004b2b359f",
+      "candidate_ids": [
+        "c34d1748-b58c-4bfc-ab09-6a51bd66814e",
+        "434d2672-0711-4699-b4aa-a625fccaeb46",
+        "71ae93a8-cc19-4c72-b9af-07004b2b359f"
+      ],
+      "path": "assets/art/board/terrain/cinder.png",
+      "picked": 2,
+      "size": [
+        96,
+        64
+      ],
+      "source_size": [
+        200,
+        200
+      ],
+      "kind": "terrain",
+      "element": "fire",
+      "credits_used": 36
+    },
+    "grove": {
+      "asset_id": "74130488-c532-4853-9897-9ead4200c204",
+      "candidate_ids": [
+        "39996a90-f09f-479e-8e4e-e3868d6c08db",
+        "28e20bfc-13ff-4df5-8f6b-af0fd83c9c4f",
+        "74130488-c532-4853-9897-9ead4200c204"
+      ],
+      "path": "assets/art/board/terrain/grove.png",
+      "picked": 2,
+      "size": [
+        96,
+        64
+      ],
+      "source_size": [
+        72,
+        72
+      ],
+      "kind": "terrain",
+      "element": "life",
+      "credits_used": 36
+    }
+  },
+  "masters": {
+    "life": "cf7a2177-0df0-4a58-8086-97252248da1d",
+    "fire": "7256956f-9b39-4fd9-b375-8cc690487cb3"
+  }
+}

@@ -92,13 +92,18 @@ func _draw() -> void:
     # Aether pips read as a resource, not a fraction in a status bar.
     var maxa: int = int(p["max_aether"])
     var cur: int = int(p["aether"])
-    var pip_r := 4.0
-    var span: float = min(size.x - 20.0, float(maxi(maxa, 1)) * (pip_r * 2.0 + 3.0))
-    var step: float = span / float(maxi(maxa, 1))
+    # Aether can reach ten, so the pips shrink to fit rather than running off the
+    # panel and colliding with the hand count.
+    var hand_text := "✋%d" % p["hand"].size()
+    var hand_w: float = f.get_string_size(hand_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+    var track: float = size.x - 24.0 - hand_w
+    var slots: int = maxi(maxa, 1)
+    var step: float = min(11.0, track / float(slots))
+    var pip_r: float = clampf(step * 0.36, 2.0, 4.0)
     for i in range(maxa):
         var c: Color = ArcanaTheme.AETHER if i < cur else ArcanaTheme.PANEL_EDGE
-        draw_circle(Vector2(10 + step * (i + 0.5), y + 6), pip_r, c)
-    draw_string(f, Vector2(size.x - 34, y + 10), "✋%d" % p["hand"].size(),
+        draw_circle(Vector2(10 + step * (float(i) + 0.5), y + 6), pip_r, c)
+    draw_string(f, Vector2(size.x - 10 - hand_w, y + 10), hand_text,
         HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
 
     if bool(p["passed"]):

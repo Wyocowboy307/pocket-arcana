@@ -8,7 +8,7 @@ signal card_clicked(card_id: String)
 signal card_hovered(card_id: String)
 signal card_unhovered
 
-const CARD := Vector2(132, 172)
+const CARD := Vector2(148, 196)
 const HOVER_SCALE := 1.42
 const MAX_SPREAD := 126.0
 
@@ -25,7 +25,8 @@ func rebuild(entries: Array) -> void:
     hovered = -1
     for entry in entries:
         var view := CardView.new()
-        view.setup(entry["card"], String(entry["reason"]), entry["art"])
+        view.setup(entry["card"], String(entry["reason"]), entry["art"],
+            String(entry["role"]), String(entry["play_on"]))
         view.count = int(entry["count"])
         view.selected = bool(entry["selected"])
         view.custom_minimum_size = CARD

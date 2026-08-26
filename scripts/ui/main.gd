@@ -98,7 +98,7 @@ func _rich(min_h: int) -> RichTextLabel:
 # on hover or selection instead of holding a permanent panel.
 
 const SIDE := 156.0          # width of a Commander column
-const HAND_H := 200.0        # height of the hand strip
+const HAND_H := 216.0        # height of the hand strip
 
 func _build_ui() -> void:
     set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -300,6 +300,7 @@ func _refresh() -> void:
     commander_rival.is_active = engine.current_player == RIVAL and not engine.match_over
     element_rail.chosen = shape_element if mode == "shape" else ""
     board_view.ghost_terrain = engine.terrain_for_element(shape_element) if mode == "shape" else ""
+    board_view.dim_illegal = mode in ["card", "shape"]
     element_rail.enabled_for_player = HUMAN
     cancel_button.visible = mode != ""
     pass_button.disabled = not my_turn
@@ -332,6 +333,8 @@ func _refresh_hand(my_turn: bool) -> void:
             "count": int(counts[cid]),
             "selected": selected_card_id == cid,
             "art": art,
+            "role": engine.card_role(cid),
+            "play_on": engine.placement_rule(cid),
         })
     hand_view.rebuild(entries)
 
@@ -463,11 +466,35 @@ func _describe_card(card_id: String) -> void:
         stats = "  ·  %d Power, %d Health" % [int(card.get("power", 0)), int(card.get("health", 0))]
     elif String(card.get("type", "")) == "landmark":
         stats = "  ·  %d Presence" % int(card.get("presence", 1))
-    _show_context(String(card.get("name", "")),
-        "%s · %s · %d Aether%s\n%s\n\n%s" % [
-            String(card.get("type", "")).capitalize(), " + ".join(els),
-            int(card.get("cost", 0)), stats, String(card.get("rules", "")),
-            _attunement_note(card)])
+
+    var lines: Array[String] = []
+    lines.append("[b]%s[/b] · %s · %d Aether%s" % [
+        engine.card_role(card_id), " + ".join(els), int(card.get("cost", 0)), stats])
+    lines.append(String(card.get("rules", "")))
+    lines.append("")
+    lines.append("[b]Play on:[/b] %s" % engine.placement_rule(card_id))
+    var need := engine.requirement_text(card_id)
+    if need != "":
+        var missing: Array[String] = engine.missing_attunement(HUMAN, card.get("attunement", []))
+        var colour: String = ArcanaTheme.DANGER.to_html(false) if not missing.is_empty() else ArcanaTheme.YOU.to_html(false)
+        var mark: String = "you do not have it yet" if not missing.is_empty() else "you have it"
+        lines.append("[b]Needs:[/b] [color=#%s]%s — %s[/color]" % [colour, need, mark])
+    var creates: Array[String] = engine.card_creates_states(card_id)
+    if not creates.is_empty():
+        var named: Array[String] = []
+        for st in creates: named.append("%s %s" % [ArcanaTheme.icon_for_state(st), ArcanaTheme.label_for_state(st)])
+        lines.append("[b]Creates:[/b] %s" % ", ".join(named))
+    var combos: Array = engine.card_combos(card_id)
+    if not combos.is_empty():
+        var shown: Array[String] = []
+        for combo in combos:
+            shown.append("%s %s → [b]%s[/b]" % [
+                ArcanaTheme.icon_for_state(String(combo["partner"])),
+                ArcanaTheme.label_for_state(String(combo["partner"])),
+                String(combo["result"])])
+            if shown.size() >= 3: break
+        lines.append("[b]Combos with:[/b] %s" % "   ".join(shown))
+    _show_context(String(card.get("name", "")), "\n".join(lines))
 
 func _attunement_note(card: Dictionary) -> String:
     var need: Array = card.get("attunement", [])
@@ -506,7 +533,17 @@ func _choose_command() -> void:
     _refresh()
 
 func _on_tile_hovered(pos: Vector2i) -> void:
-    if mode != "" or pos.x < 0:
+    if pos.x < 0: return
+    # While aiming, an illegal tile explains itself rather than staying silent.
+    if mode in ["card", "shape"] and not board_view.highlights.has(pos):
+        var why := ""
+        if mode == "card": why = engine.tile_block_reason(HUMAN, selected_card_id, pos)
+        else: why = engine.shape_block_reason(HUMAN, shape_element, pos)
+        if why == "": why = "Not a legal target for this card."
+        _context_mode = "selection"
+        _show_context("Can't play there", "[color=#%s]%s[/color]" % [ArcanaTheme.DANGER.to_html(false), why])
+        return
+    if mode != "":
         return
     var tile: Dictionary = engine.board.get_tile(pos)
     if tile.is_empty():

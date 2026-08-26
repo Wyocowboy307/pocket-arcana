@@ -34,6 +34,7 @@ var _detail_for := Vector2.ZERO      # board size the caches were built for
 var _anim: Dictionary = {}           # "unit:<uid>" / "tile:x,y" -> progress 0..1
 var _particles: Array = []           # lightweight decorative particles
 var ghost_terrain := ""              # terrain previewed on legal tiles while shaping
+var dim_illegal := false             # darken everything that is not a legal target
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_STOP
@@ -636,6 +637,14 @@ func _draw_depth(board: Rect2) -> void:
 func _draw_indicators(f: Font) -> void:
     if not targeting and selected_pos.x < 0: return
     var wave: float = 0.5 + 0.5 * sin(_pulse * TAU)
+    # Push everything illegal into shadow so the legal tiles are the only bright
+    # things on the board while aiming.
+    if dim_illegal:
+        for y in range(BoardModel.HEIGHT):
+            for x in range(BoardModel.WIDTH):
+                var p := Vector2i(x, y)
+                if highlights.has(p) or p == selected_pos: continue
+                draw_rect(tile_rect(p), Color(0.02, 0.02, 0.05, 0.52))
     for pos in highlights:
         var rect := tile_rect(pos)
         var kind := String(highlights[pos])

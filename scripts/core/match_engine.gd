@@ -218,6 +218,86 @@ func card_block_reason(player: int, card_id: String) -> String:
     if legal_targets_for_card(player, card_id).is_empty(): return "No legal tile for that card."
     return ""
 
+# --- teaching queries -------------------------------------------------------
+#
+# The UI must never invent its own version of the rules, so the plain-English
+# explanations a first-time player reads all come from here.
+
+## What kind of thing this card is, in the player's language.
+func card_role(card_id: String) -> String:
+    match String(db.get_card(card_id).get("type", "")):
+        "creature": return "Creature"
+        "landmark": return "Place"
+        "spell": return "Spell"
+        "terrain": return "Land"
+        "relic": return "Relic"
+    return "Card"
+
+## Where this card may be played, as a short sentence.
+func placement_rule(card_id: String) -> String:
+    match String(db.get_card(card_id).get("type", "")):
+        "creature": return "An empty tile in your realm"
+        "landmark": return "Your realm, where no building stands"
+        "spell": return "Any tile on the board"
+        "terrain": return "Any tile on the board"
+        "relic": return "Any tile on the board"
+    return "Any tile on the board"
+
+## What terrain the player's realm must already contain.
+func requirement_text(card_id: String) -> String:
+    var need: Array = db.get_card(card_id).get("attunement", [])
+    if need is not Array or need.is_empty(): return ""
+    var names: Array[String] = []
+    for el in need: names.append(String(db.elements.get(el, {}).get("name", el)))
+    return "%s land in your realm" % " and ".join(names)
+
+## The element states this card puts onto a tile.
+func card_creates_states(card_id: String) -> Array[String]:
+    var out: Array[String] = []
+    for effect in db.get_card(card_id).get("effects", []):
+        if String(effect.get("kind", "")) == "add_state":
+            var st := String(effect.get("state", ""))
+            if st != "" and not out.has(st): out.append(st)
+    return out
+
+## Recipes this card can help complete, as "Burning -> Ashbloom" pairs.
+func card_combos(card_id: String) -> Array:
+    var out: Array = []
+    for state in card_creates_states(card_id):
+        for recipe in db.recipes:
+            var need: Array = recipe.get("states", [])
+            if need.size() != 2 or not need.has(state): continue
+            var partner := String(need[0]) if String(need[1]) == state else String(need[1])
+            out.append({"partner": partner, "result": String(recipe.get("name", ""))})
+    return out
+
+## Why this particular tile is not a legal destination, in plain language.
+## Returns "" when the tile is fine.
+func tile_block_reason(player: int, card_id: String, pos: Vector2i) -> String:
+    var card := db.get_card(card_id)
+    if card.is_empty(): return "Card data is missing."
+    if not board.in_bounds(pos): return "That is off the board."
+    var tile := board.get_tile(pos)
+    var typ := String(card.get("type", ""))
+    if typ == "creature":
+        if int(tile.get("owner", -1)) != player: return "Not your land yet — Shape it first."
+        if tile.get("creature") != null: return "A creature already stands here."
+    elif typ == "landmark":
+        if int(tile.get("owner", -1)) != player: return "Not your land yet — Shape it first."
+        if tile.get("landmark") != null: return "A building already stands here."
+    return ""
+
+## Why this tile cannot be Shaped right now.
+func shape_block_reason(player: int, element: String, pos: Vector2i) -> String:
+    if not board.in_bounds(pos): return "That is off the board."
+    var tile := board.get_tile(pos)
+    var terrain := terrain_for_element(element)
+    if int(tile.get("owner", -1)) not in [-1, player]: return "That belongs to the rival realm."
+    if int(tile.get("owner", -1)) == player and String(tile.get("terrain", "")) == terrain:
+        return "This land is already %s." % String(db.elements.get(element, {}).get("name", element))
+    if not board.can_shape(player, pos, terrain): return "Shape next to land you already hold."
+    return ""
+
 func units_of(player: int) -> Array:
     var out: Array = []
     for y in range(BoardModel.HEIGHT):

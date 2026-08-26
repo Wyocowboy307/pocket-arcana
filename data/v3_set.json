@@ -1,0 +1,382 @@
+[
+  {
+    "id": "land_grove",
+    "name": "Grove",
+    "type": "landscape",
+    "element": "life",
+    "terrain": "grove",
+    "cost": 0,
+    "rules": "Generates 1 Life each turn.",
+    "play_on": ""
+  },
+  {
+    "id": "land_cinder",
+    "name": "Cinder",
+    "type": "landscape",
+    "element": "fire",
+    "terrain": "cinder",
+    "cost": 0,
+    "rules": "Generates 1 Fire each turn.",
+    "play_on": ""
+  },
+  {
+    "id": "life_sproutling",
+    "name": "Sproutling",
+    "type": "creature",
+    "element": "life",
+    "cost": 1,
+    "power": 1,
+    "health": 3,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_moss_frog",
+    "name": "Moss Frog",
+    "type": "creature",
+    "element": "life",
+    "cost": 1,
+    "power": 2,
+    "health": 4,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_berrycap_bunny",
+    "name": "Berrycap Bunny",
+    "type": "creature",
+    "element": "life",
+    "cost": 2,
+    "power": 1,
+    "health": 4,
+    "rules": "When played, draw 1.",
+    "play_on": "grove",
+    "effect": {
+      "kind": "draw",
+      "amount": 1
+    },
+    "fusion_only": false
+  },
+  {
+    "id": "life_petal_deer",
+    "name": "Petal Deer",
+    "type": "creature",
+    "element": "life",
+    "cost": 2,
+    "power": 3,
+    "health": 4,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_rootback_boar",
+    "name": "Rootback Boar",
+    "type": "creature",
+    "element": "life",
+    "cost": 3,
+    "power": 2,
+    "health": 6,
+    "rules": "When played, heal your Heart 2.",
+    "play_on": "grove",
+    "effect": {
+      "kind": "heal_heart",
+      "amount": 2
+    },
+    "fusion_only": false
+  },
+  {
+    "id": "life_bloom_bear",
+    "name": "Bloom Bear",
+    "type": "creature",
+    "element": "life",
+    "cost": 3,
+    "power": 4,
+    "health": 6,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_great_stag",
+    "name": "Great Stag",
+    "type": "creature",
+    "element": "life",
+    "cost": 4,
+    "power": 5,
+    "health": 7,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_garden_dragon",
+    "name": "Garden Dragon",
+    "type": "creature",
+    "element": "life",
+    "cost": 4,
+    "power": 6,
+    "health": 8,
+    "rules": "",
+    "play_on": "grove",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "life_elaria_mother_of_groves",
+    "name": "Elaria, Mother of Groves",
+    "type": "creature",
+    "element": "life",
+    "cost": 3,
+    "power": 8,
+    "health": 10,
+    "rules": "Fusion only. When played, heal your Heart 4.",
+    "play_on": "grove",
+    "effect": {
+      "kind": "heal_heart",
+      "amount": 4
+    },
+    "fusion_only": true
+  },
+  {
+    "id": "fire_cinder_pup",
+    "name": "Cinder Pup",
+    "type": "creature",
+    "element": "fire",
+    "cost": 1,
+    "power": 2,
+    "health": 1,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_emberbug",
+    "name": "Emberbug",
+    "type": "creature",
+    "element": "fire",
+    "cost": 1,
+    "power": 2,
+    "health": 1,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_coal_chick",
+    "name": "Coal Chick",
+    "type": "creature",
+    "element": "fire",
+    "cost": 2,
+    "power": 2,
+    "health": 2,
+    "rules": "When played, draw 1.",
+    "play_on": "cinder",
+    "effect": {
+      "kind": "draw",
+      "amount": 1
+    },
+    "fusion_only": false
+  },
+  {
+    "id": "fire_ashcat",
+    "name": "Ashcat",
+    "type": "creature",
+    "element": "fire",
+    "cost": 2,
+    "power": 3,
+    "health": 2,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_cinder_hound",
+    "name": "Cinder Hound",
+    "type": "creature",
+    "element": "fire",
+    "cost": 3,
+    "power": 3,
+    "health": 3,
+    "rules": "When played, deal 1 to the rival Heart.",
+    "play_on": "cinder",
+    "effect": {
+      "kind": "damage_heart",
+      "amount": 1
+    },
+    "fusion_only": false
+  },
+  {
+    "id": "fire_forge_ram",
+    "name": "Forge Ram",
+    "type": "creature",
+    "element": "fire",
+    "cost": 3,
+    "power": 4,
+    "health": 3,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_magma_turtle",
+    "name": "Magma Turtle",
+    "type": "creature",
+    "element": "fire",
+    "cost": 3,
+    "power": 4,
+    "health": 6,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_blazewing_drake",
+    "name": "Blazewing Drake",
+    "type": "creature",
+    "element": "fire",
+    "cost": 4,
+    "power": 6,
+    "health": 4,
+    "rules": "",
+    "play_on": "cinder",
+    "effect": null,
+    "fusion_only": false
+  },
+  {
+    "id": "fire_rax_the_laughing_inferno",
+    "name": "Rax, the Laughing Inferno",
+    "type": "creature",
+    "element": "fire",
+    "cost": 3,
+    "power": 9,
+    "health": 6,
+    "rules": "Fusion only. When played, deal 3 to the rival Heart.",
+    "play_on": "cinder",
+    "effect": {
+      "kind": "damage_heart",
+      "amount": 3
+    },
+    "fusion_only": true
+  },
+  {
+    "id": "life_herbalist_hut",
+    "name": "Herbalist Hut",
+    "type": "support",
+    "element": "life",
+    "cost": 2,
+    "rules": "Creatures here heal 1 at end of turn.",
+    "play_on": "grove",
+    "effect": {
+      "kind": "heal_here",
+      "amount": 1
+    }
+  },
+  {
+    "id": "life_bee_garden",
+    "name": "Bee Garden",
+    "type": "support",
+    "element": "life",
+    "cost": 3,
+    "rules": "The creature here has +1 Power.",
+    "play_on": "grove",
+    "effect": {
+      "kind": "power_here",
+      "amount": 1
+    }
+  },
+  {
+    "id": "fire_blacksmith_nook",
+    "name": "Blacksmith Nook",
+    "type": "support",
+    "element": "fire",
+    "cost": 2,
+    "rules": "The creature here has +1 Power.",
+    "play_on": "cinder",
+    "effect": {
+      "kind": "power_here",
+      "amount": 1
+    }
+  },
+  {
+    "id": "fire_ember_kitchen",
+    "name": "Ember Kitchen",
+    "type": "support",
+    "element": "fire",
+    "cost": 3,
+    "rules": "When the creature here attacks, deal 1 to the rival Heart.",
+    "play_on": "cinder",
+    "effect": {
+      "kind": "sear_on_attack",
+      "amount": 1
+    }
+  },
+  {
+    "id": "life_grow",
+    "name": "Grow",
+    "type": "spell",
+    "element": "life",
+    "cost": 1,
+    "rules": "Heal a creature 3.",
+    "play_on": "",
+    "effect": {
+      "kind": "heal_creature",
+      "amount": 3
+    },
+    "target": "creature"
+  },
+  {
+    "id": "life_warm_sun",
+    "name": "Warm Sun",
+    "type": "spell",
+    "element": "life",
+    "cost": 2,
+    "rules": "Heal your Heart 4.",
+    "play_on": "",
+    "effect": {
+      "kind": "heal_heart",
+      "amount": 4
+    },
+    "target": "none"
+  },
+  {
+    "id": "fire_little_flame",
+    "name": "Little Flame",
+    "type": "spell",
+    "element": "fire",
+    "cost": 1,
+    "rules": "Deal 2 to a creature.",
+    "play_on": "",
+    "effect": {
+      "kind": "damage_creature",
+      "amount": 2
+    },
+    "target": "creature"
+  },
+  {
+    "id": "fire_dragon_breath",
+    "name": "Dragon Breath",
+    "type": "spell",
+    "element": "fire",
+    "cost": 3,
+    "rules": "Deal 3 to the rival Heart.",
+    "play_on": "",
+    "effect": {
+      "kind": "damage_heart",
+      "amount": 3
+    },
+    "target": "none"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "fuse_great_stag",
+    "name": "Antler Communion",
+    "element": "life",
+    "sources": [
+      "life_sproutling",
+      "life_petal_deer"
+    ],
+    "result": "life_great_stag",
+    "cost": 2,
+    "flavour": "The sprout climbs the deer's antlers and they grow together."
+  },
+  {
+    "id": "fuse_elaria",
+    "name": "Mother of Groves",
+    "element": "life",
+    "sources": [
+      "life_bloom_bear",
+      "life_great_stag"
+    ],
+    "result": "life_elaria_mother_of_groves",
+    "cost": 3,
+    "flavour": "Bear and stag kneel; the grove itself stands up."
+  },
+  {
+    "id": "fuse_cinder_hound",
+    "name": "Kindled Pack",
+    "element": "fire",
+    "sources": [
+      "fire_cinder_pup",
+      "fire_coal_chick"
+    ],
+    "result": "fire_cinder_hound",
+    "cost": 2,
+    "flavour": "Two small fires agree to be one big one."
+  },
+  {
+    "id": "fuse_rax",
+    "name": "The Laughing Inferno",
+    "element": "fire",
+    "sources": [
+      "fire_forge_ram",
+      "fire_blazewing_drake"
+    ],
+    "result": "fire_rax_the_laughing_inferno",
+    "cost": 3,
+    "flavour": "The ram charges into the drake's fire and something laughs back out."
+  }
+]

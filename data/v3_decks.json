@@ -1,0 +1,122 @@
+[
+  {
+    "id": "v3_life",
+    "name": "Life Starter",
+    "element": "life",
+    "commander_id": "cmd_mossy_mae",
+    "cards": [
+      {
+        "card_id": "land_grove",
+        "count": 10
+      },
+      {
+        "card_id": "life_sproutling",
+        "count": 3
+      },
+      {
+        "card_id": "life_moss_frog",
+        "count": 3
+      },
+      {
+        "card_id": "life_berrycap_bunny",
+        "count": 3
+      },
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_rootback_boar",
+        "count": 2
+      },
+      {
+        "card_id": "life_bloom_bear",
+        "count": 2
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 2
+      },
+      {
+        "card_id": "life_garden_dragon",
+        "count": 2
+      },
+      {
+        "card_id": "life_herbalist_hut",
+        "count": 3
+      },
+      {
+        "card_id": "life_bee_garden",
+        "count": 2
+      },
+      {
+        "card_id": "life_grow",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      }
+    ]
+  },
+  {
+    "id": "v3_fire",
+    "name": "Fire Starter",
+    "element": "fire",
+    "commander_id": "cmd_poppy_cinder",
+    "cards": [
+      {
+        "card_id": "land_cinder",
+        "count": 10
+      },
+      {
+        "card_id": "fire_cinder_pup",
+        "count": 3
+      },
+      {
+        "card_id": "fire_emberbug",
+        "count": 3
+      },
+      {
+        "card_id": "fire_coal_chick",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_cinder_hound",
+        "count": 2
+      },
+      {
+        "card_id": "fire_forge_ram",
+        "count": 2
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 2
+      },
+      {
+        "card_id": "fire_blazewing_drake",
+        "count": 2
+      },
+      {
+        "card_id": "fire_blacksmith_nook",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 2
+      },
+      {
+        "card_id": "fire_little_flame",
+        "count": 3
+      },
+      {
+        "card_id": "fire_dragon_breath",
+        "count": 2
+      }
+    ]
+  }
+]

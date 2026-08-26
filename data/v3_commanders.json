@@ -1,0 +1,40 @@
+[
+  {
+    "id": "cmd_mossy_mae",
+    "name": "Mossy Mae",
+    "element": "life",
+    "passive_name": "Verdant Care",
+    "passive_text": "At the end of your turn, each of your creatures on Grove heals 2.",
+    "passive": {
+      "kind": "heal_on_terrain",
+      "terrain": "grove",
+      "amount": 2
+    },
+    "power_name": "Wild Spring",
+    "power_text": "Once per match: draw 2 cards.",
+    "power": {
+      "kind": "draw",
+      "amount": 2
+    },
+    "power_target": "none"
+  },
+  {
+    "id": "cmd_poppy_cinder",
+    "name": "Poppy Cinder",
+    "element": "fire",
+    "passive_name": "Forge Heat",
+    "passive_text": "Your creatures on Cinder have +1 Power.",
+    "passive": {
+      "kind": "power_on_terrain",
+      "terrain": "cinder",
+      "amount": 1
+    },
+    "power_name": "Ember Rush",
+    "power_text": "Once per match: deal 3 to one enemy creature, or to the rival Heart.",
+    "power": {
+      "kind": "burst",
+      "amount": 3
+    },
+    "power_target": "enemy_lane"
+  }
+]

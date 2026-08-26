@@ -326,3 +326,139 @@ def card_back(element):
     _trim(c, 0, 0, HAND_W, HAND_H, accent[2])
     _corner_brackets(c, HAND_W, HAND_H, accent[2])
     return c
+
+
+# --- V3 tabletop pieces ----------------------------------------------------
+#
+# V3 lays three slots in every lane, so the pieces are sized to sit side by side
+# rather than to dominate: a portrait Creature, a small Support beside it, and a
+# wide Landscape card lying underneath like a board tile.
+
+V3_CREATURE_W, V3_CREATURE_H = 148, 182
+V3_CREATURE_ART_Y, V3_CREATURE_ART_H = 26, 126
+V3_SUPPORT_W, V3_SUPPORT_H = 86, 112
+V3_LAND_W, V3_LAND_H = 234, 48
+
+
+def v3_creature_plate(element):
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    c = Canvas(V3_CREATURE_W, V3_CREATURE_H)
+    seed = 5200 + sum(ord(ch) for ch in element)
+    c.rect(0, 0, V3_CREATURE_W, V3_CREATURE_H, P.IRON[1])
+    c.rect(4, 4, V3_CREATURE_W - 8, V3_CREATURE_ART_Y - 4, P.UI_DARK[2])
+    art_backdrop(c, 4, V3_CREATURE_ART_Y, V3_CREATURE_W - 8, V3_CREATURE_ART_H, element, seed)
+    c.rect(4, V3_CREATURE_ART_Y + V3_CREATURE_ART_H, V3_CREATURE_W - 8,
+           V3_CREATURE_H - 4 - (V3_CREATURE_ART_Y + V3_CREATURE_ART_H), P.UI_DARK[1])
+    _trim(c, 0, 0, V3_CREATURE_W, V3_CREATURE_H, sc["accent"][2])
+    _corner_brackets(c, V3_CREATURE_W, V3_CREATURE_H, sc["accent"][2])
+    return c
+
+
+def v3_creature_frame(element):
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    accent = sc["accent"][2]
+    c = Canvas(V3_CREATURE_W, V3_CREATURE_H)
+    _trim(c, 0, 0, V3_CREATURE_W, V3_CREATURE_H, accent)
+    _corner_brackets(c, V3_CREATURE_W, V3_CREATURE_H, accent)
+    for x in range(4, V3_CREATURE_W - 4):
+        c.set(x, V3_CREATURE_ART_Y - 1, P.INK)
+        c.set(x, V3_CREATURE_ART_Y + V3_CREATURE_ART_H, P.INK)
+    for j in range(V3_CREATURE_ART_Y, V3_CREATURE_ART_Y + V3_CREATURE_ART_H):
+        c.set(4, j, P.INK)
+        c.set(V3_CREATURE_W - 5, j, P.INK)
+    _ornament(c, element, V3_CREATURE_W - 13, 13, flip=True)
+    return c
+
+
+def v3_support(element):
+    """A Support is visibly a different shape from a Creature: shorter, wider
+    shoulders, and a hatched foundation strip so it reads as built, not alive."""
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    accent = sc["accent"][2]
+    c = Canvas(V3_SUPPORT_W, V3_SUPPORT_H)
+    seed = 5400 + sum(ord(ch) for ch in element)
+    c.rect(0, 0, V3_SUPPORT_W, V3_SUPPORT_H, P.IRON[1])
+    art_backdrop(c, 4, 4, V3_SUPPORT_W - 8, V3_SUPPORT_H - 26, element, seed)
+    c.rect(4, V3_SUPPORT_H - 22, V3_SUPPORT_W - 8, 18, P.UI_DARK[1])
+    for x in range(4, V3_SUPPORT_W - 4):
+        c.set(x, V3_SUPPORT_H - 22, P.INK)
+        if x % 4 == 0:
+            c.set(x, V3_SUPPORT_H - 6, P.IRON[3])
+    _trim(c, 0, 0, V3_SUPPORT_W, V3_SUPPORT_H, accent)
+    for cx, cy, dx, dy in ((0, 0, 1, 1), (V3_SUPPORT_W - 1, 0, -1, 1)):
+        for k in range(6):
+            c.set(cx + dx * k, cy + dy, P.IRON[4])
+            c.set(cx + dx, cy + dy * k, P.IRON[4])
+    return c
+
+
+def v3_landscape(element, terrain_field=None):
+    """A wide board tile. The land's own ground fills it, so a lane's Landscape
+    card and the lane it creates are visibly the same material."""
+    from . import land as land_mod
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    accent = sc["accent"][2]
+    c = Canvas(V3_LAND_W, V3_LAND_H)
+    field = terrain_field or land_mod.field("grove" if element == "life" else "cinder")
+    for y in range(V3_LAND_H):
+        for x in range(V3_LAND_W):
+            c.set(x, y, field.get(x % field.w, y % field.h))
+    ramp = P.GROVE if element == "life" else P.CINDER
+    for x in range(V3_LAND_W):                       # lit top lip, shaded foot
+        c.set(x, 3, ramp[6])
+        c.set(x, 4, ramp[4])
+        c.set(x, V3_LAND_H - 4, ramp[1])
+    c.rect(4, V3_LAND_H - 16, 76, 12, P.UI_DARK[1])  # name plate
+    for x in range(4, 80):
+        c.set(x, V3_LAND_H - 16, P.INK)
+    _trim(c, 0, 0, V3_LAND_W, V3_LAND_H, accent)
+    _corner_brackets(c, V3_LAND_W, V3_LAND_H, accent)
+    return c
+
+
+def element_pip(element, size=26):
+    """A resource pip. The pool is the whole economy, so it gets a real icon."""
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    ramp = sc["accent"]
+    c = Canvas(size, size)
+    r = size // 2 - 1
+    cx = cy = size // 2
+    c.disc(cx, cy, r, P.INK)
+    c.disc(cx, cy, r - 1, P.IRON[3])
+    c.disc(cx, cy, r - 3, P.INK)
+    c.disc(cx, cy, r - 4, ramp[1])
+    c.disc(cx, cy, r - 5, ramp[2])
+    if element == "life":
+        for k in range(7):                            # a sprout
+            c.set(cx, cy + 4 - k, P.LEAF[4])
+            if k > 2:
+                c.set(cx - (k - 2), cy + 4 - k, P.LEAF[3])
+                c.set(cx + (k - 2), cy + 4 - k, P.LEAF[3])
+    else:
+        for k, w in enumerate((0, 1, 2, 2, 1)):       # a flame
+            for j in range(-w, w + 1):
+                c.set(cx + j, cy + 4 - k, P.HOT[3] if k > 2 else P.EMBER[4])
+    return c
+
+
+def empty_slot(kind, w, h):
+    """An empty slot: a dashed recess that says what belongs there without
+    shouting. Nothing here should compete with a real card."""
+    c = Canvas(w, h)
+    for x in range(w):
+        if x % 6 < 3:
+            c.set(x, 0, P.UI_DARK[3]); c.set(x, h - 1, P.UI_DARK[3])
+    for y in range(h):
+        if y % 6 < 3:
+            c.set(0, y, P.UI_DARK[3]); c.set(w - 1, y, P.UI_DARK[3])
+    cx, cy = w // 2, h // 2
+    if kind == "landscape":
+        for x in range(cx - 14, cx + 15):
+            c.set(x, cy, P.UI_DARK[4])
+    elif kind == "creature":
+        for k in range(9):
+            c.set(cx, cy - 4 + k, P.UI_DARK[4])
+            c.set(cx - 4 + k, cy, P.UI_DARK[4])
+    else:
+        c.frame(cx - 6, cy - 6, 13, 13, P.UI_DARK[4])
+    return c

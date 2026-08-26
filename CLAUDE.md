@@ -4,7 +4,25 @@ This repository is Pocket Arcana. **It is completely separate from Pixel Ranch a
 
 When Thomas says “go build,” implement. Do not reopen broad product discovery.
 
-## CURRENT PRODUCT PRIORITY — V2 CLARITY PROTOTYPE
+## CURRENT PRODUCT PRIORITY — V3 ELEMENTAL LANE BATTLER
+
+V3 is the live milestone. It is a **tabletop lane game**, not an open
+battlefield: four lanes a side, each holding a Landscape, a Creature and a
+Support, with the Landscape both gating what may be played there and paying for
+it. Read `docs/V3_LANE_BATTLER.md` first.
+
+- engine `scripts/v3/match_v3.gd`, content `data/v3_*.json`
+  (authored by `tools/build_v3_content.py`)
+- board `scripts/ui/v3/board_v3.gd`, screen `scripts/ui/v3/main_v3.gd`
+- launch `PLAY POCKET ARCANA V3.command` or `scenes/v3/main_v3.tscn`
+- checks: `tests_v3.tscn` (rules) and `selftest_v3.tscn` (AI-vs-AI, both seatings)
+
+V2 stays in the repo with its own launcher until V3 proves itself, the same way
+V1 was kept through V2. The V2 art pipeline — `tools/pixelart/`,
+`tools/generate_hero_art.py` and the whole locked palette — carries straight
+over, because V3 reuses the same card IDs.
+
+## SUPERSEDED — V2 CLARITY PROTOTYPE
 
 Thomas does **not** consider the current shared 7×5 movement version clear enough. Do not keep polishing the old rules merely because they already work.
 

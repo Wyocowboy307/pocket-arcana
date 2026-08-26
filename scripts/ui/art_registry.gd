@@ -334,13 +334,22 @@ func prop_kinds(element: String) -> Array:
 func ui(icon_id: String) -> Texture2D:
     return _texture(String(ui_paths.get(icon_id, "")))
 
-## Art for a card's central window: a spell's own scene, otherwise its board sprite.
+## V3 Landscape cards carry no sprite of their own — the land *is* the art, so
+## they resolve to the field they create.
+const V3_LANDSCAPE_TERRAIN := {"land_grove": "grove", "land_cinder": "cinder"}
+
+## Art for a card's central window: a spell's own scene, otherwise its board
+## sprite, otherwise the land it lays down.
 func card_art(card_id: String) -> Texture2D:
     var spell := _texture(String(spell_paths.get(card_id, "")))
     if spell != null: return spell
     var body := creature(card_id)
     if body != null: return body
-    return landmark(card_id)
+    var built := landmark(card_id)
+    if built != null: return built
+    if V3_LANDSCAPE_TERRAIN.has(card_id):
+        return land_field(String(V3_LANDSCAPE_TERRAIN[card_id]))
+    return null
 
 func source_size(id: String, fallback: Vector2i = Vector2i(64, 64)) -> Vector2i:
     return source_sizes.get(id, fallback)

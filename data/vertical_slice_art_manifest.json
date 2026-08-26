@@ -264,6 +264,24 @@
       ],
       "path": "assets/art/board/landmarks/fire/fire_blacksmith_nook.png",
       "silhouette": "small crooked forge shed, chimney, anvil sign and orange furnace mouth"
+    },
+    {
+      "card_id": "life_bee_garden",
+      "element": "life",
+      "size": [
+        96,
+        96
+      ],
+      "path": "assets/art/board/landmarks/life/life_bee_garden.png"
+    },
+    {
+      "card_id": "fire_ember_kitchen",
+      "element": "fire",
+      "size": [
+        96,
+        96
+      ],
+      "path": "assets/art/board/landmarks/fire/fire_ember_kitchen.png"
     }
   ],
   "spell_visuals": [

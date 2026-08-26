@@ -29,6 +29,10 @@ var count := 1
 var selected := false
 var hovered := false
 var art: ArtRegistry
+## V3 uses the ribbon for the landscape requirement ("GROVE CREATURE") and
+## colours it to match the lane, so a card can be matched to its land by colour
+## before a word is read. Left unset, the role colours it as before.
+var ribbon_override: Color = Color(0, 0, 0, 0)
 
 func setup(data: Dictionary, role_name: String, placement_line: String,
            reason: String, registry: ArtRegistry) -> void:
@@ -73,6 +77,7 @@ func _draw() -> void:
     var accent: Color = ArcanaTheme.color_for_element(element) if not elements.is_empty() \
         else ArcanaTheme.TEXT_DIM
     var ribbon: Color = RIBBON.get(role, ArcanaTheme.TEXT_DIM)
+    if ribbon_override.a > 0.0: ribbon = ribbon_override
     var rect := Rect2(Vector2.ZERO, size)
     var dim: Color = ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT
 
@@ -90,7 +95,7 @@ func _draw() -> void:
         var body: Color = ArcanaTheme.PANEL.lightened(0.06) if playable else ArcanaTheme.PANEL.darkened(0.34)
         draw_style_box(ArcanaTheme.panel_box(body, accent, 8, 2), rect)
     else:
-        var tint := Color(1, 1, 1, 1) if playable else Color(0.58, 0.56, 0.62, 1.0)
+        var tint := Color(1, 1, 1, 1) if playable else Color(0.80, 0.78, 0.84, 1.0)
         draw_texture_rect(frame, rect, false, tint)
 
     # Art, inside the window the frame recessed for it.
@@ -101,7 +106,7 @@ func _draw() -> void:
         var sc: float = minf((win.size.x - 8.0) / src.x, (win.size.y - 8.0) / src.y)
         var drawn := src * sc
         draw_texture_rect(tex, Rect2((win.get_center() - drawn * 0.5).round(), drawn.round()),
-            false, Color(1, 1, 1, 1) if playable else Color(0.6, 0.58, 0.64, 1.0))
+            false, Color(1, 1, 1, 1) if playable else Color(0.82, 0.80, 0.86, 1.0))
     else:
         var icon0 := String(ArcanaTheme.element_icon.get(element, "*"))
         _sigil(f, win, accent, icon0)
@@ -114,9 +119,16 @@ func _draw() -> void:
     # Type ribbon — type must read before any other text.
     var glyph := String(ROLE_GLYPH.get(role, "•"))
     var label := "%s  %s" % [glyph, role.to_upper()]
+    var text_colour: Color = ribbon if playable else ArcanaTheme.TEXT_FAINT
+    if ribbon_override.a > 0.0:
+        var band := Rect2(6.0, ROLE_Y + 1.0, size.x - 12.0, ROLE_H - 2.0)
+        draw_rect(band, Color(ribbon, 0.95 if playable else 0.45))
+        draw_rect(band, Color(ribbon.lightened(0.35), 0.9), false, 1.0)
+        label = role.to_upper()
+        text_colour = Color(1, 1, 1, 0.96 if playable else 0.6)
     var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
     draw_string(f, Vector2(size.x * 0.5 - lw * 0.5, ROLE_Y + 14.0), label,
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ribbon if playable else ArcanaTheme.TEXT_FAINT)
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, text_colour)
 
     var detailed := hovered or selected
     if detailed:

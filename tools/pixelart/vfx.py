@@ -418,3 +418,66 @@ LIBRARY = {
     "sparks_fire": lambda: impact_sparks("fire"),
     "hit_flash": hit_flash, "heart_strike": heart_strike, "fusion_core": fusion_core,
 }
+
+
+# --- spell card art ---------------------------------------------------------
+#
+# Spells never had board sprites, so their cards fell back to a placeholder
+# sigil. These are small single-frame scenes, authored rather than generated:
+# a spell's art only has to say what it does at card size.
+
+def spell_art(kind):
+    c = Canvas(72, 72)
+    s = 9000 + sum(ord(ch) for ch in kind)
+    if kind == "grow":
+        for i in range(5):                              # a sprout opening
+            a = -math.pi / 2 + (i - 2) * 0.42
+            for k in range(4, 20):
+                px = int(36 + math.cos(a) * k)
+                py = int(52 + math.sin(a) * k)
+                c.set(px, py, P.LEAF[3] if k < 14 else P.LEAF[4])
+                c.set(px + 1, py, P.LEAF[2])
+        c.blob(36, 30, 9, P.SPORE[2], 0.3, s, 5)
+        c.blob(34, 28, 5, P.SPORE[3], 0.26, s + 3, 4)
+        for i in range(9):
+            c.set(int(36 + (hash2(i, 0, s + 5) - 0.5) * 52),
+                  int(30 + (hash2(i, 1, s + 7) - 0.5) * 44), P.CREAM[3])
+        c.rect(4, 58, 64, 10, P.GROVE[2])
+        c.hline(4, 67, 58, P.GROVE[4])
+    elif kind == "warm_sun":
+        c.rect(0, 44, 72, 28, P.GROVE[3])               # meadow
+        c.hline(0, 71, 44, P.GROVE[5])
+        for i in range(16):
+            c.set(int(hash2(i, 0, s) * 72), 48 + int(hash2(i, 1, s + 3) * 20), P.LEAF[3])
+        c.disc(36, 26, 13, P.GOLD[3])                   # sun
+        c.disc(36, 26, 10, P.GOLD[4])
+        c.disc(34, 24, 6, P.HOT[4])
+        for i in range(12):
+            a = (i / 12.0) * math.tau
+            for k in range(16, 23):
+                c.set(int(36 + math.cos(a) * k), int(26 + math.sin(a) * k), P.GOLD[2])
+    elif kind == "little_flame":
+        c.rect(0, 52, 72, 20, P.CHAR[1])
+        for i, (fx, fy, fr) in enumerate([(36, 44, 11), (31, 34, 8), (40, 32, 7), (36, 24, 6)]):
+            c.blob(fx, fy, fr, P.EMBER[3], 0.24, s + i * 5, 5)
+        c.blob(36, 40, 7, P.EMBER[4], 0.22, s + 21, 4)
+        c.blob(36, 34, 4, P.HOT[2], 0.20, s + 27, 4)
+        c.blob(35, 28, 2, P.HOT[4], 0.18, s + 31, 4)
+        for i in range(8):
+            c.set(int(36 + (hash2(i, 0, s + 9) - 0.5) * 40), int(hash2(i, 1, s + 11) * 26), P.HOT[2])
+    else:                                                # dragon_breath
+        c.rect(0, 54, 72, 18, P.CHAR[1])
+        for x in range(6, 70):                           # a blast crossing the card
+            u = (x - 6) / 63.0
+            spread = int(3 + u * 18)
+            for j in range(-spread, spread + 1):
+                edge = abs(j) / float(max(spread, 1))
+                if hash2(x, j, s) < 0.26 + edge * 0.52:
+                    continue
+                tone = P.HOT[3] if u < 0.18 else (P.EMBER[4] if edge < 0.44 else
+                       (P.EMBER[3] if edge < 0.78 else P.EMBER[1]))
+                c.set(x, 34 + j, tone)
+        for i in range(10):
+            c.set(int(20 + hash2(i, 0, s + 13) * 48), int(34 + (hash2(i, 1, s + 17) - 0.5) * 40),
+                  P.HOT[2])
+    return c

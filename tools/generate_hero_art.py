@@ -54,6 +54,20 @@ JOBS = {
                   "walls, drying herb bundles hanging outside, a window with warm light, potted "
                   "seedlings and flower boxes. " + STYLE,
     },
+    "life_bee_garden_built": {
+        "size": (96, 96), "kind": "landmark", "element": "life",
+        "prompt": "Pocket Arcana pixel art game asset. A small enchanted bee garden, slight "
+                  "three-quarter overhead board perspective. Round woven straw beehives on a low "
+                  "wooden stand, flowering plants around the base, a few fat glowing bees, a "
+                  "little honey pot. " + STYLE,
+    },
+    "fire_ember_kitchen_built": {
+        "size": (96, 96), "kind": "landmark", "element": "fire",
+        "prompt": "Pocket Arcana pixel art game asset. A small open-air ember kitchen, slight "
+                  "three-quarter overhead board perspective. A dark stone hearth with a glowing "
+                  "coal bed, an iron cooking pot on a hook, hanging pans and chilli strings, a "
+                  "stack of firewood. " + STYLE,
+    },
     "fire_blacksmith_nook_built": {
         "size": (96, 96), "kind": "landmark", "element": "fire",
         "prompt": "Pocket Arcana pixel art game asset. A small finished blacksmith nook, slight "

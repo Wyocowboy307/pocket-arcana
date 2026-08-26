@@ -25,27 +25,27 @@ var tutorial_done: Dictionary = {}   # tutorial step id -> true
 
 # Nodes.
 var board_view: BoardView
-var hand_row: HBoxContainer
+var commander_me: CommanderView
+var commander_rival: CommanderView
+var hand_view: HandView
+var element_rail: ElementRail
+var context_panel: PanelContainer
 var turn_label: Label
 var chapter_label: Label
 var detail_title: Label
 var detail_body: RichTextLabel
-var pass_body: RichTextLabel
-var log_label: RichTextLabel
 var pass_button: Button
-var command_button: Button
 var cancel_button: Button
 var help_panel: PanelContainer
 var coach_panel: PanelContainer
 var coach_title: Label
-var coach_body: RichTextLabel
 var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
 var overlay_button: Button
 var banner: Label
-var shape_buttons: Dictionary = {}
-var player_strips: Array = []
+var _context_mode := ""              # "" | "card" | "tile" | "pass" | "selection"
+var _context_card := ""
 var _hand_signature := ""
 
 func _ready() -> void:
@@ -69,54 +69,7 @@ func _fatal(text: String) -> void:
     label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
     add_child(label)
 
-# --- construction -----------------------------------------------------------
-
-func _build_ui() -> void:
-    set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    var bg := ColorRect.new()
-    bg.color = ArcanaTheme.BG
-    bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-    add_child(bg)
-
-    var margin := MarginContainer.new()
-    margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    for side in ["left", "right", "top", "bottom"]:
-        margin.add_theme_constant_override("margin_" + side, 12)
-    add_child(margin)
-
-    var root := VBoxContainer.new()
-    root.add_theme_constant_override("separation", 8)
-    margin.add_child(root)
-
-    root.add_child(_build_top_bar())
-
-    var mid := HBoxContainer.new()
-    mid.size_flags_vertical = Control.SIZE_EXPAND_FILL
-    mid.add_theme_constant_override("separation", 10)
-    root.add_child(mid)
-
-    board_view = BoardView.new()
-    board_view.engine = engine
-    board_view.art = art
-    board_view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    board_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
-    board_view.tile_clicked.connect(_on_tile_clicked)
-    board_view.tile_hovered.connect(_on_tile_hovered)
-    mid.add_child(board_view)
-
-    mid.add_child(_build_side_panel())
-    root.add_child(_build_action_bar())
-    root.add_child(_build_hand())
-
-    _build_banner()
-    _build_overlay()
-
-func _panel(min_size: Vector2 = Vector2.ZERO) -> PanelContainer:
-    var p := PanelContainer.new()
-    p.add_theme_stylebox_override("panel", ArcanaTheme.panel_box())
-    if min_size != Vector2.ZERO: p.custom_minimum_size = min_size
-    return p
+# --- small builders ---------------------------------------------------------
 
 func _label(text: String, font_size: int, color: Color = ArcanaTheme.TEXT) -> Label:
     var l := Label.new()
@@ -137,214 +90,160 @@ func _rich(min_h: int) -> RichTextLabel:
     r.add_theme_color_override("default_color", ArcanaTheme.TEXT_DIM)
     return r
 
-## Fixed-height text block: RichTextLabel with fit_content grows without bound
-## and pushes the hand off the bottom of the screen.
-func _rich_fixed(height: int) -> RichTextLabel:
-    var r := _rich(height)
-    r.fit_content = false
-    r.custom_minimum_size = Vector2(0, height)
-    return r
+# --- construction -----------------------------------------------------------
+#
+# Layout is board-first. The battlefield takes the middle of the screen, the two
+# Commanders are anchored diagonally to their own halves, the hand sits along the
+# bottom like a card game, and everything explanatory is contextual: it appears
+# on hover or selection instead of holding a permanent panel.
 
-func _build_top_bar() -> Control:
-    var panel := _panel(Vector2(0, 68))
-    var rows := VBoxContainer.new()
-    rows.add_theme_constant_override("separation", 2)
-    var m := MarginContainer.new()
-    for side in ["left", "right"]: m.add_theme_constant_override("margin_" + side, 12)
-    for side in ["top", "bottom"]: m.add_theme_constant_override("margin_" + side, 6)
-    m.add_child(rows)
-    panel.add_child(m)
+const SIDE := 156.0          # width of a Commander column
+const HAND_H := 200.0        # height of the hand strip
 
-    var top := HBoxContainer.new()
-    top.add_theme_constant_override("separation", 14)
-    rows.add_child(top)
-    top.add_child(_label("POCKET ARCANA", 17, ArcanaTheme.GOLD))
-    chapter_label = _label("", 12, ArcanaTheme.TEXT_DIM)
-    top.add_child(chapter_label)
+func _build_ui() -> void:
+    set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    var bg := ColorRect.new()
+    bg.color = ArcanaTheme.BG
+    bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    add_child(bg)
+
+    # 1. The world.
+    board_view = BoardView.new()
+    board_view.engine = engine
+    board_view.art = art
+    board_view.set_anchors_preset(Control.PRESET_FULL_RECT)
+    board_view.offset_left = SIDE + 14.0
+    board_view.offset_right = -(SIDE + 14.0)
+    board_view.offset_top = 38.0
+    board_view.offset_bottom = -(HAND_H - 4.0)
+    board_view.tile_clicked.connect(_on_tile_clicked)
+    board_view.tile_hovered.connect(_on_tile_hovered)
+    add_child(board_view)
+
+    # 2. Commanders, each anchored to their own half of the board.
+    commander_me = CommanderView.new()
+    commander_me.engine = engine; commander_me.art = art; commander_me.player = HUMAN
+    commander_me.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+    commander_me.offset_left = 8.0; commander_me.offset_right = 8.0 + SIDE
+    commander_me.offset_top = -430.0; commander_me.offset_bottom = -14.0
+    commander_me.command_pressed.connect(_choose_command)
+    add_child(commander_me)
+
+    commander_rival = CommanderView.new()
+    commander_rival.engine = engine; commander_rival.art = art; commander_rival.player = RIVAL
+    commander_rival.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+    commander_rival.offset_left = -(SIDE + 8.0); commander_rival.offset_right = -8.0
+    commander_rival.offset_top = 34.0; commander_rival.offset_bottom = 34.0 + 400.0
+    add_child(commander_rival)
+
+    # 3. Hand along the bottom. Never clipped: hovered cards grow over the world.
+    hand_view = HandView.new()
+    hand_view.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+    hand_view.offset_left = SIDE + 34.0
+    hand_view.offset_right = -(SIDE + 34.0)
+    hand_view.offset_top = -HAND_H
+    hand_view.offset_bottom = 0.0
+    hand_view.card_clicked.connect(_select_card)
+    hand_view.card_hovered.connect(_on_card_hovered)
+    hand_view.card_unhovered.connect(_on_card_unhovered)
+    add_child(hand_view)
+
+    _build_top_strip()
+    _build_controls()
+    _build_context_panel()
+    _build_banner()
+    _build_overlay()
+    _build_help_panel(self)
+
+func _build_top_strip() -> void:
+    var strip := HBoxContainer.new()
+    strip.set_anchors_preset(Control.PRESET_TOP_WIDE)
+    strip.offset_left = SIDE + 16.0
+    strip.offset_right = -(SIDE + 16.0)
+    strip.offset_top = 6.0
+    strip.offset_bottom = 32.0
+    strip.add_theme_constant_override("separation", 14)
+    add_child(strip)
+
+    chapter_label = _label("", 13, ArcanaTheme.TEXT_DIM)
+    strip.add_child(chapter_label)
     var spacer := Control.new()
     spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    top.add_child(spacer)
-    turn_label = _label("", 14, ArcanaTheme.YOU)
-    top.add_child(turn_label)
+    strip.add_child(spacer)
+    turn_label = _label("", 15, ArcanaTheme.YOU)
+    strip.add_child(turn_label)
     var help := Button.new()
-    help.text = "How to play"
-    help.toggle_mode = true
-    help.add_theme_font_size_override("font_size", 11)
-    help.pressed.connect(func() -> void: help_panel.get_meta("dimmer").visible = help.button_pressed)
-    top.add_child(help)
+    help.text = "?"
+    help.tooltip_text = "How to play"
+    help.custom_minimum_size = Vector2(28, 24)
+    help.add_theme_font_size_override("font_size", 12)
+    help.pressed.connect(func() -> void: help_panel.get_meta("dimmer").visible = true)
+    strip.add_child(help)
 
-    # Both scoreboards live on one line so the board and hand keep their room.
-    var scores := HBoxContainer.new()
-    scores.add_theme_constant_override("separation", 12)
-    rows.add_child(scores)
-    for player in [HUMAN, RIVAL]:
-        var strip := _rich_fixed(20)
-        strip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-        scores.add_child(strip)
-        player_strips.append({"stats": strip})
-    return panel
-
-func _build_side_panel() -> Control:
-    var side := VBoxContainer.new()
-    side.custom_minimum_size = Vector2(312, 0)
-    side.add_theme_constant_override("separation", 6)
-
-    coach_panel = _panel()
-    var cv := VBoxContainer.new()
-    var cm := MarginContainer.new()
-    for s2 in ["left", "right", "top", "bottom"]: cm.add_theme_constant_override("margin_" + s2, 8)
-    cm.add_child(cv)
-    coach_panel.add_child(cm)
-    coach_title = _label("", 12, ArcanaTheme.GOLD)
-    coach_body = _rich_fixed(20)
-    cv.add_child(coach_title); cv.add_child(coach_body)
-    side.add_child(coach_panel)
-
-    var detail := _panel()
-    detail.size_flags_vertical = Control.SIZE_EXPAND_FILL
-    var dv := VBoxContainer.new()
-    var dm := MarginContainer.new()
-    for s2 in ["left", "right", "top", "bottom"]: dm.add_theme_constant_override("margin_" + s2, 8)
-    dm.add_child(dv)
-    detail.add_child(dm)
-    detail_title = _label("Take your turn", 13, ArcanaTheme.GOLD)
-    detail_body = _rich_fixed(90)
-    detail_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
-    detail_body.scroll_active = true
-    dv.add_child(detail_title); dv.add_child(detail_body)
-    side.add_child(detail)
-
-    var pass_panel := _panel()
-    var pv := VBoxContainer.new()
-    var pm := MarginContainer.new()
-    for s2 in ["left", "right", "top", "bottom"]: pm.add_theme_constant_override("margin_" + s2, 8)
-    pm.add_child(pv)
-    pass_panel.add_child(pm)
-    pv.add_child(_label("IF YOU PASS NOW", 10, ArcanaTheme.TEXT_FAINT))
-    pass_body = _rich_fixed(52)
-    pv.add_child(pass_body)
-    side.add_child(pass_panel)
-
-    var log_panel := _panel()
-    var lv := VBoxContainer.new()
-    var lm := MarginContainer.new()
-    for s2 in ["left", "right", "top", "bottom"]: lm.add_theme_constant_override("margin_" + s2, 8)
-    lm.add_child(lv)
-    log_panel.add_child(lm)
-    lv.add_child(_label("RECENT EVENTS", 10, ArcanaTheme.TEXT_FAINT))
-    log_label = _rich_fixed(48)
-    lv.add_child(log_label)
-    side.add_child(log_panel)
-
-    _build_help_panel(side)
-    return side
-
-func _build_help_panel(_parent: Control) -> void:
-    var dimmer := ColorRect.new()
-    dimmer.color = Color(0, 0, 0, 0.55)
-    dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
-    dimmer.visible = false
-    add_child(dimmer)
-
-    var centre := CenterContainer.new()
-    centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
-    dimmer.add_child(centre)
-
-    help_panel = PanelContainer.new()
-    help_panel.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(ArcanaTheme.PANEL, ArcanaTheme.GOLD, 12, 2))
-    help_panel.custom_minimum_size = Vector2(620, 0)
-    centre.add_child(help_panel)
-
-    var v := VBoxContainer.new()
-    v.add_theme_constant_override("separation", 10)
-    var m := MarginContainer.new()
-    for side in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + side, 22)
-    m.add_child(v)
-    help_panel.add_child(m)
-
-    var title := _label("HOW TO PLAY", 22, ArcanaTheme.GOLD)
-    title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    v.add_child(title)
-    var text := _rich(300)
-    text.add_theme_font_size_override("normal_font_size", 13)
-    text.add_theme_font_size_override("bold_font_size", 13)
-    var lines := "[b]Goal.[/b] Win two Chapters, break the rival Heart, or reach 10 Wonder.\n"
-    lines += "[b]Your turn.[/b] Do exactly one thing: play a card, Shape a tile, move or fight with one creature, use your Command, or Pass.\n"
-    lines += "[b]Shape.[/b] Shaping turns a tile beside your realm into your element. Your realm's terrain is what lets you cast cards.\n"
-    lines += "[b]Passing.[/b] When your rival Passes you get one last turn, then the Chapter scores. Cards you did not spend stay in your hand for the next Chapter.\n\n"
-    for kw in db.keywords:
-        lines += "[b]%s[/b] — %s\n" % [String(kw.get("name", "")), String(kw.get("plain", ""))]
-    text.text = lines
-    v.add_child(text)
-
-    var close := Button.new()
-    close.text = "Back to the match"
-    close.custom_minimum_size = Vector2(0, 32)
-    close.pressed.connect(func() -> void: dimmer.visible = false)
-    v.add_child(close)
-    help_panel.set_meta("dimmer", dimmer)
-
-func _build_action_bar() -> Control:
-    var panel := _panel(Vector2(0, 40))
-    var box := HBoxContainer.new()
-    box.add_theme_constant_override("separation", 4)
-    var m := MarginContainer.new()
-    for s in ["left", "right"]: m.add_theme_constant_override("margin_" + s, 10)
-    m.add_child(box)
-    panel.add_child(m)
-
-    box.add_child(_label("SHAPE", 11, ArcanaTheme.TEXT_FAINT))
-    for el_id in ["frost", "lightning", "life", "fire", "water", "earth", "wind", "death"]:
-        var b := Button.new()
-        b.text = "%s %s" % [ArcanaTheme.element_icon.get(el_id, ""), ArcanaTheme.element_name.get(el_id, el_id)]
-        b.tooltip_text = "Shape a tile into %s terrain. Shaping is your whole turn." % ArcanaTheme.element_name.get(el_id, el_id)
-        b.add_theme_font_size_override("font_size", 11)
-        b.add_theme_color_override("font_color", ArcanaTheme.color_for_element(el_id))
-        b.pressed.connect(_choose_shape.bind(el_id))
-        box.add_child(b)
-        shape_buttons[el_id] = b
-
-    var spacer := Control.new()
-    spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-    box.add_child(spacer)
+func _build_controls() -> void:
+    # Shape runes sit high on my own column; Pass sits at the far corner.
+    element_rail = ElementRail.new()
+    element_rail.engine = engine
+    element_rail.set_anchors_preset(Control.PRESET_TOP_LEFT)
+    element_rail.offset_left = 6.0
+    element_rail.offset_top = 40.0
+    element_rail.offset_right = 6.0 + SIDE
+    element_rail.offset_bottom = 40.0 + 122.0
+    element_rail.element_chosen.connect(_choose_shape)
+    add_child(element_rail)
 
     cancel_button = Button.new()
     cancel_button.text = "Cancel"
+    cancel_button.add_theme_font_size_override("font_size", 11)
+    cancel_button.set_anchors_preset(Control.PRESET_TOP_LEFT)
+    cancel_button.offset_left = 10.0; cancel_button.offset_right = 10.0 + SIDE - 8.0
+    cancel_button.offset_top = 168.0; cancel_button.offset_bottom = 194.0
     cancel_button.pressed.connect(_clear_selection)
-    box.add_child(cancel_button)
-
-    command_button = Button.new()
-    command_button.text = "COMMAND"
-    command_button.pressed.connect(_choose_command)
-    box.add_child(command_button)
+    add_child(cancel_button)
 
     pass_button = Button.new()
     pass_button.text = "PASS CHAPTER"
+    pass_button.add_theme_font_size_override("font_size", 13)
+    pass_button.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+    pass_button.offset_left = -(SIDE + 8.0); pass_button.offset_right = -8.0
+    pass_button.offset_top = -74.0; pass_button.offset_bottom = -34.0
     pass_button.pressed.connect(_do_pass)
-    box.add_child(pass_button)
-    return panel
+    pass_button.mouse_entered.connect(func() -> void:
+        _context_mode = "pass"
+        _refresh_context())
+    pass_button.mouse_exited.connect(_on_card_unhovered)
+    add_child(pass_button)
 
-func _build_hand() -> Control:
-    var panel := _panel(Vector2(0, 190))
-    var scroll := ScrollContainer.new()
-    scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
-    scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+## One floating panel replaces the old permanent sidebar. It shows whatever the
+## player is currently pointing at, and hides when they point at nothing.
+func _build_context_panel() -> void:
+    context_panel = PanelContainer.new()
+    context_panel.add_theme_stylebox_override("panel",
+        ArcanaTheme.panel_box(Color(ArcanaTheme.PANEL, 0.94), ArcanaTheme.PANEL_EDGE, 10, 1))
+    context_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+    context_panel.offset_left = -(SIDE + 296.0); context_panel.offset_right = -(SIDE + 22.0)
+    context_panel.offset_top = 44.0; context_panel.offset_bottom = 44.0
+    context_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    context_panel.visible = false
+    var v := VBoxContainer.new()
     var m := MarginContainer.new()
-    for s in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + s, 8)
-    m.add_child(scroll)
-    panel.add_child(m)
-    hand_row = HBoxContainer.new()
-    hand_row.add_theme_constant_override("separation", 8)
-    scroll.add_child(hand_row)
-    return panel
+    for side in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + side, 10)
+    m.add_child(v)
+    context_panel.add_child(m)
+    detail_title = _label("", 14, ArcanaTheme.GOLD)
+    detail_body = _rich(40)
+    detail_body.fit_content = true
+    v.add_child(detail_title); v.add_child(detail_body)
+    add_child(context_panel)
 
+## Transient messages instead of a permanent event log.
 func _build_banner() -> void:
     var holder := PanelContainer.new()
-    holder.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.92), ArcanaTheme.GOLD, 10, 2))
+    holder.add_theme_stylebox_override("panel",
+        ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.92), ArcanaTheme.GOLD, 10, 2))
     holder.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-    holder.offset_top = 232
+    holder.offset_top = 190.0
     holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
     holder.modulate.a = 0.0
     var m := MarginContainer.new()
@@ -360,43 +259,23 @@ func _build_banner() -> void:
     add_child(holder)
     banner.set_meta("holder", holder)
 
-func _build_overlay() -> void:
-    # Full-rect dimmer so the board behind is visibly paused and cannot be clicked.
-    var dimmer := ColorRect.new()
-    dimmer.color = Color(0, 0, 0, 0.55)
-    dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
-    dimmer.visible = false
-    add_child(dimmer)
-
-    var centre := CenterContainer.new()
-    centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
-    dimmer.add_child(centre)
-
-    overlay = PanelContainer.new()
-    overlay.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(ArcanaTheme.PANEL, ArcanaTheme.GOLD, 12, 2))
-    overlay.custom_minimum_size = Vector2(560, 0)
-    centre.add_child(overlay)
-
-    var v := VBoxContainer.new()
-    v.add_theme_constant_override("separation", 12)
-    var m := MarginContainer.new()
-    for side in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + side, 24)
-    m.add_child(v)
-    overlay.add_child(m)
-    overlay_title = _label("", 26, ArcanaTheme.GOLD)
-    overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    overlay_body = _rich(160)
-    overlay_body.add_theme_font_size_override("normal_font_size", 14)
-    overlay_body.add_theme_font_size_override("bold_font_size", 14)
-    overlay_body.add_theme_font_size_override("italics_font_size", 13)
-    overlay_button = Button.new()
-    overlay_button.text = "Continue"
-    overlay_button.custom_minimum_size = Vector2(0, 34)
-    overlay_button.pressed.connect(_dismiss_overlay)
-    v.add_child(overlay_title); v.add_child(overlay_body); v.add_child(overlay_button)
-    overlay.set_meta("dimmer", dimmer)
+    # A quiet hint line for the tutorial step and the most recent event.
+    var hint_holder := PanelContainer.new()
+    hint_holder.add_theme_stylebox_override("panel",
+        ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.72), Color(ArcanaTheme.PANEL_EDGE, 0.6), 8, 1))
+    hint_holder.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+    hint_holder.offset_top = 6.0
+    hint_holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    var hm := MarginContainer.new()
+    for s2 in ["left", "right"]: hm.add_theme_constant_override("margin_" + s2, 14)
+    for s2 in ["top", "bottom"]: hm.add_theme_constant_override("margin_" + s2, 5)
+    hint_holder.add_child(hm)
+    coach_title = Label.new()
+    coach_title.add_theme_font_size_override("font_size", 12)
+    coach_title.add_theme_color_override("font_color", ArcanaTheme.TEXT_DIM)
+    hm.add_child(coach_title)
+    add_child(hint_holder)
+    coach_panel = hint_holder
 
 # --- refresh ----------------------------------------------------------------
 
@@ -417,96 +296,48 @@ func _refresh() -> void:
         turn_label.text = "YOUR TURN" if my_turn else "RIVAL'S TURN"
         turn_label.add_theme_color_override("font_color", ArcanaTheme.YOU if my_turn else ArcanaTheme.RIVAL)
 
-    _refresh_player_strip(0, HUMAN, "YOU")
-    _refresh_player_strip(1, RIVAL, "RIVAL")
-    _refresh_hand(my_turn)
-    _refresh_pass_preview()
-
-    for el_id in shape_buttons:
-        var b: Button = shape_buttons[el_id]
-        b.disabled = not my_turn or engine.legal_shape_tiles(HUMAN, el_id).is_empty()
-        b.button_pressed = (mode == "shape" and shape_element == el_id)
-    command_button.disabled = not my_turn or bool(me["commander_used"])
-    command_button.button_pressed = mode == "command"
+    commander_me.is_active = my_turn
+    commander_rival.is_active = engine.current_player == RIVAL and not engine.match_over
+    element_rail.chosen = shape_element if mode == "shape" else ""
+    element_rail.enabled_for_player = HUMAN
+    cancel_button.visible = mode != ""
     pass_button.disabled = not my_turn
-    cancel_button.disabled = mode == ""
 
-    var lines: Array[String] = []
-    var start: int = maxi(0, engine.event_log.size() - 3)
-    for i in range(start, engine.event_log.size()):
-        var colour := ArcanaTheme.TEXT_DIM if i < engine.event_log.size() - 1 else ArcanaTheme.TEXT
-        lines.append("[color=#%s]%s[/color]" % [colour.to_html(false), engine.event_log[i]])
-    log_label.text = "\n".join(lines)
-
-    _refresh_coach()
+    _refresh_hand(my_turn)
     _refresh_highlights()
+    _refresh_coach()
+    _refresh_context()
     board_view.queue_redraw()
 
     if engine.current_player == RIVAL and not engine.match_over and not ai_busy and not overlay_open:
         call_deferred("_run_ai")
 
-func _refresh_player_strip(index: int, player: int, title: String) -> void:
-    var p: Dictionary = engine.players[player]
-    var cmd: Dictionary = db.get_commander(String(p["commander_id"]))
-    var accent: Color = ArcanaTheme.owner_color(player)
-    var seals := ""
-    for i in range(MatchEngine.SEALS_TO_WIN):
-        seals += "◆" if i < int(p["seals"]) else "◇"
-    var note := "  [color=#%s](passed)[/color]" % ArcanaTheme.TEXT_FAINT.to_html(false) if bool(p["passed"]) else ""
-    player_strips[index]["stats"].text = ("[b][color=#%s]%s · %s[/color][/b]   " +
-        "[color=#%s]♥ %d[/color]  [color=#%s]%s[/color]  " +
-        "[color=#%s]✦ %d/10[/color]  [color=#%s]◈ %d/%d[/color]  ✋ %d%s") % [
-        accent.to_html(false), title, String(cmd.get("name", "Commander")),
-        ArcanaTheme.HEART.to_html(false), int(p["heart"]),
-        ArcanaTheme.SEAL.to_html(false), seals,
-        ArcanaTheme.WONDER.to_html(false), int(p["wonder"]),
-        ArcanaTheme.AETHER.to_html(false), int(p["aether"]), int(p["max_aether"]),
-        p["hand"].size(), note]
-
 func _refresh_hand(my_turn: bool) -> void:
     var hand: Array = engine.players[HUMAN]["hand"]
-    # Only rebuild when the hand or its playability actually changed, so hover
-    # and lift animations are not reset every state change.
     var signature := "%s|%s|%d|%s" % [str(hand), str(my_turn), int(engine.players[HUMAN]["aether"]), selected_card_id]
     if signature == _hand_signature: return
     _hand_signature = signature
-    for child in hand_row.get_children(): child.queue_free()
-    if hand.is_empty():
-        var empty := _label("No cards in hand. Shape a tile, move a creature, or Pass to score the Chapter.",
-            14, ArcanaTheme.TEXT_FAINT)
-        hand_row.add_child(empty)
-        return
     var counts: Dictionary = {}
-    for card_id in hand:
-        counts[card_id] = int(counts.get(card_id, 0)) + 1
+    for card_id in hand: counts[card_id] = int(counts.get(card_id, 0)) + 1
+    var entries: Array = []
     var shown: Array = []
     for card_id in hand:
-        if shown.has(card_id): continue
-        shown.append(card_id)
-        var view := CardView.new()
-        var reason := engine.card_block_reason(HUMAN, String(card_id)) if my_turn else "Wait for your turn."
-        view.setup(db.get_card(String(card_id)), reason, art)
-        view.selected = (selected_card_id == String(card_id))
-        view.count = int(counts[card_id])
-        view.card_clicked.connect(_select_card)
-        view.card_hovered.connect(_describe_card)
-        hand_row.add_child(view)
-
-func _refresh_pass_preview() -> void:
-    var preview: Dictionary = engine.pass_preview(HUMAN)
-    var mine: Dictionary = preview["my_breakdown"]
-    var rival_note := "" if bool(preview["rival_passed"]) else "  [color=#%s](rival still playing)[/color]" % ArcanaTheme.TEXT_FAINT.to_html(false)
-    pass_body.text = ("[b]%s[/b]\nRealm [color=#%s]%d[/color] – [color=#%s]%d[/color]" +
-        "  ·  %d creatures, %d land, %d landmarks\nYou keep %d cards.%s") % [
-        String(preview["outcome"]),
-        ArcanaTheme.YOU.to_html(false), int(preview["my_score"]),
-        ArcanaTheme.RIVAL.to_html(false), int(preview["rival_score"]),
-        int(mine["creatures"]), int(mine["terrain"]), int(mine["landmarks"]),
-        int(preview["cards_kept"]), rival_note]
+        var cid := String(card_id)
+        if shown.has(cid): continue
+        shown.append(cid)
+        entries.append({
+            "card": db.get_card(cid),
+            "reason": engine.card_block_reason(HUMAN, cid) if my_turn else "Wait for your turn.",
+            "count": int(counts[cid]),
+            "selected": selected_card_id == cid,
+            "art": art,
+        })
+    hand_view.rebuild(entries)
 
 func _refresh_highlights() -> void:
     board_view.highlights.clear()
     board_view.selected_pos = selected_unit_pos
+    board_view.targeting = mode != ""
     if engine.current_player != HUMAN or engine.match_over: return
     match mode:
         "card":
@@ -529,6 +360,43 @@ func _refresh_highlights() -> void:
             for pos in legal["moves"]: board_view.highlights[pos] = "move"
             for pos in legal["attacks"]: board_view.highlights[pos] = "attack"
             if bool(legal["heart"]): board_view.highlights[engine.sanctuary_pos(RIVAL)] = "heart"
+
+# --- contextual information (replaces the permanent sidebar) ----------------
+
+func _on_card_hovered(card_id: String) -> void:
+    _context_mode = "card"
+    _context_card = card_id
+    _refresh_context()
+
+func _on_card_unhovered() -> void:
+    if _context_mode in ["card", "pass"]:
+        _context_mode = "selection" if mode != "" else ""
+    _refresh_context()
+
+func _show_context(title: String, body: String) -> void:
+    detail_title.text = title
+    detail_body.text = body
+    context_panel.visible = true
+
+func _refresh_context() -> void:
+    match _context_mode:
+        "card":
+            _describe_card(_context_card)
+        "pass":
+            var preview: Dictionary = engine.pass_preview(HUMAN)
+            var mine: Dictionary = preview["my_breakdown"]
+            _show_context("If you pass now",
+                ("[b]%s[/b]\nRealm [color=#%s]%d[/color] – [color=#%s]%d[/color]  ·  " +
+                 "%d creatures, %d land, %d landmarks\nYou keep %d cards for the next Chapter.") % [
+                    String(preview["outcome"]),
+                    ArcanaTheme.YOU.to_html(false), int(preview["my_score"]),
+                    ArcanaTheme.RIVAL.to_html(false), int(preview["rival_score"]),
+                    int(mine["creatures"]), int(mine["terrain"]), int(mine["landmarks"]),
+                    int(preview["cards_kept"])])
+        "tile", "selection":
+            pass   # already filled in by the handler that set the mode
+        _:
+            context_panel.visible = false
 
 # --- first-match coach ------------------------------------------------------
 #
@@ -553,37 +421,31 @@ func _refresh_coach() -> void:
     for step in steps:
         if tutorial_done.has(String(step.get("id", ""))): done += 1
     if done >= steps.size():
-        coach_title.text = "LEARNING THE GAME  ·  all done"
-        coach_body.text = "[i]Every action used. The rest is strategy.[/i]"
+        coach_panel.visible = false
         return
     for step in steps:
-        var id := String(step.get("id", ""))
-        if tutorial_done.has(id): continue
-        coach_title.text = "TRY THIS  (%d of %d)  ·  %s" % [done + 1, steps.size(), String(step.get("title", ""))]
-        coach_body.text = String(step.get("instruction", ""))
+        if tutorial_done.has(String(step.get("id", ""))): continue
+        coach_panel.visible = true
+        coach_title.text = "%s  ·  %s" % [String(step.get("title", "")), String(step.get("instruction", ""))]
         return
-
-# --- selection --------------------------------------------------------------
 
 func _clear_selection() -> void:
     mode = ""; selected_card_id = ""; shape_element = ""
     selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
-    var cmd: Dictionary = db.get_commander(String(engine.players[HUMAN]["commander_id"]))
-    detail_title.text = "Take your turn"
-    detail_body.text = ("Click a card, a Shape element, or a creature.\n\n" +
-        "[b]%s[/b]\n[i]%s[/i]\n%s") % [
-        String(cmd.get("name", "Commander")), String(cmd.get("passive_text", "")), String(cmd.get("command_text", ""))]
+    _context_mode = ""
     _hand_signature = ""
     _refresh()
 
 func _select_card(card_id: String) -> void:
     var reason := engine.card_block_reason(HUMAN, card_id)
     if reason != "":
+        _context_mode = "card"; _context_card = card_id
         _describe_card(card_id)
         detail_body.text += "\n\n[color=#%s]%s[/color]" % [ArcanaTheme.DANGER.to_html(false), reason]
         return
     mode = "card"; selected_card_id = card_id; shape_element = ""
     selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
+    _context_mode = "selection"
     _describe_card(card_id)
     detail_body.text += "\n\n[color=#%s]Click a glowing tile.[/color]" % ArcanaTheme.GOLD.to_html(false)
     _hand_signature = ""
@@ -592,15 +454,19 @@ func _select_card(card_id: String) -> void:
 func _describe_card(card_id: String) -> void:
     var card: Dictionary = db.get_card(card_id)
     if card.is_empty(): return
-    detail_title.text = String(card.get("name", ""))
     var els: Array[String] = []
     for el in card.get("elements", []):
         els.append("%s %s" % [ArcanaTheme.element_icon.get(el, ""), ArcanaTheme.element_name.get(el, el)])
-    var body := "%s · %s · %d Aether\n%s\n\n%s" % [
-        String(card.get("type", "")).capitalize(), " + ".join(els),
-        int(card.get("cost", 0)), String(card.get("rules", "")),
-        _attunement_note(card)]
-    detail_body.text = body
+    var stats := ""
+    if String(card.get("type", "")) == "creature":
+        stats = "  ·  %d Power, %d Health" % [int(card.get("power", 0)), int(card.get("health", 0))]
+    elif String(card.get("type", "")) == "landmark":
+        stats = "  ·  %d Presence" % int(card.get("presence", 1))
+    _show_context(String(card.get("name", "")),
+        "%s · %s · %d Aether%s\n%s\n\n%s" % [
+            String(card.get("type", "")).capitalize(), " + ".join(els),
+            int(card.get("cost", 0)), stats, String(card.get("rules", "")),
+            _attunement_note(card)])
 
 func _attunement_note(card: Dictionary) -> String:
     var need: Array = card.get("attunement", [])
@@ -614,45 +480,55 @@ func _attunement_note(card: Dictionary) -> String:
         ArcanaTheme.DANGER.to_html(false), " and ".join(names)]
 
 func _choose_shape(el: String) -> void:
-    mode = "shape"; shape_element = el; selected_card_id = ""; selected_unit_pos = Vector2i(-1, -1)
-    detail_title.text = "Shape %s" % ArcanaTheme.element_name.get(el, el)
-    detail_body.text = "Turn a tile beside your realm into %s, giving %s Attunement.\n\n[color=#%s]Click a glowing tile.[/color] Shaping is your whole turn." % [
-        ArcanaTheme.label_for_terrain(engine.terrain_for_element(el)),
-        ArcanaTheme.element_name.get(el, el), ArcanaTheme.GOLD.to_html(false)]
+    mode = "shape"; shape_element = el; selected_card_id = ""
+    selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
+    _context_mode = "selection"
+    _show_context("Shape %s" % ArcanaTheme.element_name.get(el, el),
+        "Turn a tile beside your realm into %s, giving %s Attunement.\n\n[color=#%s]Click a glowing tile.[/color] Shaping is your whole turn." % [
+            ArcanaTheme.label_for_terrain(engine.terrain_for_element(el)),
+            ArcanaTheme.element_name.get(el, el), ArcanaTheme.GOLD.to_html(false)])
     _hand_signature = ""
     _refresh()
 
 func _choose_command() -> void:
-    mode = "command"; selected_card_id = ""; shape_element = ""; selected_unit_pos = Vector2i(-1, -1)
+    if engine.current_player != HUMAN or engine.match_over: return
+    if bool(engine.players[HUMAN]["commander_used"]): return
+    mode = "command"; selected_card_id = ""; shape_element = ""
+    selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
     var cmd: Dictionary = db.get_commander(String(engine.players[HUMAN]["commander_id"]))
-    detail_title.text = String(cmd.get("name", "Commander"))
-    detail_body.text = "[i]%s[/i]\n\n%s\n\n[color=#%s]Click any tile. Once per Chapter.[/color]" % [
-        String(cmd.get("passive_text", "")), String(cmd.get("command_text", "")),
-        ArcanaTheme.GOLD.to_html(false)]
+    _context_mode = "selection"
+    _show_context(String(cmd.get("name", "Commander")),
+        "[i]%s[/i]\n\n%s\n\n[color=#%s]Click any tile. Once per Chapter.[/color]" % [
+            String(cmd.get("passive_text", "")), String(cmd.get("command_text", "")),
+            ArcanaTheme.GOLD.to_html(false)])
     _hand_signature = ""
     _refresh()
 
 func _on_tile_hovered(pos: Vector2i) -> void:
-    if mode != "" or pos.x < 0: return
+    if mode != "" or pos.x < 0:
+        return
     var tile: Dictionary = engine.board.get_tile(pos)
-    if tile.is_empty(): return
+    if tile.is_empty():
+        _context_mode = ""
+        _refresh_context()
+        return
     var unit = tile.get("creature")
-    detail_title.text = ArcanaTheme.label_for_terrain(String(tile.get("terrain", "neutral")))
     var parts: Array[String] = []
     var owner := int(tile.get("owner", -1))
-    parts.append("Held by: %s" % ("you" if owner == HUMAN else ("the rival" if owner == RIVAL else "nobody")))
+    parts.append("Held by %s" % ("you" if owner == HUMAN else ("the rival" if owner == RIVAL else "nobody")))
     var states: Array = tile.get("states", [])
     if not states.is_empty():
         var named: Array[String] = []
-        for s in states: named.append("%s %s" % [ArcanaTheme.icon_for_state(String(s)), ArcanaTheme.label_for_state(String(s))])
+        for st in states: named.append("%s %s" % [ArcanaTheme.icon_for_state(String(st)), ArcanaTheme.label_for_state(String(st))])
         parts.append("States: " + ", ".join(named))
         if states.size() == 1:
-            parts.append("[i]Add a second, different state here to discover new terrain.[/i]")
+            parts.append("[i]Add a second, different state to discover new terrain.[/i]")
     if unit != null:
-        parts.append("%s — %d Power, %d Health" % [String(unit.get("name", "")), int(unit.get("power", 0)), int(unit.get("health", 0))])
+        parts.append("[b]%s[/b] — %d Power, %d Health" % [String(unit.get("name", "")), int(unit.get("power", 0)), int(unit.get("health", 0))])
     var lm = tile.get("landmark")
     if lm != null: parts.append("⌂ %s (%d Presence)" % [String(lm.get("name", "")), int(lm.get("presence", 1))])
-    detail_body.text = "\n".join(parts)
+    _context_mode = "tile"
+    _show_context(ArcanaTheme.label_for_terrain(String(tile.get("terrain", "neutral"))), "\n".join(parts))
 
 func _on_tile_clicked(pos: Vector2i) -> void:
     if engine.match_over or overlay_open: return
@@ -668,8 +544,9 @@ func _on_tile_clicked(pos: Vector2i) -> void:
                 result = engine.play_card(HUMAN, selected_card_id, pos)
             if bool(result.get("needs_second_target", false)):
                 pending_primary = pos
-                detail_title.text = String(db.get_card(selected_card_id).get("name", ""))
-                detail_body.text = "[color=#%s]%s[/color]" % [ArcanaTheme.GOLD.to_html(false), String(result.get("reason", ""))]
+                _context_mode = "selection"
+                _show_context(String(db.get_card(selected_card_id).get("name", "")),
+                    "[color=#%s]%s[/color]" % [ArcanaTheme.GOLD.to_html(false), String(result.get("reason", ""))])
                 _refresh()
                 return
         "shape": result = engine.shape(HUMAN, shape_element, pos)
@@ -684,15 +561,16 @@ func _on_tile_clicked(pos: Vector2i) -> void:
             if unit != null and int(unit.get("owner", -1)) == HUMAN:
                 mode = "unit"; selected_unit_pos = pos
                 var legal: Dictionary = engine.legal_moves_for_unit(HUMAN, pos)
-                detail_title.text = String(unit.get("name", "Creature"))
+                _context_mode = "selection"
                 # The Heart strike is the decision here, so it leads.
                 var hint := ""
                 if bool(legal["heart"]):
                     hint += "[color=#%s]Click the rival Sanctuary to strike for %d — the Ward hits back for %d.[/color]\n" % [
                         ArcanaTheme.HEART.to_html(false), int(unit.get("power", 0)), MatchEngine.SANCTUARY_WARD]
                 hint += "Move one tile, or step into a rival creature to fight."
-                detail_body.text = "%d Power · %d Health\n\n%s" % [
-                    int(unit.get("power", 0)), int(unit.get("health", 0)), hint]
+                _show_context(String(unit.get("name", "Creature")),
+                    "%d Power · %d Health\n\n%s" % [
+                        int(unit.get("power", 0)), int(unit.get("health", 0)), hint])
                 _refresh()
             else:
                 _on_tile_hovered(pos)
@@ -703,8 +581,8 @@ func _on_tile_clicked(pos: Vector2i) -> void:
         _refuse(String(result.get("reason", "That is not a legal action.")))
 
 func _refuse(reason: String) -> void:
-    detail_title.text = "Can't do that"
-    detail_body.text = "[color=#%s]%s[/color]" % [ArcanaTheme.DANGER.to_html(false), reason]
+    _context_mode = "selection"
+    _show_context("Can't do that", "[color=#%s]%s[/color]" % [ArcanaTheme.DANGER.to_html(false), reason])
 
 func _do_pass() -> void:
     var result: Dictionary = engine.pass_chapter(HUMAN)
@@ -832,6 +710,90 @@ func _on_match_finished(match_winner: int) -> void:
         int(engine.players[0]["wonder"]), int(engine.players[1]["wonder"])]
     overlay_button.text = "Play again"
     _open_overlay()
+
+func _build_overlay() -> void:
+    var dimmer := ColorRect.new()
+    dimmer.color = Color(0, 0, 0, 0.6)
+    dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
+    dimmer.visible = false
+    add_child(dimmer)
+
+    var centre := CenterContainer.new()
+    centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    dimmer.add_child(centre)
+
+    overlay = PanelContainer.new()
+    overlay.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(ArcanaTheme.PANEL, ArcanaTheme.GOLD, 12, 2))
+    overlay.custom_minimum_size = Vector2(560, 0)
+    centre.add_child(overlay)
+
+    var v := VBoxContainer.new()
+    v.add_theme_constant_override("separation", 12)
+    var m := MarginContainer.new()
+    for side in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + side, 24)
+    m.add_child(v)
+    overlay.add_child(m)
+    overlay_title = _label("", 26, ArcanaTheme.GOLD)
+    overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    overlay_body = _rich(160)
+    overlay_body.add_theme_font_size_override("normal_font_size", 14)
+    overlay_body.add_theme_font_size_override("bold_font_size", 14)
+    overlay_body.add_theme_font_size_override("italics_font_size", 13)
+    overlay_button = Button.new()
+    overlay_button.text = "Continue"
+    overlay_button.custom_minimum_size = Vector2(0, 34)
+    overlay_button.pressed.connect(_dismiss_overlay)
+    v.add_child(overlay_title); v.add_child(overlay_body); v.add_child(overlay_button)
+    overlay.set_meta("dimmer", dimmer)
+
+func _build_help_panel(_parent: Control) -> void:
+    var dimmer := ColorRect.new()
+    dimmer.color = Color(0, 0, 0, 0.6)
+    dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
+    dimmer.visible = false
+    add_child(dimmer)
+
+    var centre := CenterContainer.new()
+    centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    dimmer.add_child(centre)
+
+    help_panel = PanelContainer.new()
+    help_panel.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(ArcanaTheme.PANEL, ArcanaTheme.GOLD, 12, 2))
+    help_panel.custom_minimum_size = Vector2(620, 0)
+    centre.add_child(help_panel)
+
+    var v := VBoxContainer.new()
+    v.add_theme_constant_override("separation", 10)
+    var m := MarginContainer.new()
+    for side in ["left", "right", "top", "bottom"]: m.add_theme_constant_override("margin_" + side, 22)
+    m.add_child(v)
+    help_panel.add_child(m)
+
+    var title := _label("HOW TO PLAY", 22, ArcanaTheme.GOLD)
+    title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    v.add_child(title)
+    var text := _rich(300)
+    text.add_theme_font_size_override("normal_font_size", 13)
+    text.add_theme_font_size_override("bold_font_size", 13)
+    var lines := "[b]Goal.[/b] Win two Chapters, break the rival Heart, or reach 10 Wonder.\n"
+    lines += "[b]Your turn.[/b] Do exactly one thing: play a card, Shape a tile, move or fight with one creature, use your Command, or Pass.\n"
+    lines += "[b]Shape.[/b] Shaping turns a tile beside your realm into your element. Your realm's terrain is what lets you cast cards.\n"
+    lines += "[b]Passing.[/b] When your rival Passes you get one last turn, then the Chapter scores. Cards you did not spend stay in your hand for the next Chapter.\n\n"
+    for kw in db.keywords:
+        lines += "[b]%s[/b] — %s\n" % [String(kw.get("name", "")), String(kw.get("plain", ""))]
+    text.text = lines
+    v.add_child(text)
+
+    var close := Button.new()
+    close.text = "Back to the match"
+    close.custom_minimum_size = Vector2(0, 32)
+    close.pressed.connect(func() -> void: dimmer.visible = false)
+    v.add_child(close)
+    help_panel.set_meta("dimmer", dimmer)
 
 func _open_overlay() -> void:
     overlay.get_meta("dimmer").visible = true

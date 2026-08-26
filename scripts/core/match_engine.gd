@@ -164,6 +164,10 @@ func missing_attunement(player: int, required) -> Array[String]:
         if not has_attunement(player, [el]): missing.append(String(el))
     return missing
 
+## True when no player may act — used by presentation code to grey controls.
+func match_open_blocked() -> bool:
+    return match_over
+
 func terrain_for_element(element: String) -> String:
     return String(db.elements.get(element, {}).get("terrain", ""))
 

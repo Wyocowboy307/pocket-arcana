@@ -35,6 +35,8 @@
 - [x] Chapter transition and match-end overlays
 - [x] "How to play" keyword popup
 - [x] Life and Fire play as genuinely different decks
+- [x] Phase-A production art generated and integrated
+- [x] board-first match presentation (continuous world, no visible grid)
 - [x] push/movement spell targeting (two-click)
 - [x] distinct Commander identities for the slice
 - [x] first-match coach driven by data/tutorial_steps.json

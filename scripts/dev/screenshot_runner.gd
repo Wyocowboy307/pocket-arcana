@@ -126,6 +126,15 @@ func _run_scenario() -> void:
             while not engine.match_over and guard < 900:
                 engine.perform(engine.current_player, engine.ai.choose_action(engine, engine.current_player))
                 guard += 1
+        "hand_hover":
+            # Prove the hand behaves like a card game: the pointed-at card rises
+            # out of the row and enlarges enough to read.
+            _freeze_rival()
+            await _settle(4)
+            if main.hand_view.cards.size() > 3:
+                main.hand_view.hovered = 3
+                main.hand_view.call("_layout")
+                main.call("_on_card_hovered", main.hand_view.cards[3].card_id)
         "help":
             _freeze_rival()
             main.help_panel.get_meta("dimmer").visible = true

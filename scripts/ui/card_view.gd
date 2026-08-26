@@ -14,9 +14,7 @@ var selected := false
 var block_reason := ""
 var count := 1
 var art: ArtRegistry = null           # may be null; layout falls back to text-only
-
-var _lift := 0.0
-var _target_lift := 0.0
+var hovered := false
 
 func setup(card_data: Dictionary, reason: String, registry: ArtRegistry = null) -> void:
     card = card_data
@@ -34,17 +32,7 @@ func setup(card_data: Dictionary, reason: String, registry: ArtRegistry = null) 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_STOP
     custom_minimum_size = CARD_SIZE
-    mouse_entered.connect(func() -> void:
-        _target_lift = 10.0
-        card_hovered.emit(card_id))
-    mouse_exited.connect(func() -> void: _target_lift = 0.0)
-    set_process(true)
-
-func _process(delta: float) -> void:
-    var goal: float = _target_lift + (6.0 if selected else 0.0)
-    if absf(_lift - goal) > 0.1:
-        _lift = lerpf(_lift, goal, clampf(delta * 14.0, 0.0, 1.0))
-        queue_redraw()
+    mouse_entered.connect(func() -> void: card_hovered.emit(card_id))
 
 func _gui_input(event: InputEvent) -> void:
     if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -53,14 +41,18 @@ func _gui_input(event: InputEvent) -> void:
 func _draw() -> void:
     var f := ArcanaTheme.font()
     var playable := block_reason == ""
-    var rect := Rect2(0, -_lift, size.x, size.y)
+    var rect := Rect2(Vector2.ZERO, size)
     var elements: Array = card.get("elements", [])
     var accent: Color = ArcanaTheme.color_for_element(String(elements[0])) if not elements.is_empty() else ArcanaTheme.TEXT_DIM
 
     var body: Color = ArcanaTheme.PANEL.lightened(0.04) if playable else ArcanaTheme.PANEL.darkened(0.35)
     var edge: Color = accent if playable else ArcanaTheme.PANEL_EDGE
     if selected: edge = ArcanaTheme.GOLD
-    draw_style_box(ArcanaTheme.panel_box(body, edge, 8, 3 if selected else 2), rect)
+    elif hovered: edge = accent.lightened(0.3)
+    # A raised card casts a shadow so it reads as lifted out of the hand.
+    if hovered or selected:
+        draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0.35), Color(0, 0, 0, 0), 10, 0), rect.grow(4.0))
+    draw_style_box(ArcanaTheme.panel_box(body, edge, 8, 3 if (selected or hovered) else 2), rect)
 
     var dim: Color = ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT
 

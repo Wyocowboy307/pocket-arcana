@@ -25,15 +25,28 @@
 - [x] Python content validation and audits
 - [x] headless Godot smoke-test scene/script
 
-## Requires real Godot run
-- [ ] parser/runtime cleanup in Godot 4.7.2
-- [ ] confirm AI-vs-AI headless smoke test finishes
-- [ ] manual graybox playthrough
-- [ ] direct Heart attack UX
-- [ ] full push/movement spell targeting
-- [ ] event animation queue
-- [ ] pixel art asset import / final board view
+## Verified on a real Godot 4.7.2 run (2026-08-26)
+- [x] parser/runtime cleanup in Godot 4.7.2
+- [x] AI-vs-AI headless smoke test finishes
+- [x] manual graybox playthrough (full match completes in the UI)
+- [x] direct Heart attack UX with Sanctuary Ward
+- [x] drawn board view, card views, event flourishes
+- [x] Pass preview with Realm Score breakdown
+- [x] Chapter transition and match-end overlays
+- [x] "How to play" keyword popup
+- [x] Life and Fire play as genuinely different decks
+
+## Still open
+- [ ] full push/movement spell targeting (`move_unit`)
+- [ ] Mossy Mae and Poppy Cinder still share one passive
+- [ ] tutorial_steps.json is not wired into the UI
+- [ ] pixel art assets / audio hooks
+- [ ] collection browser and deckbuilder (Milestone 4)
 
 ## Current validation
-Python content validation: **0 errors**.
-Godot runtime validation: **not possible in this container because no Godot executable is installed.**
+- `python3 tools_validate_content.py` — 0 errors
+- `python3 tools_content_audit.py` — structural checks pass
+- `./tools_check_scripts.sh` — all GDScript parses under Godot 4.7.2
+- `Godot --headless --scene res://scenes/dev/tests.tscn` — 60 checks pass
+- `./run_smoke_test.sh` — AI-vs-AI match completes
+- `Godot --scene res://scenes/dev/balance.tscn -- --matches=150` — Life 58.7% / Fire 41.3%

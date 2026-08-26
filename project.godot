@@ -21,4 +21,4 @@ textures/default_filters/use_nearest_mipmap_filter=false
 textures/canvas_textures/default_texture_filter=0
 
 [gui]
-theme/default_font_multichannel_signed_distance_field=true
+theme/default_font_multichannel_signed_distance_field=false

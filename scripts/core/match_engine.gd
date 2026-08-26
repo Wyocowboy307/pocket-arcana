@@ -245,13 +245,13 @@ func pass_preview(player: int) -> Dictionary:
     var rival_passed := bool(players[1 - player]["passed"])
     var outcome := ""
     if my_total > their_total:
-        outcome = "You win this Chapter %d–%d." % [my_total, their_total]
+        outcome = "You win this Chapter."
     elif their_total > my_total:
-        outcome = "You lose this Chapter %d–%d." % [my_total, their_total]
+        outcome = "You lose this Chapter."
     else:
-        outcome = "Tied %d–%d — nobody earns a Seal." % [my_total, their_total]
+        outcome = "Tied — nobody earns a Seal."
     if not rival_passed:
-        outcome += " The rival can still play, so this can change."
+        outcome += " The rival can still play."
     return {
         "my_score": my_total, "rival_score": their_total,
         "my_breakdown": mine, "rival_breakdown": theirs,

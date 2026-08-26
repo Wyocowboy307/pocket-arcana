@@ -8,6 +8,7 @@ var recipes: Array = []
 var tokens: Dictionary = {}
 var elements: Dictionary = {}
 var terrain_attunement: Dictionary = {}
+var keywords: Array = []
 
 func load_all() -> bool:
     cards = _index_by_id(_load_json("res://data/core_set.json"))
@@ -17,6 +18,7 @@ func load_all() -> bool:
     tokens = _index_by_id(_load_json("res://data/tokens.json"))
     elements = _index_by_id(_load_json("res://data/elements.json"))
     terrain_attunement = _load_json("res://data/terrain_attunement.json")
+    keywords = _load_json("res://data/keywords.json")
     return not cards.is_empty() and not commanders.is_empty() and not decks.is_empty()
 
 func get_card(card_id: String) -> Dictionary:

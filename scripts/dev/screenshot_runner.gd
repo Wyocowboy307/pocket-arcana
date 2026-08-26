@@ -1,35 +1,102 @@
 extends Node
-## Dev tool: boot a scene, let it settle, save a PNG of the viewport, quit.
+## Dev tool: boot the match screen, drive it into a named state, capture a PNG.
 ##
-## Usage:
 ##   Godot --path . --scene res://scenes/dev/screenshot.tscn -- \
-##         --out=/abs/path.png --frames=90 [--scene-path=res://scenes/main.tscn]
+##         --out=/abs/path.png --scenario=card_selected [--frames=90]
 ##
-## Runs windowed (viewport capture needs a real renderer, so not --headless).
+## Runs windowed — viewport capture needs a real renderer, so not --headless.
+## Scenarios drive the real UI entry points, so this playtests the click paths
+## as well as the look.
 
 var out_path := "/tmp/pocket_arcana_shot.png"
 var frames := 90
-var target_scene := "res://scenes/main.tscn"
+var scenario := "opening"
+var main: Node
 
 func _ready() -> void:
     for arg in OS.get_cmdline_user_args():
         if arg.begins_with("--out="): out_path = arg.trim_prefix("--out=")
         elif arg.begins_with("--frames="): frames = int(arg.trim_prefix("--frames="))
-        elif arg.begins_with("--scene-path="): target_scene = arg.trim_prefix("--scene-path=")
-    var packed: PackedScene = load(target_scene)
-    if packed == null:
-        push_error("screenshot_runner: could not load " + target_scene)
-        get_tree().quit(1)
-        return
-    add_child(packed.instantiate())
-    for _i in range(frames):
-        await get_tree().process_frame
+        elif arg.begins_with("--scenario="): scenario = arg.trim_prefix("--scenario=")
+    var packed: PackedScene = load("res://scenes/main.tscn")
+    main = packed.instantiate()
+    add_child(main)
+    await _settle(30)
+    await _run_scenario()
+    await _settle(frames)
     await RenderingServer.frame_post_draw
     var image := get_viewport().get_texture().get_image()
-    var err := image.save_png(out_path)
-    if err != OK:
-        push_error("screenshot_runner: save_png failed (%d) for %s" % [err, out_path])
+    if image.save_png(out_path) != OK:
+        push_error("screenshot_runner: save_png failed for " + out_path)
         get_tree().quit(1)
         return
     print("SCREENSHOT SAVED: ", out_path)
     get_tree().quit(0)
+
+func _settle(count: int) -> void:
+    for _i in range(count):
+        await get_tree().process_frame
+
+func _engine() -> MatchEngine:
+    return main.engine
+
+## Stop the rival acting so a scenario can hold a deliberate board state.
+func _freeze_rival() -> void:
+    main.ai_busy = true
+
+func _run_scenario() -> void:
+    var engine := _engine()
+    match scenario:
+        "opening":
+            pass
+        "card_selected":
+            _freeze_rival()
+            main.call("_select_card", "life_sproutling")
+        "shape_selected":
+            _freeze_rival()
+            main.call("_choose_shape", "life")
+        "midgame":
+            # Let both sides actually play, then stop on the human's turn.
+            for _i in range(26):
+                engine.perform(engine.current_player, engine.ai.choose_action(engine, engine.current_player))
+                if engine.match_over: break
+            _freeze_rival()
+        "unit_selected":
+            _freeze_rival()
+            var pos := engine.sanctuary_pos(0)
+            engine.board.get_tile(pos)["creature"] = engine.make_unit_from_card(engine.db.get_card("life_great_stag"), 0)
+            main.call("_on_tile_clicked", pos)
+        "heart_strike":
+            _freeze_rival()
+            var sanc := engine.sanctuary_pos(1)
+            var beside := Vector2i(sanc.x, sanc.y + 1)
+            engine.board.shape(0, beside, "grove")
+            engine.board.get_tile(beside)["creature"] = engine.make_unit_from_card(engine.db.get_card("life_garden_dragon"), 0)
+            main.call("_on_tile_clicked", beside)
+        "ashbloom":
+            # The marquee Life vs Fire discovery.
+            _freeze_rival()
+            var pos := Vector2i(3, 3)
+            engine.board.shape(0, pos, "grove")
+            engine.board.add_state(pos, "burning")
+            main.call("_select_card", "life_grow")
+            engine.players[0]["hand"].append("life_grow")
+            engine.play_card(0, "life_grow", pos)
+        "chapter_overlay":
+            for _i in range(18):
+                engine.perform(engine.current_player, engine.ai.choose_action(engine, engine.current_player))
+                if engine.match_over: break
+            _freeze_rival()
+            engine.pass_chapter(engine.current_player)
+            engine.pass_chapter(engine.current_player)
+        "match_end":
+            _freeze_rival()
+            var guard := 0
+            while not engine.match_over and guard < 900:
+                engine.perform(engine.current_player, engine.ai.choose_action(engine, engine.current_player))
+                guard += 1
+        "help":
+            _freeze_rival()
+            main.help_panel.get_meta("dimmer").visible = true
+        _:
+            push_error("unknown scenario: " + scenario)

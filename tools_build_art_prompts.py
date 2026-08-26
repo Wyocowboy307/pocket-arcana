@@ -15,22 +15,31 @@ MANIFEST = json.loads((ROOT / "data/vertical_slice_art_manifest.json").read_text
 # ART_BIBLE.md "AI generation rules" — required in every prompt.
 NEGATIVE = ("no text, no letters, no numbers, no watermark, no frame, no border, "
             "no anti-aliasing, no smooth vector edges, no gradients, no 3D render, "
-            "no painterly texture, no photorealism, no drop shadow")
-BASE = ("Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable "
-        "silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), "
-        "single light source from the upper left, limited harmonious palette, "
-        "crisp hard pixel edges")
-WORLD_VIEW = "top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite"
+            "no painterly texture, no photorealism, no drop shadow, "
+            "not a realistic animal, not a soft pretty fantasy illustration, "
+            "not a monster-collection mascot, not delicate, not elegant, "
+            "no base, no plinth, no stand, no pedestal, no platform under the feet, "
+            "no scenery, no ground, the creature alone")
+# Direction correction: the game reads as a playful painted board game, not soft
+# collectible-monster art. Chunk, exaggeration and silhouette over prettiness.
+BASE = ("Pocket Arcana pixel art. Chunky stylised cartoon creature with a bold thick dark "
+        "outline all the way around. Exaggerated proportions — big head, stubby limbs, heavy "
+        "planted feet — but the subject must still read unmistakably as what it is named. "
+        "Strange and characterful rather than cute or pretty. High contrast, saturated, "
+        "tightly limited palette, flat blocky shading in two or three tones only. Silhouette "
+        "instantly recognisable as a solid black shape. Single light source from the upper "
+        "left, crisp hard pixel edges")
+WORLD_VIEW = "three-quarter view from slightly above, standing on the ground, never a flat side profile"
 
 ELEMENT = {
     "life": {
-        "palette": "spring green with warm cream and petal accents",
-        "motifs": "leaves, sprouts, berries, flowers, antlers, mushrooms",
+        "palette": "punchy leaf green and deep moss with hot pink and cream accents",
+        "motifs": "fat leaves, thick vines, big round mushrooms, chunky petals, gnarled bark",
         "terrain": "lush grove, flowers, roots, tiny grass",
     },
     "fire": {
-        "palette": "orange-red with hot cream and yellow cores and charcoal accents",
-        "motifs": "flames, embers, triangular aggressive shapes",
+        "palette": "hot orange and deep ember red against near-black charcoal, with cream-yellow cores",
+        "motifs": "blocky flames, chunky cracked coal, jagged aggressive wedges, hot glowing seams",
         "terrain": "cinder soil, scorched grass, glowing cracks",
     },
 }

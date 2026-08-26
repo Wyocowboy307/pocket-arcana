@@ -12,6 +12,36 @@ The visual hierarchy is:
 
 If an asset is pretty but hurts board readability, reject it.
 
+## Direction correction — 2026-08-26
+
+The first production pass drifted into soft atmospheric fantasy: polished,
+pretty creature art that read as monster-collection mascots, and terrain that
+read as subtle painted strips. That is **not** the target.
+
+Pocket Arcana is a **playful, chunky, tactile magical board game**. Push toward
+bold, strange, toy-diorama energy; pull away from generic fantasy polish, soft
+blending and elegant emptiness.
+
+Creatures:
+- bold thick dark outline all the way around
+- exaggerated proportions: big head, stubby limbs, heavy planted feet
+- flat blocky shading in two or three tones, high contrast, tight palette
+- strange and characterful before cute or pretty
+- silhouette must read as a solid black shape
+- the subject must still be unmistakably what it is named
+
+Two failure modes found while correcting this, both now in the negative list:
+- asking for a "hand-painted tabletop miniature" makes the generator draw an
+  actual miniature base under the creature;
+- pushing exaggeration without anchoring the subject turns a Great Stag into a
+  mossy shrine. Say what it is, then exaggerate it.
+
+Land:
+- chunky cut-out slabs with a thick dark rim and a visible side face
+- bold outlined props that say what the biome is (mushrooms and stumps for
+  Grove, fire pits and burnt trunks for Cinder)
+- hard edges, not feathered gradients
+
 ## Master style
 - 2D pixel art only for the playable world.
 - Top-down / slight storybook perspective, roughly 3/4 overhead. Never side-view battle sprites.

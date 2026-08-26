@@ -1,46 +1,51 @@
 {
   "assets": {
     "fire_cinder_pup": {
-      "asset_id": "7256956f-9b39-4fd9-b375-8cc690487cb3",
+      "asset_id": "adc4f027-3c52-406d-af77-226005ac5d84",
+      "candidate_ids": [
+        "adc4f027-3c52-406d-af77-226005ac5d84",
+        "a5ed87c0-d1e6-4b23-8881-e0eeb32fbd3e",
+        "eda3a071-7a24-44d2-8e16-05de70523c4a"
+      ],
       "path": "assets/art/board/creatures/fire/fire_cinder_pup.png",
+      "picked": 0,
       "size": [
         48,
         48
       ],
       "source_size": [
-        72,
-        72
+        82,
+        82
       ],
       "kind": "creature",
       "element": "fire",
-      "credits_used": 12
+      "credits_used": 36
     },
     "life_sproutling": {
-      "asset_id": "cf7a2177-0df0-4a58-8086-97252248da1d",
+      "asset_id": "069926a5-336d-488b-892f-e366545dea04",
       "candidate_ids": [
-        "72cd4815-7dda-490e-aa4e-c07b7c928556",
-        "ed8ae1e9-0bd2-47c0-b33d-c52ac4ffbfb2",
-        "cf7a2177-0df0-4a58-8086-97252248da1d"
+        "069926a5-336d-488b-892f-e366545dea04",
+        "96f82b9e-ca6b-49c0-9ebd-c3beebae89c8"
       ],
       "path": "assets/art/board/creatures/life/life_sproutling.png",
-      "picked": 2,
+      "picked": 0,
       "size": [
         48,
         48
       ],
       "source_size": [
-        18,
-        18
+        86,
+        86
       ],
       "kind": "creature",
       "element": "life",
-      "credits_used": 36
+      "credits_used": 24
     },
     "fire_blazewing_drake": {
-      "asset_id": "35f861a4-143a-4285-9388-496646bb9d2a",
+      "asset_id": "cb850b48-b1ff-444b-9e5b-5aba5f676b8c",
       "candidate_ids": [
-        "35f861a4-143a-4285-9388-496646bb9d2a",
-        "4b63039a-8a9d-40ff-8951-83f1f3a956db"
+        "cb850b48-b1ff-444b-9e5b-5aba5f676b8c",
+        "ab5fae1c-8150-48f9-b7fa-0d6f0684e817"
       ],
       "path": "assets/art/board/creatures/fire/fire_blazewing_drake.png",
       "picked": 0,
@@ -57,10 +62,10 @@
       "credits_used": 24
     },
     "life_garden_dragon": {
-      "asset_id": "c515fdef-3b49-410a-a365-62e6e22185d5",
+      "asset_id": "021fe2b2-a908-4712-a249-43f8b2119d40",
       "candidate_ids": [
-        "c515fdef-3b49-410a-a365-62e6e22185d5",
-        "cb1a297f-e8fb-433e-867d-24dcb574ccbb"
+        "021fe2b2-a908-4712-a249-43f8b2119d40",
+        "4a78b7b1-7b5f-4a7a-b652-021314ae4491"
       ],
       "path": "assets/art/board/creatures/life/life_garden_dragon.png",
       "picked": 0,
@@ -69,8 +74,8 @@
         96
       ],
       "source_size": [
-        124,
-        124
+        76,
+        76
       ],
       "kind": "creature",
       "element": "life",
@@ -119,10 +124,10 @@
       "credits_used": 36
     },
     "life_berrycap_bunny": {
-      "asset_id": "66fb8c64-f919-4126-a657-e3e8b09f9bf0",
+      "asset_id": "62aa888e-a9a2-45e0-b43e-aa39a51a626f",
       "candidate_ids": [
-        "66fb8c64-f919-4126-a657-e3e8b09f9bf0",
-        "cd6ae0dc-2c6d-4bee-a7a4-45af913e8a3b"
+        "62aa888e-a9a2-45e0-b43e-aa39a51a626f",
+        "025eee6f-0748-469d-86fb-aba22d43b488"
       ],
       "path": "assets/art/board/creatures/life/life_berrycap_bunny.png",
       "picked": 0,
@@ -131,18 +136,18 @@
         48
       ],
       "source_size": [
-        72,
-        72
+        82,
+        82
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "life_bloom_bear": {
-      "asset_id": "4f785ebb-0e2f-4ac2-a28f-fcc5cb00f54c",
+      "asset_id": "15884bcc-733d-4111-95b5-a48438644590",
       "candidate_ids": [
-        "4f785ebb-0e2f-4ac2-a28f-fcc5cb00f54c",
-        "4e0cad1b-c463-4d3a-be83-eb6ce14424f2"
+        "15884bcc-733d-4111-95b5-a48438644590",
+        "53bebea2-76f4-42ce-95d0-bd7ac772a71e"
       ],
       "path": "assets/art/board/creatures/life/life_bloom_bear.png",
       "picked": 0,
@@ -151,18 +156,18 @@
         64
       ],
       "source_size": [
-        64,
-        64
+        82,
+        82
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "life_elaria_mother_of_groves": {
-      "asset_id": "c25b3001-e1fc-49df-a417-19f68b00fb6d",
+      "asset_id": "68ba28c9-5ed1-48f0-b7a3-8dd333487df8",
       "candidate_ids": [
-        "c25b3001-e1fc-49df-a417-19f68b00fb6d",
-        "439e280a-64ab-45f6-8fbb-26124cc90895"
+        "68ba28c9-5ed1-48f0-b7a3-8dd333487df8",
+        "d379ae72-e1d6-430b-92a9-33a2f688706a"
       ],
       "path": "assets/art/board/creatures/life/life_elaria_mother_of_groves.png",
       "picked": 0,
@@ -171,18 +176,19 @@
         96
       ],
       "source_size": [
-        124,
-        124
+        80,
+        80
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "life_great_stag": {
-      "asset_id": "2b62af8a-eafd-44d9-aaef-a272975bb449",
+      "asset_id": "6e2dfb9e-cb51-4a76-b77e-b92731185eaa",
       "candidate_ids": [
-        "2b62af8a-eafd-44d9-aaef-a272975bb449",
-        "3ed50a38-4c18-4b19-9f6e-54ed7783ee34"
+        "6e2dfb9e-cb51-4a76-b77e-b92731185eaa",
+        "2cb17923-c81c-4eb8-a17f-851b50432ed0",
+        "d3cfcd9f-267f-4e41-ae45-4edd2435b425"
       ],
       "path": "assets/art/board/creatures/life/life_great_stag.png",
       "picked": 0,
@@ -191,18 +197,18 @@
         96
       ],
       "source_size": [
-        134,
-        134
+        96,
+        96
       ],
       "kind": "creature",
       "element": "life",
-      "credits_used": 24
+      "credits_used": 36
     },
     "life_moss_frog": {
-      "asset_id": "589b02e2-e233-4cb7-821e-b9729024dc13",
+      "asset_id": "5fedadb4-0ae2-41b6-88e8-2213da725dcb",
       "candidate_ids": [
-        "589b02e2-e233-4cb7-821e-b9729024dc13",
-        "30e65be9-80d4-4ede-ae0d-da06101eea38"
+        "5fedadb4-0ae2-41b6-88e8-2213da725dcb",
+        "0b228407-b0cb-465a-a7d2-3e4d00b3ebbf"
       ],
       "path": "assets/art/board/creatures/life/life_moss_frog.png",
       "picked": 0,
@@ -211,18 +217,18 @@
         48
       ],
       "source_size": [
-        48,
-        48
+        82,
+        82
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "life_petal_deer": {
-      "asset_id": "0b056834-0165-48b1-9a77-65824cf0fcbc",
+      "asset_id": "0f71d73c-4680-47e5-8b6c-d260b63dcb44",
       "candidate_ids": [
-        "0b056834-0165-48b1-9a77-65824cf0fcbc",
-        "108adb79-5412-436c-aac2-9623d42e4988"
+        "0f71d73c-4680-47e5-8b6c-d260b63dcb44",
+        "d4305ea4-01f9-4178-8ac5-4501bd112b86"
       ],
       "path": "assets/art/board/creatures/life/life_petal_deer.png",
       "picked": 0,
@@ -231,18 +237,18 @@
         64
       ],
       "source_size": [
-        72,
-        72
+        82,
+        82
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "life_rootback_boar": {
-      "asset_id": "bc9a0c18-bd23-4f95-bde7-ccaee1fed610",
+      "asset_id": "23797d8b-8218-480c-aaf8-f435fa46b803",
       "candidate_ids": [
-        "bc9a0c18-bd23-4f95-bde7-ccaee1fed610",
-        "1fec5d81-3746-4c03-a0c3-cefafcdd815f"
+        "23797d8b-8218-480c-aaf8-f435fa46b803",
+        "24b08ea6-47bf-4ed1-b096-27f3027f163d"
       ],
       "path": "assets/art/board/creatures/life/life_rootback_boar.png",
       "picked": 0,
@@ -251,18 +257,18 @@
         64
       ],
       "source_size": [
-        60,
-        60
+        80,
+        80
       ],
       "kind": "creature",
       "element": "life",
       "credits_used": 24
     },
     "fire_ashcat": {
-      "asset_id": "89c66fe8-604d-42aa-80ea-77826fe17dfd",
+      "asset_id": "4c37d7d9-f26a-446a-a705-19d8be94c8b5",
       "candidate_ids": [
-        "89c66fe8-604d-42aa-80ea-77826fe17dfd",
-        "48c22ae2-5a4b-43fe-b44f-28e6a22c2602"
+        "4c37d7d9-f26a-446a-a705-19d8be94c8b5",
+        "d92530bb-eff0-495f-918d-96d2bf9a77f3"
       ],
       "path": "assets/art/board/creatures/fire/fire_ashcat.png",
       "picked": 0,
@@ -271,18 +277,18 @@
         48
       ],
       "source_size": [
-        62,
-        62
+        80,
+        80
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_cinder_hound": {
-      "asset_id": "aa7dfaf7-32a0-4b3b-816a-d9b7b2639402",
+      "asset_id": "03c90600-8795-4656-a176-bff235ff5fb9",
       "candidate_ids": [
-        "aa7dfaf7-32a0-4b3b-816a-d9b7b2639402",
-        "f93d2081-6586-4dbb-9b10-bda3ecaddc9d"
+        "03c90600-8795-4656-a176-bff235ff5fb9",
+        "aa89c88c-37a5-4901-af77-e9f61e21bd28"
       ],
       "path": "assets/art/board/creatures/fire/fire_cinder_hound.png",
       "picked": 0,
@@ -291,18 +297,18 @@
         64
       ],
       "source_size": [
-        70,
-        70
+        82,
+        82
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_coal_chick": {
-      "asset_id": "4b9eda7c-76f6-4893-b504-a48a5a8024c0",
+      "asset_id": "a7b0ed52-bd5c-4ff4-95b8-977aeef36c46",
       "candidate_ids": [
-        "4b9eda7c-76f6-4893-b504-a48a5a8024c0",
-        "0cbef7f9-9284-4653-98fc-fb41a939da93"
+        "a7b0ed52-bd5c-4ff4-95b8-977aeef36c46",
+        "6c5d5337-c671-464f-bf8c-a9b80b7869e7"
       ],
       "path": "assets/art/board/creatures/fire/fire_coal_chick.png",
       "picked": 0,
@@ -311,18 +317,18 @@
         48
       ],
       "source_size": [
-        60,
-        60
+        82,
+        82
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_emberbug": {
-      "asset_id": "ceb38df4-115a-4ad6-94d4-d7d26ac073c6",
+      "asset_id": "c7f786d6-cb52-416e-9ab0-a8cda00bfd6c",
       "candidate_ids": [
-        "ceb38df4-115a-4ad6-94d4-d7d26ac073c6",
-        "0e2b0fe6-f8d5-4679-9227-541bccac3ff8"
+        "c7f786d6-cb52-416e-9ab0-a8cda00bfd6c",
+        "168bdc3c-a1f3-43d8-bba9-a571366455f5"
       ],
       "path": "assets/art/board/creatures/fire/fire_emberbug.png",
       "picked": 0,
@@ -331,18 +337,18 @@
         48
       ],
       "source_size": [
-        62,
-        62
+        78,
+        78
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_forge_ram": {
-      "asset_id": "db93199d-6f3e-4e6b-9772-e1e3bd29fd0b",
+      "asset_id": "a1c5b241-1054-4f16-81cf-a08487632449",
       "candidate_ids": [
-        "db93199d-6f3e-4e6b-9772-e1e3bd29fd0b",
-        "a63d4a50-1d0a-400f-a80c-88dcd3a423c7"
+        "a1c5b241-1054-4f16-81cf-a08487632449",
+        "3b0dab47-7b52-4b69-a314-7be66ccf990d"
       ],
       "path": "assets/art/board/creatures/fire/fire_forge_ram.png",
       "picked": 0,
@@ -351,18 +357,18 @@
         64
       ],
       "source_size": [
-        66,
-        66
+        92,
+        92
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_magma_turtle": {
-      "asset_id": "eab4e3c1-017e-4171-808b-a6a67dd40316",
+      "asset_id": "b8e056f8-9e0b-4ff1-92b4-bd4e8fdadc6f",
       "candidate_ids": [
-        "eab4e3c1-017e-4171-808b-a6a67dd40316",
-        "edef3172-d16f-4cb5-931c-916ad48e5a26"
+        "b8e056f8-9e0b-4ff1-92b4-bd4e8fdadc6f",
+        "3d084e5f-e026-4484-a9ff-cb5cb03afa30"
       ],
       "path": "assets/art/board/creatures/fire/fire_magma_turtle.png",
       "picked": 0,
@@ -371,18 +377,18 @@
         64
       ],
       "source_size": [
-        68,
-        68
+        80,
+        80
       ],
       "kind": "creature",
       "element": "fire",
       "credits_used": 24
     },
     "fire_rax_the_laughing_inferno": {
-      "asset_id": "bcc6f71c-f384-48af-b3be-fb69fc5b264c",
+      "asset_id": "100ff49f-e039-4803-97b5-5a01f2c063d6",
       "candidate_ids": [
-        "bcc6f71c-f384-48af-b3be-fb69fc5b264c",
-        "54e9ab9e-bfdd-41df-80f1-fd4eb45285ba"
+        "100ff49f-e039-4803-97b5-5a01f2c063d6",
+        "f4bec221-bf4c-4dc9-b730-80f5c0f62a5c"
       ],
       "path": "assets/art/board/creatures/fire/fire_rax_the_laughing_inferno.png",
       "picked": 0,
@@ -391,8 +397,8 @@
         96
       ],
       "source_size": [
-        70,
-        70
+        82,
+        82
       ],
       "kind": "creature",
       "element": "fire",
@@ -520,7 +526,7 @@
     }
   },
   "masters": {
-    "life": "cf7a2177-0df0-4a58-8086-97252248da1d",
-    "fire": "7256956f-9b39-4fd9-b375-8cc690487cb3"
+    "life": "069926a5-336d-488b-892f-e366545dea04",
+    "fire": "adc4f027-3c52-406d-af77-226005ac5d84"
   }
 }

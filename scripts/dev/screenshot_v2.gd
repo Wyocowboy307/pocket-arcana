@@ -43,6 +43,13 @@ func _engine() -> MatchV2:
 func _freeze() -> void:
     main.ai_busy = true
 
+## Hide the tutorial coach. It sits over the top of the board, which means the
+## rival's Sanctuary is never visible in a review capture while it is up.
+func _hide_coach() -> void:
+    main.tutorial_active = false
+    if main.coach_panel != null:
+        main.coach_panel.visible = false
+
 func _place(player: int, index: int, card_id: String, ready := true) -> Dictionary:
     var e := _engine()
     if String(e.lane(player, index)["land"]) == "":
@@ -58,6 +65,36 @@ func _run() -> void:
     match scenario:
         "v2_opening":
             pass
+        "v2_sanctuaries":
+            # Both homes, with the coach out of the way.
+            _hide_coach()
+            e.players[0]["aether"] = 9
+            for i in range(MatchV2.LANES):
+                e.lane(0, i)["land"] = "grove"
+                e.lane(1, i)["land"] = "cinder"
+            main.call("_clear")
+        "v2_late_clear":
+            _hide_coach()
+            e.players[0]["aether"] = 9
+            for i in range(MatchV2.LANES):
+                e.lane(0, i)["land"] = "grove"
+                e.lane(1, i)["land"] = "cinder"
+            _place(0, 0, "life_sproutling")
+            _place(0, 1, "life_great_stag")
+            _place(0, 2, "life_bloom_bear")
+            _place(0, 3, "life_garden_dragon")
+            _place(1, 0, "fire_ashcat")
+            _place(1, 1, "fire_blazewing_drake")
+            _place(1, 2, "fire_magma_turtle")
+            _place(1, 3, "fire_cinder_hound")
+            e.lane(0, 1)["place"] = {"card_id": "life_herbalist_hut", "name": "Herbalist Hut",
+                "owner": 0, "presence": 1}
+            e.lane(1, 2)["place"] = {"card_id": "fire_blacksmith_nook", "name": "Blacksmith Nook",
+                "owner": 1, "presence": 1}
+            e.players[0]["max_aether"] = 5; e.players[0]["aether"] = 4
+            e.players[1]["max_aether"] = 5; e.players[1]["aether"] = 2
+            e.players[0]["heart"] = 14; e.players[1]["heart"] = 9
+            main.call("_clear")
         "v2_card_selected":
             e.players[0]["aether"] = 9
             e.play_realm(0, 2)
@@ -149,6 +186,46 @@ func _run() -> void:
             e.players[0]["aether"] = 9
             main.call("_clear")
             e.fuse(0, "fuse_great_stag", 0, 1)
+        "v2_spell":
+            # A Fire spell landing on a Life creature: cause, travel, impact.
+            _place(0, 1, "life_bloom_bear")
+            _place(0, 2, "life_petal_deer")
+            _place(1, 1, "fire_cinder_hound")
+            e.players[1]["aether"] = 9
+            e.players[1]["hand"].append("fire_scorch_mark")
+            main.call("_clear")
+            e.play_card(1, "fire_scorch_mark", 0, 1)
+            # Same payload shape main_v2 sends for a real cast.
+            main.stage.play("spell", {
+                "from": main.stage.sanctuary_rect(1).get_center(),
+                "to": main.stage.creature_anchor(0, 1),
+                "element": "fire",
+                "colour": main.stage.element_colour("fire")}, 1.1)
+        "v2_grove_pair":
+            # Neighbouring Grove lands reading as one region.
+            e.players[0]["aether"] = 9
+            for i in [1, 2]:
+                e.players[0]["played_card"] = false
+                e.play_realm(0, i)
+            _place(0, 1, "life_great_stag")
+            _place(0, 2, "life_bloom_bear")
+            main.call("_clear")
+        "v2_cinder_pair":
+            e.players[1]["aether"] = 9
+            for i in [1, 2]:
+                e.players[1]["played_card"] = false
+                e.play_realm(1, i)
+            _place(1, 1, "fire_blazewing_drake")
+            _place(1, 2, "fire_magma_turtle")
+            main.call("_clear")
+        "v2_place_building":
+            # Caught part-way through construction.
+            _place(0, 1, "life_petal_deer")
+            e.players[0]["hand"].append("life_herbalist_hut")
+            e.players[0]["aether"] = 9
+            e.play_card(0, "life_herbalist_hut", 0, 1)
+            main.stage.play("place_build", {"side": 0, "lane": 1, "element": "life",
+                "colour": main.stage.element_colour("life")}, 2.4)
         "v2_attack_targeting":
             _place(0, 1, "life_great_stag")
             _place(0, 3, "life_bloom_bear")

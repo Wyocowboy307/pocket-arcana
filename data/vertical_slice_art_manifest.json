@@ -370,8 +370,8 @@
       "id": "sanctuary_life",
       "path": "assets/art/board/sanctuaries/sanctuary_life.png",
       "size": [
-        96,
-        96
+        160,
+        128
       ],
       "description": "small living shrine of woven roots and heart-shaped leaves with a warm lantern, standing alone as a single object"
     },
@@ -379,8 +379,8 @@
       "id": "sanctuary_fire",
       "path": "assets/art/board/sanctuaries/sanctuary_fire.png",
       "size": [
-        96,
-        96
+        160,
+        128
       ],
       "description": "small forge shrine with a stone chimney, ember glow in its mouth and a hanging iron charm, standing alone as a single object"
     }

@@ -76,6 +76,31 @@ Review screenshots at 100% scale and at a small thumbnail size.
 
 If a board is only understandable by reading labels, the art pass is not done.
 
+## Life-vs-Fire production pass — 2026-08-26
+
+Completed in this pass, against the premium card-battler direction:
+
+| Area | State |
+| --- | --- |
+| Landscape kit | Grove/Cinder/Ashbloom/neutral 192px seamless fields, blend seams, per-element row paths, 12 anti-tiling patches, 51 authored props |
+| Battlefield | One continuous ground, no slabs/rims/divider; vignette, light pool, framing scenery |
+| Combat zone | Worn neutral field, lane marks, arcane cracks, rubble, kerbs, element influence, impact decals |
+| Sanctuaries | Generated hero pieces (Life tree-shrine, Fire forge), standing on the ground with Heart, Commander, Aether and deck |
+| Board cards | Plate + art window + frame + badges per element; creatures and Places both |
+| Places | Generated buildings, derived foundation/stage1/stage2/complete, passive-effect glow |
+| VFX | 17-effect shared library wired to every committed beat |
+| Hand/UI | Authored frames per element and role, stat sockets, card backs |
+
+Known gaps, deliberately left:
+
+- Per-creature animation sets. The card direction supersedes the original plan:
+  attacks differ by weight and element (heavy attackers get a cone and leave a
+  scar, light ones a spark), not by bespoke creature frames.
+- Element crests, the Aether icon and the End Turn button are still drawn from
+  `ArcanaTheme` rather than authored art.
+- The rival Sanctuary is drawn smaller than the player's so it fits the top
+  band; it reads as further away but is less imposing than the Life tree.
+
 ## Generator workflow
 Any AI pixel generator may be used, but it must obey `docs/ART_BIBLE.md`.
 

@@ -1,0 +1,45 @@
+{
+  "tile": 32,
+  "field": 192,
+  "rim": 18,
+  "rim_variants": 3,
+  "elements": [
+    "grove",
+    "cinder",
+    "ashbloom",
+    "neutral"
+  ],
+  "edges": [
+    "n",
+    "s",
+    "e",
+    "w"
+  ],
+  "corners": [
+    "nw",
+    "ne",
+    "sw",
+    "se"
+  ],
+  "grove_props": [
+    "detail",
+    "flower",
+    "glowplant",
+    "grass",
+    "mushroom",
+    "root",
+    "stone",
+    "tree",
+    "vine"
+  ],
+  "cinder_props": [
+    "brazier",
+    "burnt_tree",
+    "crack",
+    "debris",
+    "embers",
+    "rock",
+    "scorched",
+    "vent"
+  ]
+}

@@ -42,6 +42,43 @@ Land:
   Grove, fire pits and burnt trunks for Cinder)
 - hard edges, not feathered gradients
 
+## Direction correction — 2026-08-26 (second)
+
+Thomas supplied a premium card-battler reference and asked to move away from
+floating terrain chunks, procedural placeholder strips, obvious slot graphics
+and the prototype diorama feel. Two decisions were taken and are now binding
+for the V2 battlefield:
+
+**Played creatures are cards.** A creature on the battlefield is a card lying on
+the surface — art window, cost, power, health, name — not a loose sprite
+standing on land. The board sprite is still authored silhouette-first, because
+it is what fills the card's art window. Every animation the choreography drives
+(summon, fusion, attack lunge, defend, recoil) moves and squashes the card, so
+the thing the player reads is the thing that acts.
+
+**The board is one continuous ground.** There are no slabs, no rims, no side
+faces, no dark divider strip and no raised Sanctuary platforms. Cinder fills the
+rival's half, Grove ours, worn neutral where they meet, joined by interlocking
+blend strips. Rows read from a trodden path, a light pool, card shadows and
+spacing — never from a box.
+
+Consequences worth remembering, all learned by looking at the running game:
+
+- **Terrain is backdrop.** The first pass put a bright glowing crack on every
+  Cinder tile and a bold root bar on every Grove tile. Both beat the creatures
+  for contrast and gave the tiling away. Bright element cues belong to sparse
+  props (braziers, ember piles, glow plants), not to the ground texture.
+- **Do not build ground from small variant tiles.** Four mutually-tiling 32px
+  variants require a shared border ring, and that ring repeats every 32px as
+  visible banding. Use one large wrapping field, then break its periodicity with
+  large patches scattered at hashed positions.
+- **Rims are additive.** Immediate-mode drawing cannot cut a hole in a rect, so
+  a region's silhouette is added outward, not subtracted inward.
+- **A card is mostly art.** A wide coloured border with empty ribbons reads as a
+  placeholder however well the border is drawn. Thin dark pewter trim shared
+  across both elements, a thin accent line for identity, badges overlapping the
+  edge, and the illustration gets the rest.
+
 ## Master style
 - 2D pixel art only for the playable world.
 - Top-down / slight storybook perspective, roughly 3/4 overhead. Never side-view battle sprites.
@@ -52,6 +89,26 @@ Land:
 - Background/terrain uses less contrast than creatures.
 - Avoid photorealism, painterly gradients, anime rendering, faux-3D, smooth vector art, or high-detail AI illustration pasted into the board.
 - Cute and magical beats grim. Death is whimsical-spooky, never gore.
+
+## Where art comes from
+
+Two pipelines, chosen by what each is actually good at.
+
+**Hand-authored, in `tools/pixelart/`** — anything needing an exact palette,
+seamless tiling, crisp geometry or perfect registration:
+ground fields, blend seams, row paths, ground patches, all Grove/Cinder props,
+the clash-zone kit, card frames and plates, stat badges, card backs, and the
+whole VFX library. `python3 tools/build_land_kit.py` regenerates it;
+restyling the land is a re-run of that script, not a re-generation spend.
+
+**Generated, via `tools/generate_hero_art.py`** — characterful one-off buildings
+and creatures where a generator genuinely wins: Sanctuaries, Place buildings,
+creature board sprites. Candidates are kept in `.art_candidates/` so re-picking
+costs nothing.
+
+Place construction stages are *derived* from the approved finished building
+(`tools/pixelart/construction.py`) rather than generated separately, which is
+what guarantees the stages register with the final sprite exactly.
 
 ## Pixel scale
 Design source assets around these footprints:

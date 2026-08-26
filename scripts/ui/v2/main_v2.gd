@@ -301,7 +301,7 @@ func _layout_hand() -> void:
         var view: CardV2 = _cards[i]
         # Pivot is the card's bottom centre, so scaling grows it upward.
         view.position = Vector2(start + spread * i - (CardV2.SIZE.x - card_w) * 0.5,
-            hand_row.size.y - CardV2.SIZE.y - 6.0)
+            hand_row.size.y - CardV2.SIZE.y - 16.0)
         view.z_index = i
 
 func _lift(view: CardV2, on: bool) -> void:
@@ -316,7 +316,7 @@ func _lift(view: CardV2, on: bool) -> void:
         lean = (float(index) / float(_cards.size() - 1) - 0.5) * 0.10
     tween.tween_property(view, "rotation", lean, 0.10)
     tween.tween_property(view, "position:y",
-        hand_row.size.y - CardV2.SIZE.y - (22.0 if on else 6.0), 0.10)
+        hand_row.size.y - CardV2.SIZE.y - (34.0 if on else 16.0), 0.10)
     view.queue_redraw()
 
 func _refresh_highlights() -> void:

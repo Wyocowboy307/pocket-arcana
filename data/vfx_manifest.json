@@ -1,0 +1,90 @@
+{
+  "frames": 6,
+  "effects": {
+    "leaf_burst": {
+      "w": 56,
+      "h": 56,
+      "frames": 6
+    },
+    "healing_ribbon": {
+      "w": 44,
+      "h": 60,
+      "frames": 6
+    },
+    "vine_growth": {
+      "w": 64,
+      "h": 48,
+      "frames": 6
+    },
+    "flower_pop": {
+      "w": 36,
+      "h": 36,
+      "frames": 6
+    },
+    "rune_life": {
+      "w": 56,
+      "h": 32,
+      "frames": 6
+    },
+    "summon_portal_life": {
+      "w": 64,
+      "h": 40,
+      "frames": 6
+    },
+    "sparks_life": {
+      "w": 40,
+      "h": 40,
+      "frames": 6
+    },
+    "ember_burst": {
+      "w": 56,
+      "h": 56,
+      "frames": 6
+    },
+    "fire_bolt": {
+      "w": 52,
+      "h": 28,
+      "frames": 6
+    },
+    "flame_cone": {
+      "w": 72,
+      "h": 48,
+      "frames": 6
+    },
+    "smoke_puff": {
+      "w": 40,
+      "h": 44,
+      "frames": 6
+    },
+    "rune_fire": {
+      "w": 56,
+      "h": 32,
+      "frames": 6
+    },
+    "summon_portal_fire": {
+      "w": 64,
+      "h": 40,
+      "frames": 6
+    },
+    "sparks_fire": {
+      "w": 40,
+      "h": 40,
+      "frames": 6
+    },
+    "hit_flash": {
+      "w": 56,
+      "h": 56,
+      "frames": 6
+    },
+    "heart_strike": {
+      "w": 64,
+      "h": 64,
+      "frames": 6
+    },
+    "fusion_core": {
+      "w": 64,
+      "h": 64,
+      "frames": 6
+    }
+  }
+}

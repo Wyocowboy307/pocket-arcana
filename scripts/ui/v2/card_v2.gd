@@ -10,7 +10,7 @@ extends Control
 signal card_clicked(card_id: String)
 signal card_hovered(card_id: String)
 
-const SIZE := Vector2(156, 214)
+const SIZE := Vector2(148, 158)
 ## A distinct glyph per role, so type reads before any text does.
 const ROLE_GLYPH := {
     "Realm": "▰", "Creature": "❖", "Place": "⌂", "Spell": "✦",
@@ -52,105 +52,124 @@ func _gui_input(event: InputEvent) -> void:
     if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
         card_clicked.emit(card_id)
 
+## Regions of the authored frame (tools/pixelart/cards.py). If these move,
+## move them there too — the frame recesses every one of them so text always
+## lands on a dark plate.
+const NAME_Y := 5.0
+const NAME_H := 20.0
+const ROLE_Y := 27.0
+const ROLE_H := 17.0
+const ART_Y := 46.0
+const ART_H := 62.0
+const FOOT_Y := 110.0
+const FOOT_H := 17.0
+const RULES_Y := 129.0
+
 func _draw() -> void:
     var f := ArcanaTheme.font()
     var playable := block_reason == ""
-    var rect := Rect2(Vector2.ZERO, size)
     var elements: Array = card.get("elements", [])
-    var accent: Color = ArcanaTheme.color_for_element(String(elements[0])) if not elements.is_empty() else ArcanaTheme.TEXT_DIM
+    var element := String(elements[0]) if not elements.is_empty() else "neutral"
+    var accent: Color = ArcanaTheme.color_for_element(element) if not elements.is_empty() \
+        else ArcanaTheme.TEXT_DIM
     var ribbon: Color = RIBBON.get(role, ArcanaTheme.TEXT_DIM)
-
-    # Frame silhouette by role: Realm wide and soft, Creature rounded, Place
-    # square-shouldered, Spell sharp.
-    var radius := 12
-    if role == "Spell": radius = 2
-    elif role == "Place": radius = 4
-    elif role == "Realm": radius = 18
-    if hovered or selected:
-        draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0.42), Color(0, 0, 0, 0), radius + 2, 0), rect.grow(6.0))
-    var body: Color = ArcanaTheme.PANEL.lightened(0.06) if playable else ArcanaTheme.PANEL.darkened(0.34)
-    var edge: Color = ArcanaTheme.GOLD if selected else (accent.lightened(0.25) if hovered else (accent if playable else ArcanaTheme.PANEL_EDGE))
-    draw_style_box(ArcanaTheme.panel_box(body, edge, radius, 3 if (selected or hovered) else 2), rect)
+    var rect := Rect2(Vector2.ZERO, size)
     var dim: Color = ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT
 
-    # Cost, top left, big.
-    var cost := int(card.get("cost", 0))
-    var gem := Vector2(20, 21)
-    draw_circle(gem, 15.0, ArcanaTheme.AETHER.darkened(0.1) if playable else ArcanaTheme.PANEL_EDGE)
-    draw_circle(gem + Vector2(-4, -4), 5.0, Color(1, 1, 1, 0.25))
-    var cw: float = f.get_string_size(str(cost), HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
-    draw_string(f, Vector2(gem.x - cw * 0.5, gem.y + 6), str(cost),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 17, ArcanaTheme.TEXT)
+    var frame_key := "hand_frame:%s:%s" % [element, role.to_lower()]
+    var frame: Texture2D = art.frame(frame_key) if art != null else null
+    if frame == null and art != null:
+        frame = art.frame("hand_frame:neutral:%s" % role.to_lower())
 
-    # Element crest, top right.
-    var crest := Vector2(size.x - 20, 21)
-    draw_circle(crest, 14.0, Color(accent, 0.28))
-    draw_arc(crest, 14.0, 0, TAU, 22, Color(accent, 0.85), 2.0)
-    var icon := String(ArcanaTheme.element_icon.get(String(elements[0]), "*")) if not elements.is_empty() else "*"
-    var iw: float = f.get_string_size(icon, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
-    draw_string(f, Vector2(crest.x - iw * 0.5, crest.y + 5), icon,
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ArcanaTheme.TEXT)
+    if hovered or selected:
+        draw_rect(rect.grow(7.0), Color(0, 0, 0, 0.34))
+        draw_rect(rect.grow(3.0), Color(ArcanaTheme.GOLD if selected else accent, 0.55))
 
-    # Name, top centre between them.
-    draw_string(f, Vector2(40, 26), ArcanaTheme.fit(String(card.get("name", "")), 13, size.x - 78),
-        HORIZONTAL_ALIGNMENT_CENTER, size.x - 78, 13, dim)
+    if frame == null:
+        # Procedural fallback, kept so a missing frame never blanks the hand.
+        var body: Color = ArcanaTheme.PANEL.lightened(0.06) if playable else ArcanaTheme.PANEL.darkened(0.34)
+        draw_style_box(ArcanaTheme.panel_box(body, accent, 8, 2), rect)
+    else:
+        var tint := Color(1, 1, 1, 1) if playable else Color(0.58, 0.56, 0.62, 1.0)
+        draw_texture_rect(frame, rect, false, tint)
 
-    # Type ribbon — the loudest single element of the card.
-    var band := Rect2(6, 38, size.x - 12, 19)
-    draw_style_box(ArcanaTheme.panel_box(Color(ribbon, 0.30 if playable else 0.12),
-        Color(ribbon, 0.85 if playable else 0.3), 3, 1), band)
-    var glyph := String(ROLE_GLYPH.get(role, "•"))
-    var label := "%s  %s" % [glyph, role.to_upper()]
-    var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-    draw_string(f, Vector2(band.get_center().x - lw * 0.5, band.position.y + 14), label,
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ribbon if playable else ArcanaTheme.TEXT_FAINT)
-
-    # Art window.
-    var win := Rect2(7, 62, size.x - 14, 72)
-    draw_style_box(ArcanaTheme.panel_box(accent.darkened(0.6), Color(accent, 0.0), 5, 0), win)
+    # Art, inside the window the frame recessed for it.
+    var win := Rect2(6.0, ART_Y + 1.0, size.x - 12.0, ART_H - 2.0)
     var tex: Texture2D = art.card_art(card_id) if art != null else null
     if tex != null:
         var src := Vector2(tex.get_width(), tex.get_height())
-        var sc: float = min((win.size.x - 8.0) / src.x, (win.size.y - 8.0) / src.y)
+        var sc: float = minf((win.size.x - 8.0) / src.x, (win.size.y - 8.0) / src.y)
         var drawn := src * sc
-        draw_texture_rect(tex, Rect2(win.get_center() - drawn * 0.5, drawn), false)
+        draw_texture_rect(tex, Rect2((win.get_center() - drawn * 0.5).round(), drawn.round()),
+            false, Color(1, 1, 1, 1) if playable else Color(0.6, 0.58, 0.64, 1.0))
     else:
-        _sigil(f, win, accent, icon)
-    draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0), Color(accent, 0.75), 5, 2), win)
+        var icon0 := String(ArcanaTheme.element_icon.get(element, "*"))
+        _sigil(f, win, accent, icon0)
+
+    # Name, centred in its ribbon, clear of the cost gem and the crest.
+    draw_string(f, Vector2(28.0, NAME_Y + 15.0),
+        ArcanaTheme.fit(String(card.get("name", "")), 12, size.x - 56.0),
+        HORIZONTAL_ALIGNMENT_CENTER, size.x - 56.0, 12, dim)
+
+    # Type ribbon — type must read before any other text.
+    var glyph := String(ROLE_GLYPH.get(role, "•"))
+    var label := "%s  %s" % [glyph, role.to_upper()]
+    var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+    draw_string(f, Vector2(size.x * 0.5 - lw * 0.5, ROLE_Y + 14.0), label,
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ribbon if playable else ArcanaTheme.TEXT_FAINT)
 
     var detailed := hovered or selected
-    # PLAY ON / TARGET — printed, never inferred.
-    var foot := Rect2(6, 139, size.x - 12, 19)
-    if not detailed:
-        foot = Rect2(6, 139, size.x - 12, 0)
     if detailed:
-        draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.24 if playable else 0.08),
-            Color(accent, 0.7 if playable else 0.25), 3, 1), foot)
-        draw_string(f, Vector2(foot.position.x + 6, foot.position.y + 14),
-            ArcanaTheme.fit(placement, 10, foot.size.x - 12),
-            HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT)
-        draw_multiline_string(f, Vector2(9, 174), String(card.get("rules", "")),
-            HORIZONTAL_ALIGNMENT_LEFT, size.x - 18, 10, 2,
+        draw_string(f, Vector2(11.0, FOOT_Y + 14.0),
+            ArcanaTheme.fit(placement, 10, size.x - 22.0),
+            HORIZONTAL_ALIGNMENT_LEFT, -1, 10,
+            ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT)
+        draw_multiline_string(f, Vector2(11.0, RULES_Y + 13.0), String(card.get("rules", "")),
+            HORIZONTAL_ALIGNMENT_LEFT, size.x - 22.0, 9, 2,
             ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
 
-    # Creature gems in the bottom corners.
+    # Cost, top-left, overlapping the card edge like a real badge.
+    _socket(f, "cost", Vector2(-4.0, -4.0), str(int(card.get("cost", 0))),
+        ArcanaTheme.AETHER if playable else ArcanaTheme.PANEL_EDGE)
+
+    # Element crest, top-right.
+    var crest := Vector2(size.x - 17.0, 16.0)
+    draw_circle(crest, 12.0, Color(accent, 0.32))
+    draw_arc(crest, 12.0, 0, TAU, 22, Color(accent, 0.9), 2.0)
+    var icon := String(ArcanaTheme.element_icon.get(element, "*"))
+    var iw: float = f.get_string_size(icon, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+    draw_string(f, Vector2(crest.x - iw * 0.5, crest.y + 5.0), icon,
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ArcanaTheme.TEXT)
+
     if role == "Creature":
-        _gem(f, Vector2(19, size.y - 19), str(int(card.get("power", 0))), Color("#ffd98a"))
-        _gem(f, Vector2(size.x - 19, size.y - 19), str(int(card.get("health", 0))), Color("#ffb3c4"))
+        _socket(f, "power", Vector2(-4.0, size.y - 26.0), str(int(card.get("power", 0))), Color("#ffd98a"))
+        _socket(f, "health", Vector2(size.x - 26.0, size.y - 26.0), str(int(card.get("health", 0))), Color("#ffb3c4"))
     elif role == "Place":
-        draw_string(f, Vector2(9, size.y - 9), "⌂ %d Presence" % int(card.get("presence", 1)),
-            HORIZONTAL_ALIGNMENT_LEFT, -1, 11, dim)
+        _socket(f, "presence", Vector2(-4.0, size.y - 26.0), str(int(card.get("presence", 1))), Color("#b8f27a"))
     if count > 1:
-        draw_string(f, Vector2(size.x - 40, size.y - 9), "×%d" % count,
+        draw_string(f, Vector2(size.x - 40.0, size.y - 9.0), "×%d" % count,
             HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.GOLD)
 
     # One short reason, over the art rather than over the rules.
     if not playable:
-        var strip := Rect2(win.position.x + 1, win.position.y + win.size.y - 17.0, win.size.x - 2, 16)
-        draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.9), Color(0, 0, 0, 0), 3, 0), strip)
-        draw_string(f, Vector2(strip.position.x + 5, strip.position.y + 12),
-            ArcanaTheme.fit(block_reason, 10, strip.size.x - 10),
+        var strip := Rect2(win.position.x + 1.0, win.position.y + win.size.y - 17.0,
+            win.size.x - 2.0, 16.0)
+        draw_rect(strip, Color(ArcanaTheme.BG, 0.92))
+        draw_string(f, Vector2(strip.position.x + 5.0, strip.position.y + 12.0),
+            ArcanaTheme.fit(block_reason, 10, strip.size.x - 10.0),
             HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.DANGER)
+
+## A live number in an authored socket, overlapping the card edge.
+func _socket(f: Font, kind: String, at: Vector2, text: String, fallback: Color) -> void:
+    var tex: Texture2D = art.frame("gem:%s" % kind) if art != null else null
+    var s := 28.0
+    if tex != null:
+        draw_texture_rect(tex, Rect2(at.round(), Vector2(s, s)), false)
+    else:
+        draw_circle(at + Vector2(s * 0.5, s * 0.5), s * 0.44, fallback)
+    var w: float = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+    draw_string(f, Vector2(at.x + s * 0.5 - w * 0.5, at.y + s * 0.5 + 5.0), text,
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ArcanaTheme.TEXT)
 
 ## No card ever shows an empty rectangle: missing art becomes a deliberate sigil.
 func _sigil(f: Font, win: Rect2, accent: Color, icon: String) -> void:

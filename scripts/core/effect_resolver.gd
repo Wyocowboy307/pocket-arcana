@@ -1,7 +1,7 @@
 class_name EffectResolver
 extends RefCounted
 
-func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
+func apply(effect: Dictionary, engine, actor: int, pos: Vector2i, secondary: Vector2i = Vector2i(-1, -1)) -> Array:
     var events: Array = []
     var kind := String(effect.get("kind", ""))
     var amount := int(effect.get("amount", 0))
@@ -69,6 +69,14 @@ func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
                 engine.players[actor]["hand"].append(cid)
                 events.append({"type":"returned_from_grave","player":actor,"card_id":cid})
         "move_unit":
-            # Direction is chosen by the engine/UI; this effect is represented as a readable event in the graybox.
-            events.append({"type":"movement_magic","player":actor,"mode":effect.get("mode","push"),"distance":effect.get("distance",1),"pos":pos})
+            # The caster picks the destination; the simulation checks it is legal.
+            if not tile.is_empty() and engine.board.in_bounds(secondary):
+                var subject = tile.get("creature")
+                var wanted_enemy := target == "enemy_on_tile"
+                if subject != null and (not wanted_enemy or int(subject.get("owner", -1)) != actor):
+                    if engine.legal_push_targets(pos).has(secondary):
+                        var dest: Dictionary = engine.board.get_tile(secondary)
+                        tile["creature"] = null
+                        dest["creature"] = subject
+                        events.append({"type":"unit_pushed","player":actor,"from":pos,"to":secondary,"unit":subject})
     return events

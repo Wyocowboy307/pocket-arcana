@@ -296,15 +296,15 @@
     "name": "Mossy Mae",
     "element": "life",
     "unlock_cost": 0,
-    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive_text": "At the start of each Chapter, heal your Heart 2.",
     "passive": {
       "trigger": "on_chapter_start",
       "once_per_chapter": false,
       "conditions": [],
       "effects": [
         {
-          "kind": "gain_aether",
-          "amount": 1,
+          "kind": "heal_heart",
+          "amount": 2,
           "target": "self"
         }
       ]
@@ -442,16 +442,16 @@
     "name": "Poppy Cinder",
     "element": "fire",
     "unlock_cost": 0,
-    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive_text": "At the start of each Chapter, deal 2 damage to the rival Heart.",
     "passive": {
       "trigger": "on_chapter_start",
       "once_per_chapter": false,
       "conditions": [],
       "effects": [
         {
-          "kind": "gain_aether",
-          "amount": 1,
-          "target": "self"
+          "kind": "damage_heart",
+          "amount": 2,
+          "target": "enemy"
         }
       ]
     },

@@ -16,6 +16,7 @@ var mode := ""                       # "" | "card" | "shape" | "command" | "unit
 var selected_card_id := ""
 var shape_element := ""
 var selected_unit_pos := Vector2i(-1, -1)
+var pending_primary := Vector2i(-1, -1)   # first click of a two-step card
 var ai_busy := false
 var overlay_open := false
 var discovered: Dictionary = {}      # recipe_id -> true, for first-time celebration
@@ -487,8 +488,13 @@ func _refresh_highlights() -> void:
     if engine.current_player != HUMAN or engine.match_over: return
     match mode:
         "card":
-            for pos in engine.legal_targets_for_card(HUMAN, selected_card_id):
-                board_view.highlights[pos] = "target"
+            if pending_primary.x >= 0:
+                board_view.selected_pos = pending_primary
+                for pos in engine.legal_push_targets(pending_primary):
+                    board_view.highlights[pos] = "move"
+            else:
+                for pos in engine.legal_targets_for_card(HUMAN, selected_card_id):
+                    board_view.highlights[pos] = "target"
         "shape":
             for pos in engine.legal_shape_tiles(HUMAN, shape_element):
                 board_view.highlights[pos] = "target"
@@ -505,7 +511,8 @@ func _refresh_highlights() -> void:
 # --- selection --------------------------------------------------------------
 
 func _clear_selection() -> void:
-    mode = ""; selected_card_id = ""; shape_element = ""; selected_unit_pos = Vector2i(-1, -1)
+    mode = ""; selected_card_id = ""; shape_element = ""
+    selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
     var cmd: Dictionary = db.get_commander(String(engine.players[HUMAN]["commander_id"]))
     detail_title.text = "Take your turn"
     detail_body.text = ("One action per turn: play a card, Shape a tile, move or fight with one " +
@@ -520,7 +527,8 @@ func _select_card(card_id: String) -> void:
         _describe_card(card_id)
         detail_body.text += "\n\n[color=#%s]%s[/color]" % [ArcanaTheme.DANGER.to_html(false), reason]
         return
-    mode = "card"; selected_card_id = card_id; shape_element = ""; selected_unit_pos = Vector2i(-1, -1)
+    mode = "card"; selected_card_id = card_id; shape_element = ""
+    selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
     _describe_card(card_id)
     detail_body.text += "\n\n[color=#%s]Click a glowing tile.[/color]" % ArcanaTheme.GOLD.to_html(false)
     _hand_signature = ""
@@ -598,7 +606,17 @@ func _on_tile_clicked(pos: Vector2i) -> void:
         return
     var result: Dictionary = {}
     match mode:
-        "card": result = engine.play_card(HUMAN, selected_card_id, pos)
+        "card":
+            if pending_primary.x >= 0:
+                result = engine.play_card(HUMAN, selected_card_id, pending_primary, pos)
+            else:
+                result = engine.play_card(HUMAN, selected_card_id, pos)
+            if bool(result.get("needs_second_target", false)):
+                pending_primary = pos
+                detail_title.text = String(db.get_card(selected_card_id).get("name", ""))
+                detail_body.text = "[color=#%s]%s[/color]" % [ArcanaTheme.GOLD.to_html(false), String(result.get("reason", ""))]
+                _refresh()
+                return
         "shape": result = engine.shape(HUMAN, shape_element, pos)
         "command": result = engine.use_commander(HUMAN, pos)
         "unit":

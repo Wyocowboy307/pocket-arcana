@@ -73,7 +73,9 @@ func test_match_setup() -> void:
     var e := _new_match()
     _eq(e.players[0]["hand"].size(), 8, "player 1 opening hand")
     _eq(e.players[1]["hand"].size(), 8, "player 2 opening hand")
-    _eq(int(e.players[0]["heart"]), 25, "starting heart")
+    # Mossy Mae opens every Chapter by healing 2, so Life starts above the base 25.
+    _eq(int(e.players[0]["heart"]), MatchEngine.HEART_START + 2, "Life starts with its Commander's heal")
+    _eq(int(e.players[1]["heart"]), MatchEngine.HEART_START, "Fire is untouched until it acts")
     _eq(e.chapter, 1, "starts in chapter 1")
     _ok(not e.match_over, "match is live at setup")
     # Mono starters must be castable turn one without shaping first.
@@ -128,9 +130,9 @@ func test_cannot_act_out_of_turn() -> void:
     e.free()
 
 func test_commander_chapter_aether_is_not_wiped() -> void:
-    # Mossy Mae / Poppy Cinder grant +1 Aether at the start of each Chapter.
-    # That bonus must survive until the player actually acts.
-    var e := _new_match()
+    # Pip Snowshoe and the Water starter grant +1 Aether at the start of each
+    # Chapter. That bonus must survive until the player actually acts.
+    var e := _new_match("starter_frost", "starter_water")
     var base: int = min(10, 3 + e.chapter)
     _eq(int(e.players[0]["aether"]), base + 1, "starting player keeps chapter-start Aether")
     e.pass_chapter(0)
@@ -209,7 +211,8 @@ func test_wonder_ten_wins() -> void:
     e.free()
 
 func test_heal_caps_at_thirty() -> void:
-    var e := _new_match()
+    # Water's starter Commander has no Chapter opener, so nothing else moves the Heart.
+    var e := _new_match("starter_life", "starter_water")
     e.players[0]["heart"] = 29
     _force_hand(e, 0, "life_warm_sun")  # heal 3
     e.play_card(0, "life_warm_sun", e.sanctuary_pos(0))
@@ -255,6 +258,78 @@ func test_attunement_gates_dual_cards() -> void:
     var r: Dictionary = e.play_card(0, "dual_meltheart_salamander", e.sanctuary_pos(0))
     _ok(not bool(r.get("ok", false)), "dual card is refused without both attunements")
     e.free()
+
+func test_slice_commanders_have_distinct_identities() -> void:
+    # COMMANDERS.md: a Commander is the player's identity, not a shared sentence.
+    var mae: Dictionary = _db.get_commander("cmd_mossy_mae")
+    var poppy: Dictionary = _db.get_commander("cmd_poppy_cinder")
+    _ok(String(mae.get("passive_text", "")) != String(poppy.get("passive_text", "")),
+        "the two slice Commanders do not share a passive")
+    _ok(String(mae.get("command_text", "")) != String(poppy.get("command_text", "")),
+        "the two slice Commanders do not share a Command")
+
+func test_commander_passive_actually_fires() -> void:
+    var e := _new_match()
+    # Mossy Mae already healed 2 for the starting player; Poppy Cinder's opener
+    # fires on her own first turn, which only arrives once player 1 has acted.
+    var before: int = int(e.players[0]["heart"])
+    _eq(before, MatchEngine.HEART_START + 2, "Mossy Mae's opener landed")
+    # Read the amount from the data rather than hardcoding a tuning knob.
+    var chip := 0
+    for effect in _db.get_commander("cmd_poppy_cinder").get("passive", {}).get("effects", []):
+        if String(effect.get("kind", "")) == "damage_heart": chip = int(effect.get("amount", 0))
+    _ok(chip > 0, "Poppy Cinder's passive damages the Heart")
+    e.pass_chapter(0)
+    _eq(int(e.players[0]["heart"]), before - chip, "Poppy Cinder's opener hit the rival Heart")
+    e.free()
+
+func test_push_needs_a_second_target() -> void:
+    var e := _new_match()
+    _ok(e.card_needs_second_target("wind_tailwind"), "Tailwind asks for a push destination")
+    _ok(not e.card_needs_second_target("life_grow"), "Grow does not")
+    # Put an enemy creature in the middle of the board and shape a realm to cast from.
+    var subject := Vector2i(3, 2)
+    e.board.get_tile(subject)["creature"] = e.make_unit_from_card(_db.get_card("fire_ashcat"), 1)
+    var destinations: Array[Vector2i] = e.legal_push_targets(subject)
+    _ok(destinations.size() > 0, "the creature has somewhere to be pushed")
+    _ok(not destinations.has(e.sanctuary_pos(0)), "nothing is ever pushed into a Sanctuary")
+    # Tailwind is a Wind card, so the realm needs Wind Attunement first.
+    e.board.shape(0, Vector2i(3, 3), "skygrass")
+    _force_hand(e, 0, "wind_tailwind")
+    # First click alone is refused, and asks for the second.
+    var first: Dictionary = e.play_card(0, "wind_tailwind", subject)
+    _ok(bool(first.get("needs_second_target", false)), "first click asks for a destination")
+    _ok(e.players[0]["hand"].has("wind_tailwind"), "the refused card stayed in hand")
+    var dest: Vector2i = destinations[0]
+    var second: Dictionary = e.play_card(0, "wind_tailwind", subject, dest)
+    _ok(bool(second.get("ok", false)), "the push resolves: %s" % str(second.get("reason", "")))
+    _ok(e.board.get_tile(subject).get("creature") == null, "the creature left its tile")
+    _ok(e.board.get_tile(dest).get("creature") != null, "the creature arrived on the destination")
+    e.free()
+
+## Guards the whole simulation: every match must finish, both decks must stay
+## viable, and each must keep winning in its own way (PLAYTEST_MATRIX).
+func test_slice_matchup_stays_healthy() -> void:
+    var wins := [0, 0]
+    var seals_for_life := 0
+    var hearts_for_fire := 0
+    var unfinished := 0
+    var rounds := 40
+    for i in range(rounds):
+        var e := _new_match("starter_life", "starter_fire", 500 + i)
+        var steps := _play_out(e, 1200)
+        if not e.match_over:
+            unfinished += 1
+        else:
+            wins[e.winner] += 1
+            if e.winner == 0 and e.win_reason == "Two Chapter Seals": seals_for_life += 1
+            if e.winner == 1 and e.win_reason == "Heart broken": hearts_for_fire += 1
+        e.free()
+    _eq(unfinished, 0, "every simulated match finished")
+    _ok(wins[0] >= rounds / 5, "Life stays viable (%d/%d)" % [wins[0], rounds])
+    _ok(wins[1] >= rounds / 5, "Fire stays viable (%d/%d)" % [wins[1], rounds])
+    _ok(seals_for_life > 0, "Life still wins Chapters on Realm Score")
+    _ok(hearts_for_fire > 0, "Fire still wins by breaking the Heart")
 
 func test_every_starter_deck_is_legal() -> void:
     var validator := DeckValidator.new()

@@ -49,6 +49,41 @@ Chapters. Life now gets the tough bodies, Fire the fragile high-Power ones:
 `tools_validate_content.py` now fails if the two slice decks are ever numerical
 mirrors again, and if any card in a slice deck is not `slice_ready`.
 
+### Commander identity and the final slice balance
+Mossy Mae and Poppy Cinder both shipped with "gain 1 bonus Aether" — the same
+sentence, so Commander choice changed nothing in the slice matchup. They now carry
+their element's job, using only the existing effect vocabulary:
+
+- Mossy Mae — at the start of each Chapter, heal your Heart 2.
+- Poppy Cinder — at the start of each Chapter, deal 2 damage to the rival Heart.
+
+That left Life ahead 60/40, and reversing the seating showed it was deck strength
+rather than first-player advantage (Life won 63% *going second*). Life's tough
+bodies survive to scoring time, and Realm Score is only counted when both players
+Pass, so Fire had no way to actually race. Fire's reach was raised instead of
+Life's bodies being cut: Dragon Breath 2 -> 3 Heart damage, Rax 5 -> 6.
+
+Final, 200 matches per seating:
+
+    Life first: Life 54.5% / Fire 45.5%
+    Fire first: Fire 44.5% / Life 55.5%
+
+    Life wins ~80% of its wins on Chapter Seals (plus both Wonder wins)
+    Fire wins ~60% of its wins by breaking the Heart
+
+Turn order is worth about a point, and each deck wins in its own way — the split
+PLAYTEST_MATRIX and the "First fun proof" list ask for.
+
+`test_slice_matchup_stays_healthy` runs 40 seeded matches in the suite so this
+cannot silently regress.
+
+### move_unit
+Push/movement magic now takes a real destination. `play_card()` accepts an optional
+second target; a card that needs one is refused with `needs_second_target` until it
+gets a legal destination, and the UI turns that refusal into a second click.
+`legal_push_targets()` never allows a creature to be pushed into a Sanctuary.
+Only Tailwind uses this today, and it is outside the Life/Fire slice.
+
 ### Still open
-- `move_unit` still has no directional target UX (no slice card uses it yet).
-- Commander passives for Mossy Mae and Poppy Cinder are still the same sentence.
+- The other six starter Commanders still share the "+1 Aether" passive.
+- `data/tutorial_steps.json` is not wired into the UI.

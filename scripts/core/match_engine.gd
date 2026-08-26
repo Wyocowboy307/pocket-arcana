@@ -231,6 +231,23 @@ func legal_moves_for_unit(player: int, from: Vector2i) -> Dictionary:
         elif int(other.get("owner", -1)) != player: attacks.append(n)
     return {"moves": moves, "attacks": attacks, "heart": can_attack_heart(player, from)}
 
+## Cards whose effect needs a second click (currently push/movement magic).
+func card_needs_second_target(card_id: String) -> bool:
+    for effect in db.get_card(card_id).get("effects", []):
+        if String(effect.get("kind", "")) == "move_unit": return true
+    return false
+
+## Where a creature standing on `from` can legally be pushed.
+func legal_push_targets(from: Vector2i) -> Array[Vector2i]:
+    var out: Array[Vector2i] = []
+    if board.get_tile(from).get("creature") == null: return out
+    for n in board.neighbors(from):
+        var tile := board.get_tile(n)
+        if tile.get("creature") != null: continue
+        if int(tile.get("sanctuary_owner", -1)) >= 0: continue
+        out.append(n)
+    return out
+
 func can_attack_heart(player: int, from: Vector2i) -> bool:
     var unit = board.get_tile(from).get("creature")
     if unit == null or int(unit.get("owner", -1)) != player: return false
@@ -264,7 +281,7 @@ func pass_preview(player: int) -> Dictionary:
 ## Single entry point for an action dictionary, as produced by SimpleAI or the UI.
 func perform(player: int, action: Dictionary) -> Dictionary:
     match String(action.get("kind", "pass")):
-        "play_card": return play_card(player, String(action.get("card_id", "")), action.get("pos", Vector2i.ZERO))
+        "play_card": return play_card(player, String(action.get("card_id", "")), action.get("pos", Vector2i.ZERO), action.get("secondary", Vector2i(-1, -1)))
         "shape": return shape(player, String(action.get("element", "")), action.get("pos", Vector2i.ZERO))
         "move": return move_or_attack(player, action.get("from", Vector2i.ZERO), action.get("to", Vector2i.ZERO))
         "attack_heart": return attack_heart(player, action.get("from", Vector2i.ZERO))
@@ -272,7 +289,7 @@ func perform(player: int, action: Dictionary) -> Dictionary:
         "pass": return pass_chapter(player)
     return _fail("Unknown action.")
 
-func play_card(player: int, card_id: String, pos: Vector2i) -> Dictionary:
+func play_card(player: int, card_id: String, pos: Vector2i, secondary: Vector2i = Vector2i(-1, -1)) -> Dictionary:
     if not _can_act(player): return _fail("It is not your turn.")
     var p: Dictionary = players[player]
     if not p["hand"].has(card_id): return _fail("That card is not in your hand.")
@@ -285,6 +302,11 @@ func play_card(player: int, card_id: String, pos: Vector2i) -> Dictionary:
         for el in missing: names.append(String(db.elements.get(el, {}).get("name", el)))
         return _fail("Shape %s first." % " and ".join(names))
     if not legal_targets_for_card(player, card_id).has(pos): return _fail("That card cannot go there.")
+    if card_needs_second_target(card_id):
+        if legal_push_targets(pos).is_empty():
+            return _fail("There is nothing there to move.")
+        if not legal_push_targets(pos).has(secondary):
+            return {"ok": false, "needs_second_target": true, "reason": "Now choose where to move it."}
     p["aether"] = int(p["aether"]) - int(card.get("cost", 0))
     p["hand"].erase(card_id)
     var tile := board.get_tile(pos)
@@ -299,7 +321,7 @@ func play_card(player: int, card_id: String, pos: Vector2i) -> Dictionary:
         _emit({"type": "landmark_built", "player": player, "card_id": card_id, "pos": pos})
     else:
         _emit({"type": "spell_cast", "player": player, "card_id": card_id, "pos": pos})
-    for effect in card.get("effects", []): _apply_and_followups(effect, player, pos)
+    for effect in card.get("effects", []): _apply_and_followups(effect, player, pos, secondary)
     if typ in ["spell", "terrain", "relic"]: p["discard"].append(card_id)
     _dispatch_commander_trigger(player, "on_first_card_played", {"card": card})
     _log("P%d played %s." % [player + 1, String(card.get("name", card_id))])
@@ -426,8 +448,8 @@ func _clean_dead_on_tile(pos: Vector2i) -> void:
 
 # --- effects and triggers ---------------------------------------------------
 
-func _apply_and_followups(effect: Dictionary, actor: int, pos: Vector2i) -> void:
-    for event in effects.apply(effect, self, actor, pos):
+func _apply_and_followups(effect: Dictionary, actor: int, pos: Vector2i, secondary: Vector2i = Vector2i(-1, -1)) -> void:
+    for event in effects.apply(effect, self, actor, pos, secondary):
         _emit(event)
         if String(event.get("type", "")) == "state_added":
             _dispatch_commander_trigger(actor, "on_first_state_added", event)

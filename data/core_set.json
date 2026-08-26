@@ -2317,11 +2317,11 @@
     "attunement": [
       "fire"
     ],
-    "rules": "Deal 2 to the enemy Heart.",
+    "rules": "Deal 3 to the enemy Heart.",
     "effects": [
       {
         "kind": "damage_heart",
-        "amount": 2,
+        "amount": 3,
         "target": "enemy"
       }
     ],
@@ -2678,7 +2678,7 @@
     "effects": [
       {
         "kind": "damage_heart",
-        "amount": 5,
+        "amount": 6,
         "target": "enemy"
       },
       {

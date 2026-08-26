@@ -66,7 +66,20 @@ func _enumerate(engine, player: int, aggression: float) -> Array:
         seen_cards.append(cid)
         if engine.card_block_reason(player, cid) != "": continue
         var card: Dictionary = engine.db.get_card(cid)
+        var two_step: bool = engine.card_needs_second_target(cid)
         for pos in engine.legal_targets_for_card(player, cid):
+            if two_step:
+                var enemy_sanc: Vector2i = engine.sanctuary_pos(1 - player)
+                for dest in engine.legal_push_targets(pos):
+                    var subject = engine.board.get_tile(pos).get("creature")
+                    if subject == null or int(subject.get("owner", -1)) == player: continue
+                    # Shoving a threat away from our Sanctuary is the point of the card.
+                    var gain: float = float(_distance(dest, engine.sanctuary_pos(player)) - _distance(pos, engine.sanctuary_pos(player)))
+                    options.append({
+                        "score": 1.0 + gain * 1.6 + (2.5 if engine.can_attack_heart(1 - player, pos) else 0.0),
+                        "action": {"kind": "play_card", "card_id": cid, "pos": pos, "secondary": dest},
+                    })
+                continue
             options.append({
                 "score": _card_value(engine, player, card, pos, aggression),
                 "action": {"kind": "play_card", "card_id": cid, "pos": pos},

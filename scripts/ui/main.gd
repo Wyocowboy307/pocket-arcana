@@ -20,6 +20,7 @@ var pending_primary := Vector2i(-1, -1)   # first click of a two-step card
 var ai_busy := false
 var overlay_open := false
 var discovered: Dictionary = {}      # recipe_id -> true, for first-time celebration
+var tutorial_done: Dictionary = {}   # tutorial step id -> true
 
 # Nodes.
 var board_view: BoardView
@@ -34,6 +35,9 @@ var pass_button: Button
 var command_button: Button
 var cancel_button: Button
 var help_panel: PanelContainer
+var coach_panel: PanelContainer
+var coach_title: Label
+var coach_body: RichTextLabel
 var overlay: PanelContainer
 var overlay_title: Label
 var overlay_body: RichTextLabel
@@ -182,14 +186,28 @@ func _build_side_panel() -> Control:
     side.custom_minimum_size = Vector2(312, 0)
     side.add_theme_constant_override("separation", 6)
 
+    coach_panel = _panel()
+    var cv := VBoxContainer.new()
+    var cm := MarginContainer.new()
+    for s2 in ["left", "right", "top", "bottom"]: cm.add_theme_constant_override("margin_" + s2, 8)
+    cm.add_child(cv)
+    coach_panel.add_child(cm)
+    coach_title = _label("", 12, ArcanaTheme.GOLD)
+    coach_body = _rich_fixed(26)
+    cv.add_child(coach_title); cv.add_child(coach_body)
+    side.add_child(coach_panel)
+
     var detail := _panel()
+    detail.size_flags_vertical = Control.SIZE_EXPAND_FILL
     var dv := VBoxContainer.new()
     var dm := MarginContainer.new()
     for s2 in ["left", "right", "top", "bottom"]: dm.add_theme_constant_override("margin_" + s2, 8)
     dm.add_child(dv)
     detail.add_child(dm)
     detail_title = _label("Take your turn", 13, ArcanaTheme.GOLD)
-    detail_body = _rich_fixed(118)
+    detail_body = _rich_fixed(76)
+    detail_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+    detail_body.scroll_active = true
     dv.add_child(detail_title); dv.add_child(detail_body)
     side.add_child(detail)
 
@@ -200,12 +218,11 @@ func _build_side_panel() -> Control:
     pm.add_child(pv)
     pass_panel.add_child(pm)
     pv.add_child(_label("IF YOU PASS NOW", 10, ArcanaTheme.TEXT_FAINT))
-    pass_body = _rich_fixed(58)
+    pass_body = _rich_fixed(52)
     pv.add_child(pass_body)
     side.add_child(pass_panel)
 
     var log_panel := _panel()
-    log_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
     var lv := VBoxContainer.new()
     var lm := MarginContainer.new()
     for s2 in ["left", "right", "top", "bottom"]: lm.add_theme_constant_override("margin_" + s2, 8)
@@ -213,7 +230,6 @@ func _build_side_panel() -> Control:
     log_panel.add_child(lm)
     lv.add_child(_label("RECENT EVENTS", 10, ArcanaTheme.TEXT_FAINT))
     log_label = _rich_fixed(60)
-    log_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
     lv.add_child(log_label)
     side.add_child(log_panel)
 
@@ -267,7 +283,7 @@ func _build_help_panel(_parent: Control) -> void:
     help_panel.set_meta("dimmer", dimmer)
 
 func _build_action_bar() -> Control:
-    var panel := _panel(Vector2(0, 42))
+    var panel := _panel(Vector2(0, 40))
     var box := HBoxContainer.new()
     box.add_theme_constant_override("separation", 4)
     var m := MarginContainer.new()
@@ -307,7 +323,7 @@ func _build_action_bar() -> Control:
     return panel
 
 func _build_hand() -> Control:
-    var panel := _panel(Vector2(0, 196))
+    var panel := _panel(Vector2(0, 190))
     var scroll := ScrollContainer.new()
     scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
     scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -412,12 +428,13 @@ func _refresh() -> void:
     cancel_button.disabled = mode == ""
 
     var lines: Array[String] = []
-    var start: int = maxi(0, engine.event_log.size() - 5)
+    var start: int = maxi(0, engine.event_log.size() - 4)
     for i in range(start, engine.event_log.size()):
         var colour := ArcanaTheme.TEXT_DIM if i < engine.event_log.size() - 1 else ArcanaTheme.TEXT
         lines.append("[color=#%s]%s[/color]" % [colour.to_html(false), engine.event_log[i]])
     log_label.text = "\n".join(lines)
 
+    _refresh_coach()
     _refresh_highlights()
     board_view.queue_redraw()
 
@@ -474,13 +491,14 @@ func _refresh_hand(my_turn: bool) -> void:
 func _refresh_pass_preview() -> void:
     var preview: Dictionary = engine.pass_preview(HUMAN)
     var mine: Dictionary = preview["my_breakdown"]
-    pass_body.text = ("Realm [color=#%s]%d[/color] – [color=#%s]%d[/color]" +
-        "   [color=#%s](%d creatures, %d land, %d landmarks)[/color]\n[b]%s[/b]\nYou keep %d cards.") % [
+    var rival_note := "" if bool(preview["rival_passed"]) else "  [color=#%s](rival still playing)[/color]" % ArcanaTheme.TEXT_FAINT.to_html(false)
+    pass_body.text = ("[b]%s[/b]\nRealm [color=#%s]%d[/color] – [color=#%s]%d[/color]" +
+        "  ·  %d creatures, %d land, %d landmarks\nYou keep %d cards.%s") % [
+        String(preview["outcome"]),
         ArcanaTheme.YOU.to_html(false), int(preview["my_score"]),
         ArcanaTheme.RIVAL.to_html(false), int(preview["rival_score"]),
-        ArcanaTheme.TEXT_FAINT.to_html(false),
         int(mine["creatures"]), int(mine["terrain"]), int(mine["landmarks"]),
-        String(preview["outcome"]), int(preview["cards_kept"])]
+        int(preview["cards_kept"]), rival_note]
 
 func _refresh_highlights() -> void:
     board_view.highlights.clear()
@@ -508,6 +526,39 @@ func _refresh_highlights() -> void:
             for pos in legal["attacks"]: board_view.highlights[pos] = "attack"
             if bool(legal["heart"]): board_view.highlights[engine.sanctuary_pos(RIVAL)] = "heart"
 
+# --- first-match coach ------------------------------------------------------
+#
+# ONBOARDING_AND_ACCESSIBILITY: teach the normal game through the UI. The coach
+# never changes a rule or blocks an action — it just names the next idea.
+
+func _mark_tutorial(step_id: String) -> void:
+    if tutorial_done.has(step_id): return
+    tutorial_done[step_id] = true
+    var steps: Array = db.tutorial.get("steps", [])
+    for step in steps:
+        if String(step.get("id", "")) == step_id:
+            _show_banner(String(step.get("success", "")), 1.1)
+            return
+
+func _refresh_coach() -> void:
+    var steps: Array = db.tutorial.get("steps", [])
+    if steps.is_empty():
+        coach_panel.visible = false
+        return
+    var done := 0
+    for step in steps:
+        if tutorial_done.has(String(step.get("id", ""))): done += 1
+    if done >= steps.size():
+        coach_title.text = "LEARNING THE GAME  ·  all done"
+        coach_body.text = "[i]You have used every action in the game. The rest is strategy.[/i]"
+        return
+    for step in steps:
+        var id := String(step.get("id", ""))
+        if tutorial_done.has(id): continue
+        coach_title.text = "TRY THIS  (%d of %d)  ·  %s" % [done + 1, steps.size(), String(step.get("title", ""))]
+        coach_body.text = String(step.get("instruction", ""))
+        return
+
 # --- selection --------------------------------------------------------------
 
 func _clear_selection() -> void:
@@ -515,8 +566,8 @@ func _clear_selection() -> void:
     selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
     var cmd: Dictionary = db.get_commander(String(engine.players[HUMAN]["commander_id"]))
     detail_title.text = "Take your turn"
-    detail_body.text = ("One action per turn: play a card, Shape a tile, move or fight with one " +
-        "creature, use your Command, or Pass.\n\n[b]%s[/b]\n[i]%s[/i]\n%s") % [
+    detail_body.text = ("Click a card, a Shape element, or one of your creatures.\n\n" +
+        "[b]%s[/b]\n[i]%s[/i]\n%s") % [
         String(cmd.get("name", "Commander")), String(cmd.get("passive_text", "")), String(cmd.get("command_text", ""))]
     _hand_signature = ""
     _refresh()
@@ -561,7 +612,7 @@ func _attunement_note(card: Dictionary) -> String:
 func _choose_shape(el: String) -> void:
     mode = "shape"; shape_element = el; selected_card_id = ""; selected_unit_pos = Vector2i(-1, -1)
     detail_title.text = "Shape %s" % ArcanaTheme.element_name.get(el, el)
-    detail_body.text = "Turn a tile beside your realm into %s. That is your whole turn, and it gives your realm %s Attunement.\n\n[color=#%s]Click a glowing tile.[/color]" % [
+    detail_body.text = "Turn a tile beside your realm into %s, giving %s Attunement.\n\n[color=#%s]Click a glowing tile.[/color] Shaping is your whole turn." % [
         ArcanaTheme.label_for_terrain(engine.terrain_for_element(el)),
         ArcanaTheme.element_name.get(el, el), ArcanaTheme.GOLD.to_html(false)]
     _hand_signature = ""
@@ -630,10 +681,14 @@ func _on_tile_clicked(pos: Vector2i) -> void:
                 mode = "unit"; selected_unit_pos = pos
                 var legal: Dictionary = engine.legal_moves_for_unit(HUMAN, pos)
                 detail_title.text = String(unit.get("name", "Creature"))
-                var hint := "Move one tile, or step into a rival creature to fight."
-                if bool(legal["heart"]): hint += "\n\n[color=#%s]Beside the rival Sanctuary: click it to strike for %d. The Ward hits back for %d.[/color]" % [
-                    ArcanaTheme.HEART.to_html(false), int(unit.get("power", 0)), MatchEngine.SANCTUARY_WARD]
-                detail_body.text = "%d Power, %d Health\n\n%s" % [int(unit.get("power", 0)), int(unit.get("health", 0)), hint]
+                # The Heart strike is the decision here, so it leads.
+                var hint := ""
+                if bool(legal["heart"]):
+                    hint += "[color=#%s]Click the rival Sanctuary to strike for %d — the Ward hits back for %d.[/color]\n" % [
+                        ArcanaTheme.HEART.to_html(false), int(unit.get("power", 0)), MatchEngine.SANCTUARY_WARD]
+                hint += "Move one tile, or step into a rival creature to fight."
+                detail_body.text = "%d Power · %d Health\n\n%s" % [
+                    int(unit.get("power", 0)), int(unit.get("health", 0)), hint]
                 _refresh()
             else:
                 _on_tile_hovered(pos)
@@ -672,6 +727,14 @@ func _on_event(event: Dictionary) -> void:
     if board_view == null: return
     var kind := String(event.get("type", ""))
     var pos: Vector2i = event.get("pos", Vector2i(-1, -1))
+    if int(event.get("player", -1)) == HUMAN:
+        match kind:
+            "creature_summoned", "landmark_built", "spell_cast": _mark_tutorial("play_card")
+            "shape": _mark_tutorial("shape")
+            "unit_moved", "combat", "heart_attack": _mark_tutorial("move")
+            "passed": _mark_tutorial("pass")
+            "recipe": _mark_tutorial("recipe")
+            "commander": _mark_tutorial("commander")
     match kind:
         "creature_summoned", "token_summoned":
             board_view.flash_tile(pos, ArcanaTheme.owner_color(int(event.get("player", -1))))

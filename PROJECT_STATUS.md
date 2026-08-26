@@ -35,11 +35,12 @@
 - [x] Chapter transition and match-end overlays
 - [x] "How to play" keyword popup
 - [x] Life and Fire play as genuinely different decks
+- [x] push/movement spell targeting (two-click)
+- [x] distinct Commander identities for the slice
+- [x] first-match coach driven by data/tutorial_steps.json
 
 ## Still open
-- [ ] full push/movement spell targeting (`move_unit`)
-- [ ] Mossy Mae and Poppy Cinder still share one passive
-- [ ] tutorial_steps.json is not wired into the UI
+- [ ] the other six starter Commanders still share the "+1 Aether" passive
 - [ ] pixel art assets / audio hooks
 - [ ] collection browser and deckbuilder (Milestone 4)
 
@@ -47,6 +48,7 @@
 - `python3 tools_validate_content.py` — 0 errors
 - `python3 tools_content_audit.py` — structural checks pass
 - `./tools_check_scripts.sh` — all GDScript parses under Godot 4.7.2
-- `Godot --headless --scene res://scenes/dev/tests.tscn` — 60 checks pass
+- `Godot --headless --scene res://scenes/dev/tests.tscn` — 82 checks pass
 - `./run_smoke_test.sh` — AI-vs-AI match completes
-- `Godot --scene res://scenes/dev/balance.tscn -- --matches=150` — Life 58.7% / Fire 41.3%
+- `Godot --scene res://scenes/dev/balance.tscn -- --matches=200` — Life 54.5% / Fire 45.5%
+  (reversed seating: Life 55.5% / Fire 44.5%, so turn order is worth about a point)

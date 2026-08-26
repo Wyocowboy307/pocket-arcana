@@ -173,8 +173,9 @@ func _draw_tile(pos: Vector2i, f: Font) -> void:
         if hl == "move": glow = ArcanaTheme.MOVE
         elif hl == "attack": glow = ArcanaTheme.ATTACK
         elif hl == "heart": glow = ArcanaTheme.HEART
-        var wave: float = 0.55 + 0.45 * sin(_pulse * TAU)
-        draw_style_box(ArcanaTheme.panel_box(Color(glow, 0.10 * wave), Color(glow, 0.55 + 0.45 * wave), 7, 3), rect)
+        # Keep a strong floor: a legal tile must read as legal at any point in the pulse.
+        var wave: float = 0.5 + 0.5 * sin(_pulse * TAU)
+        draw_style_box(ArcanaTheme.panel_box(Color(glow, 0.16 + 0.12 * wave), Color(glow, 0.7 + 0.3 * wave), 7, 3), rect)
         if hl == "heart":
             draw_string(f, Vector2(rect.position.x + rect.size.x * 0.5 - 22, rect.position.y + rect.size.y * 0.5 + 6),
                 "STRIKE", HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ArcanaTheme.HEART)

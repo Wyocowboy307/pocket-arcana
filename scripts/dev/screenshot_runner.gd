@@ -51,7 +51,11 @@ func _run_scenario() -> void:
             pass
         "card_selected":
             _freeze_rival()
-            main.call("_select_card", "life_sproutling")
+            # Pick a card that is genuinely in hand and affordable.
+            for card_id in engine.players[0]["hand"]:
+                if engine.card_block_reason(0, String(card_id)) == "":
+                    main.call("_select_card", String(card_id))
+                    break
         "shape_selected":
             _freeze_rival()
             main.call("_choose_shape", "life")

@@ -195,6 +195,7 @@ func can_afford(player: int, card_id: String) -> bool:
 func card_block_reason(player: int, card_id: String) -> String:
     var card := db.get_card(card_id)
     if card.is_empty(): return "Card data is missing."
+    if not players[player]["hand"].has(card_id): return "That card is not in your hand."
     if not _can_act(player): return "It is not your turn."
     if int(card.get("cost", 0)) > int(players[player]["aether"]): return "Not enough Aether."
     var missing := missing_attunement(player, card.get("attunement", []))
@@ -266,9 +267,7 @@ func pass_preview(player: int) -> Dictionary:
     elif their_total > my_total:
         outcome = "You lose this Chapter."
     else:
-        outcome = "Tied — nobody earns a Seal."
-    if not rival_passed:
-        outcome += " The rival can still play."
+        outcome = "Tied — no Seal for anyone."
     return {
         "my_score": my_total, "rival_score": their_total,
         "my_breakdown": mine, "rival_breakdown": theirs,
@@ -456,6 +455,7 @@ func _apply_and_followups(effect: Dictionary, actor: int, pos: Vector2i, seconda
         if String(event.get("type", "")) == "unit_died":
             _dispatch_commander_trigger(int(event.get("unit", {}).get("owner", actor)), "on_unit_death", event)
     for event in combo.resolve_tile(board, pos):
+        event["player"] = actor
         if int(event.get("wonder", 0)) > 0: players[actor]["wonder"] += int(event["wonder"])
         _log("Discovery: %s." % String(event.get("name", "new terrain")))
         _emit(event)

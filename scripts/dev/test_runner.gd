@@ -122,6 +122,15 @@ func test_aether_is_spent_and_refills() -> void:
     _eq(int(e.players[0]["aether"]), before - 1, "aether was spent")
     e.free()
 
+func test_block_reason_checks_the_hand() -> void:
+    var e := _new_match()
+    # A card the player does not hold must never look playable to the UI.
+    _eq(e.card_block_reason(0, "life_elaria_mother_of_groves"), "That card is not in your hand.",
+        "a card not in hand is refused")
+    var held := String(e.players[0]["hand"][0])
+    _ok(e.card_block_reason(0, held) != "That card is not in your hand.", "a held card is not refused for that")
+    e.free()
+
 func test_cannot_act_out_of_turn() -> void:
     var e := _new_match()
     var r: Dictionary = e.pass_chapter(1)

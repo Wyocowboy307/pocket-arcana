@@ -1,0 +1,145 @@
+{
+  "version": "1.0",
+  "scope": "life_fire_vertical_slice",
+  "rule": "Do not expand to the other six elements until a complete Life vs Fire match looks coherent in screenshots and normal play.",
+  "import": {
+    "texture_filter": "nearest",
+    "mipmaps": false,
+    "world_sprite_background": "transparent",
+    "light_direction": "upper_left"
+  },
+  "commanders": [
+    {
+      "id": "cmd_mossy_mae",
+      "name": "Mossy Mae",
+      "element": "life",
+      "portrait": "assets/art/commanders/cmd_mossy_mae_portrait.png",
+      "board_avatar": "assets/art/commanders/cmd_mossy_mae_board.png",
+      "portrait_size": [256, 256],
+      "board_size": [64, 64],
+      "signature": "cheerful grove caretaker; oversized leaf hood or hat; wooden sprout staff; moss satchel; warm readable face"
+    },
+    {
+      "id": "cmd_poppy_cinder",
+      "name": "Poppy Cinder",
+      "element": "fire",
+      "portrait": "assets/art/commanders/cmd_poppy_cinder_portrait.png",
+      "board_avatar": "assets/art/commanders/cmd_poppy_cinder_board.png",
+      "portrait_size": [256, 256],
+      "board_size": [64, 64],
+      "signature": "mischievous fire mage and tinkerer; ember-red hair or scarf; small forge tool; coal-black boots; tiny flame companion"
+    }
+  ],
+  "creatures": [
+    {"card_id":"life_sproutling","name":"Sproutling","element":"life","size":[48,48],"path":"assets/art/board/creatures/life/life_sproutling.png","silhouette":"tiny walking seedling with two oversized leaves"},
+    {"card_id":"life_moss_frog","name":"Moss Frog","element":"life","size":[48,48],"path":"assets/art/board/creatures/life/life_moss_frog.png","silhouette":"round squat frog with mossy back and one flower"},
+    {"card_id":"life_berrycap_bunny","name":"Berrycap Bunny","element":"life","size":[48,48],"path":"assets/art/board/creatures/life/life_berrycap_bunny.png","silhouette":"small rabbit with berry-shaped cap and big ears"},
+    {"card_id":"life_petal_deer","name":"Petal Deer","element":"life","size":[64,64],"path":"assets/art/board/creatures/life/life_petal_deer.png","silhouette":"young deer with petal antlers"},
+    {"card_id":"life_rootback_boar","name":"Rootback Boar","element":"life","size":[64,64],"path":"assets/art/board/creatures/life/life_rootback_boar.png","silhouette":"chunky boar with root ridges and sprouting back"},
+    {"card_id":"life_bloom_bear","name":"Bloom Bear","element":"life","size":[64,64],"path":"assets/art/board/creatures/life/life_bloom_bear.png","silhouette":"big friendly bear with flowers around shoulders"},
+    {"card_id":"life_great_stag","name":"Great Stag","element":"life","size":[96,96],"path":"assets/art/board/creatures/life/life_great_stag.png","silhouette":"majestic broad-antler stag with hanging vines"},
+    {"card_id":"life_garden_dragon","name":"Garden Dragon","element":"life","size":[96,96],"path":"assets/art/board/creatures/life/life_garden_dragon.png","silhouette":"cute heavy dragon with leafy wings and flowered tail"},
+    {"card_id":"life_elaria_mother_of_groves","name":"Elaria, Mother of Groves","element":"life","size":[96,96],"path":"assets/art/board/creatures/life/life_elaria_mother_of_groves.png","silhouette":"legendary grove guardian creature with crownlike branches; distinct from Commander Mae"},
+
+    {"card_id":"fire_cinder_pup","name":"Cinder Pup","element":"fire","size":[48,48],"path":"assets/art/board/creatures/fire/fire_cinder_pup.png","silhouette":"playful puppy with ember tail and glowing paws"},
+    {"card_id":"fire_emberbug","name":"Emberbug","element":"fire","size":[48,48],"path":"assets/art/board/creatures/fire/fire_emberbug.png","silhouette":"round beetle with hot glowing shell cracks"},
+    {"card_id":"fire_coal_chick","name":"Coal Chick","element":"fire","size":[48,48],"path":"assets/art/board/creatures/fire/fire_coal_chick.png","silhouette":"tiny charcoal chick with flame crest"},
+    {"card_id":"fire_ashcat","name":"Ashcat","element":"fire","size":[48,48],"path":"assets/art/board/creatures/fire/fire_ashcat.png","silhouette":"lean cat with smoky tail and ember ears"},
+    {"card_id":"fire_cinder_hound","name":"Cinder Hound","element":"fire","size":[64,64],"path":"assets/art/board/creatures/fire/fire_cinder_hound.png","silhouette":"sturdy hound with coal armor patches and flame mane"},
+    {"card_id":"fire_forge_ram","name":"Forge Ram","element":"fire","size":[64,64],"path":"assets/art/board/creatures/fire/fire_forge_ram.png","silhouette":"broad ram with glowing curled metal-like horns"},
+    {"card_id":"fire_magma_turtle","name":"Magma Turtle","element":"fire","size":[64,64],"path":"assets/art/board/creatures/fire/fire_magma_turtle.png","silhouette":"low turtle with cracked volcanic shell"},
+    {"card_id":"fire_blazewing_drake","name":"Blazewing Drake","element":"fire","size":[96,96],"path":"assets/art/board/creatures/fire/fire_blazewing_drake.png","silhouette":"compact dragon with flame-shaped wings"},
+    {"card_id":"fire_rax_the_laughing_inferno","name":"Rax, the Laughing Inferno","element":"fire","size":[96,96],"path":"assets/art/board/creatures/fire/fire_rax_the_laughing_inferno.png","silhouette":"legendary grinning inferno beast/dragon with huge flame crest; distinct from Commander Poppy"}
+  ],
+  "landmarks": [
+    {
+      "card_id": "life_herbalist_hut",
+      "name": "Herbalist Hut",
+      "element": "life",
+      "size": [64,64],
+      "path": "assets/art/board/landmarks/life/life_herbalist_hut.png",
+      "silhouette": "tiny round-root cottage with leaf roof, potion window and herb rack"
+    },
+    {
+      "card_id": "fire_blacksmith_nook",
+      "name": "Blacksmith Nook",
+      "element": "fire",
+      "size": [64,64],
+      "path": "assets/art/board/landmarks/fire/fire_blacksmith_nook.png",
+      "silhouette": "small crooked forge shed, chimney, anvil sign and orange furnace mouth"
+    }
+  ],
+  "spell_visuals": [
+    {"card_id":"life_grow","name":"Grow","path":"assets/art/cards/life/life_grow.png","motif":"green sprout burst and curling roots"},
+    {"card_id":"life_warm_sun","name":"Warm Sun","path":"assets/art/cards/life/life_warm_sun.png","motif":"storybook sunbeam opening through leaves"},
+    {"card_id":"life_rebloom","name":"Rebloom","path":"assets/art/cards/life/life_rebloom.png","motif":"wilted flower explosively returning to bloom"},
+    {"card_id":"life_wild_flourish","name":"Wild Flourish","path":"assets/art/cards/life/life_wild_flourish.png","motif":"spiral of vines flowers mushrooms and pollen"},
+    {"card_id":"fire_little_flame","name":"Little Flame","path":"assets/art/cards/fire/fire_little_flame.png","motif":"cute determined fire sprite leaping forward"},
+    {"card_id":"fire_scorch_mark","name":"Scorch Mark","path":"assets/art/cards/fire/fire_scorch_mark.png","motif":"fresh ember slash burned into magical ground"},
+    {"card_id":"fire_dragon_breath","name":"Dragon Breath","path":"assets/art/cards/fire/fire_dragon_breath.png","motif":"wide curling cone of pixel flame from dragon silhouette"},
+    {"card_id":"fire_wildfire_waltz","name":"Wildfire Waltz","path":"assets/art/cards/fire/fire_wildfire_waltz.png","motif":"two playful flame ribbons dancing in a circle"}
+  ],
+  "terrain": [
+    {
+      "id":"grove",
+      "elements":["life"],
+      "path":"assets/art/board/terrain/grove.png",
+      "size":[96,64],
+      "description":"lush magical grass, root corners, tiny flowers, center kept readable for units"
+    },
+    {
+      "id":"cinder",
+      "elements":["fire"],
+      "path":"assets/art/board/terrain/cinder.png",
+      "size":[96,64],
+      "description":"charcoal soil and scorched grass with a few soft orange cracks, not a lava tile"
+    },
+    {
+      "id":"ashbloom",
+      "elements":["life","fire"],
+      "path":"assets/art/board/terrain/ashbloom.png",
+      "size":[96,64],
+      "description":"blackened soil growing luminous warm flowers; ember petals drift upward; clearly Life plus Fire"
+    },
+    {
+      "id":"neutral",
+      "elements":[],
+      "path":"assets/art/board/terrain/neutral.png",
+      "size":[96,64],
+      "description":"soft slate magical meadow/stone neutral ground with no element dominance"
+    }
+  ],
+  "sanctuaries": [
+    {
+      "id":"sanctuary_life",
+      "path":"assets/art/board/sanctuaries/sanctuary_life.png",
+      "size":[96,64],
+      "description":"root shrine, heart-shaped leaves, small warm lantern; open center for Heart overlay"
+    },
+    {
+      "id":"sanctuary_fire",
+      "path":"assets/art/board/sanctuaries/sanctuary_fire.png",
+      "size":[96,64],
+      "description":"miniature forge shrine with small chimney, ember glow and hanging iron charm; open center for Heart overlay"
+    }
+  ],
+  "ui": [
+    {"id":"card_frame_life","path":"assets/art/ui/card_frame_life.png","size":[140,164]},
+    {"id":"card_frame_fire","path":"assets/art/ui/card_frame_fire.png","size":[140,164]},
+    {"id":"icon_life","path":"assets/art/ui/icon_life.png","size":[48,48]},
+    {"id":"icon_fire","path":"assets/art/ui/icon_fire.png","size":[48,48]},
+    {"id":"icon_aether","path":"assets/art/ui/icon_aether.png","size":[24,24]},
+    {"id":"icon_heart","path":"assets/art/ui/icon_heart.png","size":[24,24]},
+    {"id":"icon_seal","path":"assets/art/ui/icon_seal.png","size":[24,24]},
+    {"id":"icon_wonder","path":"assets/art/ui/icon_wonder.png","size":[24,24]}
+  ],
+  "fx": [
+    {"id":"life_summon","implementation":"Godot particles/shader","motif":"leaf burst, pollen, two curling root strokes"},
+    {"id":"fire_summon","implementation":"Godot particles/shader","motif":"ember pop, flame lick, smoke pixels"},
+    {"id":"heal","implementation":"Godot particles/shader","motif":"small upward leaves plus heart sparkle"},
+    {"id":"burn","implementation":"Godot particles/shader","motif":"short ember burst and char flash"},
+    {"id":"ashbloom_recipe","implementation":"Godot animation + terrain swap","motif":"embers dim, sprouts punch through ash, flowers bloom in sequence"},
+    {"id":"heart_strike","implementation":"Godot animation","motif":"board punch, red-white impact ring, heart number rises"},
+    {"id":"chapter_win","implementation":"Godot UI animation","motif":"gold Seal stamps in with brief spark shower"}
+  ]
+}

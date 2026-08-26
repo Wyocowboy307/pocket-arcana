@@ -45,6 +45,12 @@ step "V3 lane battler simulation"
 "$GODOT" --headless --path . --scene res://scenes/dev/tests_v3.tscn 2>&1 | grep -E "V3 TESTS|✗" || fail=1
 "$GODOT" --headless --path . --scene res://scenes/dev/tests_v3.tscn 2>&1 | grep -q "V3 TESTS PASS" || fail=1
 
+step "V3 match driven through the V3 screen"
+"$GODOT" --path . --scene res://scenes/dev/ui_playthrough_v3.tscn --resolution 1280x720 \
+  -- --matches=4 2>&1 | grep -E "V3 UI PLAYTHROUGH|✗" || fail=1
+"$GODOT" --path . --scene res://scenes/dev/ui_playthrough_v3.tscn --resolution 1280x720 \
+  -- --matches=4 2>&1 | grep -q "V3 UI PLAYTHROUGH PASS" || fail=1
+
 step "V3 AI-vs-AI, both seatings"
 "$GODOT" --headless --path . --scene res://scenes/dev/selftest_v3.tscn -- --matches=60 2>&1 \
   | grep -E "wins:|average|fusions|UNFINISHED" || fail=1

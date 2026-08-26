@@ -801,10 +801,12 @@ func _draw_status(side: int, f: Font) -> void:
 
     # One row per element: pip, spendable, and how much land is behind it.
     var row := top + 8.0
+    var shown := 0
     for element in MatchV3.ELEMENTS:
         var have := engine.pool(side, element)
         var land := engine.landscape_count(side, element)
         if have == 0 and land == 0: continue
+        shown += 1
         var pip: Texture2D = _ui.get("pip:" + element, null)
         if pip != null:
             var ps := Vector2(pip.get_width(), pip.get_height())
@@ -815,6 +817,12 @@ func _draw_status(side: int, f: Font) -> void:
         draw_string(f, Vector2(r.position.x + 62.0, row + 20.0), "/%d" % land,
             HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.TEXT_FAINT)
         row += 32.0
+    if shown == 0:
+        # Before any land is down, say so rather than leaving the label bare.
+        var none := "no land yet"
+        var nw2: float = f.get_string_size(none, HORIZONTAL_ALIGNMENT_LEFT, -1, 9).x
+        draw_string(f, Vector2(r.get_center().x - nw2 * 0.5, row + 14.0), none,
+            HORIZONTAL_ALIGNMENT_LEFT, -1, 9, ArcanaTheme.TEXT_FAINT)
 
     var deck := deck_anchor(side)
     var back: Texture2D = art.frame("card_back:%s" % String(p["element"])) if art != null else null

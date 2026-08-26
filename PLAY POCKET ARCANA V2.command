@@ -6,5 +6,5 @@ if [ ! -x "$GODOT" ]; then
   read -n 1 -s -r -p "Press any key to close."
   exit 1
 fi
-# Original prototype, kept as reference.
-exec "$GODOT" --path . --scene res://scenes/main.tscn
+# Previous milestone, kept for comparison until V3 proves itself.
+exec "$GODOT" --path . --scene res://scenes/v2/main_v2.tscn

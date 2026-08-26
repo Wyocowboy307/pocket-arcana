@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Pocket Arcana"
-run/main_scene="res://scenes/v2/main_v2.tscn"
+run/main_scene="res://scenes/v3/main_v3.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]

@@ -15,3 +15,4 @@ Regenerate any of these with the screenshot harness:
 | `hand_hover.png` | the hand behaving like a card game — pointed-at card raised and enlarged |
 | `heart_strike.png` | targeting state: indicators appear only while aiming |
 | `chapter_overlay.png` | Chapter result overlay |
+| `shape_selected.png` | land-building: legal tiles preview the terrain they would become |

@@ -57,7 +57,7 @@ func _draw() -> void:
     var dim: Color = ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT
 
     # Element stripe: colour plus icon plus word.
-    var stripe := Rect2(rect.position.x + 3, rect.position.y + 3, rect.size.x - 6, 20)
+    var stripe := Rect2(rect.position.x + 3, rect.position.y + 3, rect.size.x - 6, 19)
     draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.24 if playable else 0.10), Color(accent, 0.0), 5, 0), stripe)
     var el_text := ""
     for el in elements:
@@ -83,7 +83,7 @@ func _draw() -> void:
     if art_tex != null:
         name_y = 34.0
         type_y = 46.0
-        rules_y = 116.0
+        rules_y = 122.0
         rules_lines = 2
 
     draw_string(f, Vector2(rect.position.x + 8, rect.position.y + name_y),
@@ -94,8 +94,13 @@ func _draw() -> void:
 
     var window := Rect2()
     if art_tex != null:
-        window = Rect2(rect.position.x + 7, rect.position.y + 50, rect.size.x - 14, 54)
-        draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.16), Color(accent, 0.5), 5, 1), window)
+        window = Rect2(rect.position.x + 6, rect.position.y + 48, rect.size.x - 12, 62)
+        # Element-lit vignette behind the art, then an inlaid frame.
+        draw_style_box(ArcanaTheme.panel_box(accent.darkened(0.62), Color(accent, 0.0), 6, 0), window)
+        draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.14), Color(accent, 0.75), 6, 2), window)
+        for corner in [Vector2(0, 0), Vector2(window.size.x, 0),
+                       Vector2(0, window.size.y), window.size]:
+            draw_circle(window.position + corner, 2.6, Color(accent, 0.9))
         var src := Vector2(art_tex.get_width(), art_tex.get_height())
         if src.x > 0.0 and src.y > 0.0:
             var scale: float = min((window.size.x - 6.0) / src.x, (window.size.y - 6.0) / src.y)

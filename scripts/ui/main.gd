@@ -299,6 +299,7 @@ func _refresh() -> void:
     commander_me.is_active = my_turn
     commander_rival.is_active = engine.current_player == RIVAL and not engine.match_over
     element_rail.chosen = shape_element if mode == "shape" else ""
+    board_view.ghost_terrain = engine.terrain_for_element(shape_element) if mode == "shape" else ""
     element_rail.enabled_for_player = HUMAN
     cancel_button.visible = mode != ""
     pass_button.disabled = not my_turn
@@ -617,25 +618,43 @@ func _on_event(event: Dictionary) -> void:
             "passed": _mark_tutorial("pass")
             "recipe": _mark_tutorial("recipe")
             "commander": _mark_tutorial("commander")
+
     match kind:
         "creature_summoned", "token_summoned":
-            board_view.flash_tile(pos, ArcanaTheme.owner_color(int(event.get("player", -1))))
-            board_view.ring(pos, ArcanaTheme.owner_color(int(event.get("player", -1))))
+            var unit: Dictionary = event.get("unit", {})
+            board_view.note_spawn("%d" % int(unit.get("uid", 0)))
+            var el := board_view.element_colour_for_card(String(event.get("card_id", "")))
+            board_view.burst(pos, el, 14, _style_for(String(event.get("card_id", ""))), 1.0)
+            board_view.ring(pos, el)
+            board_view.shake(0.25)
         "landmark_built":
-            board_view.flash_tile(pos, ArcanaTheme.owner_color(int(event.get("player", -1))))
+            var el2 := board_view.element_colour_for_card(String(event.get("card_id", "")))
+            board_view.note_spawn("lm%d%d" % [pos.x, pos.y])
+            board_view.burst(pos, el2, 12, "spark", 0.8)
+            board_view.ring(pos, el2)
+            board_view.shake(0.35)
         "spell_cast":
-            board_view.ring(pos, ArcanaTheme.GOLD)
+            var el3 := board_view.element_colour_for_card(String(event.get("card_id", "")))
+            board_view.ring(pos, el3, 0.85)
+            board_view.burst(pos, el3, 10, _style_for(String(event.get("card_id", ""))), 0.9)
         "shape":
-            board_view.flash_tile(pos, ArcanaTheme.color_for_element(String(event.get("element", ""))))
+            # Land being made is the heart of the game, so it gets a real beat.
+            var ec: Color = ArcanaTheme.color_for_element(String(event.get("element", "")))
+            board_view.note_shape(pos)
+            board_view.ring(pos, ec, 0.9)
+            board_view.burst(pos, ec, 16, _style_for_element(String(event.get("element", ""))), 1.1)
+            board_view.shake(0.3)
         "state_added":
             var c: Color = ArcanaTheme.color_for_state(String(event.get("state", "")))
             board_view.flash_tile(pos, c)
-            board_view.float_text(pos, ArcanaTheme.icon_for_state(String(event.get("state", ""))), c)
+            board_view.burst(pos, c, 8, "spark", 0.6)
         "recipe":
-            board_view.ring(pos, ArcanaTheme.GOLD, 1.0)
-            board_view.flash_tile(pos, ArcanaTheme.GOLD, 0.8)
-            board_view.shake(0.6)
             var rid := String(event.get("recipe_id", ""))
+            board_view.note_shape(pos)
+            board_view.ring(pos, ArcanaTheme.GOLD, 1.1)
+            board_view.burst(pos, ArcanaTheme.GOLD, 26, "leaf", 1.3)
+            board_view.burst(pos, Color("#ff9a4d"), 18, "ember", 1.2)
+            board_view.shake(0.7)
             if not discovered.has(rid):
                 discovered[rid] = true
                 _show_banner("DISCOVERY: %s" % String(event.get("name", "New terrain")))
@@ -644,29 +663,52 @@ func _on_event(event: Dictionary) -> void:
         "combat":
             board_view.float_text(event.get("to", pos), "-%d" % int(event.get("enemy_damage", 0)), ArcanaTheme.DANGER)
             board_view.float_text(event.get("from", pos), "-%d" % int(event.get("my_damage", 0)), ArcanaTheme.DANGER)
-            board_view.shake(0.5)
+            board_view.burst(event.get("to", pos), ArcanaTheme.DANGER, 12, "spark", 1.1)
+            board_view.shake(0.6)
         "unit_damaged":
             board_view.float_text(pos, "-%d" % int(event.get("amount", 0)), ArcanaTheme.DANGER)
+            board_view.burst(pos, ArcanaTheme.DANGER, 8, "spark", 0.8)
         "unit_died":
             board_view.flash_tile(pos, ArcanaTheme.DANGER, 0.6)
+            board_view.burst(pos, Color("#8b6b7a"), 14, "spark", 0.7)
         "heart_attack":
             var target: Vector2i = engine.sanctuary_pos(1 - int(event.get("player", 0)))
             board_view.float_text(target, "-%d" % int(event.get("amount", 0)), ArcanaTheme.HEART)
-            board_view.flash_tile(target, ArcanaTheme.HEART, 0.6)
-            board_view.shake(1.0)
+            board_view.ring(target, ArcanaTheme.HEART, 0.9)
+            board_view.burst(target, ArcanaTheme.HEART, 22, "spark", 1.5)
+            board_view.shake(1.2)
         "ward_retaliation":
             board_view.float_text(pos, "Ward -%d" % int(event.get("amount", 0)), ArcanaTheme.WONDER)
+            board_view.burst(pos, ArcanaTheme.WONDER, 8, "spark", 0.7)
         "heart_healed":
             if int(event.get("amount", 0)) > 0:
-                board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))), "+%d" % int(event.get("amount", 0)), ArcanaTheme.YOU)
+                var home: Vector2i = engine.sanctuary_pos(int(event.get("player", 0)))
+                board_view.float_text(home, "+%d" % int(event.get("amount", 0)), ArcanaTheme.YOU)
+                board_view.burst(home, ArcanaTheme.YOU, 10, "leaf", 0.8)
         "heart_damaged":
-            board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))), "-%d" % int(event.get("amount", 0)), ArcanaTheme.HEART)
+            board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))),
+                "-%d" % int(event.get("amount", 0)), ArcanaTheme.HEART)
         "wonder":
-            board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))), "+%d ✦" % int(event.get("amount", 0)), ArcanaTheme.WONDER)
+            board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))),
+                "+%d ✦" % int(event.get("amount", 0)), ArcanaTheme.WONDER)
         "commander_passive":
-            board_view.float_text(engine.sanctuary_pos(int(event.get("player", 0))), "✦", ArcanaTheme.GOLD)
+            board_view.burst(engine.sanctuary_pos(int(event.get("player", 0))), ArcanaTheme.GOLD, 10, "spark", 0.7)
         "commander":
+            var home2: Vector2i = engine.sanctuary_pos(int(event.get("player", 0)))
+            board_view.ring(home2, ArcanaTheme.GOLD, 1.0)
+            board_view.burst(home2, ArcanaTheme.GOLD, 24, "spark", 1.4)
+            board_view.shake(0.6)
             _show_banner(String(event.get("name", "Commander")), 0.9)
+
+## Life magic drifts, Fire magic rises.
+func _style_for(card_id: String) -> String:
+    var els: Array = db.get_card(card_id).get("elements", [])
+    return _style_for_element(String(els[0])) if not els.is_empty() else "spark"
+
+func _style_for_element(element: String) -> String:
+    if element == "life": return "leaf"
+    if element == "fire": return "ember"
+    return "spark"
 
 func _show_banner(text: String, hold: float = 1.5) -> void:
     var holder: Control = banner.get_meta("holder")

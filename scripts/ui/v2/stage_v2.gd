@@ -43,6 +43,7 @@ var _hitstop := 0.0
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_STOP
+    texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
     set_process(true)
 
 func _process(delta: float) -> void:
@@ -269,12 +270,9 @@ func _draw() -> void:
     if _scatter_for != size: _build_scatter()
 
     _draw_backdrop()
+    for side in range(2):
+        _draw_realm_ground(side)        # one connected realm, not four plots
     _draw_clash_space(f)
-    for side in range(2):
-        _draw_realm_mass(side)          # merged ground under all four plots
-    for side in range(2):
-        for i in range(MatchV2.LANES):
-            _draw_plot(side, i, f)
     for side in range(2):
         _draw_sanctuary(side, f)
     # Pieces last, so nothing paints over a creature.
@@ -292,197 +290,232 @@ func _draw() -> void:
     _draw_particles()
 
 ## Sky above the far realm, warm ground light near ours.
+## Sky above the far realm, warmer ground light near ours.
 func _draw_backdrop() -> void:
     draw_rect(Rect2(Vector2.ZERO, size), ArcanaTheme.BG)
     var o := _origin()
     var total_h: float = SANCT_H * 2.0 + PLOT_H * 2.0 + CLASH_H
-    var slices := 40
+    var slices := 44
     for i in range(slices):
         var t := float(i) / float(slices - 1)
-        var y0: float = o.y - 20.0 + total_h * (float(i) / float(slices)) * 1.06
-        var y1: float = o.y - 20.0 + total_h * (float(i + 1) / float(slices)) * 1.06
-        var far := Color(0.13, 0.16, 0.21, 1.0)
-        var near := Color(0.15, 0.17, 0.14, 1.0)
-        draw_rect(Rect2(0.0, y0, size.x, y1 - y0 + 1.0), far.lerp(near, t))
+        var y0: float = o.y - 24.0 + total_h * (float(i) / float(slices)) * 1.08
+        var y1: float = o.y - 24.0 + total_h * (float(i + 1) / float(slices)) * 1.08
+        draw_rect(Rect2(0.0, y0, size.x, y1 - y0 + 1.0),
+            Color(0.115, 0.135, 0.170).lerp(Color(0.150, 0.160, 0.130), t))
 
-## The ground each player's four plots share, drawn as one soft mass so a realm
-## never reads as four separate tiles.
-func _draw_realm_mass(side: int) -> void:
-    # A soft shadow under each plot so it sits in the ground rather than floating.
+## The band of ground a player's whole realm occupies.
+func _realm_band(side: int) -> Rect2:
+    var first := lane_rect(side, 0)
+    var last := lane_rect(side, MatchV2.LANES - 1)
+    return Rect2(first.position.x - 34.0, first.position.y - 6.0,
+        last.position.x + last.size.x + 34.0 - (first.position.x - 34.0), first.size.y + 12.0)
+
+## One connected realm, not four plots. Untamed ground everywhere, with built
+## terrain blended over it so neighbouring lands of the same element merge into
+## a single landscape.
+func _draw_realm_ground(side: int) -> void:
+    var band := _realm_band(side)
+    _draw_wildland(side, band)
+
+    # Group neighbouring lanes that share an element, and paint each run as one
+    # feathered region. This is what makes a realm read as a place.
+    var lane_index := 0
+    while lane_index < MatchV2.LANES:
+        var terrain := String(engine.lane(side, lane_index)["land"])
+        if terrain == "":
+            lane_index += 1
+            continue
+        var run_end := lane_index
+        while run_end + 1 < MatchV2.LANES and String(engine.lane(side, run_end + 1)["land"]) == terrain:
+            run_end += 1
+        _draw_terrain_run(side, lane_index, run_end, terrain, band)
+        lane_index = run_end + 1
+
     for i in range(MatchV2.LANES):
-        if String(engine.lane(side, i)["land"]) == "": continue   # nothing to seat yet
-        var r := lane_rect(side, i)
-        var pts := _blob(r.grow(-4.0), side * 311 + i * 57, 0.075)
-        var shifted := PackedVector2Array()
-        for p in pts: shifted.append(p + Vector2(0, 5.0))
-        draw_colored_polygon(shifted, Color(0.07, 0.08, 0.06, 0.55))
+        var t2 := String(engine.lane(side, i)["land"])
+        if t2 != "": _draw_growth(side, i, t2)
 
-## An irregular closed outline for a piece of ground.
-func _blob(rect: Rect2, seed_value: int, wobble: float) -> PackedVector2Array:
+## Untamed land: scrub grass, stones and dead branches, so an unbuilt board still
+## looks like somewhere rather than a void.
+func _draw_wildland(side: int, band: Rect2) -> void:
     var pts := PackedVector2Array()
-    var steps := 34
-    var centre := rect.get_center()
-    var rx: float = rect.size.x * 0.5
-    var ry: float = rect.size.y * 0.5
-    for i in range(steps):
-        var a: float = TAU * float(i) / float(steps)
-        # Superellipse keeps the plot broad rather than circular, jitter softens it.
-        var cx: float = cos(a)
-        var cy: float = sin(a)
-        var k: float = 2.6
-        var denom: float = pow(pow(absf(cx), k) + pow(absf(cy), k), 1.0 / k)
-        var n := Vector2(cx / denom, cy / denom)
-        var j: float = 1.0 + (_vhash(seed_value, i) - 0.5) * 2.0 * wobble
-        pts.append(centre + Vector2(n.x * rx, n.y * ry) * j)
-    return pts
+    var steps := 40
+    for i in range(steps + 1):
+        var fx: float = float(i) / float(steps)
+        pts.append(Vector2(band.position.x + fx * band.size.x,
+            band.position.y + (_vhash(side * 17 + i, 401) - 0.5) * 11.0))
+    for i in range(steps + 1):
+        var fx2: float = 1.0 - float(i) / float(steps)
+        pts.append(Vector2(band.position.x + fx2 * band.size.x,
+            band.position.y + band.size.y + (_vhash(side * 23 + i, 457) - 0.5) * 11.0))
+    draw_colored_polygon(pts, Color(0.196, 0.204, 0.165))
+    for item in _scatter[side]:
+        var at := Vector2(band.position.x + float(item["u"]) * band.size.x,
+                          band.position.y + 10.0 + float(item["v"]) * (band.size.y - 20.0))
+        var sc: float = float(item["size"])
+        match int(item["kind"]):
+            0:
+                var lean: float = (float(item["tilt"]) - 0.5) * 5.0
+                draw_line(at, at + Vector2(lean, -7.0 * sc), Color(0.30, 0.35, 0.24), 2.0)
+                draw_line(at, at + Vector2(lean - 3.0, -5.0 * sc), Color(0.26, 0.31, 0.21), 1.5)
+            1:
+                draw_circle(at, 2.8 * sc, Color(0.31, 0.30, 0.27))
+                draw_circle(at - Vector2(0.8, 1.0), 1.4 * sc, Color(0.38, 0.37, 0.33))
+            _:
+                draw_line(at, at + Vector2(6.0 * sc, -2.0 * sc), Color(0.27, 0.24, 0.19), 2.0)
 
-func _build_scatter() -> void:
-    _scatter.clear()
-    for side in range(2):
-        for lane in range(MatchV2.LANES):
-            var items: Array = []
-            for i in range(26):
-                var seed_value := side * 733 + lane * 131 + i
-                items.append({
-                    "u": _vhash(seed_value, 3), "v": _vhash(seed_value, 11),
-                    "kind": int(_vhash(seed_value, 17) * 3.0),
-                    "size": 0.7 + 0.7 * _vhash(seed_value, 23),
-                    "tilt": _vhash(seed_value, 29),
-                })
-            _scatter.append(items)
-    _scatter_for = size
-
-## One landscape. Dormant plots are bare ground with a faint rune; built ones are
-## textured, decorated, and merge with same-element neighbours.
-func _draw_plot(side: int, index: int, f: Font) -> void:
-    var r := lane_rect(side, index)
-    var l: Dictionary = engine.lane(side, index)
-    var terrain := String(l["land"])
-    var build := _find_act("land_build", side, index)
+## A run of same-element lanes, painted as one region that fades into the wild
+## ground at its outer edges so nothing looks like a tile.
+func _draw_terrain_run(side: int, from_lane: int, to_lane: int, terrain: String, band: Rect2) -> void:
+    var left := lane_rect(side, from_lane)
+    var right := lane_rect(side, to_lane)
     var grow := 1.0
-    if not build.is_empty():
-        grow = clampf(float(build["t"]) / float(build["dur"]) / 0.78, 0.0, 1.0)
-
-    var inner := r.grow(-4.0)
-    var pts := _blob(inner, side * 311 + index * 57, 0.075)
-
-    if terrain == "" or grow < 0.06:
-        # A dormant plot: scuffed earth and a sleeping rune, no panel.
-        draw_colored_polygon(pts, Color(0.150, 0.155, 0.135, 0.30))
-        var c := inner.get_center()
-        var breathe: float = 0.30 + 0.20 * sin(_pulse * TAU + float(index))
-        # A few scuffs of bare earth so it still looks like ground.
-        for i in range(9):
-            var u := _vhash(side * 91 + index * 13 + i, 41)
-            var v := _vhash(side * 91 + index * 13 + i, 67)
-            draw_circle(Vector2(inner.position.x + 16.0 + u * (inner.size.x - 32.0),
-                inner.position.y + 16.0 + v * (inner.size.y - 32.0)),
-                1.5 + 2.0 * u, Color(0.20, 0.19, 0.16, 0.55))
-        draw_arc(c, 24.0, 0, TAU, 26, Color(ArcanaTheme.TEXT_FAINT, breathe * 0.45), 1.5)
-        for i in range(6):
-            var a: float = TAU * float(i) / 6.0 + _pulse * 0.4
-            draw_circle(c + Vector2(cos(a), sin(a) * 0.5) * 24.0, 1.8,
-                Color(ArcanaTheme.TEXT_FAINT, breathe * 0.8))
-        return
-
+    for i in range(from_lane, to_lane + 1):
+        var act := _find_act("land_build", side, i)
+        if not act.is_empty():
+            grow = minf(grow, clampf(float(act["t"]) / float(act["dur"]) / 0.72, 0.0, 1.0))
+    var feather := 74.0
+    var x0: float = left.position.x - feather * 0.5
+    var x1: float = right.position.x + right.size.x + feather * 0.5
+    var top: float = band.position.y + 4.0
+    var bottom: float = band.position.y + band.size.y - 4.0
     var tex: Texture2D = art.terrain(terrain) if art != null else null
-    var grown := pts
-    if grow < 1.0:
-        # Land grows outward from the middle of the plot.
-        var eased: float = 1.0 - pow(1.0 - grow, 3.0)
-        grown = PackedVector2Array()
-        var c2 := inner.get_center()
-        for p in pts: grown.append(c2 + (p - c2) * eased)
-    if tex != null:
-        var uvs := PackedVector2Array()
-        for p in grown:
-            uvs.append(Vector2((p.x - r.position.x) / r.size.x, (p.y - r.position.y) / r.size.y))
-        draw_colored_polygon(grown, Color(1, 1, 1, minf(1.0, grow * 1.4)), uvs, tex)
-    else:
-        draw_colored_polygon(grown, Color(ArcanaTheme.color_for_terrain(terrain).darkened(0.45), grow))
+    var flat: Color = ArcanaTheme.color_for_terrain(terrain).darkened(0.45)
 
-    _draw_plot_decor(side, index, inner, terrain, grow)
+    var columns := 44
+    for c in range(columns):
+        var fa: float = float(c) / float(columns)
+        var fb: float = float(c + 1) / float(columns)
+        var xa: float = lerpf(x0, x1, fa)
+        var xb: float = lerpf(x0, x1, fb)
+        # Alpha falls off toward the ends of the run and toward the band edges.
+        var aa: float = _edge_falloff(xa, x0, x1, feather) * grow
+        var ab: float = _edge_falloff(xb, x0, x1, feather) * grow
+        var wob_a: float = (_vhash(side * 71 + c, 811) - 0.5) * 12.0
+        var wob_b: float = (_vhash(side * 71 + c + 1, 811) - 0.5) * 12.0
+        var pts := PackedVector2Array([
+            Vector2(xa, top + wob_a), Vector2(xb, top + wob_b),
+            Vector2(xb, bottom + wob_b * 0.6), Vector2(xa, bottom + wob_a * 0.6)])
+        var near := 1.0
+        var far := 0.22          # the edge away from the player dissolves into wildland
+        var cols := PackedColorArray([
+            Color(1, 1, 1, aa * far), Color(1, 1, 1, ab * far),
+            Color(1, 1, 1, ab * near), Color(1, 1, 1, aa * near)])
+        if side == 1:
+            cols = PackedColorArray([
+                Color(1, 1, 1, aa * near), Color(1, 1, 1, ab * near),
+                Color(1, 1, 1, ab * far), Color(1, 1, 1, aa * far)])
+        if tex != null:
+            var aspect: float = float(tex.get_width()) / float(tex.get_height())
+            var repeats: float = maxf(1.0, (x1 - x0) / ((bottom - top) * aspect))
+            var uvs := PackedVector2Array([
+                Vector2(fa * repeats, 0.0), Vector2(fb * repeats, 0.0),
+                Vector2(fb * repeats, 1.0), Vector2(fa * repeats, 1.0)])
+            draw_polygon(pts, cols, uvs, tex)
+        else:
+            var tinted := PackedColorArray()
+            for col in cols: tinted.append(Color(flat, col.a))
+            draw_polygon(pts, tinted)
 
-    # Only edges facing different ground get a rim, so same-element plots merge.
-    var left_same: bool = index > 0 and String(engine.lane(side, index - 1)["land"]) == terrain
-    var right_same: bool = index < MatchV2.LANES - 1 and String(engine.lane(side, index + 1)["land"]) == terrain
-    var rim: Color = ArcanaTheme.color_for_terrain(terrain).darkened(0.25)
-    for i in range(grown.size()):
-        var a: Vector2 = grown[i]
-        var b: Vector2 = grown[(i + 1) % grown.size()]
-        var mid := (a + b) * 0.5
-        if left_same and mid.x < inner.position.x + 40.0: continue
-        if right_same and mid.x > inner.position.x + inner.size.x - 40.0: continue
-        draw_line(a, b, Color(rim, 0.5 * grow), 2.0)
+func _edge_falloff(x: float, x0: float, x1: float, feather: float) -> float:
+    var left: float = clampf((x - x0) / feather, 0.0, 1.0)
+    var right: float = clampf((x1 - x) / feather, 0.0, 1.0)
+    var k: float = minf(left, right)
+    return k * k * (3.0 - 2.0 * k)
 
-## Growth that belongs to the element: sprouts and blossoms, or char and embers.
-func _draw_plot_decor(side: int, index: int, inner: Rect2, terrain: String, grow: float) -> void:
-    var items: Array = _scatter[side * MatchV2.LANES + index]
+## What grows on built land: sprouts and blossoms, or char and embers.
+func _draw_growth(side: int, index: int, terrain: String) -> void:
+    var r := lane_rect(side, index)
+    var act := _find_act("land_build", side, index)
+    var grow := 1.0
+    if not act.is_empty(): grow = clampf(float(act["t"]) / float(act["dur"]) / 0.80, 0.0, 1.0)
     var life := terrain == "grove" or terrain == "ashbloom"
-    for item in items:
-        if float(item["u"]) > grow: continue          # detail appears as the land forms
-        var at := Vector2(inner.position.x + 12.0 + float(item["u"]) * (inner.size.x - 24.0),
-                          inner.position.y + 14.0 + float(item["v"]) * (inner.size.y - 28.0))
+    for item in _scatter[2 + side * MatchV2.LANES + index]:
+        if float(item["u"]) > grow: continue
+        var at := Vector2(r.position.x + 8.0 + float(item["u"]) * (r.size.x - 16.0),
+                          r.position.y + 12.0 + float(item["v"]) * (r.size.y - 24.0))
         var sc: float = float(item["size"])
         var kind := int(item["kind"])
         if life:
             if kind == 0:
-                var lean: float = (float(item["tilt"]) - 0.5) * 5.0
-                draw_line(at, at + Vector2(lean, -9.0 * sc), Color("#7fc45c"), 2.0)
-                draw_line(at, at + Vector2(lean - 3.0, -6.0 * sc), Color("#6fae4f"), 1.5)
+                var lean: float = (float(item["tilt"]) - 0.5) * 6.0
+                draw_line(at, at + Vector2(lean, -11.0 * sc), Color("#7fc45c"), 2.0)
+                draw_line(at, at + Vector2(lean - 4.0, -7.0 * sc), Color("#6fae4f"), 1.5)
             elif kind == 1:
-                draw_circle(at, 2.6 * sc, Color("#f2c7dd"))
-                draw_circle(at, 1.2 * sc, Color("#fff4d2"))
+                draw_circle(at, 2.8 * sc, Color("#f2c7dd"))
+                draw_circle(at, 1.3 * sc, Color("#fff4d2"))
             else:
-                draw_circle(at, 3.0 * sc, Color("#4e6b39"))
+                draw_circle(at, 3.2 * sc, Color("#4e6b39"))
         else:
             if kind == 0:
-                draw_line(at, at + Vector2(6.0 * sc, -4.0 * sc), Color("#5a3a2c"), 2.0)
+                draw_line(at, at + Vector2(7.0 * sc, -4.0 * sc), Color("#5a3a2c"), 2.0)
             elif kind == 1:
                 var flick: float = 0.5 + 0.5 * sin(_pulse * TAU * 2.0 + float(item["tilt"]) * 6.0)
-                draw_circle(at, 2.2 * sc, Color("#ff9a4d", 0.5 + 0.5 * flick))
-                draw_circle(at, 4.4 * sc, Color(1.0, 0.55, 0.2, 0.10 * flick))
+                draw_circle(at, 2.2 * sc, Color("#ff9a4d", 0.45 + 0.5 * flick))
+                draw_circle(at, 5.0 * sc, Color(1.0, 0.55, 0.2, 0.09 * flick))
+                draw_circle(at - Vector2(0, 8.0 + 8.0 * flick), 2.5 * sc, Color(0.35, 0.32, 0.30, 0.25))
             else:
-                draw_circle(at, 3.0 * sc, Color("#241d1a"))
+                draw_circle(at, 3.2 * sc, Color("#241d1a"))
 
-## The middle of the board, where the two realms actually meet.
+func _build_scatter() -> void:
+    _scatter.clear()
+    # Two wildland sets, then one growth set per lane per side.
+    for side in range(2):
+        var wild: Array = []
+        for i in range(120):
+            var sv := side * 977 + i
+            wild.append({"u": _vhash(sv, 5), "v": _vhash(sv, 13),
+                "kind": int(_vhash(sv, 19) * 3.0), "size": 0.7 + 0.7 * _vhash(sv, 27),
+                "tilt": _vhash(sv, 33)})
+        _scatter.append(wild)
+    for side in range(2):
+        for lane in range(MatchV2.LANES):
+            var items: Array = []
+            for i in range(30):
+                var seed_value := side * 733 + lane * 131 + i
+                items.append({"u": _vhash(seed_value, 3), "v": _vhash(seed_value, 11),
+                    "kind": int(_vhash(seed_value, 17) * 3.0),
+                    "size": 0.7 + 0.7 * _vhash(seed_value, 23), "tilt": _vhash(seed_value, 29)})
+            _scatter.append(items)
+    _scatter_for = size
+
+## The middle of the board: a fought-over road between the two realms.
 func _draw_clash_space(f: Font) -> void:
     var o := _origin()
     var top: float = o.y + SANCT_H + PLOT_H
-    var band := Rect2(o.x - 30.0, top, _field_width() + 60.0, CLASH_H)
-    # Trodden neutral ground with a broken edge, not a bar.
+    var band := Rect2(o.x - 40.0, top, _field_width() + 80.0, CLASH_H)
     var ground := PackedVector2Array()
-    var steps := 26
+    var steps := 30
     for i in range(steps + 1):
         var fx: float = float(i) / float(steps)
         ground.append(Vector2(band.position.x + fx * band.size.x,
-            band.position.y + (_vhash(i, 611) - 0.5) * 9.0))
+            band.position.y + (_vhash(i, 611) - 0.5) * 12.0))
     for i in range(steps + 1):
         var fx2: float = 1.0 - float(i) / float(steps)
         ground.append(Vector2(band.position.x + fx2 * band.size.x,
-            band.position.y + band.size.y + (_vhash(i, 733) - 0.5) * 9.0))
-    draw_colored_polygon(ground, Color(0.155, 0.150, 0.135, 1.0))
-    for i in range(70):
+            band.position.y + band.size.y + (_vhash(i, 733) - 0.5) * 12.0))
+    draw_colored_polygon(ground, Color(0.140, 0.132, 0.120))
+    # Churned earth, old scorch marks and rubble from previous fights.
+    for i in range(90):
         var u := _vhash(i, 91)
         var v := _vhash(i, 137)
-        var at := Vector2(band.position.x + u * band.size.x, band.position.y + v * band.size.y)
+        var at := Vector2(band.position.x + u * band.size.x, band.position.y + 8.0 + v * (band.size.y - 16.0))
         var tone: float = _vhash(i, 53)
-        draw_circle(at, 1.5 + 3.0 * tone,
-            Color(0.19, 0.18, 0.16, 0.9) if tone > 0.5 else Color(0.12, 0.11, 0.10, 0.9))
+        if tone > 0.82:
+            draw_circle(at, 3.0 + 3.0 * tone, Color(0.09, 0.08, 0.07, 0.8))
+        elif tone > 0.5:
+            draw_circle(at, 1.5 + 2.5 * tone, Color(0.20, 0.19, 0.17, 0.85))
+        else:
+            draw_line(at, at + Vector2(5.0 + 6.0 * tone, 1.5), Color(0.11, 0.10, 0.09, 0.7), 2.0)
+    # An open lane shows the road onward to the rival Heart.
     for index in range(MatchV2.LANES):
+        if engine.lane(1, index)["creature"] != null: continue
         var c := clash_centre(index)
-        var open: bool = engine.lane(1, index)["creature"] == null
         var wave: float = 0.5 + 0.5 * sin(_pulse * TAU + float(index) * 0.7)
-        # A worn ring marks where this lane's fight happens.
-        draw_arc(c, 34.0, 0, TAU, 30, Color(0.28, 0.27, 0.25, 0.55), 2.0)
-        draw_arc(c, 24.0, 0, TAU, 24, Color(0.24, 0.23, 0.21, 0.4), 1.0)
-        if open:
-            # Nothing blocking: the road to the rival Heart is lit.
-            var to := sanctuary_rect(1).get_center()
-            for k in range(6):
-                var t := float(k) / 6.0
-                var p: Vector2 = c.lerp(Vector2(c.x, to.y), t)
-                draw_circle(p, 3.0 - t * 1.5, Color(ArcanaTheme.HEART, (0.30 - t * 0.22) * (0.6 + 0.4 * wave)))
+        for k in range(5):
+            var t := float(k) / 5.0
+            draw_circle(Vector2(c.x, c.y - t * (CLASH_H * 0.5 + 10.0)), 2.5 - t,
+                Color(ArcanaTheme.HEART, (0.22 - t * 0.16) * (0.6 + 0.4 * wave)))
 
 ## A built home place behind the realm, not a status bar.
 func _draw_sanctuary(side: int, f: Font) -> void:
@@ -531,7 +564,8 @@ func _draw_sanctuary(side: int, f: Font) -> void:
         draw_line(Vector2(cx - mw * 0.5 + inset, bottom - 3.0 + float(i) * 1.5),
             Vector2(cx + mw * 0.5 - inset, bottom - 3.0 + float(i) * 1.5),
             Color(stone.darkened(0.2), 0.9), 3.0)
-    _draw_home_decor(mound, element, accent, breathe)
+    if element == "life": _draw_life_home(mound, accent, breathe)
+    else: _draw_fire_home(mound, accent, breathe)
 
     var mid_y: float = mound.get_center().y
     # Shrine at the heart of the base.
@@ -605,6 +639,72 @@ func _draw_sanctuary(side: int, f: Font) -> void:
             Color(accent, 0.5), 4, 1), Rect2(deck - Vector2(15, 22) + off, Vector2(30, 44)))
     draw_string(f, deck - Vector2(8, -4), str(p["deck"].size()),
         HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
+
+## A living tree-and-garden home: trunks, canopy, hanging lanterns, flower beds.
+func _draw_life_home(mound: Rect2, accent: Color, breathe: float) -> void:
+    var base_y: float = mound.position.y + mound.size.y - 14.0
+    for i in range(4):
+        # Two trees a side, framing the middle of the platform.
+        var slot: float = [0.06, 0.20, 0.80, 0.94][i]
+        var tx: float = mound.position.x + slot * mound.size.x
+        var h: float = 30.0 + 9.0 * _vhash(i, 71)
+        # Trunk.
+        draw_line(Vector2(tx, base_y), Vector2(tx + (_vhash(i, 5) - 0.5) * 8.0, base_y - h),
+            Color("#4a3a2a"), 7.0)
+        # Canopy, breathing gently.
+        var top := Vector2(tx + (_vhash(i, 5) - 0.5) * 8.0, base_y - h)
+        for k in range(3):
+            var rr: float = (17.0 - float(k) * 3.0) * (1.0 + 0.02 * sin(_pulse * TAU + float(i)))
+            draw_circle(top + Vector2((_vhash(i, k + 9) - 0.5) * 11.0, -float(k) * 5.0), rr,
+                Color("#4f7d3c").lerp(accent, 0.25 + 0.1 * float(k)))
+        # A lantern hanging in the branches.
+        var lan := top + Vector2(11.0, -2.0)
+        draw_line(top + Vector2(10.0, -9.0), lan, Color("#3a2f22"), 1.5)
+        draw_circle(lan, 3.5, Color("#ffd98a", 0.55 + 0.3 * breathe))
+        draw_circle(lan, 7.0, Color(1.0, 0.85, 0.5, 0.10 + 0.06 * breathe))
+    # Flower beds along the front.
+    for i in range(18):
+        var fx: float = float(i) / 18.0
+        var at := Vector2(mound.position.x + 26.0 + fx * (mound.size.x - 52.0), base_y + 6.0)
+        draw_circle(at, 2.6, Color("#f2c7dd") if i % 3 else Color("#fff4d2"))
+        draw_line(at, at + Vector2(0, -6.0), Color("#5f8a45"), 1.5)
+
+## A forge home: furnace, chimney, anvil, heat and smoke.
+func _draw_fire_home(mound: Rect2, accent: Color, breathe: float) -> void:
+    var base_y: float = mound.position.y + mound.size.y - 14.0
+    var cx: float = mound.get_center().x
+    # Forge house, blackened stone.
+    var house := Rect2(mound.position.x + 16.0, base_y - 42.0, 88.0, 42.0)
+    draw_rect(house, Color("#2b2320"))
+    draw_rect(Rect2(house.position, Vector2(house.size.x, 8.0)), Color("#38302c"))
+    # Furnace mouth, glowing.
+    var mouth := Rect2(house.position.x + 24.0, base_y - 24.0, 38.0, 24.0)
+    draw_rect(mouth, Color("#1a120f"))
+    for i in range(4):
+        var t := float(i) / 4.0
+        draw_rect(Rect2(mouth.position.x + t * 6.0, mouth.position.y + t * 5.0,
+            mouth.size.x - t * 12.0, mouth.size.y - t * 8.0),
+            Color("#ff7a2f").lerp(Color("#ffd98a"), t) * Color(1, 1, 1, 0.55 + 0.3 * breathe))
+    # Chimney with smoke.
+    draw_rect(Rect2(house.position.x + 62.0, house.position.y - 16.0, 16.0, 18.0), Color("#241d1a"))
+    for i in range(4):
+        var rise: float = fmod(_pulse * 30.0 + float(i) * 11.0, 34.0)
+        draw_circle(Vector2(house.position.x + 70.0 + sin(rise * 0.12) * 6.0,
+            house.position.y - 16.0 - rise), 3.0 + rise * 0.10,
+            Color(0.42, 0.39, 0.37, 0.20 * (1.0 - rise / 34.0)))
+    # Anvil on a block.
+    var ax2: float = mound.position.x + mound.size.x - 46.0
+    draw_rect(Rect2(ax2 - 13.0, base_y - 10.0, 26.0, 10.0), Color("#3b2f26"))
+    draw_rect(Rect2(ax2 - 16.0, base_y - 16.0, 32.0, 6.0), Color("#4a4a50"))
+    draw_rect(Rect2(ax2 - 6.0, base_y - 21.0, 12.0, 6.0), Color("#5a5a62"))
+    # Cinder blocks and heat shimmer along the front.
+    for i in range(16):
+        var fx2: float = float(i) / 16.0
+        var at2 := Vector2(mound.position.x + 26.0 + fx2 * (mound.size.x - 52.0), base_y + 6.0)
+        draw_circle(at2, 2.4, Color("#241d1a"))
+        var lift: float = fmod(fx2 * 3.3 + _pulse, 1.0) * 16.0
+        draw_circle(at2 - Vector2(0, lift), 1.8,
+            Color("#ffb066", 0.5 * (1.0 - lift / 16.0) + 0.1 * breathe))
 
 func _draw_home_decor(mound: Rect2, element: String, accent: Color, breathe: float) -> void:
     for i in range(12):
@@ -780,24 +880,24 @@ func _defend_offset(act: Dictionary, side: int, index: int) -> Vector2:
 func _draw_targeting(f: Font) -> void:
     var wave: float = 0.5 + 0.5 * sin(_pulse * TAU)
     if dim_others:
-        for side in range(2):
-            for i in range(MatchV2.LANES):
-                if highlights.has("%d,%d" % [side, i]): continue
-                var r := lane_rect(side, i)
-                draw_colored_polygon(_blob(r.grow(-4.0), side * 311 + i * 57, 0.075),
-                    Color(0.02, 0.02, 0.05, 0.55))
+        draw_rect(Rect2(Vector2.ZERO, size), Color(0.02, 0.02, 0.05, 0.52))
     for key in highlights:
         var parts: PackedStringArray = String(key).split(",")
         var side := int(parts[0])
         var index := int(parts[1])
         var r2 := lane_rect(side, index)
         var glow: Color = ArcanaTheme.LEGAL if String(highlights[key]) == "legal" else ArcanaTheme.ATTACK
-        var pts := _blob(r2.grow(-4.0), side * 311 + index * 57, 0.075)
-        draw_colored_polygon(pts, Color(glow, 0.12 + 0.10 * wave))
-        draw_polyline(pts, Color(glow, 0.8 + 0.2 * wave), 3.0)
+        # A pool of light on the ground rather than an outlined slot.
+        var c := r2.get_center()
+        # Lift the dim back off the legal ground, then pool light on it.
+        for ring in range(7):
+            var t := float(ring) / 7.0
+            draw_circle(c, r2.size.x * (0.46 - t * 0.06),
+                Color(glow, (0.055 + 0.045 * wave) * (1.0 - t * 0.6)))
+        draw_arc(c, r2.size.x * 0.42, 0, TAU, 44, Color(glow, 0.6 + 0.3 * wave), 2.5)
     if selected_lane >= 0:
-        var pts2 := _blob(lane_rect(0, selected_lane).grow(-4.0), selected_lane * 57, 0.075)
-        draw_polyline(pts2, Color(ArcanaTheme.GOLD, 0.95), 3.0)
+        var sr := lane_rect(0, selected_lane)
+        draw_arc(sr.get_center(), sr.size.x * 0.42, 0, TAU, 40, Color(ArcanaTheme.GOLD, 0.95), 3.0)
     for pair in fusion_pairs:
         var r3 := lane_rect(0, int(pair))
         var c := Vector2(r3.get_center().x, r3.position.y + 16.0)

@@ -342,9 +342,7 @@ func _refresh_highlights() -> void:
             if selected_lane >= 0:
                 stage.highlights["%d,%d" % [RIVAL, selected_lane]] = "attack"
         _:
-            stage.ghost_card = ""
-            for i in engine.legal_attacks(HUMAN):
-                stage.highlights["%d,%d" % [HUMAN, i]] = "legal"
+            stage.ghost_card = ""      # nothing highlighted during normal play
 
 # --- interaction ------------------------------------------------------------
 

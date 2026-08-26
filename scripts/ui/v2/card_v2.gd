@@ -118,18 +118,20 @@ func _draw() -> void:
         _sigil(f, win, accent, icon)
     draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0), Color(accent, 0.75), 5, 2), win)
 
+    var detailed := hovered or selected
     # PLAY ON / TARGET — printed, never inferred.
     var foot := Rect2(6, 139, size.x - 12, 19)
-    draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.24 if playable else 0.08),
-        Color(accent, 0.7 if playable else 0.25), 3, 1), foot)
-    draw_string(f, Vector2(foot.position.x + 6, foot.position.y + 14),
-        ArcanaTheme.fit(placement, 10, foot.size.x - 12),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT)
-
-    # At most two rules lines.
-    draw_multiline_string(f, Vector2(9, 174), String(card.get("rules", "")),
-        HORIZONTAL_ALIGNMENT_LEFT, size.x - 18, 10, 2,
-        ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
+    if not detailed:
+        foot = Rect2(6, 139, size.x - 12, 0)
+    if detailed:
+        draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.24 if playable else 0.08),
+            Color(accent, 0.7 if playable else 0.25), 3, 1), foot)
+        draw_string(f, Vector2(foot.position.x + 6, foot.position.y + 14),
+            ArcanaTheme.fit(placement, 10, foot.size.x - 12),
+            HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT)
+        draw_multiline_string(f, Vector2(9, 174), String(card.get("rules", "")),
+            HORIZONTAL_ALIGNMENT_LEFT, size.x - 18, 10, 2,
+            ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
 
     # Creature gems in the bottom corners.
     if role == "Creature":

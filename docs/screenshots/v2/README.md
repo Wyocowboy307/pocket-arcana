@@ -1,30 +1,26 @@
-# V2 prototype screenshots
-
-Regenerate any of these with the V2 review harness:
+# V2 battlefield screenshots
 
     GODOT=~/godot-editor/Godot.app/Contents/MacOS/Godot
     "$GODOT" --path . --resolution 1280x720 \
         --scene res://scenes/dev/screenshot_v2.tscn -- \
         --out="$PWD/docs/screenshots/v2/<name>.png" --scenario=<name> [--delay=<s>]
 
-Animation beats need `--delay` to land on a specific phase, e.g.
-`--scenario=v2_dragon --delay=0.44 --frames=1`.
+Animation beats need `--delay` to land on a phase, e.g.
+`--scenario=v2_attack --delay=0.44 --frames=1`.
 
 | file | what it shows |
 | --- | --- |
-| `v2_opening.png` | match start: both signature lands growing, empty realm slots |
-| `v2_board.png` | a mid-match position on both sides |
-| `v2_card_selected.png` | a Creature selected — only its Groves light, everything else darkens |
-| `v2_attack_targeting.png` | an attack chosen, showing the lane it will cross |
-| `v2_land_build.png` | Realm card growing land, mid rune-circle |
-| `v2_summon.png` | a creature arriving through its element portal |
-| `v2_attack.png` | a melee lunge on its impact beat |
-| `v2_dragon.png` | dragon breath crossing the front line |
+| `v2_opening.png` | match opening — both signature lands growing |
+| `v2_one_grove.png` | a single Grove built, the rest dormant ground |
+| `v2_three_lands.png` | three lands built, plots merging into one realm |
+| `v2_facing.png` | creatures from opposing realms facing across the clash space |
+| `v2_attack.png` | an attacker out in the clash space at the impact beat |
 | `v2_heart.png` | an open lane reaching the Sanctuary; Heart shaking |
-| `v2_fusion.png` | Fusion at the flash/name-reveal beat |
+| `v2_place_built.png` | a Place constructed, linked to the creature it supports |
+| `v2_fusion.png` | Fusion at the slam and name reveal |
+| `v2_late.png` | late game — two fully developed realms |
+| `v2_land_build.png` | vines crawling out as a Grove forms |
+| `v2_card_selected.png` | a card selected: only its land lights, the rest darkens |
 
-Play V2 directly:
-
-    "$GODOT" --path . --scene res://scenes/v2/main_v2.tscn
-
-V1 is unchanged and still runs from `res://scenes/main.tscn`.
+Play V2: `Godot --path .` (V2 is the default scene).
+V1 remains at `res://scenes/main.tscn`.

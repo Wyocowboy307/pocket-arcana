@@ -66,6 +66,48 @@ func _run() -> void:
             main.call("_select_card", "life_petal_deer")
             main.stage.hover_side = 0
             main.stage.hover_lane = 1
+        "v2_one_grove":
+            pass                     # only the signature Grove exists yet
+        "v2_three_lands":
+            e.players[0]["aether"] = 9
+            for i in [0, 2]:
+                e.players[0]["played_card"] = false
+                e.play_realm(0, i)
+        "v2_facing":
+            # Creatures from opposing realms staring at each other.
+            _place(0, 1, "life_great_stag")
+            _place(0, 2, "life_bloom_bear")
+            _place(1, 1, "fire_blazewing_drake")
+            _place(1, 2, "fire_forge_ram")
+            main.call("_clear")
+        "v2_place_built":
+            _place(0, 1, "life_petal_deer")
+            e.players[0]["hand"].append("life_herbalist_hut")
+            e.players[0]["aether"] = 9
+            e.play_card(0, "life_herbalist_hut", 0, 1)
+        "v2_late":
+            # Both realms fully developed, the way a match should end up looking.
+            e.players[0]["aether"] = 9
+            for i in range(MatchV2.LANES):
+                e.lane(0, i)["land"] = "grove"
+                e.lane(1, i)["land"] = "cinder"
+            _place(0, 0, "life_sproutling")
+            _place(0, 1, "life_great_stag")
+            _place(0, 2, "life_bloom_bear")
+            _place(0, 3, "life_garden_dragon")
+            _place(1, 0, "fire_ashcat")
+            _place(1, 1, "fire_blazewing_drake")
+            _place(1, 2, "fire_magma_turtle")
+            _place(1, 3, "fire_cinder_hound")
+            e.lane(0, 1)["place"] = {"card_id": "life_herbalist_hut", "name": "Herbalist Hut",
+                "owner": 0, "presence": 1}
+            e.lane(1, 2)["place"] = {"card_id": "fire_blacksmith_nook", "name": "Blacksmith Nook",
+                "owner": 1, "presence": 1}
+            e.players[0]["max_aether"] = 5; e.players[0]["aether"] = 4
+            e.players[1]["max_aether"] = 5; e.players[1]["aether"] = 2
+            e.players[0]["heart"] = 14; e.players[1]["heart"] = 9
+            e.players[0]["realm_stack"] = 0; e.players[1]["realm_stack"] = 0
+            main.call("_clear")
         "v2_board":
             # A believable mid-match position on both sides.
             _place(0, 0, "life_sproutling")

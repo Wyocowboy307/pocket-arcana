@@ -10,7 +10,9 @@ extends Control
 
 const HUMAN := 0
 const RIVAL := 1
-const HAND_H := 226.0
+const HAND_H := 168.0
+const REST_SCALE := 0.72             # the hand sits small until you point at it
+const HOVER_SCALE := 1.18
 
 var db := ContentDatabase.new()
 var engine := MatchV2.new()
@@ -74,7 +76,7 @@ func _build_ui() -> void:
     stage.engine = engine
     stage.art = art
     stage.set_anchors_preset(Control.PRESET_FULL_RECT)
-    stage.offset_top = 46.0
+    stage.offset_top = 0.0
     stage.offset_bottom = -HAND_H
     stage.lane_clicked.connect(_on_lane_clicked)
     stage.lane_hovered.connect(_on_lane_hovered)
@@ -279,6 +281,7 @@ func _refresh_hand(my_turn: bool) -> void:
         view.selected = selected_card == cid
         view.size = CardV2.SIZE
         view.pivot_offset = Vector2(CardV2.SIZE.x * 0.5, CardV2.SIZE.y)
+        view.scale = Vector2.ONE * REST_SCALE
         view.card_clicked.connect(_select_card)
         view.card_hovered.connect(_describe_card)
         view.mouse_entered.connect(func() -> void: _lift(view, true))
@@ -290,19 +293,22 @@ func _refresh_hand(my_turn: bool) -> void:
 func _layout_hand() -> void:
     var n := _cards.size()
     if n == 0: return
-    var spread: float = min(150.0, max(52.0, (hand_row.size.x - CardV2.SIZE.x) / max(1, n - 1)))
-    var total: float = CardV2.SIZE.x + spread * (n - 1)
+    var card_w: float = CardV2.SIZE.x * REST_SCALE
+    var spread: float = min(card_w + 10.0, max(44.0, (hand_row.size.x - card_w) / max(1, n - 1)))
+    var total: float = card_w + spread * (n - 1)
     var start: float = (hand_row.size.x - total) * 0.5
     for i in range(n):
         var view: CardV2 = _cards[i]
-        view.position = Vector2(start + spread * i, hand_row.size.y - CardV2.SIZE.y - 8.0)
+        # Pivot is the card's bottom centre, so scaling grows it upward.
+        view.position = Vector2(start + spread * i - (CardV2.SIZE.x - card_w) * 0.5,
+            hand_row.size.y - CardV2.SIZE.y - 6.0)
         view.z_index = i
 
 func _lift(view: CardV2, on: bool) -> void:
     view.hovered = on
     view.z_index = 40 if on else _cards.find(view)
     var tween := create_tween().set_parallel(true)
-    tween.tween_property(view, "scale", Vector2.ONE * (1.30 if on else 1.0), 0.10)
+    tween.tween_property(view, "scale", Vector2.ONE * (HOVER_SCALE if on else REST_SCALE), 0.10)
     # A small tilt keeps the raised card feeling physical rather than scaled.
     var index := _cards.find(view)
     var lean: float = 0.0
@@ -310,7 +316,7 @@ func _lift(view: CardV2, on: bool) -> void:
         lean = (float(index) / float(_cards.size() - 1) - 0.5) * 0.10
     tween.tween_property(view, "rotation", lean, 0.10)
     tween.tween_property(view, "position:y",
-        hand_row.size.y - CardV2.SIZE.y - (26.0 if on else 8.0), 0.10)
+        hand_row.size.y - CardV2.SIZE.y - (22.0 if on else 6.0), 0.10)
     view.queue_redraw()
 
 func _refresh_highlights() -> void:
@@ -641,9 +647,12 @@ func _play_attack(side: int, lane: int, attacker: Dictionary, kind: String, targ
         }, dur))
     # The defender recoils and the number appears only after the blow lands.
     var impact := delay + dur * (0.52 if kind == "attack" else 0.58)
+    if not defender.is_empty():
+        _later(delay + dur * 0.24, func() -> void:
+            stage.play("defend", {"uid": int(defender["uid"])}, dur * 0.5))
     _later(impact, func() -> void:
         var to: Vector2 = stage.sanctuary_rect(target_side).get_center() if kind == "heart_attack" \
-            else stage.creature_anchor(target_side, lane)
+            else stage.clash_centre(lane)
         if not defender.is_empty():
             stage.play("recoil", {"uid": int(defender["uid"]),
                 "push": Vector2(0, -1.0 if side == 0 else 1.0)}, 0.32)

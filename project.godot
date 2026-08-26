@@ -22,3 +22,27 @@ textures/canvas_textures/default_texture_filter=0
 
 [gui]
 theme/default_font_multichannel_signed_distance_field=false
+
+[importer_defaults]
+
+; Pixel art must import lossless and unfiltered. fix_alpha_border rewrites the
+; pixels just outside a transparent edge, which visibly softens 1px outlines,
+; and detect_3d would silently re-import textures with mipmaps.
+texture={
+"compress/mode": 0,
+"compress/high_quality": false,
+"compress/hdr_compression": 0,
+"compress/normal_map": 0,
+"compress/channel_pack": 0,
+"detect_3d/compress_to": 0,
+"mipmaps/generate": false,
+"mipmaps/limit": -1,
+"process/fix_alpha_border": false,
+"process/premult_alpha": false,
+"process/normal_map_invert_y": false,
+"process/hdr_as_srgb": false,
+"process/hdr_clamp_exposure": false,
+"process/size_limit": 0,
+"roughness/mode": 0,
+"roughness/src_normal": ""
+}

@@ -1,0 +1,458 @@
+[
+  {
+    "id": "cmd_mossy_mae",
+    "kind": "commander_board",
+    "element": "life",
+    "path": "assets/art/commanders/cmd_mossy_mae_board.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Mossy Mae — cheerful grove caretaker; oversized leaf hood or hat; wooden sprout staff; moss satchel; warm readable face. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "cmd_poppy_cinder",
+    "kind": "commander_board",
+    "element": "fire",
+    "path": "assets/art/commanders/cmd_poppy_cinder_board.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Poppy Cinder — mischievous fire mage and tinkerer; ember-red hair or scarf; small forge tool; coal-black boots; tiny flame companion. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_blazewing_drake",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_blazewing_drake.png",
+    "size": [
+      96,
+      96
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Blazewing Drake — compact dragon with flame-shaped wings. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 96x96 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 96px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_cinder_pup",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_cinder_pup.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Cinder Pup — playful puppy with ember tail and glowing paws. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_garden_dragon",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_garden_dragon.png",
+    "size": [
+      96,
+      96
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Garden Dragon — cute heavy dragon with leafy wings and flowered tail. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 96x96 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 96px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_sproutling",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_sproutling.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Sproutling — tiny walking seedling with two oversized leaves. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "cinder",
+    "kind": "terrain",
+    "element": "fire",
+    "path": "assets/art/board/terrain/cinder.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Seamless top-down terrain tile: charcoal soil and scorched grass with a few soft orange cracks, not a lava tile. Terrain language: cinder soil, scorched grass, glowing cracks. Lower contrast than creatures so units stay readable on top. Keep the centre visually calm — a creature sprite sits there. Exactly 96x64 pixels, fills the whole tile edge to edge, opaque background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "grove",
+    "kind": "terrain",
+    "element": "life",
+    "path": "assets/art/board/terrain/grove.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "A",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Seamless top-down terrain tile: lush magical grass, root corners, tiny flowers, center kept readable for units. Terrain language: lush grove, flowers, roots, tiny grass. Lower contrast than creatures so units stay readable on top. Keep the centre visually calm — a creature sprite sits there. Exactly 96x64 pixels, fills the whole tile edge to edge, opaque background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "cmd_mossy_mae",
+    "kind": "commander_portrait",
+    "element": "life",
+    "path": "assets/art/commanders/cmd_mossy_mae_portrait.png",
+    "size": [
+      256,
+      256
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Pixel-art character portrait of Mossy Mae — cheerful grove caretaker; oversized leaf hood or hat; wooden sprout staff; moss satchel; warm readable face. Head and shoulders, facing the viewer, one signature prop clearly visible, simple face readable when shrunk to 64px. Exactly 256x256 pixels, simple flat element-coloured backdrop. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "cmd_poppy_cinder",
+    "kind": "commander_portrait",
+    "element": "fire",
+    "path": "assets/art/commanders/cmd_poppy_cinder_portrait.png",
+    "size": [
+      256,
+      256
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Pixel-art character portrait of Poppy Cinder — mischievous fire mage and tinkerer; ember-red hair or scarf; small forge tool; coal-black boots; tiny flame companion. Head and shoulders, facing the viewer, one signature prop clearly visible, simple face readable when shrunk to 64px. Exactly 256x256 pixels, simple flat element-coloured backdrop. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_ashcat",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_ashcat.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Ashcat — lean cat with smoky tail and ember ears. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_cinder_hound",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_cinder_hound.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Cinder Hound — sturdy hound with coal armor patches and flame mane. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_coal_chick",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_coal_chick.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Coal Chick — tiny charcoal chick with flame crest. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_emberbug",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_emberbug.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Emberbug — round beetle with hot glowing shell cracks. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_forge_ram",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_forge_ram.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Forge Ram — broad ram with glowing curled metal-like horns. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_magma_turtle",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_magma_turtle.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Magma Turtle — low turtle with cracked volcanic shell. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_rax_the_laughing_inferno",
+    "kind": "creature",
+    "element": "fire",
+    "path": "assets/art/board/creatures/fire/fire_rax_the_laughing_inferno.png",
+    "size": [
+      96,
+      96
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Rax, the Laughing Inferno — legendary grinning inferno beast/dragon with huge flame crest; distinct from Commander Poppy. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 96x96 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 96px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_berrycap_bunny",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_berrycap_bunny.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Berrycap Bunny — small rabbit with berry-shaped cap and big ears. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_bloom_bear",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_bloom_bear.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Bloom Bear — big friendly bear with flowers around shoulders. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_elaria_mother_of_groves",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_elaria_mother_of_groves.png",
+    "size": [
+      96,
+      96
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Elaria, Mother of Groves — legendary grove guardian creature with crownlike branches; distinct from Commander Mae. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 96x96 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 96px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_great_stag",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_great_stag.png",
+    "size": [
+      96,
+      96
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Great Stag — majestic broad-antler stag with hanging vines. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 96x96 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 96px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_moss_frog",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_moss_frog.png",
+    "size": [
+      48,
+      48
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Moss Frog — round squat frog with mossy back and one flower. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 48x48 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 48px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_petal_deer",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_petal_deer.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Petal Deer — young deer with petal antlers. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_rootback_boar",
+    "kind": "creature",
+    "element": "life",
+    "path": "assets/art/board/creatures/life/life_rootback_boar.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Rootback Boar — chunky boar with root ridges and sprouting back. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_blacksmith_nook",
+    "kind": "landmark",
+    "element": "fire",
+    "path": "assets/art/board/landmarks/fire/fire_blacksmith_nook.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Subject: Blacksmith Nook — small crooked forge shed, chimney, anvil sign and orange furnace mouth. Element motifs: flames, embers, triangular aggressive shapes. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_herbalist_hut",
+    "kind": "landmark",
+    "element": "life",
+    "path": "assets/art/board/landmarks/life/life_herbalist_hut.png",
+    "size": [
+      64,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Subject: Herbalist Hut — tiny round-root cottage with leaf roof, potion window and herb rack. Element motifs: leaves, sprouts, berries, flowers, antlers, mushrooms. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Exactly 64x64 pixels, fully transparent background, single centred object with nothing baked behind it, must stay readable at 64px on a dark game board. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "sanctuary_fire",
+    "kind": "sanctuary",
+    "element": "fire",
+    "path": "assets/art/board/sanctuaries/sanctuary_fire.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Top-down magical home tile: miniature forge shrine with small chimney, ember glow and hanging iron charm; open center for Heart overlay. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Leave the centre open — a Heart number and an attack-target highlight are drawn on top. Exactly 96x64 pixels, opaque, fills the tile. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "sanctuary_life",
+    "kind": "sanctuary",
+    "element": "life",
+    "path": "assets/art/board/sanctuaries/sanctuary_life.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Top-down magical home tile: root shrine, heart-shaped leaves, small warm lantern; open center for Heart overlay. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Leave the centre open — a Heart number and an attack-target highlight are drawn on top. Exactly 96x64 pixels, opaque, fills the tile. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "ashbloom",
+    "kind": "terrain",
+    "element": "life+fire",
+    "path": "assets/art/board/terrain/ashbloom.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents combined with orange-red with hot cream and yellow cores and charcoal accents. Seamless top-down terrain tile: blackened soil growing luminous warm flowers; ember petals drift upward; clearly Life plus Fire. Must clearly read as BOTH life and fire at once — do not average the two colours together. Lower contrast than creatures so units stay readable on top. Keep the centre visually calm — a creature sprite sits there. Exactly 96x64 pixels, fills the whole tile edge to edge, opaque background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "neutral",
+    "kind": "terrain",
+    "element": "",
+    "path": "assets/art/board/terrain/neutral.png",
+    "size": [
+      96,
+      64
+    ],
+    "phase": "B",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, muted slate and soft stone greys. Seamless top-down terrain tile: soft slate magical meadow/stone neutral ground with no element dominance. Neutral ground with no element dominance. Lower contrast than creatures so units stay readable on top. Keep the centre visually calm — a creature sprite sits there. Exactly 96x64 pixels, fills the whole tile edge to edge, opaque background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_dragon_breath",
+    "kind": "spell_art",
+    "element": "fire",
+    "path": "assets/art/cards/fire/fire_dragon_breath.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Pixel-art card illustration for the spell Dragon Breath: wide curling cone of pixel flame from dragon silhouette. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_little_flame",
+    "kind": "spell_art",
+    "element": "fire",
+    "path": "assets/art/cards/fire/fire_little_flame.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Pixel-art card illustration for the spell Little Flame: cute determined fire sprite leaping forward. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_scorch_mark",
+    "kind": "spell_art",
+    "element": "fire",
+    "path": "assets/art/cards/fire/fire_scorch_mark.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Pixel-art card illustration for the spell Scorch Mark: fresh ember slash burned into magical ground. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "fire_wildfire_waltz",
+    "kind": "spell_art",
+    "element": "fire",
+    "path": "assets/art/cards/fire/fire_wildfire_waltz.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Pixel-art card illustration for the spell Wildfire Waltz: two playful flame ribbons dancing in a circle. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_grow",
+    "kind": "spell_art",
+    "element": "life",
+    "path": "assets/art/cards/life/life_grow.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Pixel-art card illustration for the spell Grow: green sprout burst and curling roots. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_rebloom",
+    "kind": "spell_art",
+    "element": "life",
+    "path": "assets/art/cards/life/life_rebloom.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Pixel-art card illustration for the spell Rebloom: wilted flower explosively returning to bloom. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_warm_sun",
+    "kind": "spell_art",
+    "element": "life",
+    "path": "assets/art/cards/life/life_warm_sun.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Pixel-art card illustration for the spell Warm Sun: storybook sunbeam opening through leaves. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  },
+  {
+    "id": "life_wild_flourish",
+    "kind": "spell_art",
+    "element": "life",
+    "path": "assets/art/cards/life/life_wild_flourish.png",
+    "size": [
+      256,
+      160
+    ],
+    "phase": "C",
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Pixel-art card illustration for the spell Wild Flourish: spiral of vines flowers mushrooms and pollen. One clear focal action, expressive storybook scene, readable when shrunk into a 126x58 card window. Exactly 256x160 pixels. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+  }
+]

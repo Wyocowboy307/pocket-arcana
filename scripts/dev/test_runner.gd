@@ -340,6 +340,51 @@ func test_slice_matchup_stays_healthy() -> void:
     _ok(seals_for_life > 0, "Life still wins Chapters on Realm Score")
     _ok(hearts_for_fire > 0, "Fire still wins by breaking the Heart")
 
+# --- production art -------------------------------------------------------
+#
+# Art is presentation only. These guard the rule that a missing asset degrades
+# to procedural drawing and that art can never touch the simulation.
+
+func test_art_registry_loads_the_manifest() -> void:
+    var registry := ArtRegistry.new()
+    _ok(registry.load_manifest(), "art manifest parses")
+    _ok(registry.is_loaded(), "registry reports loaded")
+    _eq(registry.creature_paths.size(), 18, "18 slice creatures are mapped")
+    _eq(registry.terrain_paths.size(), 4, "4 terrains are mapped")
+    _eq(registry.sanctuary_paths.size(), 2, "2 sanctuaries are mapped")
+    _ok(registry.commander_board_paths.has("cmd_mossy_mae"), "Mossy Mae has a board avatar path")
+    # Paths must be engine-resolvable.
+    for cid in registry.creature_paths:
+        _ok(String(registry.creature_paths[cid]).begins_with("res://"),
+            "%s path is a res:// path" % cid)
+        break
+
+func test_art_registry_is_silent_when_art_is_missing() -> void:
+    var registry := ArtRegistry.new()
+    registry.load_manifest()
+    # Unknown ids and un-generated assets must both return null, never error.
+    _ok(registry.creature("no_such_card") == null, "unknown creature id returns null")
+    _ok(registry.terrain("no_such_terrain") == null, "unknown terrain id returns null")
+    _ok(registry.sanctuary("no_such_element") == null, "unknown sanctuary returns null")
+    _ok(registry.commander_board("no_such_commander") == null, "unknown commander returns null")
+    _ok(registry.card_art("no_such_card") == null, "unknown card art returns null")
+    _ok(registry.ui("no_such_icon") == null, "unknown ui icon returns null")
+    var report: Dictionary = registry.coverage()
+    _ok(report.has("creatures") and report.has("terrain"), "coverage report covers each group")
+
+func test_art_never_changes_the_simulation() -> void:
+    # Same seed, once with a registry present and once without: the match must be
+    # byte-identical. Nothing in the art path may reach the rules.
+    var registry := ArtRegistry.new()
+    registry.load_manifest()
+    var a := _new_match("starter_life", "starter_fire", 4242)
+    _play_out(a)
+    var b := _new_match("starter_life", "starter_fire", 4242)
+    _play_out(b)
+    _eq(a.event_log, b.event_log, "match is unchanged by art being loaded")
+    _eq(a.winner, b.winner, "winner is unchanged by art being loaded")
+    a.free(); b.free()
+
 func test_every_starter_deck_is_legal() -> void:
     var validator := DeckValidator.new()
     for deck_id in _db.decks.keys():

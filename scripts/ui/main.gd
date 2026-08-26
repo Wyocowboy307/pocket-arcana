@@ -10,6 +10,7 @@ const AI_THINK_TIME := 0.55
 
 var db := ContentDatabase.new()
 var engine := MatchEngine.new()
+var art := ArtRegistry.new()
 
 # Interaction state.
 var mode := ""                       # "" | "card" | "shape" | "command" | "unit"
@@ -52,6 +53,7 @@ func _ready() -> void:
         _fatal("Content failed to load. Check the Godot error panel.")
         return
     ArcanaTheme.configure(db)
+    art.load_manifest()
     _build_ui()
     add_child(engine)
     engine.state_changed.connect(_refresh)
@@ -96,6 +98,7 @@ func _build_ui() -> void:
 
     board_view = BoardView.new()
     board_view.engine = engine
+    board_view.art = art
     board_view.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     board_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
     board_view.tile_clicked.connect(_on_tile_clicked)
@@ -482,7 +485,7 @@ func _refresh_hand(my_turn: bool) -> void:
         shown.append(card_id)
         var view := CardView.new()
         var reason := engine.card_block_reason(HUMAN, String(card_id)) if my_turn else "Wait for your turn."
-        view.setup(db.get_card(String(card_id)), reason)
+        view.setup(db.get_card(String(card_id)), reason, art)
         view.selected = (selected_card_id == String(card_id))
         view.count = int(counts[card_id])
         view.card_clicked.connect(_select_card)

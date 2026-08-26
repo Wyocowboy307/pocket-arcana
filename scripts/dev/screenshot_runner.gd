@@ -93,6 +93,33 @@ func _run_scenario() -> void:
             _freeze_rival()
             engine.pass_chapter(engine.current_player)
             engine.pass_chapter(engine.current_player)
+        "art_review":
+            # The Phase-A capture from docs/ART_PRODUCTION_PIPELINE.md: a Life
+            # creature on Grove, a Fire creature on Cinder, and a dragon a side.
+            _freeze_rival()
+            var place := func(pos: Vector2i, terrain: String, owner: int, card_id: String) -> void:
+                engine.board.shape(owner, pos, terrain)
+                if card_id != "":
+                    engine.board.get_tile(pos)["creature"] = engine.make_unit_from_card(
+                        engine.db.get_card(card_id), owner)
+            place.call(Vector2i(2, 3), "grove", 0, "life_sproutling")
+            place.call(Vector2i(3, 3), "grove", 0, "life_garden_dragon")
+            place.call(Vector2i(4, 3), "grove", 0, "life_petal_deer")
+            place.call(Vector2i(2, 1), "cinder", 1, "fire_cinder_pup")
+            place.call(Vector2i(3, 1), "cinder", 1, "fire_blazewing_drake")
+            place.call(Vector2i(4, 1), "cinder", 1, "fire_ashcat")
+            place.call(Vector2i(1, 2), "grove", 0, "")
+            place.call(Vector2i(5, 2), "cinder", 1, "")
+            # A landmark sharing a tile with a creature, and an Ashbloom reaction.
+            engine.board.get_tile(Vector2i(2, 3))["landmark"] = {
+                "card_id": "life_herbalist_hut", "name": "Herbalist Hut", "owner": 0, "presence": 1}
+            engine.board.get_tile(Vector2i(4, 1))["landmark"] = {
+                "card_id": "fire_blacksmith_nook", "name": "Blacksmith Nook", "owner": 1, "presence": 1}
+            engine.board.shape(0, Vector2i(3, 2), "grove")
+            engine.board.add_state(Vector2i(3, 2), "overgrown")
+            engine.board.add_state(Vector2i(3, 2), "burning")
+            engine.combo.resolve_tile(engine.board, Vector2i(3, 2))
+            main.call("_clear_selection")
         "match_end":
             _freeze_rival()
             var guard := 0

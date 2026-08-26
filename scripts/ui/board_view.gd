@@ -10,6 +10,7 @@ signal tile_hovered(pos: Vector2i)
 const GAP := 6.0
 
 var engine: MatchEngine
+var art: ArtRegistry                 # may be null; every use falls back to drawing
 var highlights: Dictionary = {}      # Vector2i -> "target" | "move" | "attack" | "heart"
 var selected_pos := Vector2i(-1, -1)
 var hover_pos := Vector2i(-1, -1)
@@ -118,19 +119,31 @@ func _draw_tile(pos: Vector2i, f: Font) -> void:
     var terrain := String(tile.get("terrain", "neutral"))
     var sanc := int(tile.get("sanctuary_owner", -1))
 
-    # Ground: terrain colour, kept dim so foreground pieces stay readable.
+    # Ground: production terrain art when it exists, procedural panel otherwise.
     var ground: Color = ArcanaTheme.color_for_terrain(terrain)
-    var fill: Color = ArcanaTheme.TILE_EMPTY if terrain == "neutral" else ground.darkened(0.62)
     var edge: Color = ArcanaTheme.PANEL_EDGE
     var edge_w := 1
     if owner >= 0:
         edge = ArcanaTheme.owner_color(owner).darkened(0.15)
         edge_w = 2
-    draw_style_box(ArcanaTheme.panel_box(fill, edge, 7, edge_w), rect)
+    var ground_tex: Texture2D = null
+    if art != null:
+        ground_tex = art.sanctuary(_sanctuary_element(sanc)) if sanc >= 0 else null
+        if ground_tex == null: ground_tex = art.terrain(terrain)
+    if ground_tex != null:
+        draw_texture_rect(ground_tex, rect, false)
+        # Ownership stays legible without hiding the artwork.
+        if owner >= 0:
+            draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.owner_color(owner), 0.13), edge, 7, edge_w), rect)
+        else:
+            draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0), edge, 7, edge_w), rect)
+    else:
+        var fill: Color = ArcanaTheme.TILE_EMPTY if terrain == "neutral" else ground.darkened(0.62)
+        draw_style_box(ArcanaTheme.panel_box(fill, edge, 7, edge_w), rect)
 
     # Terrain name, always a word as well as a colour.
     var states: Array = tile.get("states", [])
-    if terrain != "neutral":
+    if terrain != "neutral" and ground_tex == null:
         var reserved: float = 14.0 + states.size() * 13.0
         draw_string(f, Vector2(rect.position.x + 7, rect.position.y + 15),
             ArcanaTheme.fit(ArcanaTheme.label_for_terrain(terrain), 11, rect.size.x - reserved - 8),
@@ -156,10 +169,15 @@ func _draw_tile(pos: Vector2i, f: Font) -> void:
     # Landmark sits on its own layer and can share the tile with a creature.
     var lm = tile.get("landmark")
     if lm != null:
-        var lc: Color = ArcanaTheme.owner_color(int(lm.get("owner", -1)))
-        draw_string(f, Vector2(rect.position.x + 7, rect.position.y + rect.size.y - 24),
-            ArcanaTheme.fit("⌂ " + String(lm.get("name", "Landmark")), 10, rect.size.x - 14),
-            HORIZONTAL_ALIGNMENT_LEFT, -1, 10, lc)
+        var lm_tex: Texture2D = art.landmark(String(lm.get("card_id", ""))) if art != null else null
+        if lm_tex != null:
+            # Behind the creature, so the two can share a tile.
+            _draw_sprite(lm_tex, rect, 0.86, -4.0)
+        else:
+            var lc: Color = ArcanaTheme.owner_color(int(lm.get("owner", -1)))
+            draw_string(f, Vector2(rect.position.x + 7, rect.position.y + rect.size.y - 24),
+                ArcanaTheme.fit("⌂ " + String(lm.get("name", "Landmark")), 10, rect.size.x - 14),
+                HORIZONTAL_ALIGNMENT_LEFT, -1, 10, lc)
 
     # Creature chip.
     var unit = tile.get("creature")
@@ -184,9 +202,30 @@ func _draw_tile(pos: Vector2i, f: Font) -> void:
     elif pos == hover_pos:
         draw_style_box(ArcanaTheme.panel_box(Color(1, 1, 1, 0), Color(ArcanaTheme.TEXT, 0.28), 7, 2), rect)
 
+## Scale a source sprite to fit the tile without smoothing or distortion.
+func _draw_sprite(tex: Texture2D, tile_rect_in: Rect2, fill_ratio: float, y_offset: float) -> void:
+    var src := Vector2(tex.get_width(), tex.get_height())
+    if src.x <= 0.0 or src.y <= 0.0: return
+    var budget := Vector2(tile_rect_in.size.x * fill_ratio, tile_rect_in.size.y * fill_ratio)
+    var scale: float = min(budget.x / src.x, budget.y / src.y)
+    var drawn := src * scale
+    var pos := Vector2(
+        tile_rect_in.position.x + (tile_rect_in.size.x - drawn.x) * 0.5,
+        tile_rect_in.position.y + (tile_rect_in.size.y - drawn.y) * 0.5 + y_offset)
+    draw_texture_rect(tex, Rect2(pos, drawn), false)
+
+func _sanctuary_element(sanc: int) -> String:
+    if engine == null or sanc < 0 or engine.players.size() <= sanc: return ""
+    return engine.commander_element(sanc)
+
 func _draw_unit(tile_rect_in: Rect2, unit: Dictionary, f: Font) -> void:
     var owner := int(unit.get("owner", -1))
     var c: Color = ArcanaTheme.owner_color(owner)
+    var sprite: Texture2D = art.creature(String(unit.get("card_id", ""))) if art != null else null
+    if sprite != null:
+        _draw_sprite(sprite, tile_rect_in, 0.78, -3.0)
+        _draw_stat_plate(tile_rect_in, unit, f, c)
+        return
     var w: float = tile_rect_in.size.x - 16
     var h := 34.0
     var chip := Rect2(tile_rect_in.position.x + 8, tile_rect_in.position.y + tile_rect_in.size.y * 0.5 - h * 0.5 - 3, w, h)
@@ -202,6 +241,22 @@ func _draw_unit(tile_rect_in: Rect2, unit: Dictionary, f: Font) -> void:
     # Wound bar, so a damaged creature reads at a glance.
     if hp < max_hp:
         var bar := Rect2(chip.position.x + 2, chip.position.y + chip.size.y - 3, (chip.size.x - 4) * (float(hp) / float(max_hp)), 2)
+        draw_rect(bar, ArcanaTheme.HEART)
+
+## Small unobtrusive Power/Health plate for a creature that has real art.
+func _draw_stat_plate(tile_rect_in: Rect2, unit: Dictionary, f: Font, c: Color) -> void:
+    var hp := int(unit.get("health", 0))
+    var max_hp: int = maxi(1, int(unit.get("max_health", hp)))
+    var text := "%d ⚔ %d ♥" % [int(unit.get("power", 0)), hp]
+    var w: float = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x + 10.0
+    var plate := Rect2(tile_rect_in.position.x + (tile_rect_in.size.x - w) * 0.5,
+        tile_rect_in.position.y + tile_rect_in.size.y - 19.0, w, 15.0)
+    draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.82), c, 4, 1), plate)
+    draw_string(f, Vector2(plate.position.x + 5, plate.position.y + 11), text,
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT)
+    if hp < max_hp:
+        var bar := Rect2(plate.position.x + 1, plate.position.y + plate.size.y - 2,
+            (plate.size.x - 2) * (float(hp) / float(max_hp)), 2)
         draw_rect(bar, ArcanaTheme.HEART)
 
 func _draw_flourish(fl: Dictionary, f: Font) -> void:

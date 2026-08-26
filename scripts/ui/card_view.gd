@@ -13,12 +13,14 @@ var card_id := ""
 var selected := false
 var block_reason := ""
 var count := 1
+var art: ArtRegistry = null           # may be null; layout falls back to text-only
 
 var _lift := 0.0
 var _target_lift := 0.0
 
-func setup(card_data: Dictionary, reason: String) -> void:
+func setup(card_data: Dictionary, reason: String, registry: ArtRegistry = null) -> void:
     card = card_data
+    art = registry
     card_id = String(card_data.get("id", ""))
     block_reason = reason
     custom_minimum_size = CARD_SIZE
@@ -85,8 +87,23 @@ func _draw() -> void:
     draw_string(f, Vector2(rect.position.x + 8, rect.position.y + 58),
         String(card.get("type", "")).capitalize(), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT_DIM)
 
-    draw_multiline_string(f, Vector2(rect.position.x + 8, rect.position.y + 76),
-        String(card.get("rules", "")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 16, 11, 4,
+    # Central art window. Rules text keeps its full space when there is no art,
+    # so readability never depends on production assets existing.
+    var rules_y := rect.position.y + 76
+    var art_tex: Texture2D = art.card_art(card_id) if art != null else null
+    if art_tex != null:
+        var window := Rect2(rect.position.x + 7, rect.position.y + 68, rect.size.x - 14, 58)
+        draw_style_box(ArcanaTheme.panel_box(Color(accent, 0.16), Color(accent, 0.5), 5, 1), window)
+        var src := Vector2(art_tex.get_width(), art_tex.get_height())
+        if src.x > 0.0 and src.y > 0.0:
+            var scale: float = min((window.size.x - 6.0) / src.x, (window.size.y - 6.0) / src.y)
+            var drawn := src * scale
+            draw_texture_rect(art_tex, Rect2(window.get_center() - drawn * 0.5, drawn), false)
+        rules_y = window.position.y + window.size.y + 13
+
+    draw_multiline_string(f, Vector2(rect.position.x + 8, rules_y),
+        String(card.get("rules", "")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 16, 11,
+        2 if art_tex != null else 4,
         ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
 
     # Stat line.

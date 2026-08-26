@@ -1,0 +1,274 @@
+[
+  {
+    "id": "archetype_frost_1",
+    "name": "FREEZE",
+    "elements": [
+      "frost"
+    ],
+    "difficulty": "easy",
+    "pitch": "Freeze trouble and win Chapters with sturdy winter creatures.",
+    "commander_fit": "Any frost Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_frost_2",
+    "name": "ICE PALACE",
+    "elements": [
+      "frost"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Preserve terrain and landmarks, then score a huge late Chapter.",
+    "commander_fit": "Any frost Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_lightning_1",
+    "name": "SPARKS",
+    "elements": [
+      "lightning"
+    ],
+    "difficulty": "easy",
+    "pitch": "Charge tiles and deal quick burst damage.",
+    "commander_fit": "Any lightning Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_lightning_2",
+    "name": "STORM ENGINE",
+    "elements": [
+      "lightning"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Build Charged setup, draw into payoff cards, then explode in one turn.",
+    "commander_fit": "Any lightning Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_life_1",
+    "name": "HEAL & GROW",
+    "elements": [
+      "life"
+    ],
+    "difficulty": "easy",
+    "pitch": "Heal your Heart and make a big friendly board.",
+    "commander_fit": "Any life Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_life_2",
+    "name": "LIVING KINGDOM",
+    "elements": [
+      "life"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Use landmarks, Overgrown terrain and Wonder to win without racing damage.",
+    "commander_fit": "Any life Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_fire_1",
+    "name": "DRAGONS",
+    "elements": [
+      "fire"
+    ],
+    "difficulty": "easy",
+    "pitch": "Pressure the Heart and finish with dragons.",
+    "commander_fit": "Any fire Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_fire_2",
+    "name": "ASH ECONOMY",
+    "elements": [
+      "fire"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Burn your own terrain or creatures when destruction creates more value.",
+    "commander_fit": "Any fire Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_water_1",
+    "name": "FLOW",
+    "elements": [
+      "water"
+    ],
+    "difficulty": "easy",
+    "pitch": "Wet tiles, draw cards and move around blockers.",
+    "commander_fit": "Any water Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_water_2",
+    "name": "WEATHER CONTROL",
+    "elements": [
+      "water"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Turn Wet into recipes and keep changing where the fight happens.",
+    "commander_fit": "Any water Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_earth_1",
+    "name": "BUILD",
+    "elements": [
+      "earth"
+    ],
+    "difficulty": "easy",
+    "pitch": "Fortify tiles and build landmarks for Realm Score.",
+    "commander_fit": "Any earth Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_earth_2",
+    "name": "WALKING CITY",
+    "elements": [
+      "earth"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Use huge creatures and structures that turn the board into a fortress.",
+    "commander_fit": "Any earth Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_wind_1",
+    "name": "MOVE",
+    "elements": [
+      "wind"
+    ],
+    "difficulty": "easy",
+    "pitch": "Reposition creatures and sneak through gaps.",
+    "commander_fit": "Any wind Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_wind_2",
+    "name": "SKY ROADS",
+    "elements": [
+      "wind"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Use movement triggers and floating terrain to make impossible routes.",
+    "commander_fit": "Any wind Commander",
+    "win_plan": "Heart/Seals"
+  },
+  {
+    "id": "archetype_death_1",
+    "name": "SPOOKY FRIENDS",
+    "elements": [
+      "death"
+    ],
+    "difficulty": "easy",
+    "pitch": "Play cute ghosts and bring fallen friends back.",
+    "commander_fit": "Any death Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_death_2",
+    "name": "LANTERN LOOP",
+    "elements": [
+      "death"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Sacrifice creatures for value, recur them, and grind out later Chapters.",
+    "commander_fit": "Any death Commander",
+    "win_plan": "Seals/Wonder"
+  },
+  {
+    "id": "archetype_aurora machine",
+    "name": "AURORA MACHINE",
+    "elements": [
+      "frost",
+      "lightning"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Freeze + Charge the same tiles, discover Aurora Ice, then cash in the setup.",
+    "commander_fit": "Frost or Lightning Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_ashbloom",
+    "name": "ASHBLOOM",
+    "elements": [
+      "life",
+      "fire"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Grow your own realm, burn it on purpose, and turn loss into explosive new terrain.",
+    "commander_fit": "Life or Fire Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_steam dragons",
+    "name": "STEAM DRAGONS",
+    "elements": [
+      "fire",
+      "water"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Burn + Wet tiles into Steamfield and use the chaos to support dragons.",
+    "commander_fit": "Fire or Water Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_stormglass",
+    "name": "STORMGLASS",
+    "elements": [
+      "lightning",
+      "water"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Wet + Charge the board, draw quickly and create storm-combo turns.",
+    "commander_fit": "Lightning or Water Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_second spring",
+    "name": "SECOND SPRING",
+    "elements": [
+      "life",
+      "death"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Let friendly creatures die, bring them back, and turn Haunted+Overgrown into value.",
+    "commander_fit": "Life or Death Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_floating kingdom",
+    "name": "FLOATING KINGDOM",
+    "elements": [
+      "earth",
+      "wind"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Fortify + Windsweep land into floating terrain, then build a strange moving city.",
+    "commander_fit": "Earth or Wind Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_ghostwater",
+    "name": "GHOSTWATER",
+    "elements": [
+      "water",
+      "death"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Use Wet+Haunted terrain, recursion and repositioning to outlast both Chapters.",
+    "commander_fit": "Water or Death Commander",
+    "win_plan": "Flexible"
+  },
+  {
+    "id": "archetype_meltheart",
+    "name": "MELTHEART",
+    "elements": [
+      "frost",
+      "fire"
+    ],
+    "difficulty": "advanced",
+    "pitch": "Deliberately mix opposite elements, creating Meltwater and tempo swings instead of choosing one side.",
+    "commander_fit": "Frost or Fire Commander",
+    "win_plan": "Flexible"
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "principle": "One new idea at a time. Same rules as the real game.",
+  "steps": [
+    {
+      "id": "play_card",
+      "title": "Play a Friend",
+      "instruction": "Pick a card, then pick a glowing tile.",
+      "success": "You put a creature into the world."
+    },
+    {
+      "id": "shape",
+      "title": "Shape the World",
+      "instruction": "Choose an element, then shape a glowing tile.",
+      "success": "Terrain gives your deck Attunement."
+    },
+    {
+      "id": "move",
+      "title": "Move",
+      "instruction": "Pick your creature, then an adjacent tile.",
+      "success": "Position matters."
+    },
+    {
+      "id": "pass",
+      "title": "Know When to Pass",
+      "instruction": "Pass when you want to save cards for the next Chapter.",
+      "success": "Win 2 Chapters to win the match."
+    },
+    {
+      "id": "recipe",
+      "title": "Make Magic Mix",
+      "instruction": "Put two elemental states on the same tile.",
+      "success": "The tile transforms and enters your Codex."
+    },
+    {
+      "id": "commander",
+      "title": "Your Commander",
+      "instruction": "Use your Command once each Chapter.",
+      "success": "Your Commander helps define your deck."
+    }
+  ],
+  "ui_rules": [
+    "Glow legal targets.",
+    "Preview recipe results before confirmation after discovery.",
+    "Use one-sentence card text.",
+    "Tap/hover any keyword for plain-language help.",
+    "Never require memorizing icon-only information."
+  ]
+}

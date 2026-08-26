@@ -1,0 +1,98 @@
+[
+  {
+    "id": "chapter",
+    "name": "Chapter",
+    "plain": "One round of the match. Win two Chapters to win the match.",
+    "advanced": "Both players can Pass; when both have passed, Realm Score decides the Chapter."
+  },
+  {
+    "id": "pass",
+    "name": "Pass",
+    "plain": "Stop playing for this Chapter and save your cards for later.",
+    "advanced": "You cannot act again that Chapter after passing."
+  },
+  {
+    "id": "heart",
+    "name": "Heart",
+    "plain": "Your main life total. If it reaches 0, you lose immediately.",
+    "advanced": "Heart damage persists across Chapters; healing can raise it to 30."
+  },
+  {
+    "id": "seal",
+    "name": "Chapter Seal",
+    "plain": "Win a Chapter to earn a Seal. Two Seals wins the match.",
+    "advanced": "Tied Chapters award no Seal in the first ruleset."
+  },
+  {
+    "id": "wonder",
+    "name": "Wonder",
+    "plain": "Build an amazing magical realm. Reach 10 Wonder to win immediately.",
+    "advanced": "Wonder rewards deliberate engines and some recipe/landmark cards."
+  },
+  {
+    "id": "aether",
+    "name": "Aether",
+    "plain": "Magic points used to play cards. It refills on your turn.",
+    "advanced": "The cap grows during a Chapter so bigger cards arrive later."
+  },
+  {
+    "id": "attunement",
+    "name": "Attunement",
+    "plain": "The elements your shaped world can use.",
+    "advanced": "A dual-element card needs both elements represented by terrain you control."
+  },
+  {
+    "id": "realm_score",
+    "name": "Realm Score",
+    "plain": "How strong your world is this Chapter. Higher score wins when both players Pass.",
+    "advanced": "Graybox formula: creature Power + landmark Presence + one per shaped/special tile."
+  },
+  {
+    "id": "frozen",
+    "name": "Frozen",
+    "plain": "Frost magic is on this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "charged",
+    "name": "Charged",
+    "plain": "Lightning magic is crackling on this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "overgrown",
+    "name": "Overgrown",
+    "plain": "Life magic is growing on this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "burning",
+    "name": "Burning",
+    "plain": "Fire magic is burning on this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "wet",
+    "name": "Wet",
+    "plain": "Water magic is soaking this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "fortified",
+    "name": "Fortified",
+    "plain": "Earth magic has strengthened this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "windswept",
+    "name": "Windswept",
+    "plain": "Wind magic is rushing across this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  },
+  {
+    "id": "haunted",
+    "name": "Haunted",
+    "plain": "Friendly Death magic lingers on this tile.",
+    "advanced": "Combines with another elemental state to discover special terrain."
+  }
+]

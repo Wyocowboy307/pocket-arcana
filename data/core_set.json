@@ -1,0 +1,6855 @@
+[
+  {
+    "id": "frost_snowcap_cub",
+    "name": "Snowcap Cub",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "When played, make this tile Frozen.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "frost_icicle_mouse",
+    "name": "Icicle Mouse",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "frost_frostfin_pup",
+    "name": "Frostfin Pup",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "frost_chillwing_owl",
+    "name": "Chillwing Owl",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "When played, make this tile Frozen.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "frost_rimehorn_yak",
+    "name": "Rimehorn Yak",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Give a friendly creature +2 Health.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 0,
+        "health": 2,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "frost_glacier_fox",
+    "name": "Glacier Fox",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Make this tile Frozen. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "frost_crystal_mammoth",
+    "name": "Crystal Mammoth",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "frost_winter_drake",
+    "name": "Winter Drake",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "When played, make this tile Frozen.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "frost_snap_freeze",
+    "name": "Snap Freeze",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Make a tile Frozen.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "frost_snowglobe_trick",
+    "name": "Snowglobe Trick",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Deal 1 to a creature there and Freeze the tile.",
+    "effects": [
+      {
+        "kind": "damage_unit",
+        "amount": 1,
+        "target": "enemy_on_tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_cold_front",
+    "name": "Cold Front",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Freeze a tile. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_absolute_zero",
+    "name": "Absolute Zero",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Create a powerful Frost swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "damage_unit",
+        "amount": 3,
+        "target": "enemy_on_tile"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_igloo_library",
+    "name": "Igloo Library",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "frost_rimewatch_tower",
+    "name": "Rimewatch Tower",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "frost",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "frost_crystal_conservatory",
+    "name": "Crystal Conservatory",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "frost_palace_of_quiet_snow",
+    "name": "Palace of Quiet Snow",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "frost_fresh_snow",
+    "name": "Fresh Snow",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Turn a tile into Tundra.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "tundra",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_icebound_charm",
+    "name": "Icebound Charm",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "frost",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_hailstorm_hop",
+    "name": "Hailstorm Hop",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Make a tile Frozen. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_aurora_garden",
+    "name": "Aurora Garden",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Make a tile Frozen. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_frostwarden",
+    "name": "Frostwarden",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Make this tile Frozen. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "frost_whiteout_giant",
+    "name": "Whiteout Giant",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "frost_winter_without_end",
+    "name": "Winter Without End",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Gain 2 Wonder and reshape the tile.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      },
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "frost"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "frost_sereva_crown_of_winter",
+    "name": "Sereva, Crown of Winter",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "frost"
+    ],
+    "attunement": [
+      "frost"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "frost",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "lightning_sparkmouse",
+    "name": "Sparkmouse",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "When played, make this tile Charged.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "lightning_static_finch",
+    "name": "Static Finch",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "lightning_bolt_beetle",
+    "name": "Bolt Beetle",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "lightning_stormtail_lynx",
+    "name": "Stormtail Lynx",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "When played, make this tile Charged.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "lightning_coilback_ram",
+    "name": "Coilback Ram",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Gain 1 Aether this turn.",
+    "effects": [
+      {
+        "kind": "gain_aether",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "lightning_thunder_pup",
+    "name": "Thunder Pup",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Make this tile Charged. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "lightning_cloud_manta",
+    "name": "Cloud Manta",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "lightning_tempest_drake",
+    "name": "Tempest Drake",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "When played, make this tile Charged.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "lightning_quick_zap",
+    "name": "Quick Zap",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Make a tile Charged.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "lightning_bottle_lightning",
+    "name": "Bottle Lightning",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Deal 2 to a creature there and Charge the tile.",
+    "effects": [
+      {
+        "kind": "damage_unit",
+        "amount": 2,
+        "target": "enemy_on_tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_chain_spark",
+    "name": "Chain Spark",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Deal 2 to the enemy Heart.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_skybreaker",
+    "name": "Skybreaker",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Create a powerful Lightning swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "damage_unit",
+        "amount": 3,
+        "target": "enemy_on_tile"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_copper_kiteworks",
+    "name": "Copper Kiteworks",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "lightning_stormbell_tower",
+    "name": "Stormbell Tower",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "lightning",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "lightning_coil_laboratory",
+    "name": "Coil Laboratory",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "lightning_thunderhead_station",
+    "name": "Thunderhead Station",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "lightning_charged_ground",
+    "name": "Charged Ground",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Turn a tile into Stormfield.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "stormfield",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_stormcoil_ring",
+    "name": "Stormcoil Ring",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_flashstep",
+    "name": "Flashstep",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Make a tile Charged. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_living_circuit",
+    "name": "Living Circuit",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Make a tile Charged. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_arc_runner",
+    "name": "Arc Runner",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Make this tile Charged. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "lightning_thunder_golem",
+    "name": "Thunder Golem",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "lightning_perfect_storm",
+    "name": "Perfect Storm",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Deal 4 to the enemy Heart.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 4,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "lightning"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "lightning_voltara_heart_of_thunder",
+    "name": "Voltara, Heart of Thunder",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "lightning"
+    ],
+    "attunement": [
+      "lightning"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 3,
+        "target": "enemy"
+      },
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "life_sproutling",
+    "name": "Sproutling",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "When played, make this tile Overgrown.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "life_moss_frog",
+    "name": "Moss Frog",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "life_berrycap_bunny",
+    "name": "Berrycap Bunny",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "life_petal_deer",
+    "name": "Petal Deer",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "When played, make this tile Overgrown.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "life_rootback_boar",
+    "name": "Rootback Boar",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Heal your Heart 2.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "life_bloom_bear",
+    "name": "Bloom Bear",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Make this tile Overgrown. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "life_great_stag",
+    "name": "Great Stag",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "life_garden_dragon",
+    "name": "Garden Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "When played, make this tile Overgrown.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "life_grow",
+    "name": "Grow",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Make a tile Overgrown.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "life_warm_sun",
+    "name": "Warm Sun",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Heal your Heart 3.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 3,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_rebloom",
+    "name": "Rebloom",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Heal 2 and gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 2,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_wild_flourish",
+    "name": "Wild Flourish",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Create a powerful Life swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_herbalist_hut",
+    "name": "Herbalist Hut",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "life_bee_garden",
+    "name": "Bee Garden",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "life",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "life_worldroot_shrine",
+    "name": "Worldroot Shrine",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "life_festival_orchard",
+    "name": "Festival Orchard",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "life_soft_meadow",
+    "name": "Soft Meadow",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Turn a tile into Grove.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "grove",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_seed_satchel",
+    "name": "Seed Satchel",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "life",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_kindly_rain",
+    "name": "Kindly Rain",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Make a tile Overgrown. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_living_hedge",
+    "name": "Living Hedge",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Make a tile Overgrown. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_grove_keeper",
+    "name": "Grove Keeper",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Make this tile Overgrown. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "life_ancient_treant",
+    "name": "Ancient Treant",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "life_spring_eternal",
+    "name": "Spring Eternal",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Heal 5 and gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 5,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "life_elaria_mother_of_groves",
+    "name": "Elaria, Mother of Groves",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "life"
+    ],
+    "attunement": [
+      "life"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 6,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "life",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "fire_cinder_pup",
+    "name": "Cinder Pup",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "When played, make this tile Burning.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "fire_emberbug",
+    "name": "Emberbug",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "fire_coal_chick",
+    "name": "Coal Chick",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "fire_ashcat",
+    "name": "Ashcat",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "When played, make this tile Burning.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "fire_cinder_hound",
+    "name": "Cinder Hound",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Deal 1 damage to the enemy Heart.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 1,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "fire_forge_ram",
+    "name": "Forge Ram",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Make this tile Burning. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "fire_magma_turtle",
+    "name": "Magma Turtle",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "fire_blazewing_drake",
+    "name": "Blazewing Drake",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "When played, make this tile Burning.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "fire_little_flame",
+    "name": "Little Flame",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Make a tile Burning.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "fire_scorch_mark",
+    "name": "Scorch Mark",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Deal 2 to a creature there and Burn the tile.",
+    "effects": [
+      {
+        "kind": "damage_unit",
+        "amount": 2,
+        "target": "enemy_on_tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_dragon_breath",
+    "name": "Dragon Breath",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Deal 2 to the enemy Heart.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 2,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_wildfire_waltz",
+    "name": "Wildfire Waltz",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Create a powerful Fire swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "damage_unit",
+        "amount": 3,
+        "target": "enemy_on_tile"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_blacksmith_nook",
+    "name": "Blacksmith Nook",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "fire_ember_kitchen",
+    "name": "Ember Kitchen",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "fire",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "fire_dragon_roost",
+    "name": "Dragon Roost",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "fire_volcano_forge",
+    "name": "Volcano Forge",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "fire_cinder_patch",
+    "name": "Cinder Patch",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Turn a tile into Cinder.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "cinder",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_hot_iron_charm",
+    "name": "Hot Iron Charm",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_firecracker",
+    "name": "Firecracker",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Make a tile Burning. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_ashbloom_rite",
+    "name": "Ashbloom Rite",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Make a tile Burning. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_flamekeeper",
+    "name": "Flamekeeper",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Make this tile Burning. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "fire_lava_giant",
+    "name": "Lava Giant",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "fire_festival_of_sparks",
+    "name": "Festival of Sparks",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Deal 4 to the enemy Heart.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 4,
+        "target": "enemy"
+      }
+    ],
+    "tags": [
+      "fire"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "fire_rax_the_laughing_inferno",
+    "name": "Rax, the Laughing Inferno",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "fire"
+    ],
+    "attunement": [
+      "fire"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "damage_heart",
+        "amount": 5,
+        "target": "enemy"
+      },
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "water_puddle_slime",
+    "name": "Puddle Slime",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "When played, make this tile Wet.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "water_river_otter",
+    "name": "River Otter",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "water_bubble_koi",
+    "name": "Bubble Koi",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "water_rain_heron",
+    "name": "Rain Heron",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "When played, make this tile Wet.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "water_tideback_turtle",
+    "name": "Tideback Turtle",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "water_current_fox",
+    "name": "Current Fox",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Make this tile Wet. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "water_moon_whale",
+    "name": "Moon Whale",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "water_river_dragon",
+    "name": "River Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "When played, make this tile Wet.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "water_splash",
+    "name": "Splash",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Make a tile Wet.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "water_gentle_rain",
+    "name": "Gentle Rain",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Wet a tile. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_undertow",
+    "name": "Undertow",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Wet a tile and heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_tidal_parade",
+    "name": "Tidal Parade",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Create a powerful Water swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_fisher_witch_hut",
+    "name": "Fisher Witch Hut",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "water_rainmill",
+    "name": "Rainmill",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "water",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "water_moonpool_dock",
+    "name": "Moonpool Dock",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "water_tide_observatory",
+    "name": "Tide Observatory",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "water_clear_spring",
+    "name": "Clear Spring",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Turn a tile into Spring.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "spring",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_pearl_compass",
+    "name": "Pearl Compass",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "water",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_slipstream",
+    "name": "Slipstream",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Make a tile Wet. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_deepwater_blessing",
+    "name": "Deepwater Blessing",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Make a tile Wet. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_tidecaller",
+    "name": "Tidecaller",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Make this tile Wet. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "water_leviathan_calf",
+    "name": "Leviathan Calf",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "water_endless_rain",
+    "name": "Endless Rain",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Heal 5 and gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "heal_heart",
+        "amount": 5,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "water_mira_of_the_seven_tides",
+    "name": "Mira of the Seven Tides",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "water"
+    ],
+    "attunement": [
+      "water"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 2,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "earth_pebble_pal",
+    "name": "Pebble Pal",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "When played, make this tile Fortified.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "earth_burrow_mole",
+    "name": "Burrow Mole",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "earth_clay_crab",
+    "name": "Clay Crab",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "earth_stone_goat",
+    "name": "Stone Goat",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "When played, make this tile Fortified.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "earth_boulder_beetle",
+    "name": "Boulder Beetle",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "earth_ironhide_ox",
+    "name": "Ironhide Ox",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Make this tile Fortified. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "earth_hill_golem",
+    "name": "Hill Golem",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "earth_mountain_dragon",
+    "name": "Mountain Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "When played, make this tile Fortified.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "earth_pile_stones",
+    "name": "Pile Stones",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Make a tile Fortified.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "earth_raise_wall",
+    "name": "Raise Wall",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Fortify a tile and give a friendly creature there +2 Health.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "buff_unit",
+        "power": 0,
+        "health": 2,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_rockslide",
+    "name": "Rockslide",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Fortify a tile and gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_mountain_wakes",
+    "name": "Mountain Wakes",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Create a powerful Earth swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_mason_lodge",
+    "name": "Mason Lodge",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "earth_rune_quarry",
+    "name": "Rune Quarry",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "earth",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "earth_golem_workshop",
+    "name": "Golem Workshop",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "earth_citadel_garden",
+    "name": "Citadel Garden",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "earth_stonefield",
+    "name": "Stonefield",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Turn a tile into Stonefield.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "stonefield",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_builder_bell",
+    "name": "Builder Bell",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_anchor_spell",
+    "name": "Anchor Spell",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Make a tile Fortified. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_living_rampart",
+    "name": "Living Rampart",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Make a tile Fortified. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_stonekeeper",
+    "name": "Stonekeeper",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Make this tile Fortified. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "earth_walking_mountain",
+    "name": "Walking Mountain",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "earth_worldwall",
+    "name": "Worldwall",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Gain 2 Wonder and reshape the tile.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "earth_bram_king_under_hills",
+    "name": "Bram, King Under Hills",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "earth"
+    ],
+    "attunement": [
+      "earth"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 3,
+        "target": "self"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "wind_breeze_bird",
+    "name": "Breeze Bird",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "When played, make this tile Windswept.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "wind_kite_fox",
+    "name": "Kite Fox",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "wind_cloud_rabbit",
+    "name": "Cloud Rabbit",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "wind_gust_gecko",
+    "name": "Gust Gecko",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "When played, make this tile Windswept.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "wind_sailwing_goat",
+    "name": "Sailwing Goat",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "wind_whirlcat",
+    "name": "Whirlcat",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Make this tile Windswept. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "wind_sky_ray",
+    "name": "Sky Ray",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "wind_cloud_dragon",
+    "name": "Cloud Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "When played, make this tile Windswept.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "wind_puff",
+    "name": "Puff",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Make a tile Windswept.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "wind_tailwind",
+    "name": "Tailwind",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Push an enemy creature 1 tile.",
+    "effects": [
+      {
+        "kind": "move_unit",
+        "mode": "push",
+        "distance": 1,
+        "target": "enemy_on_tile"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_updraft",
+    "name": "Updraft",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Draw 2 cards.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_great_gust",
+    "name": "Great Gust",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Create a powerful Wind swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_kite_shop",
+    "name": "Kite Shop",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "wind_windmill_house",
+    "name": "Windmill House",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "wind",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "wind_cloudport",
+    "name": "Cloudport",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "wind_floating_market",
+    "name": "Floating Market",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "wind_skygrass",
+    "name": "Skygrass",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Turn a tile into Skygrass.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "skygrass",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_feather_charm",
+    "name": "Feather Charm",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "wind",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_swap_places",
+    "name": "Swap Places",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Make a tile Windswept. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_road_of_air",
+    "name": "Road of Air",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Make a tile Windswept. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_wayfinder",
+    "name": "Wayfinder",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Make this tile Windswept. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "wind_cyclone_roc",
+    "name": "Cyclone Roc",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "wind_open_sky",
+    "name": "Open Sky",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Draw 3 cards.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 3,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "wind_aera_keeper_of_horizons",
+    "name": "Aera, Keeper of Horizons",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "wind"
+    ],
+    "attunement": [
+      "wind"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 2,
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "death_bone_buddy",
+    "name": "Bone Buddy",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "When played, make this tile Haunted.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "slice_ready",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "death_lantern_moth",
+    "name": "Lantern Moth",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "A simple friend with dependable stats.",
+    "effects": [],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 2
+  },
+  {
+    "id": "death_tiny_ghost",
+    "name": "Tiny Ghost",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "When played, draw 1 card.",
+    "effects": [
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 3
+  },
+  {
+    "id": "death_graveyard_cat",
+    "name": "Graveyard Cat",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "When played, make this tile Haunted.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 2
+  },
+  {
+    "id": "death_friendly_wraith",
+    "name": "Friendly Wraith",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Summon a Tiny Ghost here.",
+    "effects": [
+      {
+        "kind": "summon_token",
+        "token_id": "tiny_ghost",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 4
+  },
+  {
+    "id": "death_skullcap_crow",
+    "name": "Skullcap Crow",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Make this tile Haunted. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 3
+  },
+  {
+    "id": "death_lantern_stag",
+    "name": "Lantern Stag",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Enters with an extra +1/+1 after its magic settles.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "self_unit"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 5,
+    "health": 5
+  },
+  {
+    "id": "death_midnight_dragon",
+    "name": "Midnight Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "When played, make this tile Haunted.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature",
+      "dragon"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 5
+  },
+  {
+    "id": "death_boo",
+    "name": "Boo!",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Make a tile Haunted.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "death_haunting_song",
+    "name": "Haunting Song",
+    "type": "spell",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Summon a Tiny Ghost.",
+    "effects": [
+      {
+        "kind": "summon_token",
+        "token_id": "tiny_ghost",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_borrowed_time",
+    "name": "Borrowed Time",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Return your most recent fallen creature to your hand.",
+    "effects": [
+      {
+        "kind": "resurrect_last",
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_parade_of_ghosts",
+    "name": "Parade of Ghosts",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Create a powerful Death swing.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "summon_token",
+        "token_id": "tiny_ghost",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_lantern_keeper_hut",
+    "name": "Lantern Keeper Hut",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "landmark"
+    ],
+    "implementation_status": "slice_ready",
+    "presence": 1
+  },
+  {
+    "id": "death_memory_garden",
+    "name": "Memory Garden",
+    "type": "landmark",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [],
+    "tags": [
+      "death",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "death_moonlit_mausoleum",
+    "name": "Moonlit Mausoleum",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "death_ghost_market",
+    "name": "Ghost Market",
+    "type": "landmark",
+    "rarity": "rare",
+    "cost": 5,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "A landmark that strengthens your realm while it remains.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 2
+  },
+  {
+    "id": "death_gravegarden",
+    "name": "Gravegarden",
+    "type": "terrain",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Turn a tile into Gravegarden.",
+    "effects": [
+      {
+        "kind": "transform_terrain",
+        "terrain": "gravegarden",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_lucky_bone",
+    "name": "Lucky Bone",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Give a friendly creature +1/+1.",
+    "effects": [
+      {
+        "kind": "buff_unit",
+        "power": 1,
+        "health": 1,
+        "target": "friendly_on_tile"
+      }
+    ],
+    "tags": [
+      "death",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_come_back_soon",
+    "name": "Come Back Soon",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Make a tile Haunted. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_rebloom_the_fallen",
+    "name": "Rebloom the Fallen",
+    "type": "terrain",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Make a tile Haunted. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "terrain"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_spirit_guide",
+    "name": "Spirit Guide",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Make this tile Haunted. Heal 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 4,
+    "health": 6
+  },
+  {
+    "id": "death_kindly_reaper",
+    "name": "Kindly Reaper",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 6,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "When played, gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 6,
+    "health": 6
+  },
+  {
+    "id": "death_night_remembers",
+    "name": "Night Remembers",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 7,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Return a fallen creature and summon a Tiny Ghost.",
+    "effects": [
+      {
+        "kind": "resurrect_last",
+        "target": "self"
+      },
+      {
+        "kind": "summon_token",
+        "token_id": "tiny_ghost",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "death"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "death_nox_keeper_of_names",
+    "name": "Nox, Keeper of Names",
+    "type": "creature",
+    "rarity": "mythic",
+    "cost": 8,
+    "elements": [
+      "death"
+    ],
+    "attunement": [
+      "death"
+    ],
+    "rules": "Mythic entrance: a huge but readable elemental payoff.",
+    "effects": [
+      {
+        "kind": "resurrect_last",
+        "target": "self"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 8,
+    "health": 8
+  },
+  {
+    "id": "dual_aurora_dynamo",
+    "name": "Aurora Dynamo",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "frost",
+      "lightning"
+    ],
+    "attunement": [
+      "frost",
+      "lightning"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Frozen and Charged to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "lightning",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_wintergreen_elk",
+    "name": "Wintergreen Elk",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "frost",
+      "life"
+    ],
+    "attunement": [
+      "frost",
+      "life"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Frozen and Overgrown to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "life",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_meltheart_salamander",
+    "name": "Meltheart Salamander",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost",
+      "fire"
+    ],
+    "attunement": [
+      "frost",
+      "fire"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Frozen and Burning to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_mirrorlake_spirit",
+    "name": "Mirrorlake Spirit",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "frost",
+      "water"
+    ],
+    "attunement": [
+      "frost",
+      "water"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Frozen and Wet to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "water",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_glacier_keep",
+    "name": "Glacier Keep",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "frost",
+      "earth"
+    ],
+    "attunement": [
+      "frost",
+      "earth"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Frozen and Fortified to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_snowkite_roc",
+    "name": "Snowkite Roc",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "frost",
+      "wind"
+    ],
+    "attunement": [
+      "frost",
+      "wind"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Frozen and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_pale_lantern",
+    "name": "Pale Lantern",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "frost",
+      "death"
+    ],
+    "attunement": [
+      "frost",
+      "death"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Frozen and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "frozen",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "frost",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_stormroot_dryad",
+    "name": "Stormroot Dryad",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "lightning",
+      "life"
+    ],
+    "attunement": [
+      "lightning",
+      "life"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Charged and Overgrown to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "life",
+      "creature"
+    ],
+    "implementation_status": "slice_ready"
+  },
+  {
+    "id": "dual_thunderforge_dragon",
+    "name": "Thunderforge Dragon",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "lightning",
+      "fire"
+    ],
+    "attunement": [
+      "lightning",
+      "fire"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Charged and Burning to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_stormglass_eel",
+    "name": "Stormglass Eel",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "lightning",
+      "water"
+    ],
+    "attunement": [
+      "lightning",
+      "water"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Charged and Wet to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_copperstone_colossus",
+    "name": "Copperstone Colossus",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "lightning",
+      "earth"
+    ],
+    "attunement": [
+      "lightning",
+      "earth"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Charged and Fortified to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_tempest_courier",
+    "name": "Tempest Courier",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "lightning",
+      "wind"
+    ],
+    "attunement": [
+      "lightning",
+      "wind"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Charged and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_gravespark_wisp",
+    "name": "Gravespark Wisp",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "lightning",
+      "death"
+    ],
+    "attunement": [
+      "lightning",
+      "death"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Charged and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "lightning",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_ashbloom_fox",
+    "name": "Ashbloom Fox",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "life",
+      "fire"
+    ],
+    "attunement": [
+      "life",
+      "fire"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Overgrown and Burning to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "life",
+      "fire",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_rainforest_giant",
+    "name": "Rainforest Giant",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "life",
+      "water"
+    ],
+    "attunement": [
+      "life",
+      "water"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Overgrown and Wet to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "life",
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_worldroot_mason",
+    "name": "Worldroot Mason",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "life",
+      "earth"
+    ],
+    "attunement": [
+      "life",
+      "earth"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Overgrown and Fortified to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "life",
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_seedwind_faerie",
+    "name": "Seedwind Faerie",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "life",
+      "wind"
+    ],
+    "attunement": [
+      "life",
+      "wind"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Overgrown and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "life",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_gravegarden_witch",
+    "name": "Gravegarden Witch",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "life",
+      "death"
+    ],
+    "attunement": [
+      "life",
+      "death"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Overgrown and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "life",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_steam_dragon",
+    "name": "Steam Dragon",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "fire",
+      "water"
+    ],
+    "attunement": [
+      "fire",
+      "water"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Burning and Wet to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "fire",
+      "water",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_volcano_golem",
+    "name": "Volcano Golem",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "fire",
+      "earth"
+    ],
+    "attunement": [
+      "fire",
+      "earth"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Burning and Fortified to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "fire",
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_wildfire_kite",
+    "name": "Wildfire Kite",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "fire",
+      "wind"
+    ],
+    "attunement": [
+      "fire",
+      "wind"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Burning and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "fire",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_ashen_revenant",
+    "name": "Ashen Revenant",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "fire",
+      "death"
+    ],
+    "attunement": [
+      "fire",
+      "death"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Burning and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "fire",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_riverstone_turtle",
+    "name": "Riverstone Turtle",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "water",
+      "earth"
+    ],
+    "attunement": [
+      "water",
+      "earth"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Wet and Fortified to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "water",
+      "earth",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_monsoon_manta",
+    "name": "Monsoon Manta",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "water",
+      "wind"
+    ],
+    "attunement": [
+      "water",
+      "wind"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Wet and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "water",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_ghostwater_ferryman",
+    "name": "Ghostwater Ferryman",
+    "type": "creature",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "water",
+      "death"
+    ],
+    "attunement": [
+      "water",
+      "death"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Wet and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "water",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_floating_islander",
+    "name": "Floating Islander",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "earth",
+      "wind"
+    ],
+    "attunement": [
+      "earth",
+      "wind"
+    ],
+    "power": 4,
+    "health": 5,
+    "rules": "When played, add Fortified and Windswept to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "earth",
+      "wind",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_tombstone_gardener",
+    "name": "Tombstone Gardener",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [
+      "earth",
+      "death"
+    ],
+    "attunement": [
+      "earth",
+      "death"
+    ],
+    "power": 5,
+    "health": 3,
+    "rules": "When played, add Fortified and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "earth",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_whisperwing_ghost",
+    "name": "Whisperwing Ghost",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 5,
+    "elements": [
+      "wind",
+      "death"
+    ],
+    "attunement": [
+      "wind",
+      "death"
+    ],
+    "power": 3,
+    "health": 4,
+    "rules": "When played, add Windswept and Haunted to this tile.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      }
+    ],
+    "tags": [
+      "dual",
+      "wind",
+      "death",
+      "creature"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_phoenix_seed",
+    "name": "Phoenix Seed",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "fire",
+      "life"
+    ],
+    "attunement": [
+      "fire",
+      "life"
+    ],
+    "rules": "Burn and Overgrow a tile. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "burning",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "dual",
+      "fire",
+      "life",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_rain_of_sparks",
+    "name": "Rain of Sparks",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "water",
+      "lightning"
+    ],
+    "attunement": [
+      "water",
+      "lightning"
+    ],
+    "rules": "Wet and Charge a tile. Draw 1.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "wet",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "charged",
+        "target": "tile"
+      },
+      {
+        "kind": "draw",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "dual",
+      "water",
+      "lightning",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_skyland_rising",
+    "name": "Skyland Rising",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "earth",
+      "wind"
+    ],
+    "attunement": [
+      "earth",
+      "wind"
+    ],
+    "rules": "Fortify and Windsweep a tile. Gain 1 Wonder.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "fortified",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "windswept",
+        "target": "tile"
+      },
+      {
+        "kind": "gain_wonder",
+        "amount": 1,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "dual",
+      "earth",
+      "wind",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "dual_second_spring",
+    "name": "Second Spring",
+    "type": "spell",
+    "rarity": "rare",
+    "cost": 4,
+    "elements": [
+      "death",
+      "life"
+    ],
+    "attunement": [
+      "death",
+      "life"
+    ],
+    "rules": "Haunt and Overgrow a tile. Heal 2.",
+    "effects": [
+      {
+        "kind": "add_state",
+        "state": "haunted",
+        "target": "tile"
+      },
+      {
+        "kind": "add_state",
+        "state": "overgrown",
+        "target": "tile"
+      },
+      {
+        "kind": "heal_heart",
+        "amount": 2,
+        "target": "self"
+      }
+    ],
+    "tags": [
+      "dual",
+      "death",
+      "life",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_pocket_map",
+    "name": "Pocket Map",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_lucky_button",
+    "name": "Lucky Button",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_tea_break",
+    "name": "Tea Break",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_tiny_backpack",
+    "name": "Tiny Backpack",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 4,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_old_telescope",
+    "name": "Old Telescope",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 1,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_traveling_merchant",
+    "name": "Traveling Merchant",
+    "type": "relic",
+    "rarity": "common",
+    "cost": 2,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "relic"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_clockwork_mouse",
+    "name": "Clockwork Mouse",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 3,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "neutral_cardboard_castle",
+    "name": "Cardboard Castle",
+    "type": "creature",
+    "rarity": "common",
+    "cost": 4,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 2,
+    "health": 3
+  },
+  {
+    "id": "neutral_wandering_cart",
+    "name": "Wandering Cart",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 1,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 3,
+    "health": 4
+  },
+  {
+    "id": "neutral_magic_chalk",
+    "name": "Magic Chalk",
+    "type": "creature",
+    "rarity": "uncommon",
+    "cost": 2,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "creature"
+    ],
+    "implementation_status": "blueprint",
+    "power": 1,
+    "health": 2
+  },
+  {
+    "id": "neutral_borrowed_boots",
+    "name": "Borrowed Boots",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_storybook",
+    "name": "Storybook",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_field_kitchen",
+    "name": "Field Kitchen",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 1,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_friendly_courier",
+    "name": "Friendly Courier",
+    "type": "spell",
+    "rarity": "uncommon",
+    "cost": 2,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "spell"
+    ],
+    "implementation_status": "blueprint"
+  },
+  {
+    "id": "neutral_realm_compass",
+    "name": "Realm Compass",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 3,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  },
+  {
+    "id": "neutral_the_little_door",
+    "name": "The Little Door",
+    "type": "landmark",
+    "rarity": "uncommon",
+    "cost": 4,
+    "elements": [],
+    "attunement": [],
+    "rules": "A simple neutral tool that fits many decks.",
+    "effects": [],
+    "tags": [
+      "neutral",
+      "landmark"
+    ],
+    "implementation_status": "blueprint",
+    "presence": 1
+  }
+]

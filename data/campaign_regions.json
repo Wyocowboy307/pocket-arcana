@@ -1,0 +1,434 @@
+[
+  {
+    "id": "region_frost",
+    "name": "Snowbell Peaks",
+    "element": "frost",
+    "order": 1,
+    "description": "A playful frost region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "frost_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_pip_snowshoe",
+        "rule_twist": "None",
+        "teaches": "Frost basics"
+      },
+      {
+        "id": "frost_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_pip_snowshoe",
+        "rule_twist": "Center tile begins frozen.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "frost_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_sereva_iceheart",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "frost_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_sereva_iceheart",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "frost_boss",
+        "kind": "boss",
+        "title": "Old Man Wintermere",
+        "opponent_commander_id": "cmd_old_man_wintermere",
+        "rule_twist": "The boss starts with one special Frost landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_sereva_iceheart",
+      "cosmetic": "frost_board_trim"
+    }
+  },
+  {
+    "id": "region_lightning",
+    "name": "Stormglass Coast",
+    "element": "lightning",
+    "order": 2,
+    "description": "A playful lightning region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "lightning_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_zuzu_sparks",
+        "rule_twist": "None",
+        "teaches": "Lightning basics"
+      },
+      {
+        "id": "lightning_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_zuzu_sparks",
+        "rule_twist": "Center tile begins charged.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "lightning_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_voltara_stormborn",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "lightning_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_voltara_stormborn",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "lightning_boss",
+        "kind": "boss",
+        "title": "Professor Coil",
+        "opponent_commander_id": "cmd_professor_coil",
+        "rule_twist": "The boss starts with one special Lightning landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_voltara_stormborn",
+      "cosmetic": "lightning_board_trim"
+    }
+  },
+  {
+    "id": "region_life",
+    "name": "Mossmere",
+    "element": "life",
+    "order": 3,
+    "description": "A playful life region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "life_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_mossy_mae",
+        "rule_twist": "None",
+        "teaches": "Life basics"
+      },
+      {
+        "id": "life_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_mossy_mae",
+        "rule_twist": "Center tile begins overgrown.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "life_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_elaria_greenhand",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "life_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_elaria_greenhand",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "life_boss",
+        "kind": "boss",
+        "title": "Grandpa Oak",
+        "opponent_commander_id": "cmd_grandpa_oak",
+        "rule_twist": "The boss starts with one special Life landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_elaria_greenhand",
+      "cosmetic": "life_board_trim"
+    }
+  },
+  {
+    "id": "region_fire",
+    "name": "Cinder Carnival",
+    "element": "fire",
+    "order": 4,
+    "description": "A playful fire region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "fire_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_poppy_cinder",
+        "rule_twist": "None",
+        "teaches": "Fire basics"
+      },
+      {
+        "id": "fire_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_poppy_cinder",
+        "rule_twist": "Center tile begins burning.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "fire_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_rax_flamegrin",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "fire_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_rax_flamegrin",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "fire_boss",
+        "kind": "boss",
+        "title": "Chef Magma",
+        "opponent_commander_id": "cmd_chef_magma",
+        "rule_twist": "The boss starts with one special Fire landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_rax_flamegrin",
+      "cosmetic": "fire_board_trim"
+    }
+  },
+  {
+    "id": "region_water",
+    "name": "Rainchain Isles",
+    "element": "water",
+    "order": 5,
+    "description": "A playful water region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "water_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_mira_rainstep",
+        "rule_twist": "None",
+        "teaches": "Water basics"
+      },
+      {
+        "id": "water_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_mira_rainstep",
+        "rule_twist": "Center tile begins wet.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "water_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_captain_ripple",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "water_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_captain_ripple",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "water_boss",
+        "kind": "boss",
+        "title": "Nell Moonwater",
+        "opponent_commander_id": "cmd_nell_moonwater",
+        "rule_twist": "The boss starts with one special Water landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_captain_ripple",
+      "cosmetic": "water_board_trim"
+    }
+  },
+  {
+    "id": "region_earth",
+    "name": "Stonehome",
+    "element": "earth",
+    "order": 6,
+    "description": "A playful earth region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "earth_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_bram_stoneboot",
+        "rule_twist": "None",
+        "teaches": "Earth basics"
+      },
+      {
+        "id": "earth_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_bram_stoneboot",
+        "rule_twist": "Center tile begins fortified.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "earth_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_mason_marn",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "earth_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_mason_marn",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "earth_boss",
+        "kind": "boss",
+        "title": "Queen Pebble",
+        "opponent_commander_id": "cmd_queen_pebble",
+        "rule_twist": "The boss starts with one special Earth landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_mason_marn",
+      "cosmetic": "earth_board_trim"
+    }
+  },
+  {
+    "id": "region_wind",
+    "name": "Skyroad",
+    "element": "wind",
+    "order": 7,
+    "description": "A playful wind region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "wind_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_aera_kitekeeper",
+        "rule_twist": "None",
+        "teaches": "Wind basics"
+      },
+      {
+        "id": "wind_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_aera_kitekeeper",
+        "rule_twist": "Center tile begins windswept.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "wind_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_finn_feathercap",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "wind_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_finn_feathercap",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "wind_boss",
+        "kind": "boss",
+        "title": "The Traveling Gale",
+        "opponent_commander_id": "cmd_the_traveling_gale",
+        "rule_twist": "The boss starts with one special Wind landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_finn_feathercap",
+      "cosmetic": "wind_board_trim"
+    }
+  },
+  {
+    "id": "region_death",
+    "name": "Lantern Hollow",
+    "element": "death",
+    "order": 8,
+    "description": "A playful death region that teaches the element, then tests it.",
+    "encounters": [
+      {
+        "id": "death_welcome",
+        "kind": "duel",
+        "title": "First Steps",
+        "opponent_commander_id": "cmd_nox_lanternkeeper",
+        "rule_twist": "None",
+        "teaches": "Death basics"
+      },
+      {
+        "id": "death_world",
+        "kind": "duel",
+        "title": "The World Changes",
+        "opponent_commander_id": "cmd_nox_lanternkeeper",
+        "rule_twist": "Center tile begins haunted.",
+        "teaches": "elemental states"
+      },
+      {
+        "id": "death_puzzle",
+        "kind": "puzzle",
+        "title": "One Good Trick",
+        "opponent_commander_id": "cmd_mimi_memento",
+        "rule_twist": "Authored hand and board; solve in 1–3 actions.",
+        "teaches": "recipe or positioning"
+      },
+      {
+        "id": "death_deck",
+        "kind": "deck_challenge",
+        "title": "Build It Your Way",
+        "opponent_commander_id": "cmd_mimi_memento",
+        "rule_twist": "Choose 8 temporary cards before the duel.",
+        "teaches": "deckbuilding choices"
+      },
+      {
+        "id": "death_boss",
+        "kind": "boss",
+        "title": "Sir Boo the Polite",
+        "opponent_commander_id": "cmd_sir_boo_the_polite",
+        "rule_twist": "The boss starts with one special Death landmark.",
+        "teaches": "passing + mastery"
+      }
+    ],
+    "completion_reward": {
+      "coins": 600,
+      "commander_unlock": "cmd_mimi_memento",
+      "cosmetic": "death_board_trim"
+    }
+  }
+]

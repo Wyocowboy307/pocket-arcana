@@ -1,0 +1,75 @@
+{
+  "currencies": [
+    {
+      "id": "arcana_coin",
+      "name": "Arcana Coins",
+      "earned_from": [
+        "duels",
+        "puzzles",
+        "campaign",
+        "expeditions"
+      ],
+      "use": [
+        "unlock commanders",
+        "craft missing base cards",
+        "cosmetics"
+      ],
+      "premium": false
+    }
+  ],
+  "commander_mastery": {
+    "max_level": 20,
+    "xp_from_play": true,
+    "ranked_stat_bonus": false,
+    "rewards": [
+      {
+        "level": 2,
+        "type": "lore"
+      },
+      {
+        "level": 4,
+        "type": "portrait_frame"
+      },
+      {
+        "level": 6,
+        "type": "emote"
+      },
+      {
+        "level": 8,
+        "type": "command_vfx"
+      },
+      {
+        "level": 10,
+        "type": "mastery_sidegrade_slot"
+      },
+      {
+        "level": 12,
+        "type": "card_back"
+      },
+      {
+        "level": 15,
+        "type": "title"
+      },
+      {
+        "level": 20,
+        "type": "alternate_commander_art"
+      }
+    ]
+  },
+  "collection": {
+    "duplicate_need": false,
+    "crafting_enabled": true,
+    "starter_decks_free": true,
+    "pay_to_win_forbidden": true
+  },
+  "codex_tracks": [
+    "cards",
+    "commanders",
+    "terrain",
+    "recipes",
+    "tokens",
+    "opponents",
+    "puzzles",
+    "weird_interactions"
+  ]
+}

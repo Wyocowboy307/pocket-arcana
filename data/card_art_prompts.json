@@ -1,0 +1,962 @@
+[
+  {
+    "card_id": "frost_snowcap_cub",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Snowcap Cub. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_icicle_mouse",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Icicle Mouse. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_frostfin_pup",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Frostfin Pup. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_chillwing_owl",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Chillwing Owl. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_rimehorn_yak",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rimehorn Yak. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_glacier_fox",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Glacier Fox. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_crystal_mammoth",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Crystal Mammoth. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_winter_drake",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Winter Drake. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_snap_freeze",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Snap Freeze. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_snowglobe_trick",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Snowglobe Trick. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_cold_front",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cold Front. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_absolute_zero",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Absolute Zero. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_igloo_library",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Igloo Library. Elements: frost. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_rimewatch_tower",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rimewatch Tower. Elements: frost. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_crystal_conservatory",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Crystal Conservatory. Elements: frost. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_palace_of_quiet_snow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Palace of Quiet Snow. Elements: frost. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_fresh_snow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Fresh Snow. Elements: frost. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_icebound_charm",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Icebound Charm. Elements: frost. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_hailstorm_hop",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Hailstorm Hop. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_aurora_garden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Aurora Garden. Elements: frost. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_frostwarden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Frostwarden. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_whiteout_giant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Whiteout Giant. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_winter_without_end",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Winter Without End. Elements: frost. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "frost_sereva_crown_of_winter",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Sereva, Crown of Winter. Elements: frost. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_sparkmouse",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Sparkmouse. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_static_finch",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Static Finch. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_bolt_beetle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bolt Beetle. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_stormtail_lynx",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stormtail Lynx. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_coilback_ram",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Coilback Ram. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_thunder_pup",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Thunder Pup. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_cloud_manta",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cloud Manta. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_tempest_drake",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tempest Drake. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_quick_zap",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Quick Zap. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_bottle_lightning",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bottle Lightning. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_chain_spark",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Chain Spark. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_skybreaker",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Skybreaker. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_copper_kiteworks",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Copper Kiteworks. Elements: lightning. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_stormbell_tower",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stormbell Tower. Elements: lightning. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_coil_laboratory",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Coil Laboratory. Elements: lightning. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_thunderhead_station",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Thunderhead Station. Elements: lightning. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_charged_ground",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Charged Ground. Elements: lightning. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_stormcoil_ring",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stormcoil Ring. Elements: lightning. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_flashstep",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Flashstep. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_living_circuit",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Living Circuit. Elements: lightning. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_arc_runner",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Arc Runner. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_thunder_golem",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Thunder Golem. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_perfect_storm",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Perfect Storm. Elements: lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "lightning_voltara_heart_of_thunder",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Voltara, Heart of Thunder. Elements: lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_sproutling",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Sproutling. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_moss_frog",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Moss Frog. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_berrycap_bunny",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Berrycap Bunny. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_petal_deer",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Petal Deer. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_rootback_boar",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rootback Boar. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_bloom_bear",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bloom Bear. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_great_stag",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Great Stag. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_garden_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Garden Dragon. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_grow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Grow. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_warm_sun",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Warm Sun. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_rebloom",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rebloom. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_wild_flourish",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wild Flourish. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_herbalist_hut",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Herbalist Hut. Elements: life. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_bee_garden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bee Garden. Elements: life. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_worldroot_shrine",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Worldroot Shrine. Elements: life. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_festival_orchard",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Festival Orchard. Elements: life. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_soft_meadow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Soft Meadow. Elements: life. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_seed_satchel",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Seed Satchel. Elements: life. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_kindly_rain",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Kindly Rain. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_living_hedge",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Living Hedge. Elements: life. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_grove_keeper",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Grove Keeper. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_ancient_treant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ancient Treant. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_spring_eternal",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Spring Eternal. Elements: life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "life_elaria_mother_of_groves",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Elaria, Mother of Groves. Elements: life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_cinder_pup",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cinder Pup. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_emberbug",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Emberbug. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_coal_chick",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Coal Chick. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_ashcat",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ashcat. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_cinder_hound",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cinder Hound. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_forge_ram",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Forge Ram. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_magma_turtle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Magma Turtle. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_blazewing_drake",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Blazewing Drake. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_little_flame",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Little Flame. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_scorch_mark",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Scorch Mark. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_dragon_breath",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Dragon Breath. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_wildfire_waltz",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wildfire Waltz. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_blacksmith_nook",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Blacksmith Nook. Elements: fire. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_ember_kitchen",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ember Kitchen. Elements: fire. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_dragon_roost",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Dragon Roost. Elements: fire. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_volcano_forge",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Volcano Forge. Elements: fire. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_cinder_patch",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cinder Patch. Elements: fire. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_hot_iron_charm",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Hot Iron Charm. Elements: fire. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_firecracker",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Firecracker. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_ashbloom_rite",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ashbloom Rite. Elements: fire. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_flamekeeper",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Flamekeeper. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_lava_giant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lava Giant. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_festival_of_sparks",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Festival of Sparks. Elements: fire. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "fire_rax_the_laughing_inferno",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rax, the Laughing Inferno. Elements: fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_puddle_slime",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Puddle Slime. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_river_otter",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: River Otter. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_bubble_koi",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bubble Koi. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_rain_heron",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rain Heron. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_tideback_turtle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tideback Turtle. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_current_fox",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Current Fox. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_moon_whale",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Moon Whale. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_river_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: River Dragon. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_splash",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Splash. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_gentle_rain",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Gentle Rain. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_undertow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Undertow. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_tidal_parade",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tidal Parade. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_fisher_witch_hut",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Fisher Witch Hut. Elements: water. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_rainmill",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rainmill. Elements: water. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_moonpool_dock",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Moonpool Dock. Elements: water. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_tide_observatory",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tide Observatory. Elements: water. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_clear_spring",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Clear Spring. Elements: water. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_pearl_compass",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Pearl Compass. Elements: water. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_slipstream",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Slipstream. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_deepwater_blessing",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Deepwater Blessing. Elements: water. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_tidecaller",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tidecaller. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_leviathan_calf",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Leviathan Calf. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_endless_rain",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Endless Rain. Elements: water. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "water_mira_of_the_seven_tides",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Mira of the Seven Tides. Elements: water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_pebble_pal",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Pebble Pal. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_burrow_mole",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Burrow Mole. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_clay_crab",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Clay Crab. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_stone_goat",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stone Goat. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_boulder_beetle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Boulder Beetle. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_ironhide_ox",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ironhide Ox. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_hill_golem",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Hill Golem. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_mountain_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Mountain Dragon. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_pile_stones",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Pile Stones. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_raise_wall",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Raise Wall. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_rockslide",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rockslide. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_mountain_wakes",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Mountain Wakes. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_mason_lodge",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Mason Lodge. Elements: earth. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_rune_quarry",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rune Quarry. Elements: earth. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_golem_workshop",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Golem Workshop. Elements: earth. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_citadel_garden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Citadel Garden. Elements: earth. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_stonefield",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stonefield. Elements: earth. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_builder_bell",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Builder Bell. Elements: earth. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_anchor_spell",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Anchor Spell. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_living_rampart",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Living Rampart. Elements: earth. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_stonekeeper",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stonekeeper. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_walking_mountain",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Walking Mountain. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_worldwall",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Worldwall. Elements: earth. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "earth_bram_king_under_hills",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bram, King Under Hills. Elements: earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_breeze_bird",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Breeze Bird. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_kite_fox",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Kite Fox. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_cloud_rabbit",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cloud Rabbit. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_gust_gecko",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Gust Gecko. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_sailwing_goat",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Sailwing Goat. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_whirlcat",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Whirlcat. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_sky_ray",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Sky Ray. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_cloud_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cloud Dragon. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_puff",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Puff. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_tailwind",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tailwind. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_updraft",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Updraft. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_great_gust",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Great Gust. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_kite_shop",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Kite Shop. Elements: wind. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_windmill_house",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Windmill House. Elements: wind. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_cloudport",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cloudport. Elements: wind. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_floating_market",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Floating Market. Elements: wind. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_skygrass",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Skygrass. Elements: wind. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_feather_charm",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Feather Charm. Elements: wind. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_swap_places",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Swap Places. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_road_of_air",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Road of Air. Elements: wind. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_wayfinder",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wayfinder. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_cyclone_roc",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cyclone Roc. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_open_sky",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Open Sky. Elements: wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "wind_aera_keeper_of_horizons",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Aera, Keeper of Horizons. Elements: wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_bone_buddy",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Bone Buddy. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_lantern_moth",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lantern Moth. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_tiny_ghost",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tiny Ghost. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_graveyard_cat",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Graveyard Cat. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_friendly_wraith",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Friendly Wraith. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_skullcap_crow",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Skullcap Crow. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_lantern_stag",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lantern Stag. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_midnight_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Midnight Dragon. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_boo",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Boo!. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_haunting_song",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Haunting Song. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_borrowed_time",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Borrowed Time. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_parade_of_ghosts",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Parade of Ghosts. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_lantern_keeper_hut",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lantern Keeper Hut. Elements: death. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_memory_garden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Memory Garden. Elements: death. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_moonlit_mausoleum",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Moonlit Mausoleum. Elements: death. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_ghost_market",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ghost Market. Elements: death. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_gravegarden",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Gravegarden. Elements: death. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_lucky_bone",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lucky Bone. Elements: death. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_come_back_soon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Come Back Soon. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_rebloom_the_fallen",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rebloom the Fallen. Elements: death. Type: terrain. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_spirit_guide",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Spirit Guide. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_kindly_reaper",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Kindly Reaper. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_night_remembers",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Night Remembers. Elements: death. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "death_nox_keeper_of_names",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Nox, Keeper of Names. Elements: death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_aurora_dynamo",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Aurora Dynamo. Elements: frost, lightning. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_wintergreen_elk",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wintergreen Elk. Elements: frost, life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_meltheart_salamander",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Meltheart Salamander. Elements: frost, fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_mirrorlake_spirit",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Mirrorlake Spirit. Elements: frost, water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_glacier_keep",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Glacier Keep. Elements: frost, earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_snowkite_roc",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Snowkite Roc. Elements: frost, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_pale_lantern",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Pale Lantern. Elements: frost, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_stormroot_dryad",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stormroot Dryad. Elements: lightning, life. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_thunderforge_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Thunderforge Dragon. Elements: lightning, fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_stormglass_eel",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Stormglass Eel. Elements: lightning, water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_copperstone_colossus",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Copperstone Colossus. Elements: lightning, earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_tempest_courier",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tempest Courier. Elements: lightning, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_gravespark_wisp",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Gravespark Wisp. Elements: lightning, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_ashbloom_fox",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ashbloom Fox. Elements: life, fire. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_rainforest_giant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rainforest Giant. Elements: life, water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_worldroot_mason",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Worldroot Mason. Elements: life, earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_seedwind_faerie",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Seedwind Faerie. Elements: life, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_gravegarden_witch",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Gravegarden Witch. Elements: life, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_steam_dragon",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Steam Dragon. Elements: fire, water. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_volcano_golem",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Volcano Golem. Elements: fire, earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_wildfire_kite",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wildfire Kite. Elements: fire, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_ashen_revenant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ashen Revenant. Elements: fire, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_riverstone_turtle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Riverstone Turtle. Elements: water, earth. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_monsoon_manta",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Monsoon Manta. Elements: water, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_ghostwater_ferryman",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Ghostwater Ferryman. Elements: water, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_floating_islander",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Floating Islander. Elements: earth, wind. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_tombstone_gardener",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tombstone Gardener. Elements: earth, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_whisperwing_ghost",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Whisperwing Ghost. Elements: wind, death. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_phoenix_seed",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Phoenix Seed. Elements: fire, life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_rain_of_sparks",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Rain of Sparks. Elements: water, lightning. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_skyland_rising",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Skyland Rising. Elements: earth, wind. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "dual_second_spring",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Second Spring. Elements: death, life. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_pocket_map",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Pocket Map. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_lucky_button",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Lucky Button. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_tea_break",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tea Break. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_tiny_backpack",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Tiny Backpack. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_old_telescope",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Old Telescope. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_traveling_merchant",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Traveling Merchant. Elements: neutral. Type: relic. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_clockwork_mouse",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Clockwork Mouse. Elements: neutral. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_cardboard_castle",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Cardboard Castle. Elements: neutral. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_wandering_cart",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Wandering Cart. Elements: neutral. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_magic_chalk",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Magic Chalk. Elements: neutral. Type: creature. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_borrowed_boots",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Borrowed Boots. Elements: neutral. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_storybook",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Storybook. Elements: neutral. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_field_kitchen",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Field Kitchen. Elements: neutral. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_friendly_courier",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Friendly Courier. Elements: neutral. Type: spell. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_realm_compass",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: Realm Compass. Elements: neutral. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  },
+  {
+    "card_id": "neutral_the_little_door",
+    "prompt": "2D top-down pixel art for Pocket Arcana, clean chunky 32px-inspired shapes, readable silhouette, whimsical magical storybook tone, limited harmonious palette, no text, transparent or simple tile-friendly background, not photorealistic, not 3D, consistent soft outline. Subject: The Little Door. Elements: neutral. Type: landmark. Show one clear focal subject and a hint of its board effect."
+  }
+]

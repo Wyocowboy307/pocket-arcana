@@ -1,0 +1,1170 @@
+[
+  {
+    "id": "cmd_pip_snowshoe",
+    "name": "Pip Snowshoe",
+    "element": "frost",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Frozen.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "frozen",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_sereva_iceheart",
+    "name": "Sereva Iceheart",
+    "element": "frost",
+    "unlock_cost": 1350,
+    "passive_text": "The first Frost card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "frost"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Frozen and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "frozen",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_old_man_wintermere",
+    "name": "Old Man Wintermere",
+    "element": "frost",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Frozen each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "frozen"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Frozen.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "frozen",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_zuzu_sparks",
+    "name": "Zuzu Sparks",
+    "element": "lightning",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Charged.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "charged",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_voltara_stormborn",
+    "name": "Voltara Stormborn",
+    "element": "lightning",
+    "unlock_cost": 1350,
+    "passive_text": "The first Lightning card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "lightning"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Charged and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "charged",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_professor_coil",
+    "name": "Professor Coil",
+    "element": "lightning",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Charged each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "charged"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Charged.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "charged",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_mossy_mae",
+    "name": "Mossy Mae",
+    "element": "life",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Overgrown.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "overgrown",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_elaria_greenhand",
+    "name": "Elaria Greenhand",
+    "element": "life",
+    "unlock_cost": 1350,
+    "passive_text": "The first Life card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "life"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Overgrown and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "overgrown",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_grandpa_oak",
+    "name": "Grandpa Oak",
+    "element": "life",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Overgrown each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "overgrown"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Overgrown.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "overgrown",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_poppy_cinder",
+    "name": "Poppy Cinder",
+    "element": "fire",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Burning.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "burning",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_rax_flamegrin",
+    "name": "Rax Flamegrin",
+    "element": "fire",
+    "unlock_cost": 1350,
+    "passive_text": "The first Fire card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "fire"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Burning and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "burning",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_chef_magma",
+    "name": "Chef Magma",
+    "element": "fire",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Burning each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "burning"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Burning.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "burning",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_mira_rainstep",
+    "name": "Mira Rainstep",
+    "element": "water",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Wet.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "wet",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_captain_ripple",
+    "name": "Captain Ripple",
+    "element": "water",
+    "unlock_cost": 1350,
+    "passive_text": "The first Water card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "water"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Wet and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "wet",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_nell_moonwater",
+    "name": "Nell Moonwater",
+    "element": "water",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Wet each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "wet"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Wet.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "wet",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_bram_stoneboot",
+    "name": "Bram Stoneboot",
+    "element": "earth",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Fortified.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "fortified",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_mason_marn",
+    "name": "Mason Marn",
+    "element": "earth",
+    "unlock_cost": 1350,
+    "passive_text": "The first Earth card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "earth"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Fortified and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "fortified",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_queen_pebble",
+    "name": "Queen Pebble",
+    "element": "earth",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Fortified each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "fortified"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Fortified.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "fortified",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_aera_kitekeeper",
+    "name": "Aera Kitekeeper",
+    "element": "wind",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Windswept.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "windswept",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_finn_feathercap",
+    "name": "Finn Feathercap",
+    "element": "wind",
+    "unlock_cost": 1350,
+    "passive_text": "The first Wind card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "wind"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Windswept and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "windswept",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_the_traveling_gale",
+    "name": "The Traveling Gale",
+    "element": "wind",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Windswept each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "windswept"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Windswept.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "windswept",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_nox_lanternkeeper",
+    "name": "Nox Lanternkeeper",
+    "element": "death",
+    "unlock_cost": 0,
+    "passive_text": "At the start of each Chapter, gain 1 bonus Aether on your first turn.",
+    "passive": {
+      "trigger": "on_chapter_start",
+      "once_per_chapter": false,
+      "conditions": [],
+      "effects": [
+        {
+          "kind": "gain_aether",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Haunted.",
+    "command": {
+      "effects": [
+        {
+          "kind": "add_state",
+          "state": "haunted",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": true
+  },
+  {
+    "id": "cmd_mimi_memento",
+    "name": "Mimi Memento",
+    "element": "death",
+    "unlock_cost": 1350,
+    "passive_text": "The first Death card you play each Chapter draws 1.",
+    "passive": {
+      "trigger": "on_first_card_played",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "card_element",
+          "element": "death"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — make a tile Haunted and gain 1 Wonder.",
+    "command": {
+      "effects": [
+        {
+          "kind": "gain_wonder",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "haunted",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  },
+  {
+    "id": "cmd_sir_boo_the_polite",
+    "name": "Sir Boo the Polite",
+    "element": "death",
+    "unlock_cost": 1800,
+    "passive_text": "The first time you create Haunted each Chapter, heal 1.",
+    "passive": {
+      "trigger": "on_first_state_added",
+      "once_per_chapter": true,
+      "conditions": [
+        {
+          "kind": "state_is",
+          "state": "haunted"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "heal_heart",
+          "amount": 1,
+          "target": "self"
+        }
+      ]
+    },
+    "command_text": "Command — draw 1, then make a tile Haunted.",
+    "command": {
+      "effects": [
+        {
+          "kind": "draw",
+          "amount": 1,
+          "target": "self"
+        },
+        {
+          "kind": "add_state",
+          "state": "haunted",
+          "target": "tile"
+        }
+      ]
+    },
+    "mastery_sidegrades": [
+      {
+        "id": "steady",
+        "name": "Steady Hand",
+        "tradeoff": "Smaller effect, easier setup."
+      },
+      {
+        "id": "wild",
+        "name": "Wild Hand",
+        "tradeoff": "Bigger effect, stricter setup."
+      }
+    ],
+    "starter": false
+  }
+]

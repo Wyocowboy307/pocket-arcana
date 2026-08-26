@@ -1,0 +1,562 @@
+[
+  {
+    "id": "future_frost_01",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 1",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_02",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 2",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_03",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 3",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_04",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 4",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_05",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 5",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_06",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 6",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_07",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 7",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_08",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 8",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_09",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 9",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_frost_10",
+    "element": "frost",
+    "working_name": "Frost Expansion Hook 10",
+    "pitch": "Explore a new frost mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_01",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 1",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_02",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 2",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_03",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 3",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_04",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 4",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_05",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 5",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_06",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 6",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_07",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 7",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_08",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 8",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_09",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 9",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_lightning_10",
+    "element": "lightning",
+    "working_name": "Lightning Expansion Hook 10",
+    "pitch": "Explore a new lightning mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_01",
+    "element": "life",
+    "working_name": "Life Expansion Hook 1",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_02",
+    "element": "life",
+    "working_name": "Life Expansion Hook 2",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_03",
+    "element": "life",
+    "working_name": "Life Expansion Hook 3",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_04",
+    "element": "life",
+    "working_name": "Life Expansion Hook 4",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_05",
+    "element": "life",
+    "working_name": "Life Expansion Hook 5",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_06",
+    "element": "life",
+    "working_name": "Life Expansion Hook 6",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_07",
+    "element": "life",
+    "working_name": "Life Expansion Hook 7",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_08",
+    "element": "life",
+    "working_name": "Life Expansion Hook 8",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_09",
+    "element": "life",
+    "working_name": "Life Expansion Hook 9",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_life_10",
+    "element": "life",
+    "working_name": "Life Expansion Hook 10",
+    "pitch": "Explore a new life mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_01",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 1",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_02",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 2",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_03",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 3",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_04",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 4",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_05",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 5",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_06",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 6",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_07",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 7",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_08",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 8",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_09",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 9",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_fire_10",
+    "element": "fire",
+    "working_name": "Fire Expansion Hook 10",
+    "pitch": "Explore a new fire mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_01",
+    "element": "water",
+    "working_name": "Water Expansion Hook 1",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_02",
+    "element": "water",
+    "working_name": "Water Expansion Hook 2",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_03",
+    "element": "water",
+    "working_name": "Water Expansion Hook 3",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_04",
+    "element": "water",
+    "working_name": "Water Expansion Hook 4",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_05",
+    "element": "water",
+    "working_name": "Water Expansion Hook 5",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_06",
+    "element": "water",
+    "working_name": "Water Expansion Hook 6",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_07",
+    "element": "water",
+    "working_name": "Water Expansion Hook 7",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_08",
+    "element": "water",
+    "working_name": "Water Expansion Hook 8",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_09",
+    "element": "water",
+    "working_name": "Water Expansion Hook 9",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_water_10",
+    "element": "water",
+    "working_name": "Water Expansion Hook 10",
+    "pitch": "Explore a new water mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_01",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 1",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_02",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 2",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_03",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 3",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_04",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 4",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_05",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 5",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_06",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 6",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_07",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 7",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_08",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 8",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_09",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 9",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_earth_10",
+    "element": "earth",
+    "working_name": "Earth Expansion Hook 10",
+    "pitch": "Explore a new earth mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_01",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 1",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_02",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 2",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_03",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 3",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_04",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 4",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_05",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 5",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_06",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 6",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_07",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 7",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_08",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 8",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_09",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 9",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_wind_10",
+    "element": "wind",
+    "working_name": "Wind Expansion Hook 10",
+    "pitch": "Explore a new wind mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_01",
+    "element": "death",
+    "working_name": "Death Expansion Hook 1",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_02",
+    "element": "death",
+    "working_name": "Death Expansion Hook 2",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_03",
+    "element": "death",
+    "working_name": "Death Expansion Hook 3",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_04",
+    "element": "death",
+    "working_name": "Death Expansion Hook 4",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_05",
+    "element": "death",
+    "working_name": "Death Expansion Hook 5",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_06",
+    "element": "death",
+    "working_name": "Death Expansion Hook 6",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_07",
+    "element": "death",
+    "working_name": "Death Expansion Hook 7",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_08",
+    "element": "death",
+    "working_name": "Death Expansion Hook 8",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_09",
+    "element": "death",
+    "working_name": "Death Expansion Hook 9",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  },
+  {
+    "id": "future_death_10",
+    "element": "death",
+    "working_name": "Death Expansion Hook 10",
+    "pitch": "Explore a new death mechanic that changes the visible board without adding hidden bookkeeping.",
+    "status": "idea_only"
+  }
+]

@@ -1,0 +1,450 @@
+[
+  {
+    "id": "recipe_aurora_ice",
+    "name": "Aurora Ice",
+    "states": [
+      "frozen",
+      "charged"
+    ],
+    "result_terrain": "aurora_ice",
+    "attunements": [
+      "frost",
+      "lightning"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Frost meets Lightning?",
+    "revealed_by_default": true
+  },
+  {
+    "id": "recipe_wintergarden",
+    "name": "Wintergarden",
+    "states": [
+      "frozen",
+      "overgrown"
+    ],
+    "result_terrain": "wintergarden",
+    "attunements": [
+      "frost",
+      "life"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Frost meets Life?",
+    "revealed_by_default": true
+  },
+  {
+    "id": "recipe_meltwater",
+    "name": "Meltwater",
+    "states": [
+      "frozen",
+      "burning"
+    ],
+    "result_terrain": "meltwater",
+    "attunements": [
+      "frost",
+      "fire"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Frost meets Fire?",
+    "revealed_by_default": true
+  },
+  {
+    "id": "recipe_mirror_ice",
+    "name": "Mirror Ice",
+    "states": [
+      "frozen",
+      "wet"
+    ],
+    "result_terrain": "mirror_ice",
+    "attunements": [
+      "frost",
+      "water"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Frost meets Water?",
+    "revealed_by_default": true
+  },
+  {
+    "id": "recipe_permafrost_keep",
+    "name": "Permafrost Keep",
+    "states": [
+      "frozen",
+      "fortified"
+    ],
+    "result_terrain": "permafrost_keep",
+    "attunements": [
+      "frost",
+      "earth"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Frost meets Earth?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_blizzard_path",
+    "name": "Blizzard Path",
+    "states": [
+      "frozen",
+      "windswept"
+    ],
+    "result_terrain": "blizzard_path",
+    "attunements": [
+      "frost",
+      "wind"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Frost meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_pale_grave",
+    "name": "Pale Grave",
+    "states": [
+      "frozen",
+      "haunted"
+    ],
+    "result_terrain": "pale_grave",
+    "attunements": [
+      "frost",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Frost meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_stormroot",
+    "name": "Stormroot",
+    "states": [
+      "charged",
+      "overgrown"
+    ],
+    "result_terrain": "stormroot",
+    "attunements": [
+      "lightning",
+      "life"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Lightning meets Life?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_plasma_coal",
+    "name": "Plasma Coal",
+    "states": [
+      "charged",
+      "burning"
+    ],
+    "result_terrain": "plasma_coal",
+    "attunements": [
+      "lightning",
+      "fire"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Lightning meets Fire?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_stormglass",
+    "name": "Stormglass",
+    "states": [
+      "charged",
+      "wet"
+    ],
+    "result_terrain": "stormglass",
+    "attunements": [
+      "lightning",
+      "water"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Lightning meets Water?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_lodestone_field",
+    "name": "Lodestone Field",
+    "states": [
+      "charged",
+      "fortified"
+    ],
+    "result_terrain": "lodestone_field",
+    "attunements": [
+      "lightning",
+      "earth"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Lightning meets Earth?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_thundercloud",
+    "name": "Thundercloud",
+    "states": [
+      "charged",
+      "windswept"
+    ],
+    "result_terrain": "thundercloud",
+    "attunements": [
+      "lightning",
+      "wind"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Lightning meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_gravespark",
+    "name": "Gravespark",
+    "states": [
+      "charged",
+      "haunted"
+    ],
+    "result_terrain": "gravespark",
+    "attunements": [
+      "lightning",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Lightning meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_ashbloom",
+    "name": "Ashbloom",
+    "states": [
+      "overgrown",
+      "burning"
+    ],
+    "result_terrain": "ashbloom",
+    "attunements": [
+      "life",
+      "fire"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Life meets Fire?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_rain_garden",
+    "name": "Rain Garden",
+    "states": [
+      "overgrown",
+      "wet"
+    ],
+    "result_terrain": "rain_garden",
+    "attunements": [
+      "life",
+      "water"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Life meets Water?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_worldroot",
+    "name": "Worldroot",
+    "states": [
+      "overgrown",
+      "fortified"
+    ],
+    "result_terrain": "worldroot",
+    "attunements": [
+      "life",
+      "earth"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Life meets Earth?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_seedwind",
+    "name": "Seedwind",
+    "states": [
+      "overgrown",
+      "windswept"
+    ],
+    "result_terrain": "seedwind",
+    "attunements": [
+      "life",
+      "wind"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Life meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_gravegarden_bloom",
+    "name": "Gravegarden Bloom",
+    "states": [
+      "overgrown",
+      "haunted"
+    ],
+    "result_terrain": "gravegarden_bloom",
+    "attunements": [
+      "life",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Life meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_steamfield",
+    "name": "Steamfield",
+    "states": [
+      "burning",
+      "wet"
+    ],
+    "result_terrain": "steamfield",
+    "attunements": [
+      "fire",
+      "water"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Fire meets Water?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_volcano",
+    "name": "Volcano",
+    "states": [
+      "burning",
+      "fortified"
+    ],
+    "result_terrain": "volcano",
+    "attunements": [
+      "fire",
+      "earth"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Fire meets Earth?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_firestorm",
+    "name": "Firestorm",
+    "states": [
+      "burning",
+      "windswept"
+    ],
+    "result_terrain": "firestorm",
+    "attunements": [
+      "fire",
+      "wind"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Fire meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_ashen_hollow",
+    "name": "Ashen Hollow",
+    "states": [
+      "burning",
+      "haunted"
+    ],
+    "result_terrain": "ashen_hollow",
+    "attunements": [
+      "fire",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Fire meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_riverstone",
+    "name": "Riverstone",
+    "states": [
+      "wet",
+      "fortified"
+    ],
+    "result_terrain": "riverstone",
+    "attunements": [
+      "water",
+      "earth"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Water meets Earth?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_monsoon",
+    "name": "Monsoon",
+    "states": [
+      "wet",
+      "windswept"
+    ],
+    "result_terrain": "monsoon",
+    "attunements": [
+      "water",
+      "wind"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Water meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_ghostwater",
+    "name": "Ghostwater",
+    "states": [
+      "wet",
+      "haunted"
+    ],
+    "result_terrain": "ghostwater",
+    "attunements": [
+      "water",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Water meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_floating_island",
+    "name": "Floating Island",
+    "states": [
+      "fortified",
+      "windswept"
+    ],
+    "result_terrain": "floating_island",
+    "attunements": [
+      "earth",
+      "wind"
+    ],
+    "wonder": 1,
+    "discovery_hint": "What happens when Earth meets Wind?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_tombgarden",
+    "name": "Tombgarden",
+    "states": [
+      "fortified",
+      "haunted"
+    ],
+    "result_terrain": "tombgarden",
+    "attunements": [
+      "earth",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Earth meets Death?",
+    "revealed_by_default": false
+  },
+  {
+    "id": "recipe_whispermoor",
+    "name": "Whispermoor",
+    "states": [
+      "windswept",
+      "haunted"
+    ],
+    "result_terrain": "whispermoor",
+    "attunements": [
+      "wind",
+      "death"
+    ],
+    "wonder": 0,
+    "discovery_hint": "What happens when Wind meets Death?",
+    "revealed_by_default": false
+  }
+]

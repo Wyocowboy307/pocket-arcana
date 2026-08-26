@@ -1,0 +1,322 @@
+{
+  "project": "Pocket Arcana",
+  "version": "0.4.0-graybox",
+  "generated_date": "2026-08-26",
+  "godot_target": "4.7.2-stable",
+  "content_counts": {
+    "cards": 240,
+    "slice_ready_cards": 32,
+    "commanders": 24,
+    "starter_decks": 8,
+    "advanced_precons": 16,
+    "recipes": 28,
+    "tokens": 12,
+    "archetypes": 24,
+    "opponents": 24,
+    "campaign_regions": 8,
+    "campaign_encounters": 40,
+    "art_prompts": 240
+  },
+  "validation": {
+    "python_content": "pass",
+    "python_tests": "pass",
+    "godot_runtime": "pending real Godot executable"
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 89,
+      "sha256": "cb3e3d402ad6ab8c56b995f5c7de50bf1d094d5ea7aed2a1b8a212afe57537df"
+    },
+    {
+      "path": ".pytest_cache/.gitignore",
+      "bytes": 37,
+      "sha256": "3ed731b65d06150c138e2dadb0be0697550888a6b47eb8c45ecc9adba8b8e9bd"
+    },
+    {
+      "path": ".pytest_cache/CACHEDIR.TAG",
+      "bytes": 191,
+      "sha256": "37dc88ef9a0abeddbe81053a6dd8fdfb13afb613045ea1eb4a5c815a74a3bde4"
+    },
+    {
+      "path": ".pytest_cache/README.md",
+      "bytes": 302,
+      "sha256": "73fd6fccdd802c419a6b2d983d6c3173b7da97558ac4b589edec2dfe443db9ad"
+    },
+    {
+      "path": ".pytest_cache/v/cache/nodeids",
+      "bytes": 42,
+      "sha256": "7e5c20a21382358cf57e56bc03c5671e5f58984a70fef327ca8d99ed2516b084"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 1921,
+      "sha256": "9f478d948c7ec9e02bc25ad44da8d9cfd8b9a06dcfe3a316e671f561c41c37f3"
+    },
+    {
+      "path": "PROJECT_STATUS.md",
+      "bytes": 1430,
+      "sha256": "c490bd63af3ecfbfcd1de1cae854bc6b53916623f9085c39ae7af9985d2985d8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1659,
+      "sha256": "eeea2593083f86aa71d7064bce482b7c0ef1ed56f5159b01721f3cb22021379f"
+    },
+    {
+      "path": "data/archetype_blueprints.json",
+      "bytes": 7161,
+      "sha256": "7781b7daf9ae182ab1c21bee4c871379a4ab6c6f67aaaa16b9abd238862fc773"
+    },
+    {
+      "path": "data/campaign_regions.json",
+      "bytes": 13309,
+      "sha256": "a5afcda39339c87b05c31a5235f195eba17628176cc3a9c2b5b92eedc450faeb"
+    },
+    {
+      "path": "data/card_art_prompts.json",
+      "bytes": 107996,
+      "sha256": "b476a8cea13b7f8c3e68cab3833ba4e148af1ec3b5dabefea22664dbd49a63f2"
+    },
+    {
+      "path": "data/combo_recipes.json",
+      "bytes": 9236,
+      "sha256": "786722145207e6936436ce6677d0e21b71f208d56fb1a35969509888b512a1b4"
+    },
+    {
+      "path": "data/commanders.json",
+      "bytes": 26388,
+      "sha256": "570dcad2c28d8aa9966aa61b8a6bd3b3775c9b388641901f0820df1ca9055ee0"
+    },
+    {
+      "path": "data/core_set.json",
+      "bytes": 127884,
+      "sha256": "3923c954597c461460dbcd5e417f10fee6bdb14f090af65058532d149a15307d"
+    },
+    {
+      "path": "data/elements.json",
+      "bytes": 2488,
+      "sha256": "a34cf903e3e966ad6d3db4db05628fc97942078556a57f7e4b3655ff82b83be5"
+    },
+    {
+      "path": "data/future_blueprints.json",
+      "bytes": 19651,
+      "sha256": "f64a4869d78463bc6fd5020ccfc1d15046941dc5c5f37a97bfb47f131722c969"
+    },
+    {
+      "path": "data/keywords.json",
+      "bytes": 3251,
+      "sha256": "01063cfba518731195294a567aebc524cedf9591e3ae028bf7f765618540ad59"
+    },
+    {
+      "path": "data/opponents.json",
+      "bytes": 12367,
+      "sha256": "d821b58c2a63ea41d0371b945b86fe2d8b07d426e776e690bb34f310e249de36"
+    },
+    {
+      "path": "data/preconstructed_decks.json",
+      "bytes": 22713,
+      "sha256": "b1cf3427101cfbceaa9c02f4cac94215ff9114f8b73d5fa6fcb0a3ae1297a576"
+    },
+    {
+      "path": "data/progression.json",
+      "bytes": 1317,
+      "sha256": "7840b149f4d2a2d697c12503dd8ac1cbe934a8640cd70de5153a5048086ee632"
+    },
+    {
+      "path": "data/starter_decks.json",
+      "bytes": 11332,
+      "sha256": "bdf0789e7fdb8fc009c109552fd25d3f293acd962832e14e92c571251b78fa20"
+    },
+    {
+      "path": "data/terrain_attunement.json",
+      "bytes": 1637,
+      "sha256": "9e5bb535f542590bc4a7f033dda4fd22e23ff61aec3e67154870d28e6d7a3983"
+    },
+    {
+      "path": "data/tokens.json",
+      "bytes": 2047,
+      "sha256": "169b15492c368e978f27f094c40e05b5be2d330e5eaa49803f4029969687be49"
+    },
+    {
+      "path": "data/tutorial_steps.json",
+      "bytes": 1475,
+      "sha256": "2333d1c917543aa1317caeee7399acb79caa7492aa9735ccc41aa3d3047d9fd1"
+    },
+    {
+      "path": "docs/ANIMATION_BIBLE.md",
+      "bytes": 1342,
+      "sha256": "1e04c1eb26a3ded9814fbb071be0f7f529c1f93c518fb721617531886320f3df"
+    },
+    {
+      "path": "docs/ART_BIBLE.md",
+      "bytes": 789,
+      "sha256": "c560afae650c6a8be9eeb4f26d6d2f924e1323c7c217b839277af6820c7669b2"
+    },
+    {
+      "path": "docs/CARD_DESIGN_RULES.md",
+      "bytes": 1989,
+      "sha256": "8be5c96655017a7fb8735933010f5fb8f1da6b3c1f8451178d2b23eff27cca02"
+    },
+    {
+      "path": "docs/CLAUDE_HANDOFF.md",
+      "bytes": 1539,
+      "sha256": "6c4aa5e8086466f23a922b41ad76f9e6c1e9516659799b52f71a1cc15dcbd386"
+    },
+    {
+      "path": "docs/COLLECTION_AND_REPLAY_LOOP.md",
+      "bytes": 874,
+      "sha256": "332b8df4f57d3a75df8c1d6505aa255816b15a3b1966629ec2c11c8f818791f7"
+    },
+    {
+      "path": "docs/COMMANDERS.md",
+      "bytes": 632,
+      "sha256": "9bb951853a08bb6b47fb346d8429f39bc4230f5727ff448838208b96f86ba312"
+    },
+    {
+      "path": "docs/CONTENT_SCHEMA.md",
+      "bytes": 1090,
+      "sha256": "f436e9042d8a259deec753af7261b77a157f765d4c45a6a65cbbc02225020257"
+    },
+    {
+      "path": "docs/DESIGN_DECISIONS.md",
+      "bytes": 1417,
+      "sha256": "a927eac0a61e38cb869eb6dc1f3c41e7122504ca4c5810c964fe5b33bc16053e"
+    },
+    {
+      "path": "docs/GAME_DESIGN.md",
+      "bytes": 8653,
+      "sha256": "34c6cc22af6fad00af3cc15072b2680641b2c0e5850af3c3d0061c4a41fa14ef"
+    },
+    {
+      "path": "docs/GODOT_AI_WORKFLOW.md",
+      "bytes": 1674,
+      "sha256": "f3a5e7d11cad672ad94108f2993b1b4ace7992de150b4ac7a06f9cbd74429bb0"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_NOTES.md",
+      "bytes": 881,
+      "sha256": "a0c618d13265c475706bbc3d0e2a61fbaa3edaf23ba5d81e94a6d5c787999b33"
+    },
+    {
+      "path": "docs/MATCH_RULES_V1.md",
+      "bytes": 1923,
+      "sha256": "57f8eb8e1e510461a78f79d0459e68530313d0773489e7912161b7f27b365dcd"
+    },
+    {
+      "path": "docs/ONBOARDING_AND_ACCESSIBILITY.md",
+      "bytes": 1140,
+      "sha256": "3927a519da47c42f5d30b58fa2a1ca15b38ba972e4e4fc308f5c74573b24da26"
+    },
+    {
+      "path": "docs/OPUS_CONTEXT.md",
+      "bytes": 2332,
+      "sha256": "ca42a553b938a3063f6bf9fa6d1f9249e1fee9f72d9b420413eda0f52eab89de"
+    },
+    {
+      "path": "docs/PLAYTEST_MATRIX.md",
+      "bytes": 1022,
+      "sha256": "779391c09afdaf71434feab24b3be904e3176fcbc1ea85beb7386cd5c62bf28f"
+    },
+    {
+      "path": "docs/ROADMAP_AND_TASKS.md",
+      "bytes": 1728,
+      "sha256": "adbffa3a63d7676c93a39f713a37ef33c2c1bf118f940e3ff878bb8023e468e0"
+    },
+    {
+      "path": "project.godot",
+      "bytes": 710,
+      "sha256": "863ff80f9d1c1acb425f2bcac23de14504afe2cc06221e72df7a6cd7606d3a1c"
+    },
+    {
+      "path": "run_smoke_test.sh",
+      "bytes": 342,
+      "sha256": "369498ae6cc74e55d3670ff53f5b83d879e0d4a84d3d70fa0315f0aac6c9f0c0"
+    },
+    {
+      "path": "scenes/main.tscn",
+      "bytes": 276,
+      "sha256": "881392a832cdef8c1382df9287c57fbc0c55c07611d091bc5d96f10b4f278e79"
+    },
+    {
+      "path": "scenes/self_test.tscn",
+      "bytes": 171,
+      "sha256": "9a133b9bc305b3a1bb3b2bddecfbc0a3fee5e704656978fc23b40c26684e0de7"
+    },
+    {
+      "path": "scripts/core/board_model.gd",
+      "bytes": 2792,
+      "sha256": "0bcb95f77992737a0eeb2fbafadc4ae623da5a6761ece19da2da7cf5c08c4325"
+    },
+    {
+      "path": "scripts/core/combo_resolver.gd",
+      "bytes": 1009,
+      "sha256": "7d7cb8c5efec8f9f3a5d6c9ebc5026fecb53a4bc0133eba1a21b5d2af7fd67a1"
+    },
+    {
+      "path": "scripts/core/content_database.gd",
+      "bytes": 1796,
+      "sha256": "bc65d1d910bd2b79e0744fb8985b4099bff802826773d8da50967eb4082465b0"
+    },
+    {
+      "path": "scripts/core/deck_builder_model.gd",
+      "bytes": 2618,
+      "sha256": "cea62030917c6c3788c6feadc7b7732779acead803714681669bcbc8e5eefa49"
+    },
+    {
+      "path": "scripts/core/deck_validator.gd",
+      "bytes": 1007,
+      "sha256": "746f09253df072528606cbad19c0ab4bbfcc10e02393a0ee84c1a4a2e2177ad5"
+    },
+    {
+      "path": "scripts/core/effect_resolver.gd",
+      "bytes": 4523,
+      "sha256": "2c4b70331743b068426842d9d68c07356d85b31f27d92aed5f27528d60890b6a"
+    },
+    {
+      "path": "scripts/core/match_engine.gd",
+      "bytes": 13951,
+      "sha256": "78d994ff26d912b8e87813a57a455671ce72f8e5bac63c88b9832aaf380b8d9b"
+    },
+    {
+      "path": "scripts/core/save_manager.gd",
+      "bytes": 2903,
+      "sha256": "f502a5616a3fd4e69fcef8b183511ce5b65994e840797306cf1078d8d9ebfa18"
+    },
+    {
+      "path": "scripts/core/self_test.gd",
+      "bytes": 1170,
+      "sha256": "1008b37eef479841981dd56e8ab6d5444093b3c39552fdd215912319df142eb0"
+    },
+    {
+      "path": "scripts/core/simple_ai.gd",
+      "bytes": 1831,
+      "sha256": "cc57bf0cc93e5974ba91d0a877ecd9383f364406bd31d88cf56e3f1a10acf9c5"
+    },
+    {
+      "path": "scripts/ui/main.gd",
+      "bytes": 10154,
+      "sha256": "2fe2da09b348dd5d736fa10fbd39e65a49a766159f570d4322deeca733f2c420"
+    },
+    {
+      "path": "tests/test_content.py",
+      "bytes": 326,
+      "sha256": "2b1c01e80ec8267712dcedd033e2e8b54ce55eb2a326e62b2857d5e516d88bf3"
+    },
+    {
+      "path": "tools_balance_report.py",
+      "bytes": 921,
+      "sha256": "3d3999590f6d774f6935e839f4ae8cfe5dbab3e0f78ad521c8961892e0d1f10e"
+    },
+    {
+      "path": "tools_content_audit.py",
+      "bytes": 770,
+      "sha256": "bf5b0032dcbf8c0edf1461a554ff8ef7e55d807f027d990b830f983a81062d96"
+    },
+    {
+      "path": "tools_validate_content.py",
+      "bytes": 3740,
+      "sha256": "8dc8ed7d200ec3f0bd362b6d68837475bd9980b7d300d834b2eafada8862fc1e"
+    }
+  ]
+}

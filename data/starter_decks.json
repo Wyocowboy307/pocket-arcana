@@ -1,0 +1,530 @@
+[
+  {
+    "id": "starter_frost",
+    "name": "Frost Starter",
+    "element_label": "Frost",
+    "commander_id": "cmd_pip_snowshoe",
+    "cards": [
+      {
+        "card_id": "frost_snowcap_cub",
+        "count": 3
+      },
+      {
+        "card_id": "frost_icicle_mouse",
+        "count": 3
+      },
+      {
+        "card_id": "frost_frostfin_pup",
+        "count": 3
+      },
+      {
+        "card_id": "frost_chillwing_owl",
+        "count": 3
+      },
+      {
+        "card_id": "frost_rimehorn_yak",
+        "count": 3
+      },
+      {
+        "card_id": "frost_glacier_fox",
+        "count": 3
+      },
+      {
+        "card_id": "frost_crystal_mammoth",
+        "count": 3
+      },
+      {
+        "card_id": "frost_winter_drake",
+        "count": 3
+      },
+      {
+        "card_id": "frost_snap_freeze",
+        "count": 3
+      },
+      {
+        "card_id": "frost_snowglobe_trick",
+        "count": 3
+      },
+      {
+        "card_id": "frost_cold_front",
+        "count": 3
+      },
+      {
+        "card_id": "frost_absolute_zero",
+        "count": 3
+      },
+      {
+        "card_id": "frost_igloo_library",
+        "count": 3
+      },
+      {
+        "card_id": "frost_sereva_crown_of_winter",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Freeze things so they cannot cause trouble.",
+    "advanced_pitch": "Freeze routes, preserve value, slow threats, and turn cold into crystal-clear control."
+  },
+  {
+    "id": "starter_lightning",
+    "name": "Lightning Starter",
+    "element_label": "Lightning",
+    "commander_id": "cmd_zuzu_sparks",
+    "cards": [
+      {
+        "card_id": "lightning_sparkmouse",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_static_finch",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bolt_beetle",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormtail_lynx",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_coilback_ram",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_thunder_pup",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_cloud_manta",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_tempest_drake",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_quick_zap",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bottle_lightning",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_chain_spark",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_skybreaker",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_copper_kiteworks",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_voltara_heart_of_thunder",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Charge things, then make the charge pop.",
+    "advanced_pitch": "Charge tiles, chain bursts, build storm engines, and turn setup into explosive turns."
+  },
+  {
+    "id": "starter_life",
+    "name": "Life Starter",
+    "element_label": "Life",
+    "commander_id": "cmd_mossy_mae",
+    "cards": [
+      {
+        "card_id": "life_sproutling",
+        "count": 3
+      },
+      {
+        "card_id": "life_moss_frog",
+        "count": 3
+      },
+      {
+        "card_id": "life_berrycap_bunny",
+        "count": 3
+      },
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_rootback_boar",
+        "count": 3
+      },
+      {
+        "card_id": "life_bloom_bear",
+        "count": 3
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 3
+      },
+      {
+        "card_id": "life_garden_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "life_grow",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      },
+      {
+        "card_id": "life_rebloom",
+        "count": 3
+      },
+      {
+        "card_id": "life_wild_flourish",
+        "count": 3
+      },
+      {
+        "card_id": "life_herbalist_hut",
+        "count": 3
+      },
+      {
+        "card_id": "life_elaria_mother_of_groves",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Grow a big healthy board.",
+    "advanced_pitch": "Heal, grow creatures, spread gardens, make tokens, and win by building a thriving realm."
+  },
+  {
+    "id": "starter_fire",
+    "name": "Fire Starter",
+    "element_label": "Fire",
+    "commander_id": "cmd_poppy_cinder",
+    "cards": [
+      {
+        "card_id": "fire_cinder_pup",
+        "count": 3
+      },
+      {
+        "card_id": "fire_emberbug",
+        "count": 3
+      },
+      {
+        "card_id": "fire_coal_chick",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_cinder_hound",
+        "count": 3
+      },
+      {
+        "card_id": "fire_forge_ram",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_blazewing_drake",
+        "count": 3
+      },
+      {
+        "card_id": "fire_little_flame",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_dragon_breath",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_blacksmith_nook",
+        "count": 3
+      },
+      {
+        "card_id": "fire_rax_the_laughing_inferno",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Burn stuff and hit hard.",
+    "advanced_pitch": "Burn terrain, pressure Hearts, hatch dragons, and turn destruction into new opportunities."
+  },
+  {
+    "id": "starter_water",
+    "name": "Water Starter",
+    "element_label": "Water",
+    "commander_id": "cmd_mira_rainstep",
+    "cards": [
+      {
+        "card_id": "water_puddle_slime",
+        "count": 3
+      },
+      {
+        "card_id": "water_river_otter",
+        "count": 3
+      },
+      {
+        "card_id": "water_bubble_koi",
+        "count": 3
+      },
+      {
+        "card_id": "water_rain_heron",
+        "count": 3
+      },
+      {
+        "card_id": "water_tideback_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "water_current_fox",
+        "count": 3
+      },
+      {
+        "card_id": "water_moon_whale",
+        "count": 3
+      },
+      {
+        "card_id": "water_river_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "water_splash",
+        "count": 3
+      },
+      {
+        "card_id": "water_gentle_rain",
+        "count": 3
+      },
+      {
+        "card_id": "water_undertow",
+        "count": 3
+      },
+      {
+        "card_id": "water_tidal_parade",
+        "count": 3
+      },
+      {
+        "card_id": "water_fisher_witch_hut",
+        "count": 3
+      },
+      {
+        "card_id": "water_mira_of_the_seven_tides",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Move things around and make everything wet.",
+    "advanced_pitch": "Wet the board, redirect movement, flow around defenses, and combine weather into strange terrain."
+  },
+  {
+    "id": "starter_earth",
+    "name": "Earth Starter",
+    "element_label": "Earth",
+    "commander_id": "cmd_bram_stoneboot",
+    "cards": [
+      {
+        "card_id": "earth_pebble_pal",
+        "count": 3
+      },
+      {
+        "card_id": "earth_burrow_mole",
+        "count": 3
+      },
+      {
+        "card_id": "earth_clay_crab",
+        "count": 3
+      },
+      {
+        "card_id": "earth_stone_goat",
+        "count": 3
+      },
+      {
+        "card_id": "earth_boulder_beetle",
+        "count": 3
+      },
+      {
+        "card_id": "earth_ironhide_ox",
+        "count": 3
+      },
+      {
+        "card_id": "earth_hill_golem",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "earth_pile_stones",
+        "count": 3
+      },
+      {
+        "card_id": "earth_raise_wall",
+        "count": 3
+      },
+      {
+        "card_id": "earth_rockslide",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_wakes",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mason_lodge",
+        "count": 3
+      },
+      {
+        "card_id": "earth_bram_king_under_hills",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Build strong places that are hard to move.",
+    "advanced_pitch": "Fortify tiles, build landmarks, make sturdy creatures, and score through an unmovable realm."
+  },
+  {
+    "id": "starter_wind",
+    "name": "Wind Starter",
+    "element_label": "Wind",
+    "commander_id": "cmd_aera_kitekeeper",
+    "cards": [
+      {
+        "card_id": "wind_breeze_bird",
+        "count": 3
+      },
+      {
+        "card_id": "wind_kite_fox",
+        "count": 3
+      },
+      {
+        "card_id": "wind_cloud_rabbit",
+        "count": 3
+      },
+      {
+        "card_id": "wind_gust_gecko",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sailwing_goat",
+        "count": 3
+      },
+      {
+        "card_id": "wind_whirlcat",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sky_ray",
+        "count": 3
+      },
+      {
+        "card_id": "wind_cloud_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "wind_puff",
+        "count": 3
+      },
+      {
+        "card_id": "wind_tailwind",
+        "count": 3
+      },
+      {
+        "card_id": "wind_updraft",
+        "count": 3
+      },
+      {
+        "card_id": "wind_great_gust",
+        "count": 3
+      },
+      {
+        "card_id": "wind_kite_shop",
+        "count": 3
+      },
+      {
+        "card_id": "wind_aera_keeper_of_horizons",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Move your creatures where they need to be.",
+    "advanced_pitch": "Move creatures, dodge blockers, create floating terrain, and win through clever positioning."
+  },
+  {
+    "id": "starter_death",
+    "name": "Death Starter",
+    "element_label": "Death",
+    "commander_id": "cmd_nox_lanternkeeper",
+    "cards": [
+      {
+        "card_id": "death_bone_buddy",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_moth",
+        "count": 3
+      },
+      {
+        "card_id": "death_tiny_ghost",
+        "count": 3
+      },
+      {
+        "card_id": "death_graveyard_cat",
+        "count": 3
+      },
+      {
+        "card_id": "death_friendly_wraith",
+        "count": 3
+      },
+      {
+        "card_id": "death_skullcap_crow",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_stag",
+        "count": 3
+      },
+      {
+        "card_id": "death_midnight_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "death_boo",
+        "count": 3
+      },
+      {
+        "card_id": "death_haunting_song",
+        "count": 3
+      },
+      {
+        "card_id": "death_borrowed_time",
+        "count": 3
+      },
+      {
+        "card_id": "death_parade_of_ghosts",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_keeper_hut",
+        "count": 3
+      },
+      {
+        "card_id": "death_nox_keeper_of_names",
+        "count": 1
+      }
+    ],
+    "beginner_pitch": "Your spooky friends keep coming back.",
+    "advanced_pitch": "Use friendly ghosts, sacrifice, recursion, haunted terrain, and value that refuses to stay gone."
+  }
+]

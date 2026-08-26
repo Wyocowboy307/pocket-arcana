@@ -1,0 +1,138 @@
+{
+  "tundra": [
+    "frost"
+  ],
+  "stormfield": [
+    "lightning"
+  ],
+  "grove": [
+    "life"
+  ],
+  "cinder": [
+    "fire"
+  ],
+  "spring": [
+    "water"
+  ],
+  "stonefield": [
+    "earth"
+  ],
+  "skygrass": [
+    "wind"
+  ],
+  "gravegarden": [
+    "death"
+  ],
+  "aurora_ice": [
+    "frost",
+    "lightning"
+  ],
+  "wintergarden": [
+    "frost",
+    "life"
+  ],
+  "meltwater": [
+    "frost",
+    "fire"
+  ],
+  "mirror_ice": [
+    "frost",
+    "water"
+  ],
+  "permafrost_keep": [
+    "frost",
+    "earth"
+  ],
+  "blizzard_path": [
+    "frost",
+    "wind"
+  ],
+  "pale_grave": [
+    "frost",
+    "death"
+  ],
+  "stormroot": [
+    "lightning",
+    "life"
+  ],
+  "plasma_coal": [
+    "lightning",
+    "fire"
+  ],
+  "stormglass": [
+    "lightning",
+    "water"
+  ],
+  "lodestone_field": [
+    "lightning",
+    "earth"
+  ],
+  "thundercloud": [
+    "lightning",
+    "wind"
+  ],
+  "gravespark": [
+    "lightning",
+    "death"
+  ],
+  "ashbloom": [
+    "life",
+    "fire"
+  ],
+  "rain_garden": [
+    "life",
+    "water"
+  ],
+  "worldroot": [
+    "life",
+    "earth"
+  ],
+  "seedwind": [
+    "life",
+    "wind"
+  ],
+  "gravegarden_bloom": [
+    "life",
+    "death"
+  ],
+  "steamfield": [
+    "fire",
+    "water"
+  ],
+  "volcano": [
+    "fire",
+    "earth"
+  ],
+  "firestorm": [
+    "fire",
+    "wind"
+  ],
+  "ashen_hollow": [
+    "fire",
+    "death"
+  ],
+  "riverstone": [
+    "water",
+    "earth"
+  ],
+  "monsoon": [
+    "water",
+    "wind"
+  ],
+  "ghostwater": [
+    "water",
+    "death"
+  ],
+  "floating_island": [
+    "earth",
+    "wind"
+  ],
+  "tombgarden": [
+    "earth",
+    "death"
+  ],
+  "whispermoor": [
+    "wind",
+    "death"
+  ]
+}

@@ -1,0 +1,1122 @@
+[
+  {
+    "id": "precon_freeze_fortress",
+    "name": "FREEZE FORTRESS",
+    "elements": [
+      "frost",
+      "earth"
+    ],
+    "commander_id": "cmd_sereva_iceheart",
+    "cards": [
+      {
+        "card_id": "frost_chillwing_owl",
+        "count": 3
+      },
+      {
+        "card_id": "frost_crystal_mammoth",
+        "count": 3
+      },
+      {
+        "card_id": "frost_snowglobe_trick",
+        "count": 3
+      },
+      {
+        "card_id": "frost_absolute_zero",
+        "count": 3
+      },
+      {
+        "card_id": "frost_rimewatch_tower",
+        "count": 3
+      },
+      {
+        "card_id": "frost_icebound_charm",
+        "count": 3
+      },
+      {
+        "card_id": "earth_stone_goat",
+        "count": 3
+      },
+      {
+        "card_id": "earth_hill_golem",
+        "count": 3
+      },
+      {
+        "card_id": "earth_raise_wall",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_wakes",
+        "count": 3
+      },
+      {
+        "card_id": "earth_rune_quarry",
+        "count": 3
+      },
+      {
+        "card_id": "earth_builder_bell",
+        "count": 3
+      },
+      {
+        "card_id": "dual_glacier_keep",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix frost and earth.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_aurora_surge",
+    "name": "AURORA SURGE",
+    "elements": [
+      "frost",
+      "lightning"
+    ],
+    "commander_id": "cmd_sereva_iceheart",
+    "cards": [
+      {
+        "card_id": "frost_chillwing_owl",
+        "count": 3
+      },
+      {
+        "card_id": "frost_crystal_mammoth",
+        "count": 3
+      },
+      {
+        "card_id": "frost_snowglobe_trick",
+        "count": 3
+      },
+      {
+        "card_id": "frost_absolute_zero",
+        "count": 3
+      },
+      {
+        "card_id": "frost_rimewatch_tower",
+        "count": 3
+      },
+      {
+        "card_id": "frost_icebound_charm",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormtail_lynx",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_cloud_manta",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bottle_lightning",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_skybreaker",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormbell_tower",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormcoil_ring",
+        "count": 3
+      },
+      {
+        "card_id": "dual_aurora_dynamo",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Freeze + Charge the same tiles, discover Aurora Ice, then cash in the setup.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_stormglass",
+    "name": "STORMGLASS",
+    "elements": [
+      "lightning",
+      "water"
+    ],
+    "commander_id": "cmd_voltara_stormborn",
+    "cards": [
+      {
+        "card_id": "lightning_stormtail_lynx",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_cloud_manta",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bottle_lightning",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_skybreaker",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormbell_tower",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormcoil_ring",
+        "count": 3
+      },
+      {
+        "card_id": "water_rain_heron",
+        "count": 3
+      },
+      {
+        "card_id": "water_moon_whale",
+        "count": 3
+      },
+      {
+        "card_id": "water_gentle_rain",
+        "count": 3
+      },
+      {
+        "card_id": "water_tidal_parade",
+        "count": 3
+      },
+      {
+        "card_id": "water_rainmill",
+        "count": 3
+      },
+      {
+        "card_id": "water_pearl_compass",
+        "count": 3
+      },
+      {
+        "card_id": "dual_stormglass_eel",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Wet + Charge the board, draw quickly and create storm-combo turns.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_thunderforge",
+    "name": "THUNDERFORGE",
+    "elements": [
+      "lightning",
+      "fire"
+    ],
+    "commander_id": "cmd_voltara_stormborn",
+    "cards": [
+      {
+        "card_id": "lightning_stormtail_lynx",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_cloud_manta",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bottle_lightning",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_skybreaker",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormbell_tower",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormcoil_ring",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 3
+      },
+      {
+        "card_id": "fire_hot_iron_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_thunderforge_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix lightning and fire.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_second_spring",
+    "name": "SECOND SPRING",
+    "elements": [
+      "life",
+      "death"
+    ],
+    "commander_id": "cmd_elaria_greenhand",
+    "cards": [
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      },
+      {
+        "card_id": "life_wild_flourish",
+        "count": 3
+      },
+      {
+        "card_id": "life_bee_garden",
+        "count": 3
+      },
+      {
+        "card_id": "life_seed_satchel",
+        "count": 3
+      },
+      {
+        "card_id": "death_graveyard_cat",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_stag",
+        "count": 3
+      },
+      {
+        "card_id": "death_haunting_song",
+        "count": 3
+      },
+      {
+        "card_id": "death_parade_of_ghosts",
+        "count": 3
+      },
+      {
+        "card_id": "death_memory_garden",
+        "count": 3
+      },
+      {
+        "card_id": "death_lucky_bone",
+        "count": 3
+      },
+      {
+        "card_id": "dual_gravegarden_witch",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Let friendly creatures die, bring them back, and turn Haunted+Overgrown into value.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_ashbloom",
+    "name": "ASHBLOOM",
+    "elements": [
+      "life",
+      "fire"
+    ],
+    "commander_id": "cmd_elaria_greenhand",
+    "cards": [
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      },
+      {
+        "card_id": "life_wild_flourish",
+        "count": 3
+      },
+      {
+        "card_id": "life_bee_garden",
+        "count": 3
+      },
+      {
+        "card_id": "life_seed_satchel",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 3
+      },
+      {
+        "card_id": "fire_hot_iron_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_ashbloom_fox",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Grow your own realm, burn it on purpose, and turn loss into explosive new terrain.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_steam_dragons",
+    "name": "STEAM DRAGONS",
+    "elements": [
+      "fire",
+      "water"
+    ],
+    "commander_id": "cmd_rax_flamegrin",
+    "cards": [
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 3
+      },
+      {
+        "card_id": "fire_hot_iron_charm",
+        "count": 3
+      },
+      {
+        "card_id": "water_rain_heron",
+        "count": 3
+      },
+      {
+        "card_id": "water_moon_whale",
+        "count": 3
+      },
+      {
+        "card_id": "water_gentle_rain",
+        "count": 3
+      },
+      {
+        "card_id": "water_tidal_parade",
+        "count": 3
+      },
+      {
+        "card_id": "water_rainmill",
+        "count": 3
+      },
+      {
+        "card_id": "water_pearl_compass",
+        "count": 3
+      },
+      {
+        "card_id": "dual_steam_dragon",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Burn + Wet tiles into Steamfield and use the chaos to support dragons.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_volcano_forge",
+    "name": "VOLCANO FORGE",
+    "elements": [
+      "fire",
+      "earth"
+    ],
+    "commander_id": "cmd_rax_flamegrin",
+    "cards": [
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 3
+      },
+      {
+        "card_id": "fire_hot_iron_charm",
+        "count": 3
+      },
+      {
+        "card_id": "earth_stone_goat",
+        "count": 3
+      },
+      {
+        "card_id": "earth_hill_golem",
+        "count": 3
+      },
+      {
+        "card_id": "earth_raise_wall",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_wakes",
+        "count": 3
+      },
+      {
+        "card_id": "earth_rune_quarry",
+        "count": 3
+      },
+      {
+        "card_id": "earth_builder_bell",
+        "count": 3
+      },
+      {
+        "card_id": "dual_volcano_golem",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix fire and earth.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_rain_garden",
+    "name": "RAIN GARDEN",
+    "elements": [
+      "water",
+      "life"
+    ],
+    "commander_id": "cmd_captain_ripple",
+    "cards": [
+      {
+        "card_id": "water_rain_heron",
+        "count": 3
+      },
+      {
+        "card_id": "water_moon_whale",
+        "count": 3
+      },
+      {
+        "card_id": "water_gentle_rain",
+        "count": 3
+      },
+      {
+        "card_id": "water_tidal_parade",
+        "count": 3
+      },
+      {
+        "card_id": "water_rainmill",
+        "count": 3
+      },
+      {
+        "card_id": "water_pearl_compass",
+        "count": 3
+      },
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      },
+      {
+        "card_id": "life_wild_flourish",
+        "count": 3
+      },
+      {
+        "card_id": "life_bee_garden",
+        "count": 3
+      },
+      {
+        "card_id": "life_seed_satchel",
+        "count": 3
+      },
+      {
+        "card_id": "dual_rainforest_giant",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix water and life.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_ghostwater",
+    "name": "GHOSTWATER",
+    "elements": [
+      "water",
+      "death"
+    ],
+    "commander_id": "cmd_captain_ripple",
+    "cards": [
+      {
+        "card_id": "water_rain_heron",
+        "count": 3
+      },
+      {
+        "card_id": "water_moon_whale",
+        "count": 3
+      },
+      {
+        "card_id": "water_gentle_rain",
+        "count": 3
+      },
+      {
+        "card_id": "water_tidal_parade",
+        "count": 3
+      },
+      {
+        "card_id": "water_rainmill",
+        "count": 3
+      },
+      {
+        "card_id": "water_pearl_compass",
+        "count": 3
+      },
+      {
+        "card_id": "death_graveyard_cat",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_stag",
+        "count": 3
+      },
+      {
+        "card_id": "death_haunting_song",
+        "count": 3
+      },
+      {
+        "card_id": "death_parade_of_ghosts",
+        "count": 3
+      },
+      {
+        "card_id": "death_memory_garden",
+        "count": 3
+      },
+      {
+        "card_id": "death_lucky_bone",
+        "count": 3
+      },
+      {
+        "card_id": "dual_ghostwater_ferryman",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Use Wet+Haunted terrain, recursion and repositioning to outlast both Chapters.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_floating_kingdom",
+    "name": "FLOATING KINGDOM",
+    "elements": [
+      "earth",
+      "wind"
+    ],
+    "commander_id": "cmd_mason_marn",
+    "cards": [
+      {
+        "card_id": "earth_stone_goat",
+        "count": 3
+      },
+      {
+        "card_id": "earth_hill_golem",
+        "count": 3
+      },
+      {
+        "card_id": "earth_raise_wall",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_wakes",
+        "count": 3
+      },
+      {
+        "card_id": "earth_rune_quarry",
+        "count": 3
+      },
+      {
+        "card_id": "earth_builder_bell",
+        "count": 3
+      },
+      {
+        "card_id": "wind_gust_gecko",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sky_ray",
+        "count": 3
+      },
+      {
+        "card_id": "wind_tailwind",
+        "count": 3
+      },
+      {
+        "card_id": "wind_great_gust",
+        "count": 3
+      },
+      {
+        "card_id": "wind_windmill_house",
+        "count": 3
+      },
+      {
+        "card_id": "wind_feather_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_floating_islander",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Fortify + Windsweep land into floating terrain, then build a strange moving city.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_tomb_garden",
+    "name": "TOMB GARDEN",
+    "elements": [
+      "earth",
+      "death"
+    ],
+    "commander_id": "cmd_mason_marn",
+    "cards": [
+      {
+        "card_id": "earth_stone_goat",
+        "count": 3
+      },
+      {
+        "card_id": "earth_hill_golem",
+        "count": 3
+      },
+      {
+        "card_id": "earth_raise_wall",
+        "count": 3
+      },
+      {
+        "card_id": "earth_mountain_wakes",
+        "count": 3
+      },
+      {
+        "card_id": "earth_rune_quarry",
+        "count": 3
+      },
+      {
+        "card_id": "earth_builder_bell",
+        "count": 3
+      },
+      {
+        "card_id": "death_graveyard_cat",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_stag",
+        "count": 3
+      },
+      {
+        "card_id": "death_haunting_song",
+        "count": 3
+      },
+      {
+        "card_id": "death_parade_of_ghosts",
+        "count": 3
+      },
+      {
+        "card_id": "death_memory_garden",
+        "count": 3
+      },
+      {
+        "card_id": "death_lucky_bone",
+        "count": 3
+      },
+      {
+        "card_id": "dual_tombstone_gardener",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix earth and death.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_seedwind",
+    "name": "SEEDWIND",
+    "elements": [
+      "life",
+      "wind"
+    ],
+    "commander_id": "cmd_elaria_greenhand",
+    "cards": [
+      {
+        "card_id": "life_petal_deer",
+        "count": 3
+      },
+      {
+        "card_id": "life_great_stag",
+        "count": 3
+      },
+      {
+        "card_id": "life_warm_sun",
+        "count": 3
+      },
+      {
+        "card_id": "life_wild_flourish",
+        "count": 3
+      },
+      {
+        "card_id": "life_bee_garden",
+        "count": 3
+      },
+      {
+        "card_id": "life_seed_satchel",
+        "count": 3
+      },
+      {
+        "card_id": "wind_gust_gecko",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sky_ray",
+        "count": 3
+      },
+      {
+        "card_id": "wind_tailwind",
+        "count": 3
+      },
+      {
+        "card_id": "wind_great_gust",
+        "count": 3
+      },
+      {
+        "card_id": "wind_windmill_house",
+        "count": 3
+      },
+      {
+        "card_id": "wind_feather_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_seedwind_faerie",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix life and wind.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_firestorm",
+    "name": "FIRESTORM",
+    "elements": [
+      "fire",
+      "wind"
+    ],
+    "commander_id": "cmd_rax_flamegrin",
+    "cards": [
+      {
+        "card_id": "fire_ashcat",
+        "count": 3
+      },
+      {
+        "card_id": "fire_magma_turtle",
+        "count": 3
+      },
+      {
+        "card_id": "fire_scorch_mark",
+        "count": 3
+      },
+      {
+        "card_id": "fire_wildfire_waltz",
+        "count": 3
+      },
+      {
+        "card_id": "fire_ember_kitchen",
+        "count": 3
+      },
+      {
+        "card_id": "fire_hot_iron_charm",
+        "count": 3
+      },
+      {
+        "card_id": "wind_gust_gecko",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sky_ray",
+        "count": 3
+      },
+      {
+        "card_id": "wind_tailwind",
+        "count": 3
+      },
+      {
+        "card_id": "wind_great_gust",
+        "count": 3
+      },
+      {
+        "card_id": "wind_windmill_house",
+        "count": 3
+      },
+      {
+        "card_id": "wind_feather_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_wildfire_kite",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix fire and wind.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_blizzard_path",
+    "name": "BLIZZARD PATH",
+    "elements": [
+      "frost",
+      "wind"
+    ],
+    "commander_id": "cmd_sereva_iceheart",
+    "cards": [
+      {
+        "card_id": "frost_chillwing_owl",
+        "count": 3
+      },
+      {
+        "card_id": "frost_crystal_mammoth",
+        "count": 3
+      },
+      {
+        "card_id": "frost_snowglobe_trick",
+        "count": 3
+      },
+      {
+        "card_id": "frost_absolute_zero",
+        "count": 3
+      },
+      {
+        "card_id": "frost_rimewatch_tower",
+        "count": 3
+      },
+      {
+        "card_id": "frost_icebound_charm",
+        "count": 3
+      },
+      {
+        "card_id": "wind_gust_gecko",
+        "count": 3
+      },
+      {
+        "card_id": "wind_sky_ray",
+        "count": 3
+      },
+      {
+        "card_id": "wind_tailwind",
+        "count": 3
+      },
+      {
+        "card_id": "wind_great_gust",
+        "count": 3
+      },
+      {
+        "card_id": "wind_windmill_house",
+        "count": 3
+      },
+      {
+        "card_id": "wind_feather_charm",
+        "count": 3
+      },
+      {
+        "card_id": "dual_snowkite_roc",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix frost and wind.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  },
+  {
+    "id": "precon_gravespark",
+    "name": "GRAVESPARK",
+    "elements": [
+      "lightning",
+      "death"
+    ],
+    "commander_id": "cmd_voltara_stormborn",
+    "cards": [
+      {
+        "card_id": "lightning_stormtail_lynx",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_cloud_manta",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_bottle_lightning",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_skybreaker",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormbell_tower",
+        "count": 3
+      },
+      {
+        "card_id": "lightning_stormcoil_ring",
+        "count": 3
+      },
+      {
+        "card_id": "death_graveyard_cat",
+        "count": 3
+      },
+      {
+        "card_id": "death_lantern_stag",
+        "count": 3
+      },
+      {
+        "card_id": "death_haunting_song",
+        "count": 3
+      },
+      {
+        "card_id": "death_parade_of_ghosts",
+        "count": 3
+      },
+      {
+        "card_id": "death_memory_garden",
+        "count": 3
+      },
+      {
+        "card_id": "death_lucky_bone",
+        "count": 3
+      },
+      {
+        "card_id": "dual_gravespark_wisp",
+        "count": 3
+      },
+      {
+        "card_id": "neutral_pocket_map",
+        "count": 1
+      }
+    ],
+    "difficulty": "advanced",
+    "pitch": "Mix lightning and death.",
+    "unlock": "Campaign recipe challenge or 1200 Arcana Coins"
+  }
+]

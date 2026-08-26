@@ -1,0 +1,482 @@
+[
+  {
+    "id": "npc_pip_snowshoe",
+    "name": "Pip Snowshoe",
+    "commander_id": "cmd_pip_snowshoe",
+    "element": "frost",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Frost can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_sereva_iceheart",
+    "name": "Sereva Iceheart",
+    "commander_id": "cmd_sereva_iceheart",
+    "element": "frost",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Frost pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_old_man_wintermere",
+    "name": "Old Man Wintermere",
+    "commander_id": "cmd_old_man_wintermere",
+    "element": "frost",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Frost pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_frost"
+    }
+  },
+  {
+    "id": "npc_zuzu_sparks",
+    "name": "Zuzu Sparks",
+    "commander_id": "cmd_zuzu_sparks",
+    "element": "lightning",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Lightning can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_voltara_stormborn",
+    "name": "Voltara Stormborn",
+    "commander_id": "cmd_voltara_stormborn",
+    "element": "lightning",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Lightning pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_professor_coil",
+    "name": "Professor Coil",
+    "commander_id": "cmd_professor_coil",
+    "element": "lightning",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Lightning pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_lightning"
+    }
+  },
+  {
+    "id": "npc_mossy_mae",
+    "name": "Mossy Mae",
+    "commander_id": "cmd_mossy_mae",
+    "element": "life",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Life can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_elaria_greenhand",
+    "name": "Elaria Greenhand",
+    "commander_id": "cmd_elaria_greenhand",
+    "element": "life",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Life pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_grandpa_oak",
+    "name": "Grandpa Oak",
+    "commander_id": "cmd_grandpa_oak",
+    "element": "life",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Life pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_life"
+    }
+  },
+  {
+    "id": "npc_poppy_cinder",
+    "name": "Poppy Cinder",
+    "commander_id": "cmd_poppy_cinder",
+    "element": "fire",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Fire can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_rax_flamegrin",
+    "name": "Rax Flamegrin",
+    "commander_id": "cmd_rax_flamegrin",
+    "element": "fire",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Fire pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_chef_magma",
+    "name": "Chef Magma",
+    "commander_id": "cmd_chef_magma",
+    "element": "fire",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Fire pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_fire"
+    }
+  },
+  {
+    "id": "npc_mira_rainstep",
+    "name": "Mira Rainstep",
+    "commander_id": "cmd_mira_rainstep",
+    "element": "water",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Water can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_captain_ripple",
+    "name": "Captain Ripple",
+    "commander_id": "cmd_captain_ripple",
+    "element": "water",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Water pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_nell_moonwater",
+    "name": "Nell Moonwater",
+    "commander_id": "cmd_nell_moonwater",
+    "element": "water",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Water pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_water"
+    }
+  },
+  {
+    "id": "npc_bram_stoneboot",
+    "name": "Bram Stoneboot",
+    "commander_id": "cmd_bram_stoneboot",
+    "element": "earth",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Earth can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_mason_marn",
+    "name": "Mason Marn",
+    "commander_id": "cmd_mason_marn",
+    "element": "earth",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Earth pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_queen_pebble",
+    "name": "Queen Pebble",
+    "commander_id": "cmd_queen_pebble",
+    "element": "earth",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.75,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Earth pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_earth"
+    }
+  },
+  {
+    "id": "npc_aera_kitekeeper",
+    "name": "Aera Kitekeeper",
+    "commander_id": "cmd_aera_kitekeeper",
+    "element": "wind",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Wind can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_finn_feathercap",
+    "name": "Finn Feathercap",
+    "commander_id": "cmd_finn_feathercap",
+    "element": "wind",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Wind pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_the_traveling_gale",
+    "name": "The Traveling Gale",
+    "commander_id": "cmd_the_traveling_gale",
+    "element": "wind",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.7,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Wind pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_wind"
+    }
+  },
+  {
+    "id": "npc_nox_lanternkeeper",
+    "name": "Nox Lanternkeeper",
+    "commander_id": "cmd_nox_lanternkeeper",
+    "element": "death",
+    "difficulty": 1,
+    "role": "friendly teacher",
+    "ai_profile": {
+      "pass_caution": 0.75,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.55
+    },
+    "intro": "I’ll show you what Death can do.",
+    "reward": {
+      "commander_mastery_xp": 100,
+      "coins": 75,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_mimi_memento",
+    "name": "Mimi Memento",
+    "commander_id": "cmd_mimi_memento",
+    "element": "death",
+    "difficulty": 2,
+    "role": "clever rival",
+    "ai_profile": {
+      "pass_caution": 0.45,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.75
+    },
+    "intro": "Let’s see what your realm does when Death pushes back.",
+    "reward": {
+      "commander_mastery_xp": 200,
+      "coins": 150,
+      "signature_unlock": null
+    }
+  },
+  {
+    "id": "npc_sir_boo_the_polite",
+    "name": "Sir Boo the Polite",
+    "commander_id": "cmd_sir_boo_the_polite",
+    "element": "death",
+    "difficulty": 3,
+    "role": "elemental master",
+    "ai_profile": {
+      "pass_caution": 0.25,
+      "heart_pressure": 0.35,
+      "wonder_interest": 0.3,
+      "recipe_interest": 0.9500000000000001
+    },
+    "intro": "Let’s see what your realm does when Death pushes back.",
+    "reward": {
+      "commander_mastery_xp": 300,
+      "coins": 225,
+      "signature_unlock": "signature_death"
+    }
+  }
+]

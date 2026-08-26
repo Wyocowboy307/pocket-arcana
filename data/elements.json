@@ -1,0 +1,82 @@
+[
+  {
+    "id": "frost",
+    "name": "Frost",
+    "emoji": "❄",
+    "state": "frozen",
+    "terrain": "tundra",
+    "color": "#9edff5",
+    "fantasy": "Freeze routes, preserve value, slow threats, and turn cold into crystal-clear control.",
+    "beginner": "Freeze things so they cannot cause trouble."
+  },
+  {
+    "id": "lightning",
+    "name": "Lightning",
+    "emoji": "⚡",
+    "state": "charged",
+    "terrain": "stormfield",
+    "color": "#f5d547",
+    "fantasy": "Charge tiles, chain bursts, build storm engines, and turn setup into explosive turns.",
+    "beginner": "Charge things, then make the charge pop."
+  },
+  {
+    "id": "life",
+    "name": "Life",
+    "emoji": "🌿",
+    "state": "overgrown",
+    "terrain": "grove",
+    "color": "#75cf78",
+    "fantasy": "Heal, grow creatures, spread gardens, make tokens, and win by building a thriving realm.",
+    "beginner": "Grow a big healthy board."
+  },
+  {
+    "id": "fire",
+    "name": "Fire",
+    "emoji": "🔥",
+    "state": "burning",
+    "terrain": "cinder",
+    "color": "#ef7a55",
+    "fantasy": "Burn terrain, pressure Hearts, hatch dragons, and turn destruction into new opportunities.",
+    "beginner": "Burn stuff and hit hard."
+  },
+  {
+    "id": "water",
+    "name": "Water",
+    "emoji": "💧",
+    "state": "wet",
+    "terrain": "spring",
+    "color": "#5da9e9",
+    "fantasy": "Wet the board, redirect movement, flow around defenses, and combine weather into strange terrain.",
+    "beginner": "Move things around and make everything wet."
+  },
+  {
+    "id": "earth",
+    "name": "Earth",
+    "emoji": "🪨",
+    "state": "fortified",
+    "terrain": "stonefield",
+    "color": "#b59770",
+    "fantasy": "Fortify tiles, build landmarks, make sturdy creatures, and score through an unmovable realm.",
+    "beginner": "Build strong places that are hard to move."
+  },
+  {
+    "id": "wind",
+    "name": "Wind",
+    "emoji": "🌪",
+    "state": "windswept",
+    "terrain": "skygrass",
+    "color": "#c4eadb",
+    "fantasy": "Move creatures, dodge blockers, create floating terrain, and win through clever positioning.",
+    "beginner": "Move your creatures where they need to be."
+  },
+  {
+    "id": "death",
+    "name": "Death",
+    "emoji": "💀",
+    "state": "haunted",
+    "terrain": "gravegarden",
+    "color": "#bca4d9",
+    "fantasy": "Use friendly ghosts, sacrifice, recursion, haunted terrain, and value that refuses to stay gone.",
+    "beginner": "Your spooky friends keep coming back."
+  }
+]

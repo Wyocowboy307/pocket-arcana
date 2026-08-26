@@ -3,6 +3,7 @@ extends RefCounted
 
 const WIDTH := 7
 const HEIGHT := 5
+const DIRECTIONS: Array[Vector2i] = [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 var tiles: Array = []
 var next_unit_id := 1
 
@@ -34,15 +35,18 @@ func in_bounds(pos: Vector2i) -> bool:
 
 func neighbors(pos: Vector2i) -> Array[Vector2i]:
     var out: Array[Vector2i] = []
-    for d in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
-        var p := pos + d
+    for d in DIRECTIONS:
+        var p: Vector2i = pos + d
         if in_bounds(p): out.append(p)
     return out
 
-func can_shape(player: int, pos: Vector2i) -> bool:
+func can_shape(player: int, pos: Vector2i, terrain: String = "") -> bool:
     if not in_bounds(pos): return false
     var tile := get_tile(pos)
     if int(tile.get("owner", -1)) not in [-1, player]: return false
+    # Shaping is a whole turn: it must actually change the tile.
+    if terrain != "" and int(tile.get("owner", -1)) == player and String(tile.get("terrain", "neutral")) == terrain:
+        return false
     if int(tile.get("sanctuary_owner", -1)) == player: return true
     for n in neighbors(pos):
         var nt := get_tile(n)
@@ -51,7 +55,7 @@ func can_shape(player: int, pos: Vector2i) -> bool:
     return false
 
 func shape(player: int, pos: Vector2i, terrain: String) -> bool:
-    if not can_shape(player, pos): return false
+    if not can_shape(player, pos, terrain): return false
     var tile := get_tile(pos)
     tile["owner"] = player
     tile["terrain"] = terrain

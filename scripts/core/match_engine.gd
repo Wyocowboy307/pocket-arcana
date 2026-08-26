@@ -125,6 +125,15 @@ func play_card(player: int, card_id: String, pos: Vector2i) -> Dictionary:
     _check_victory_or_finish_action(player)
     return {"ok":true}
 
+func terrain_for_element(element: String) -> String:
+    var info: Dictionary = db.elements.get(element, {})
+    return String(info.get("terrain", ""))
+
+func can_shape_with_element(player: int, element: String, pos: Vector2i) -> bool:
+    var terrain := terrain_for_element(element)
+    if terrain == "": return false
+    return board.can_shape(player, pos, terrain)
+
 func shape(player: int, element: String, pos: Vector2i) -> Dictionary:
     if not _can_act(player): return _fail("It is not your turn.")
     var info: Dictionary = db.elements.get(element,{})
@@ -216,7 +225,9 @@ func _dispatch_commander_trigger(player: int, trigger: String, context: Dictiona
     if bool(passive.get("once_per_chapter",false)) and bool(players[player]["chapter_flags"].get(flag,false)): return
     for cond in passive.get("conditions",[]):
         if String(cond.get("kind",""))=="card_element":
-            var card: Dictionary=context.get("card",{}); if not card.get("elements",[]).has(cond.get("element")): return
+            var card: Dictionary = context.get("card", {})
+            if not card.get("elements", []).has(cond.get("element")):
+                return
         elif String(cond.get("kind",""))=="state_is" and String(context.get("state","")) != String(cond.get("state","")): return
     players[player]["chapter_flags"][flag]=true
     for effect in passive.get("effects",[]): _apply_and_followups(effect,player,Vector2i(3,4) if player==0 else Vector2i(3,0))

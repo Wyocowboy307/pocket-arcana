@@ -59,7 +59,7 @@ func _refresh() -> void:
         var tile:=engine.board.get_tile(pos); var b:Button=board_buttons[pos]
         b.text=_tile_text(tile)
         b.disabled=engine.match_over
-        if _is_legal_highlight(pos): b.modulate=Color(1.15,1.15,1.15,1) else: b.modulate=Color.WHITE
+        b.modulate = Color(1.15, 1.15, 1.15, 1) if _is_legal_highlight(pos) else Color.WHITE
     for child in hand_box.get_children(): child.queue_free()
     for card_id in p0["hand"]:
         var card:=db.get_card(String(card_id)); var b:=Button.new(); b.custom_minimum_size=Vector2(150,104); b.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -115,7 +115,10 @@ func _on_tile_pressed(pos:Vector2i) -> void:
     _refresh()
 
 func _pass() -> void:
-    var r:=engine.pass_chapter(0); if not bool(r.get("ok",false)): detail_label.text=String(r.get("reason","")); _refresh()
+    var r := engine.pass_chapter(0)
+    if not bool(r.get("ok", false)):
+        detail_label.text = String(r.get("reason", ""))
+    _refresh()
 
 func _run_ai() -> void:
     ai_busy=true; await get_tree().create_timer(0.35).timeout
@@ -135,7 +138,7 @@ func _on_match_finished(winner:int) -> void:
 func _is_legal_highlight(pos:Vector2i) -> bool:
     if engine.current_player!=0:return false
     if selected_card_id!="":return engine.legal_targets_for_card(0,selected_card_id).has(pos)
-    if shape_element!="":return engine.board.can_shape(0,pos)
+    if shape_element!="":return engine.can_shape_with_element(0,shape_element,pos)
     if commander_mode:return true
     if selected_unit_pos.x>=0:return engine.board.neighbors(selected_unit_pos).has(pos)
     return false

@@ -6,7 +6,7 @@ func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
     var kind := String(effect.get("kind", ""))
     var amount := int(effect.get("amount", 0))
     var target := String(effect.get("target", ""))
-    var tile := engine.board.get_tile(pos)
+    var tile: Dictionary = engine.board.get_tile(pos)
     match kind:
         "add_state":
             var state := String(effect.get("state", ""))
@@ -19,7 +19,7 @@ func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
                     unit["health"] = int(unit.get("health", 0)) - amount
                     events.append({"type":"unit_damaged","amount":amount,"pos":pos,"actor":actor})
                     if int(unit["health"]) <= 0:
-                        var dead := unit.duplicate(true)
+                        var dead: Dictionary = unit.duplicate(true)
                         tile["creature"] = null
                         engine.players[int(dead.get("owner", -1))]["graveyard"].append(String(dead.get("card_id", "")))
                         events.append({"type":"unit_died","unit":dead,"pos":pos,"actor":actor})
@@ -57,7 +57,7 @@ func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
                 events.append({"type":"terrain_changed","player":actor,"terrain":tile["terrain"],"pos":pos})
         "summon_token":
             if not tile.is_empty() and tile.get("creature") == null:
-                var token := engine.db.get_token(String(effect.get("token_id","")))
+                var token: Dictionary = engine.db.get_token(String(effect.get("token_id","")))
                 if not token.is_empty():
                     tile["creature"] = engine.make_unit_from_token(token, actor)
                     tile["owner"] = actor

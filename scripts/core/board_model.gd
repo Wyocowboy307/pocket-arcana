@@ -75,16 +75,31 @@ func clear_creatures_for_new_chapter() -> void:
         for tile in row:
             tile["creature"] = null
 
-func realm_score(player: int) -> int:
-    var score := 0
+## Realm Score, split so the UI can explain where a Chapter result came from.
+## Rules v1: creature Power + landmark Presence + 1 per shaped tile you control.
+func realm_score_breakdown(player: int) -> Dictionary:
+    var terrain_points := 0
+    var landmark_points := 0
+    var creature_points := 0
+    var tiles_held := 0
     for row in tiles:
         for tile in row:
             if int(tile.get("owner", -1)) == player:
-                if String(tile.get("terrain", "neutral")) != "neutral": score += 1
+                tiles_held += 1
+                if String(tile.get("terrain", "neutral")) != "neutral": terrain_points += 1
                 var lm = tile.get("landmark")
                 if lm != null and int(lm.get("owner", -1)) == player:
-                    score += int(lm.get("presence", 1))
+                    landmark_points += int(lm.get("presence", 1))
             var creature = tile.get("creature")
             if creature != null and int(creature.get("owner", -1)) == player:
-                score += max(0, int(creature.get("power", 0)))
-    return score
+                creature_points += max(0, int(creature.get("power", 0)))
+    return {
+        "terrain": terrain_points,
+        "landmarks": landmark_points,
+        "creatures": creature_points,
+        "tiles_held": tiles_held,
+        "total": terrain_points + landmark_points + creature_points,
+    }
+
+func realm_score(player: int) -> int:
+    return int(realm_score_breakdown(player)["total"])

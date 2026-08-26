@@ -36,7 +36,15 @@ Then the other player acts. A player who has passed is skipped.
 - Occupy one tile.
 - Move one orthogonal tile when chosen as your action.
 - Moving into an enemy creature creates simultaneous combat.
-- Reaching the rival Sanctuary can damage the Heart.
+- A creature standing **beside** the rival Sanctuary may spend its action to strike
+  the Heart for its Power. Creatures never enter a Sanctuary tile.
+- **Sanctuary Ward:** striking the Heart costs the attacker 2 damage from the
+  Sanctuary itself. Heart pressure is a real plan; it is not free.
+
+## Shaping
+Shaping spends your whole turn, so it must actually change the tile. You cannot
+re-shape a tile that already has that terrain, and you cannot shape into the
+rival realm.
 
 ## Element states
 Frost→Frozen · Lightning→Charged · Life→Overgrown · Fire→Burning · Water→Wet · Earth→Fortified · Wind→Windswept · Death→Haunted.

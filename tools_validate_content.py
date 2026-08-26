@@ -50,7 +50,30 @@ for c in cards:
     for fx in c.get('effects',[]):
         if fx.get('kind') not in supported: errors.append(f'{c["id"]}: unsupported effect {fx.get("kind")}')
 ready=sum(c.get('implementation_status')=='slice_ready' for c in cards)
-if ready!=32: errors.append(f'expected 32 slice-ready cards, got {ready}')
+if ready<32: errors.append(f'expected at least 32 slice-ready cards, got {ready}')
+# Every card the vertical slice can actually draw must be runtime-active.
+SLICE_DECKS={'starter_life','starter_fire'}
+for d in decks:
+    if d['id'] not in SLICE_DECKS: continue
+    for x in d['cards']:
+        c=by.get(x['card_id'])
+        if c and c.get('implementation_status')!='slice_ready':
+            errors.append(f'{d["id"]}: {x["card_id"]} is in the vertical slice but not slice_ready')
+# Roadmap M2: at least four playable cards per element.
+for el in sorted(elements):
+    n=sum(1 for c in cards if c.get('implementation_status')=='slice_ready' and el in c.get('elements',[]))
+    if n<4: errors.append(f'{el}: only {n} slice-ready cards, need 4')
+# CARD_DESIGN_RULES bans "same card but +1 stat" filler: the two slice decks must
+# not be numerical mirrors of each other.
+def _curve(deck_id):
+    d=next(x for x in decks if x['id']==deck_id)
+    out=[]
+    for x in d['cards']:
+        c=by[x['card_id']]
+        if c['type']=='creature': out.append((c['cost'],c['power'],c['health']))
+    return sorted(out)
+if _curve('starter_life')==_curve('starter_fire'):
+    errors.append('starter_life and starter_fire are stat-identical mirror decks')
 print(f'Pocket Arcana content: {len(cards)} cards, {len(cmds)} commanders, {len(decks)} starters, {len(recipes)} recipes, {len(tokens)} tokens, {ready} slice-ready')
 if errors:
     print('ERRORS:'); [print(' -',e) for e in errors]; sys.exit(1)

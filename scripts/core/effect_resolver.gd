@@ -39,7 +39,7 @@ func apply(effect: Dictionary, engine, actor: int, pos: Vector2i) -> Array:
             engine.players[actor]["wonder"] = int(engine.players[actor]["wonder"]) + amount
             events.append({"type":"wonder","player":actor,"amount":amount})
         "gain_aether":
-            engine.players[actor]["aether"] = int(engine.players[actor]["aether"]) + amount
+            engine.grant_aether(actor, amount)
             events.append({"type":"aether","player":actor,"amount":amount})
         "buff_unit":
             if not tile.is_empty():

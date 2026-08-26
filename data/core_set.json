@@ -1376,7 +1376,7 @@
     ],
     "implementation_status": "slice_ready",
     "power": 1,
-    "health": 2
+    "health": 3
   },
   {
     "id": "life_moss_frog",
@@ -1390,15 +1390,15 @@
     "attunement": [
       "life"
     ],
-    "rules": "A simple friend with dependable stats.",
+    "rules": "A steady friend that is hard to knock over.",
     "effects": [],
     "tags": [
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 2,
-    "health": 2
+    "health": 4
   },
   {
     "id": "life_berrycap_bunny",
@@ -1424,9 +1424,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 1,
-    "health": 3
+    "health": 4
   },
   {
     "id": "life_petal_deer",
@@ -1452,9 +1452,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 3,
-    "health": 2
+    "health": 4
   },
   {
     "id": "life_rootback_boar",
@@ -1480,9 +1480,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 2,
-    "health": 4
+    "health": 6
   },
   {
     "id": "life_bloom_bear",
@@ -1513,9 +1513,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 4,
-    "health": 3
+    "health": 6
   },
   {
     "id": "life_great_stag",
@@ -1542,9 +1542,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 5,
-    "health": 5
+    "health": 7
   },
   {
     "id": "life_garden_dragon",
@@ -1571,9 +1571,9 @@
       "creature",
       "dragon"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 6,
-    "health": 5
+    "health": 8
   },
   {
     "id": "life_grow",
@@ -1623,7 +1623,7 @@
     "tags": [
       "life"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "life_rebloom",
@@ -1653,7 +1653,7 @@
     "tags": [
       "life"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "life_wild_flourish",
@@ -1683,7 +1683,7 @@
     "tags": [
       "life"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "life_herbalist_hut",
@@ -2021,9 +2021,9 @@
       "life",
       "creature"
     ],
-    "implementation_status": "blueprint",
+    "implementation_status": "slice_ready",
     "power": 8,
-    "health": 8
+    "health": 11
   },
   {
     "id": "fire_cinder_pup",
@@ -2050,8 +2050,8 @@
       "creature"
     ],
     "implementation_status": "slice_ready",
-    "power": 1,
-    "health": 2
+    "power": 2,
+    "health": 1
   },
   {
     "id": "fire_emberbug",
@@ -2065,15 +2065,15 @@
     "attunement": [
       "fire"
     ],
-    "rules": "A simple friend with dependable stats.",
+    "rules": "All spark, no armour. It hits and it goes.",
     "effects": [],
     "tags": [
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 2,
-    "health": 2
+    "implementation_status": "slice_ready",
+    "power": 3,
+    "health": 1
   },
   {
     "id": "fire_coal_chick",
@@ -2099,9 +2099,9 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 1,
-    "health": 3
+    "implementation_status": "slice_ready",
+    "power": 2,
+    "health": 2
   },
   {
     "id": "fire_ashcat",
@@ -2127,8 +2127,8 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 3,
+    "implementation_status": "slice_ready",
+    "power": 4,
     "health": 2
   },
   {
@@ -2155,9 +2155,9 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 2,
-    "health": 4
+    "implementation_status": "slice_ready",
+    "power": 3,
+    "health": 3
   },
   {
     "id": "fire_forge_ram",
@@ -2188,8 +2188,8 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 4,
+    "implementation_status": "slice_ready",
+    "power": 5,
     "health": 3
   },
   {
@@ -2217,9 +2217,9 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 5,
-    "health": 5
+    "implementation_status": "slice_ready",
+    "power": 4,
+    "health": 6
   },
   {
     "id": "fire_blazewing_drake",
@@ -2246,9 +2246,9 @@
       "creature",
       "dragon"
     ],
-    "implementation_status": "blueprint",
-    "power": 6,
-    "health": 5
+    "implementation_status": "slice_ready",
+    "power": 7,
+    "health": 4
   },
   {
     "id": "fire_little_flame",
@@ -2303,7 +2303,7 @@
     "tags": [
       "fire"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "fire_dragon_breath",
@@ -2328,7 +2328,7 @@
     "tags": [
       "fire"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "fire_wildfire_waltz",
@@ -2358,7 +2358,7 @@
     "tags": [
       "fire"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "fire_blacksmith_nook",
@@ -2691,9 +2691,9 @@
       "fire",
       "creature"
     ],
-    "implementation_status": "blueprint",
-    "power": 8,
-    "health": 8
+    "implementation_status": "slice_ready",
+    "power": 9,
+    "health": 6
   },
   {
     "id": "water_puddle_slime",

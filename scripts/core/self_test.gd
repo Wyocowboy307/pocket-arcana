@@ -1,4 +1,6 @@
 extends Node
+## Headless AI-vs-AI smoke test. Run with:
+##   ./run_smoke_test.sh
 
 var db := ContentDatabase.new()
 var engine := MatchEngine.new()
@@ -14,20 +16,18 @@ func _ready() -> void:
     var steps := 0
     while not engine.match_over and steps < max_steps:
         var player := engine.current_player
-        var action := engine.ai.choose_action(engine, player)
-        var kind := String(action.get("kind", "pass"))
-        if kind == "play_card":
-            engine.play_card(player, String(action["card_id"]), action["pos"])
-        elif kind == "shape":
-            engine.shape(player, String(action["element"]), action["pos"])
-        else:
-            engine.pass_chapter(player)
+        engine.perform(player, engine.ai.choose_action(engine, player))
         steps += 1
     if not engine.match_over:
         push_error("SELF TEST: match failed to finish in %d actions" % max_steps)
         get_tree().quit(2)
         return
     print("SELF TEST PASS: completed in %d actions" % steps)
+    print("Winner: P%d (%s)" % [engine.winner + 1, engine.win_reason])
+    print("Hearts: %d / %d   Seals: %d / %d   Wonder: %d / %d" % [
+        engine.players[0]["heart"], engine.players[1]["heart"],
+        engine.players[0]["seals"], engine.players[1]["seals"],
+        engine.players[0]["wonder"], engine.players[1]["wonder"]])
     print("Last events:")
     for line in engine.event_log:
         print("  ", line)

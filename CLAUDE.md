@@ -1,72 +1,80 @@
 # Pocket Arcana — Claude Code Instructions
 
-This repository is Pocket Arcana. **It is completely separate from Pixel Ranch. Never read, edit, import, move, or commit anything in Pixel Ranch.**
+This repository is Pocket Arcana. **It is completely separate from Pixel Ranch and Pixel Skies. Never read, edit, import, move, or commit anything in either other repository.**
 
-When Thomas says “go build,” implement. Do not reopen product discovery.
+When Thomas says “go build,” implement. Do not reopen broad product discovery.
 
-## Read order
-1. `docs/DESIGN_DECISIONS.md`
-2. `docs/MATCH_RULES_V1.md`
-3. `docs/ROADMAP_AND_TASKS.md`
-4. `docs/IMPLEMENTATION_NOTES.md`
-5. Exact code/data needed for the current milestone
+## CURRENT PRODUCT PRIORITY — V2 CLARITY PROTOTYPE
 
-For visual-production work also read:
+Thomas does **not** consider the current shared 7×5 movement version clear enough. Do not keep polishing the old rules merely because they already work.
+
+The next gameplay prototype is defined by:
+1. `docs/V2_CLARITY_REDESIGN.md`
+2. `docs/V2_CARD_LANGUAGE.md`
+3. `docs/V2_ANIMATION_CHOREOGRAPHY.md`
+4. `docs/V2_TUTORIAL.md`
+5. `docs/V2_PROTOTYPE_TASKS.md`
+
+These V2 files supersede the old gameplay assumptions in `MATCH_RULES_V1.md` **for the current prototype milestone**. Keep V1 as historical/reference material until V2 proves itself; do not delete old systems blindly before the replacement is playable.
+
+## Existing reference read order
+
+After the V2 files, read:
+- `docs/DESIGN_DECISIONS.md`
 - `docs/ART_BIBLE.md`
 - `docs/ART_PRODUCTION_PIPELINE.md`
-- `data/vertical_slice_art_manifest.json`
+- `docs/IMPLEMENTATION_NOTES.md`
+- exact code/data required for the milestone
 
 ## First commands
+
 - `python3 tools_validate_content.py`
 - `python3 tools_content_audit.py`
-- `./tools_verify.sh` when available
-Then run `scenes/main.tscn` in Godot and fix parser/runtime errors before adding features.
+- `./tools_verify.sh`
+- boot the real Godot project and fix parser/runtime errors before feature work
 
-## Locked product
-A 2D pixel-art living-board collectible card game that a kid or non-TCG adult can learn quickly, with serious deckbuilding underneath. Board 7×5. Win 2 Chapters, break the persistent Heart, or complete 10 Wonder. Turns are one main action. Passing preserves cards for later Chapters.
+## Product sentence
 
-Elements: Frost, Lightning, Life, Fire, Water, Earth, Wind, Death.
+A 2D pixel-art magical card battler where **Land visibly builds your realm, creatures clearly belong to that land, cards physically come alive when played, and attacks are readable without needing a rulebook.**
 
-Every deck has one Commander: one passive + one once-per-Chapter Command. Commander progression is horizontal/cosmetic, not paid raw power.
+## V2 design intent
 
-## Data authority
-- `data/core_set.json` — 240 designed cards. Do NOT bespoke-code all 240.
-- `data/commanders.json` — 24 Commanders.
-- `data/starter_decks.json` — 8 legal 40-card starters.
-- `data/combo_recipes.json` — 28 pair recipes.
-- `data/elements.json`, `data/terrain_attunement.json`, `data/tokens.json`
-- `data/card_art_prompts.json` — broader AI-art prompt library.
-- `data/vertical_slice_art_manifest.json` — exact production-art targets for the current Life/Fire art milestone.
+The current prototype is too hard to understand because it mixes shared-grid movement, shaping, attunement, Chapters, Seals, Wonder, Heart attacks and card placement at the same time.
+
+V2 deliberately tests a simpler core:
+- split battlefield: your realm vs rival realm;
+- four clear lanes/land plots per player;
+- creatures do not wander into enemy territory;
+- attacks animate across a lane and return;
+- Land is a real visible card/system, not an abstract toolbar action;
+- one creature + one Place per land keeps capacity readable;
+- cards show type, element, cost and `PLAY ON` rule directly on the card;
+- unified Aether comes from the Sanctuary + built lands;
+- first prototype win condition is **reduce the rival Heart to 0**;
+- Chapters/Seals/Wonder are disabled in the V2 test until the basic game is fun and obvious;
+- creature fusion/combination is a first-class spectacle mechanic, not hidden trivia.
+
+Do not add more elements before Life vs Fire is understandable. There are already eight planned elements; the current need is stronger identity, not more colors.
 
 ## Engineering rules
+
 - Deterministic simulation.
 - Generic effect vocabulary first.
-- UI asks the simulation for legal actions and failure reasons.
+- UI asks simulation for legal actions and exact failure reasons.
 - Animation communicates committed state; it never decides rules.
+- Data drives card role, element, land requirement, attack style and fusion tags.
+- Preserve existing content where it fits, but do not force old mechanics into V2 if they harm clarity.
 - Higher AI difficulty means better decisions, not hidden resources/stats.
 - Commit stable milestone boundaries.
-- Prefer implementing/testing over broad questions.
 
-## Current visual-production rule
-The Life/Fire vertical slice is the only production-art target until it looks coherent in a complete match.
+## Art / animation rule
 
-Do NOT batch-generate art for all 240 cards.
+Do not mass-generate the remaining card set while the V2 battlefield/card language is unsettled.
 
-Before generating many assets:
-1. lock a master style with the eight Phase-A references in `docs/ART_PRODUCTION_PIPELINE.md`;
-2. view those references inside the real board/card UI;
-3. reject anything that looks like a different game;
-4. keep the existing procedural board/card rendering as fallback until each production asset is present.
+Life/Fire remains the only production target.
 
-Use AI generators aggressively where useful, but obey `docs/ART_BIBLE.md`. Consistency is more important than an individually impressive generation.
+Every important action must have readable choreography: draw, select, land build, summon, Place build, spell cast, attack, hit, death, Heart strike, fusion and victory.
 
-For the first art integration:
-- add a small data-driven ArtRegistry/helper rather than hardcoding asset loads throughout `BoardView` and `CardView`;
-- render terrain textures under existing legality/selection overlays;
-- render landmarks behind creatures;
-- render creature sprites in place of text-only chips while keeping compact stats readable;
-- add a central art window to cards without sacrificing rules readability;
-- use reusable Godot VFX for summon/heal/burn/reaction/Heart strike/Chapter win rather than bespoke sprite sheets for every spell;
-- run the UI playthrough and screenshot scenarios after each visual milestone.
+The goal is not “particles happened.” The player must see **cause -> travel/action -> impact -> result**.
 
-No artwork is allowed to change simulation legality, board coordinates, hitboxes, AI behavior, balance, or deterministic outcomes.
+Use AI generators aggressively for consistent production assets, but judge them in the running game at actual scale.

@@ -11,9 +11,15 @@ When Thomas says “go build,” implement. Do not reopen product discovery.
 4. `docs/IMPLEMENTATION_NOTES.md`
 5. Exact code/data needed for the current milestone
 
+For visual-production work also read:
+- `docs/ART_BIBLE.md`
+- `docs/ART_PRODUCTION_PIPELINE.md`
+- `data/vertical_slice_art_manifest.json`
+
 ## First commands
 - `python3 tools_validate_content.py`
 - `python3 tools_content_audit.py`
+- `./tools_verify.sh` when available
 Then run `scenes/main.tscn` in Godot and fix parser/runtime errors before adding features.
 
 ## Locked product
@@ -29,7 +35,8 @@ Every deck has one Commander: one passive + one once-per-Chapter Command. Comman
 - `data/starter_decks.json` — 8 legal 40-card starters.
 - `data/combo_recipes.json` — 28 pair recipes.
 - `data/elements.json`, `data/terrain_attunement.json`, `data/tokens.json`
-- `data/card_art_prompts.json` — AI-art direction prompts.
+- `data/card_art_prompts.json` — broader AI-art prompt library.
+- `data/vertical_slice_art_manifest.json` — exact production-art targets for the current Life/Fire art milestone.
 
 ## Engineering rules
 - Deterministic simulation.
@@ -39,3 +46,27 @@ Every deck has one Commander: one passive + one once-per-Chapter Command. Comman
 - Higher AI difficulty means better decisions, not hidden resources/stats.
 - Commit stable milestone boundaries.
 - Prefer implementing/testing over broad questions.
+
+## Current visual-production rule
+The Life/Fire vertical slice is the only production-art target until it looks coherent in a complete match.
+
+Do NOT batch-generate art for all 240 cards.
+
+Before generating many assets:
+1. lock a master style with the eight Phase-A references in `docs/ART_PRODUCTION_PIPELINE.md`;
+2. view those references inside the real board/card UI;
+3. reject anything that looks like a different game;
+4. keep the existing procedural board/card rendering as fallback until each production asset is present.
+
+Use AI generators aggressively where useful, but obey `docs/ART_BIBLE.md`. Consistency is more important than an individually impressive generation.
+
+For the first art integration:
+- add a small data-driven ArtRegistry/helper rather than hardcoding asset loads throughout `BoardView` and `CardView`;
+- render terrain textures under existing legality/selection overlays;
+- render landmarks behind creatures;
+- render creature sprites in place of text-only chips while keeping compact stats readable;
+- add a central art window to cards without sacrificing rules readability;
+- use reusable Godot VFX for summon/heal/burn/reaction/Heart strike/Chapter win rather than bespoke sprite sheets for every spell;
+- run the UI playthrough and screenshot scenarios after each visual milestone.
+
+No artwork is allowed to change simulation legality, board coordinates, hitboxes, AI behavior, balance, or deterministic outcomes.

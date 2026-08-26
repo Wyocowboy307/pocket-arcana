@@ -35,6 +35,9 @@ var _anim: Dictionary = {}           # "unit:<uid>" / "tile:x,y" -> progress 0..
 var _particles: Array = []           # lightweight decorative particles
 var ghost_terrain := ""              # terrain previewed on legal tiles while shaping
 var dim_illegal := false             # darken everything that is not a legal target
+var preview_card := ""               # card whose result is ghosted under the cursor
+var _acts: Array = []                # running attack choreographies
+var _ghosts: Array = []              # units animating their own death
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_STOP
@@ -49,6 +52,7 @@ func _process(delta: float) -> void:
         if float(f["t"]) < float(f["life"]): alive.append(f)
     _flourishes = alive
 
+    _step_acts(delta)
     for key in _anim.keys():
         var v: float = float(_anim[key]) + delta * 3.2
         if v >= 1.0: _anim.erase(key)
@@ -63,6 +67,175 @@ func _process(delta: float) -> void:
         live.append(pt)
     _particles = live
     queue_redraw()
+
+# --- attack choreography ----------------------------------------------------
+#
+# The simulation has already resolved by the time any of this runs. These are
+# purely cosmetic beats laid over committed state, so a slow animation can never
+# hold up or alter a rule.
+#
+# Phases, in normalised time:
+#   0.00-0.18  anticipation : coil back
+#   0.18-0.34  wind-up      : rise and brighten
+#   0.34-0.52  travel       : lunge, or launch a projectile
+#   0.52-0.60  impact       : flash, burst, board punch
+#   0.60-0.76  recoil       : defender knocked back and flashed
+#   0.76-1.00  settle       : attacker eases home
+
+const ACT_DURATION := 0.86
+
+func motion_style(card_id: String) -> String:
+    if engine == null or engine.db == null: return "lunge"
+    var table: Dictionary = engine.db.motion.get("creatures", {})
+    if table.has(card_id): return String(table[card_id])
+    # Fall back on the size language when a creature has no entry.
+    var tier: int = art.source_size(card_id, Vector2i(64, 64)).y if art != null else 64
+    if tier >= 96: return "slam"
+    if tier <= 48: return "hop"
+    return "lunge"
+
+func _style_data(style: String) -> Dictionary:
+    var styles: Dictionary = engine.db.motion.get("styles", {}) if engine != null and engine.db != null else {}
+    return styles.get(style, {"reach": 0.6, "wind": 0.2, "impact_shake": 0.5})
+
+## Choreograph one attack. `defender_uid` may be 0 for a Heart strike.
+func play_attack(attacker_uid: int, from: Vector2i, to: Vector2i, card_id: String,
+                 colour: Color, on_heart: bool = false) -> void:
+    var style := motion_style(card_id)
+    _acts.append({
+        "uid": attacker_uid, "from": from, "to": to, "style": style,
+        "data": _style_data(style), "colour": colour, "t": 0.0,
+        "impacted": false, "heart": on_heart,
+    })
+
+## A unit that has already been removed from the board still gets to die on screen.
+## `hold` keeps the unit drawn as if alive until the impact beat, so it never
+## vanishes before the blow that killed it.
+func play_death(unit: Dictionary, pos: Vector2i, hold: float = 0.12) -> void:
+    _ghosts.append({"unit": unit, "pos": pos, "t": 0.0, "hold": hold, "life": 0.55})
+
+func _act_for(uid: int) -> Dictionary:
+    for a in _acts:
+        if int(a["uid"]) == uid: return a
+    return {}
+
+## Where the attacker should be drawn, and how it is squashed, mid-attack.
+func _act_transform(act: Dictionary) -> Dictionary:
+    var t: float = float(act["t"]) / ACT_DURATION
+    var data: Dictionary = act["data"]
+    var reach: float = float(data.get("reach", 0.6))
+    var arc: float = float(data.get("arc", 0.0))
+    var from_c := tile_rect(act["from"]).get_center()
+    var to_c := tile_rect(act["to"]).get_center()
+    var dir := (to_c - from_c)
+    var offset := Vector2.ZERO
+    var squash := Vector2.ONE
+    var glow := 0.0
+
+    if t < 0.18:                                   # anticipation
+        var k: float = t / 0.18
+        offset = -dir * 0.10 * k * reach
+        squash = Vector2(1.0 + 0.10 * k, 1.0 - 0.10 * k)
+    elif t < 0.34:                                 # wind-up
+        var k: float = (t - 0.18) / 0.16
+        offset = -dir * 0.10 * (1.0 - k) * reach
+        squash = Vector2(1.0 - 0.08 * k, 1.0 + 0.14 * k)
+        glow = k
+    elif t < 0.52:                                 # travel
+        var k: float = (t - 0.34) / 0.18
+        var eased: float = k * k
+        offset = dir * reach * eased
+        offset.y -= sin(k * PI) * arc * 40.0
+        squash = Vector2(1.0 + 0.12, 1.0 - 0.08)
+        glow = 1.0
+    elif t < 0.60:                                 # impact
+        offset = dir * reach
+        squash = Vector2(1.0 - 0.16, 1.0 + 0.16)
+        glow = 1.0
+    else:                                          # settle
+        var k: float = (t - 0.60) / 0.40
+        var eased: float = 1.0 - pow(1.0 - k, 3.0)
+        offset = dir * reach * (1.0 - eased)
+        squash = Vector2.ONE
+    return {"offset": offset, "squash": squash, "glow": glow}
+
+func _step_acts(delta: float) -> void:
+    var live: Array = []
+    for act in _acts:
+        act["t"] = float(act["t"]) + delta
+        var t: float = float(act["t"]) / ACT_DURATION
+        if t >= 0.52 and not bool(act["impacted"]):
+            act["impacted"] = true
+            var target: Vector2i = act["to"]
+            shake(float(act["data"].get("impact_shake", 0.5)))
+            burst(target, act["colour"], 16, "spark", 1.2)
+            flash_tile(target, act["colour"], 0.28)
+            ring(target, act["colour"], 0.5)
+        if float(act["t"]) < ACT_DURATION: live.append(act)
+    _acts = live
+
+    var alive: Array = []
+    for g in _ghosts:
+        g["t"] = float(g["t"]) + delta
+        if float(g["t"]) < float(g["hold"]) + float(g["life"]): alive.append(g)
+    _ghosts = alive
+
+## Dragons and casters do not move; their magic travels instead.
+func _draw_projectiles() -> void:
+    for act in _acts:
+        var proj := String(act["data"].get("projectile", ""))
+        if proj == "": continue
+        var t: float = float(act["t"]) / ACT_DURATION
+        if t < 0.34 or t > 0.56: continue
+        var k: float = clampf((t - 0.34) / 0.22, 0.0, 1.0)
+        var a := tile_rect(act["from"]).get_center()
+        var b := tile_rect(act["to"]).get_center()
+        var at: Vector2 = a.lerp(b, k)
+        var colour: Color = act["colour"]
+        if proj == "cone":
+            # A gout that widens toward the target, with a bright core and a
+            # scatter of sparks riding along it.
+            var width: float = 14.0 + 46.0 * k
+            draw_line(a, at, Color(colour, 0.22), width)
+            draw_line(a, at, Color(colour, 0.42), width * 0.62)
+            draw_line(a, at, Color(colour, 0.85), width * 0.26)
+            draw_circle(at, width * 0.42, Color(colour, 0.55))
+            draw_circle(at, width * 0.24, Color(1, 1, 1, 0.55))
+            for i in range(7):
+                var f2: float = _vhash(i, 3)
+                var along: float = clampf(k - f2 * 0.35, 0.0, 1.0)
+                var p2: Vector2 = a.lerp(b, along)
+                var spread: float = (_vhash(i, 9) - 0.5) * width * 0.9
+                draw_circle(p2 + Vector2(spread, spread * 0.4), 2.5 + 2.0 * f2,
+                    Color(colour, 0.7 * (1.0 - along)))
+        else:
+            draw_circle(at, 9.0, Color(colour, 0.35))
+            draw_circle(at, 5.0, Color(colour, 0.95))
+            draw_circle(a.lerp(b, maxf(0.0, k - 0.10)), 3.0, Color(colour, 0.45))
+
+func _draw_ghosts(f: Font) -> void:
+    for g in _ghosts:
+        var held: float = float(g["hold"])
+        var raw: float = float(g["t"])
+        # Standing its ground until the hit lands, then falling.
+        var t: float = 0.0 if raw < held else clampf((raw - held) / float(g["life"]), 0.0, 1.0)
+        var rect := tile_rect(g["pos"])
+        var unit: Dictionary = g["unit"]
+        var tex: Texture2D = art.creature(String(unit.get("card_id", ""))) if art != null else null
+        var fade: float = 1.0 - t
+        # Sink, fade and tip over rather than blinking out.
+        var drop: float = t * rect.size.y * 0.22
+        if tex != null:
+            var src := Vector2(tex.get_width(), tex.get_height())
+            var budget := rect.size * _tier_fill(String(unit.get("card_id", "")))
+            var sc: float = min(budget.x / src.x, budget.y / src.y)
+            var drawn := src * sc * Vector2(1.0 + t * 0.2, 1.0 - t * 0.5)
+            draw_texture_rect(tex,
+                Rect2(rect.get_center() - drawn * 0.5 + Vector2(0, drop), drawn),
+                false, Color(1, 1, 1, fade))
+        else:
+            draw_circle(rect.get_center() + Vector2(0, drop), rect.size.x * 0.2 * fade,
+                Color(0.6, 0.4, 0.5, fade))
 
 # --- effects API (driven by committed simulation events) --------------------
 
@@ -327,6 +500,8 @@ func _draw() -> void:
 
     _draw_depth(board)
     _draw_indicators(f)
+    _draw_ghosts(f)
+    _draw_projectiles()
     for fl in _flourishes: _draw_flourish(fl, f)
     _draw_particles()
 
@@ -542,15 +717,29 @@ func _draw_creature(pos: Vector2i, f: Font) -> void:
         scale_x = 0.55 + 0.45 * e + 0.16 * sin(e * PI)
         scale_y = 0.40 + 0.60 * e - 0.12 * sin(e * PI)
 
+    # An attacking creature is offset and squashed by its choreography.
+    var act := _act_for(int(unit.get("uid", 0)))
+    var act_offset := Vector2.ZERO
+    if not act.is_empty():
+        var tr: Dictionary = _act_transform(act)
+        act_offset = tr["offset"]
+        scale_x *= float(tr["squash"].x)
+        scale_y *= float(tr["squash"].y)
+        var g: float = float(tr["glow"])
+        if g > 0.0:
+            draw_circle(rect.get_center() + act_offset, rect.size.x * 0.30 * g,
+                Color(act["colour"], 0.22 * g))
+
+    var acting := Rect2(rect.position + act_offset, rect.size)
     var sprite: Texture2D = art.creature(card_id) if art != null else null
     if sprite != null:
-        _draw_sprite_scaled(sprite, rect, _tier_fill(card_id), -rect.size.y * 0.08,
+        _draw_sprite_scaled(sprite, acting, _tier_fill(card_id), -rect.size.y * 0.08,
             Vector2(scale_x, scale_y))
     else:
         # Fallback silhouette still carries element colour and size tier.
         var tier: float = _tier_fill(card_id)
         var body := Rect2(Vector2.ZERO, rect.size * Vector2(0.46, 0.50) * tier * Vector2(scale_x, scale_y))
-        body.position = rect.get_center() - body.size * 0.5 - Vector2(0, rect.size.y * 0.06)
+        body.position = acting.get_center() - body.size * 0.5 - Vector2(0, rect.size.y * 0.06)
         draw_style_box(ArcanaTheme.panel_box(element.darkened(0.45), element.lightened(0.15), 10, 2), body)
         draw_string(f, Vector2(body.position.x + 4, body.get_center().y + 4),
             ArcanaTheme.fit(String(unit.get("name", "Unit")), 11, body.size.x - 8),
@@ -663,6 +852,18 @@ func _draw_indicators(f: Font) -> void:
     if selected_pos.x >= 0:
         draw_style_box(ArcanaTheme.panel_box(Color(1, 1, 1, 0), Color(ArcanaTheme.GOLD, 0.95), 10, 3),
             tile_rect(selected_pos).grow(-3.0))
+    # Ghost the actual result on the tile under the cursor.
+    if preview_card != "" and hover_pos.x >= 0 and highlights.has(hover_pos) and art != null:
+        var ghost: Texture2D = art.creature(preview_card)
+        if ghost == null: ghost = art.landmark(preview_card)
+        if ghost != null:
+            var gr := tile_rect(hover_pos)
+            var src := Vector2(ghost.get_width(), ghost.get_height())
+            var budget := gr.size * _tier_fill(preview_card)
+            var sc: float = min(budget.x / src.x, budget.y / src.y)
+            var drawn := src * sc
+            draw_texture_rect(ghost, Rect2(gr.get_center() - drawn * 0.5, drawn), false,
+                Color(1, 1, 1, 0.42 + 0.12 * wave))
     if targeting and hover_pos.x >= 0 and highlights.has(hover_pos):
         draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.TEXT, 0.10), Color(ArcanaTheme.TEXT, 0.5), 10, 2),
             tile_rect(hover_pos).grow(-4.0))

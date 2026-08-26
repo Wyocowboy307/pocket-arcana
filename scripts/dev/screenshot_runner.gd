@@ -11,6 +11,7 @@ extends Node
 var out_path := "/tmp/pocket_arcana_shot.png"
 var frames := 90
 var scenario := "opening"
+var delay := 0.0                      # real seconds to wait after the scenario
 var main: Node
 
 func _ready() -> void:
@@ -18,11 +19,14 @@ func _ready() -> void:
         if arg.begins_with("--out="): out_path = arg.trim_prefix("--out=")
         elif arg.begins_with("--frames="): frames = int(arg.trim_prefix("--frames="))
         elif arg.begins_with("--scenario="): scenario = arg.trim_prefix("--scenario=")
+        elif arg.begins_with("--delay="): delay = float(arg.trim_prefix("--delay="))
     var packed: PackedScene = load("res://scenes/main.tscn")
     main = packed.instantiate()
     add_child(main)
     await _settle(30)
     await _run_scenario()
+    if delay > 0.0:
+        await get_tree().create_timer(delay).timeout
     await _settle(frames)
     await RenderingServer.frame_post_draw
     var image := get_viewport().get_texture().get_image()
@@ -135,6 +139,38 @@ func _run_scenario() -> void:
                 main.hand_view.hovered = 3
                 main.hand_view.call("_layout")
                 main.call("_on_card_hovered", main.hand_view.cards[3].card_id)
+        "combat_beat":
+            # Freeze mid-attack so the choreography can be judged from a still.
+            _freeze_rival()
+            var a := Vector2i(3, 3)
+            var d := Vector2i(3, 2)
+            engine.board.shape(0, a, "grove")
+            engine.board.shape(0, d, "grove")
+            engine.board.get_tile(a)["creature"] = engine.make_unit_from_card(
+                engine.db.get_card("life_great_stag"), 0)
+            engine.board.get_tile(d)["creature"] = engine.make_unit_from_card(
+                engine.db.get_card("fire_ashcat"), 1)
+            main.call("_clear_selection")
+            engine.move_or_attack(0, a, d)
+        "dragon_breath":
+            _freeze_rival()
+            var da := Vector2i(3, 3)
+            var dd := Vector2i(3, 2)
+            engine.board.shape(0, da, "grove")
+            engine.board.get_tile(da)["creature"] = engine.make_unit_from_card(
+                engine.db.get_card("life_garden_dragon"), 0)
+            engine.board.get_tile(dd)["creature"] = engine.make_unit_from_card(
+                engine.db.get_card("fire_magma_turtle"), 1)
+            main.call("_clear_selection")
+            engine.move_or_attack(0, da, dd)
+        "card_targeting":
+            # A creature card selected: legal land lit, everything else in shadow.
+            _freeze_rival()
+            engine.board.shape(0, Vector2i(3, 3), "grove")
+            engine.board.shape(0, Vector2i(2, 3), "grove")
+            engine.players[0]["aether"] = 99
+            main.call("_select_card", "life_petal_deer")
+            main.board_view.hover_pos = Vector2i(3, 3)
         "help":
             _freeze_rival()
             main.help_panel.get_meta("dimmer").visible = true

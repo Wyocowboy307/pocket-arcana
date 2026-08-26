@@ -141,11 +141,12 @@ func _draw() -> void:
         ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
 
     # "Play on" — where this card is allowed to go.
-    var foot := Rect2(rect.position.x + 4, rect.position.y + rect.size.y - 40, rect.size.x - 8, 15)
-    draw_style_box(ArcanaTheme.panel_box(Color(0, 0, 0, 0.30), Color(0, 0, 0, 0), 4, 0), foot)
-    draw_string(f, Vector2(foot.position.x + 5, foot.position.y + 11),
-        ArcanaTheme.fit("▸ " + play_on, 9, foot.size.x - 10),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 9, ArcanaTheme.TEXT_DIM if playable else ArcanaTheme.TEXT_FAINT)
+    var foot := Rect2(rect.position.x + 4, rect.position.y + rect.size.y - 42, rect.size.x - 8, 18)
+    var foot_tint: Color = accent if playable else ArcanaTheme.PANEL_EDGE
+    draw_style_box(ArcanaTheme.panel_box(Color(foot_tint, 0.22), Color(foot_tint, 0.6), 4, 1), foot)
+    draw_string(f, Vector2(foot.position.x + 5, foot.position.y + 13),
+        ArcanaTheme.fit(play_on.to_upper(), 9, foot.size.x - 10),
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 9, ArcanaTheme.TEXT if playable else ArcanaTheme.TEXT_FAINT)
 
     # Stats, in the role's own language.
     var base_y: float = rect.position.y + rect.size.y - 8

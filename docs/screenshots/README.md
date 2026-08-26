@@ -16,3 +16,9 @@ Regenerate any of these with the screenshot harness:
 | `heart_strike.png` | targeting state: indicators appear only while aiming |
 | `chapter_overlay.png` | Chapter result overlay |
 | `shape_selected.png` | land-building: legal tiles preview the terrain they would become |
+| `card_targeting.png` | a selected card: legal land lit, the rest in shadow, result ghosted under the cursor |
+| `combat_beat.png` | a lunge attack frozen on its impact beat (`--delay=0.44`) |
+| `dragon_breath.png` | a dragon's breath mid-flight (`--delay=0.44`) |
+
+Attack beats need `--delay=<seconds>` to land on a specific phase of the
+choreography, for example `--scenario=combat_beat --delay=0.44 --frames=1`.

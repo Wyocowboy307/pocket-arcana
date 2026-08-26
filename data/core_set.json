@@ -1799,7 +1799,7 @@
     "attunement": [
       "life"
     ],
-    "rules": "Turn a tile into Grove.",
+    "rules": "Build Grove land on open ground beside your realm.",
     "effects": [
       {
         "kind": "transform_terrain",
@@ -1811,7 +1811,7 @@
       "life",
       "terrain"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "life_seed_satchel",
@@ -2474,7 +2474,7 @@
     "attunement": [
       "fire"
     ],
-    "rules": "Turn a tile into Cinder.",
+    "rules": "Build Cinder land on open ground beside your realm.",
     "effects": [
       {
         "kind": "transform_terrain",
@@ -2486,7 +2486,7 @@
       "fire",
       "terrain"
     ],
-    "implementation_status": "blueprint"
+    "implementation_status": "slice_ready"
   },
   {
     "id": "fire_hot_iron_charm",

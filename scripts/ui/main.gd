@@ -46,6 +46,7 @@ var overlay_button: Button
 var banner: Label
 var _context_mode := ""              # "" | "card" | "tile" | "pass" | "selection"
 var _context_card := ""
+var _death_hold := 0.12              # how long a dying unit stands before falling
 var _hand_signature := ""
 
 func _ready() -> void:
@@ -301,6 +302,7 @@ func _refresh() -> void:
     element_rail.chosen = shape_element if mode == "shape" else ""
     board_view.ghost_terrain = engine.terrain_for_element(shape_element) if mode == "shape" else ""
     board_view.dim_illegal = mode in ["card", "shape"]
+    board_view.preview_card = selected_card_id if mode == "card" else ""
     element_rail.enabled_for_player = HUMAN
     cancel_button.visible = mode != ""
     pass_button.disabled = not my_turn
@@ -334,7 +336,7 @@ func _refresh_hand(my_turn: bool) -> void:
             "selected": selected_card_id == cid,
             "art": art,
             "role": engine.card_role(cid),
-            "play_on": engine.placement_rule(cid),
+            "play_on": "%s: %s" % [engine.placement_verb(cid), engine.placement_rule(cid)],
         })
     hand_view.rebuild(entries)
 
@@ -472,7 +474,7 @@ func _describe_card(card_id: String) -> void:
         engine.card_role(card_id), " + ".join(els), int(card.get("cost", 0)), stats])
     lines.append(String(card.get("rules", "")))
     lines.append("")
-    lines.append("[b]Play on:[/b] %s" % engine.placement_rule(card_id))
+    lines.append("[b]%s:[/b] %s" % [engine.placement_verb(card_id), engine.placement_rule(card_id)])
     var need := engine.requirement_text(card_id)
     if need != "":
         var missing: Array[String] = engine.missing_attunement(HUMAN, card.get("attunement", []))
@@ -573,6 +575,7 @@ func _on_tile_clicked(pos: Vector2i) -> void:
     if engine.current_player != HUMAN:
         _refuse("It is the rival's turn.")
         return
+    var played_card := selected_card_id
     var result: Dictionary = {}
     match mode:
         "card":
@@ -614,6 +617,8 @@ func _on_tile_clicked(pos: Vector2i) -> void:
                 _on_tile_hovered(pos)
             return
     if bool(result.get("ok", false)):
+        if mode == "card" and played_card != "":
+            _launch_card_flight(played_card, pos)
         _clear_selection()
     else:
         _refuse(String(result.get("reason", "That is not a legal action.")))
@@ -698,22 +703,31 @@ func _on_event(event: Dictionary) -> void:
             else:
                 board_view.float_text(pos, String(event.get("name", "")), ArcanaTheme.GOLD)
         "combat":
-            board_view.float_text(event.get("to", pos), "-%d" % int(event.get("enemy_damage", 0)), ArcanaTheme.DANGER)
-            board_view.float_text(event.get("from", pos), "-%d" % int(event.get("my_damage", 0)), ArcanaTheme.DANGER)
-            board_view.burst(event.get("to", pos), ArcanaTheme.DANGER, 12, "spark", 1.1)
-            board_view.shake(0.6)
+            var afrom: Vector2i = event.get("from", pos)
+            var ato: Vector2i = event.get("to", pos)
+            var attacker = engine.board.get_tile(afrom).get("creature")
+            var acard := String(attacker.get("card_id", "")) if attacker != null else ""
+            var auid := int(attacker.get("uid", 0)) if attacker != null else 0
+            board_view.play_attack(auid, afrom, ato, acard,
+                board_view.element_colour_for_card(acard))
+            _death_hold = 0.46      # deaths in this exchange wait for the impact
+            # Damage numbers land on the impact beat, not before the blow.
+            _delay_float(ato, "-%d" % int(event.get("enemy_damage", 0)), ArcanaTheme.DANGER, 0.46)
+            _delay_float(afrom, "-%d" % int(event.get("my_damage", 0)), ArcanaTheme.DANGER, 0.52)
         "unit_damaged":
             board_view.float_text(pos, "-%d" % int(event.get("amount", 0)), ArcanaTheme.DANGER)
             board_view.burst(pos, ArcanaTheme.DANGER, 8, "spark", 0.8)
         "unit_died":
-            board_view.flash_tile(pos, ArcanaTheme.DANGER, 0.6)
-            board_view.burst(pos, Color("#8b6b7a"), 14, "spark", 0.7)
+            board_view.play_death(event.get("unit", {}), pos, _death_hold)
+            _delay_burst(pos, Color("#8b6b7a"), 14, _death_hold)
+            _death_hold = 0.12
         "heart_attack":
             var target: Vector2i = engine.sanctuary_pos(1 - int(event.get("player", 0)))
-            board_view.float_text(target, "-%d" % int(event.get("amount", 0)), ArcanaTheme.HEART)
-            board_view.ring(target, ArcanaTheme.HEART, 0.9)
-            board_view.burst(target, ArcanaTheme.HEART, 22, "spark", 1.5)
-            board_view.shake(1.2)
+            var striker: Dictionary = event.get("unit", {})
+            var scard := String(striker.get("card_id", ""))
+            board_view.play_attack(int(striker.get("uid", 0)), event.get("from", pos), target,
+                scard, ArcanaTheme.HEART, true)
+            _delay_float(target, "-%d" % int(event.get("amount", 0)), ArcanaTheme.HEART, 0.48)
         "ward_retaliation":
             board_view.float_text(pos, "Ward -%d" % int(event.get("amount", 0)), ArcanaTheme.WONDER)
             board_view.burst(pos, ArcanaTheme.WONDER, 8, "spark", 0.7)
@@ -736,6 +750,34 @@ func _on_event(event: Dictionary) -> void:
             board_view.burst(home2, ArcanaTheme.GOLD, 24, "spark", 1.4)
             board_view.shake(0.6)
             _show_banner(String(event.get("name", "Commander")), 0.9)
+
+## Send the played card flying from the hand into the world.
+func _launch_card_flight(card_id: String, target: Vector2i) -> void:
+    var start := Vector2(size.x * 0.5, size.y - HAND_H * 0.5)
+    for view in hand_view.cards:
+        if view.card_id == card_id:
+            start = view.global_position + view.size * 0.5
+            break
+    var flight := CardFlight.new()
+    flight.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+    add_child(flight)
+    flight.launch(start, board_view.global_position + board_view.tile_rect(target).get_center(),
+        String(db.get_card(card_id).get("name", "")), engine.card_role(card_id),
+        board_view.element_colour_for_card(card_id))
+
+## Hold a burst until the beat it belongs to.
+func _delay_burst(pos: Vector2i, colour: Color, count: int, delay: float) -> void:
+    if delay <= 0.0:
+        board_view.burst(pos, colour, count, "spark", 0.7)
+        return
+    get_tree().create_timer(delay).timeout.connect(func() -> void:
+        if board_view != null: board_view.burst(pos, colour, count, "spark", 0.7))
+
+## Damage numbers wait for the impact beat so cause reads before effect.
+func _delay_float(pos: Vector2i, text: String, colour: Color, delay: float) -> void:
+    var timer := get_tree().create_timer(delay)
+    timer.timeout.connect(func() -> void:
+        if board_view != null: board_view.float_text(pos, text, colour))
 
 ## Life magic drifts, Fire magic rises.
 func _style_for(card_id: String) -> String:

@@ -196,9 +196,21 @@ func legal_targets_for_card(player: int, card_id: String) -> Array[Vector2i]:
                 out.append(pos)
             elif typ == "landmark" and int(tile.get("owner", -1)) == player and tile.get("landmark") == null:
                 out.append(pos)
-            elif typ in ["spell", "terrain", "relic"]:
+            elif typ == "terrain":
+                # A Land card grows your realm outward, so it obeys the same
+                # adjacency rule as Shaping.
+                var made := _terrain_made_by(card)
+                if made == "" or board.can_shape(player, pos, made): out.append(pos)
+            elif typ in ["spell", "relic"]:
                 out.append(pos)
     return out
+
+## The terrain a Land card would create, if any.
+func _terrain_made_by(card: Dictionary) -> String:
+    for effect in card.get("effects", []):
+        if String(effect.get("kind", "")) == "transform_terrain":
+            return String(effect.get("terrain", ""))
+    return ""
 
 func can_afford(player: int, card_id: String) -> bool:
     return int(db.get_card(card_id).get("cost", 99)) <= int(players[player]["aether"])
@@ -236,12 +248,18 @@ func card_role(card_id: String) -> String:
 ## Where this card may be played, as a short sentence.
 func placement_rule(card_id: String) -> String:
     match String(db.get_card(card_id).get("type", "")):
-        "creature": return "An empty tile in your realm"
-        "landmark": return "Your realm, where no building stands"
-        "spell": return "Any tile on the board"
-        "terrain": return "Any tile on the board"
-        "relic": return "Any tile on the board"
-    return "Any tile on the board"
+        "creature": return "your open land"
+        "landmark": return "your land, no building"
+        "spell": return "any tile"
+        "terrain": return "open ground by your realm"
+        "relic": return "any tile"
+    return "any tile"
+
+## "Play on" for things that stay, "Target" for things that resolve and go.
+func placement_verb(card_id: String) -> String:
+    match String(db.get_card(card_id).get("type", "")):
+        "creature", "landmark", "terrain": return "Play on"
+    return "Target"
 
 ## What terrain the player's realm must already contain.
 func requirement_text(card_id: String) -> String:
@@ -261,15 +279,24 @@ func card_creates_states(card_id: String) -> Array[String]:
     return out
 
 ## Recipes this card can help complete, as "Burning -> Ashbloom" pairs.
+## Combos this card can help complete. Recipes needing an element nobody is
+## playing are noise to a new player, so those are filtered out.
 func card_combos(card_id: String) -> Array:
+    var in_play: Array[String] = []
+    for p in range(players.size()):
+        var st := String(db.elements.get(commander_element(p), {}).get("state", ""))
+        if st != "" and not in_play.has(st): in_play.append(st)
     var out: Array = []
+    var fallback: Array = []
     for state in card_creates_states(card_id):
         for recipe in db.recipes:
             var need: Array = recipe.get("states", [])
             if need.size() != 2 or not need.has(state): continue
             var partner := String(need[0]) if String(need[1]) == state else String(need[1])
-            out.append({"partner": partner, "result": String(recipe.get("name", ""))})
-    return out
+            var entry := {"partner": partner, "result": String(recipe.get("name", ""))}
+            if in_play.has(partner): out.append(entry)
+            else: fallback.append(entry)
+    return out if not out.is_empty() else fallback
 
 ## Why this particular tile is not a legal destination, in plain language.
 ## Returns "" when the tile is fine.
@@ -279,8 +306,15 @@ func tile_block_reason(player: int, card_id: String, pos: Vector2i) -> String:
     if not board.in_bounds(pos): return "That is off the board."
     var tile := board.get_tile(pos)
     var typ := String(card.get("type", ""))
-    if typ == "creature":
-        if int(tile.get("owner", -1)) != player: return "Not your land yet — Shape it first."
+    if typ == "terrain":
+        var made := _terrain_made_by(card)
+        if made != "":
+            if int(tile.get("owner", -1)) not in [-1, player]: return "That belongs to the rival realm."
+            if int(tile.get("owner", -1)) == player and String(tile.get("terrain", "")) == made:
+                return "This land is already that."
+            if not board.can_shape(player, pos, made): return "Must touch land you already hold."
+    elif typ == "creature":
+        if int(tile.get("owner", -1)) != player: return "Not your land yet — build land here first."
         if tile.get("creature") != null: return "A creature already stands here."
     elif typ == "landmark":
         if int(tile.get("owner", -1)) != player: return "Not your land yet — Shape it first."

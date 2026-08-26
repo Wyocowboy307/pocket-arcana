@@ -1,0 +1,32 @@
+{
+  "comment": "How each creature moves when it attacks. Presentation only — motion style never affects damage, legality or outcomes.",
+  "styles": {
+    "hop":     {"reach": 0.42, "wind": 0.16, "impact_shake": 0.35, "note": "small beasts spring at the target"},
+    "lunge":   {"reach": 0.62, "wind": 0.20, "impact_shake": 0.55, "note": "mid-size bodies drive forward"},
+    "charge":  {"reach": 0.86, "wind": 0.30, "impact_shake": 0.85, "note": "horned creatures run the whole way"},
+    "swoop":   {"reach": 0.70, "wind": 0.18, "impact_shake": 0.5,  "arc": 0.55, "note": "fliers dive in an arc"},
+    "slam":    {"reach": 0.34, "wind": 0.34, "impact_shake": 1.1,  "note": "giants rear up and come down hard"},
+    "breath":  {"reach": 0.0,  "wind": 0.28, "impact_shake": 0.8,  "projectile": "cone", "note": "dragons stay put and breathe"},
+    "cast":    {"reach": 0.0,  "wind": 0.24, "impact_shake": 0.45, "projectile": "orb", "note": "magical creatures throw a bolt"}
+  },
+  "creatures": {
+    "life_sproutling": "hop",
+    "life_moss_frog": "hop",
+    "life_berrycap_bunny": "hop",
+    "life_petal_deer": "charge",
+    "life_rootback_boar": "charge",
+    "life_bloom_bear": "slam",
+    "life_great_stag": "charge",
+    "life_garden_dragon": "breath",
+    "life_elaria_mother_of_groves": "cast",
+    "fire_cinder_pup": "hop",
+    "fire_emberbug": "swoop",
+    "fire_coal_chick": "hop",
+    "fire_ashcat": "lunge",
+    "fire_cinder_hound": "lunge",
+    "fire_forge_ram": "charge",
+    "fire_magma_turtle": "slam",
+    "fire_blazewing_drake": "breath",
+    "fire_rax_the_laughing_inferno": "breath"
+  }
+}

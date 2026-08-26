@@ -35,6 +35,7 @@ var props: Dictionary = {}              # "element:name" -> Array[Texture2D]
 var clash_art: Dictionary = {}          # "field" / "lane_mark:0" / "crack:1" ...
 var ground_art: Dictionary = {}         # blends, foreground pieces, lighting
 var ground_patches: Dictionary = {}     # element -> Array[Texture2D], anti-tiling
+var lane_grounds: Dictionary = {}       # element -> Array[Texture2D], one Realm's land
 var card_art_frames: Dictionary = {}    # board/place/hand frames, gems, backs
 var fx_strips: Dictionary = {}          # effect name -> Texture2D frame strip
 var fx_meta: Dictionary = {}            # effect name -> {w, h, frames}
@@ -194,6 +195,11 @@ func _load_ground_kit() -> void:
             var pt := _texture("%s/patch_%s_%d.png" % [GROUND_DIR, element, v])
             if pt != null: patches.append(pt)
         ground_patches[element] = patches
+        var lanes: Array[Texture2D] = []
+        for v in range(2):
+            var lt := _texture("%s/lane_%s_%d.png" % [GROUND_DIR, element, v])
+            if lt != null: lanes.append(lt)
+        lane_grounds[element] = lanes
 
 func ground(key: String) -> Texture2D:
     return ground_art.get(key, null)
@@ -202,6 +208,13 @@ func ground(key: String) -> Texture2D:
 ## 128px repeat.
 func ground_patch(element: String, variant: int) -> Texture2D:
     var set: Array = ground_patches.get(element, [])
+    if set.is_empty(): return null
+    return set[posmod(variant, set.size())]
+
+## The ground a single Realm card transforms. Wider than a lane, so two
+## neighbouring lands of the same element overlap into one region.
+func lane_ground(element: String, variant: int) -> Texture2D:
+    var set: Array = lane_grounds.get(element, [])
     if set.is_empty(): return null
     return set[posmod(variant, set.size())]
 

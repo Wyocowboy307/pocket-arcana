@@ -251,3 +251,62 @@ def patch(element, size=140, v=0):
             if c.get(px, py) is not None:
                 c.set(px, py, P.EMBER[1])
     return c
+
+
+def lane_ground(element, w=272, h=248, v=0):
+    """The ground one Realm card transforms.
+
+    Playing a Grove card has to visibly change *that part* of the battlefield,
+    so land is painted per lane rather than tinting a whole half. Edges are
+    ragged and the patch is wider than a lane, which means two neighbouring
+    lands of the same element overlap and read as one continuous region while a
+    lone one still looks hand-torn out of the wild ground.
+    """
+    src = clash.clash_field() if element == "neutral" else land.field(element)
+    c = Canvas(w, h)
+    s = 6100 + v * 71 + sum(ord(ch) for ch in element)
+    cx, cy = w / 2.0, h / 2.0
+    for y in range(h):
+        for x in range(w):
+            dx = (x - cx) / (w * 0.5)
+            dy = (y - cy) / (h * 0.5)
+            d = (dx * dx * 0.86 + dy * dy) ** 0.5
+            edge = (0.80 + value_noise(x, y, 34, s) * 0.24
+                    + value_noise(x, y, 13, s + 7) * 0.10
+                    + value_noise(x, y, 5, s + 11) * 0.05)
+            if d < edge:
+                c.set(x, y, _sample(src, x + v * 47, y + v * 29))
+
+    ramp = land.CREST.get(element, P.STONE)
+    for i in range(12):                                  # tonal relief inside
+        bx = int(hash2(i, 0, s + 13) * w)
+        by = int(hash2(i, 1, s + 17) * h)
+        if c.get(bx, by) is None:
+            continue
+        tone = ramp[1] if i % 2 else ramp[4]
+        r = 10 + hash2(i, 2, s + 19) * 20
+        rr = r * 1.5
+        for y in range(int(by - rr), int(by + rr) + 1):
+            for x in range(int(bx - rr), int(bx + rr) + 1):
+                if c.get(x, y) is None:
+                    continue
+                dd = ((x - bx) ** 2 + (y - by) ** 2) ** 0.5
+                if dd <= r * (1.0 + (value_noise(x, y, 8, s + i) - 0.5) * 0.75):
+                    c.set(x, y, tone)
+
+    # A lit lip along the top of the patch: it reads as ground that grew *over*
+    # the wild floor rather than a decal lying flat on it.
+    lit = land.LIT.get(element, P.STONE[6])
+    for x in range(w):
+        for y in range(h):
+            if c.get(x, y) is not None:
+                c.set(x, y, lit)
+                if y + 1 < h and c.get(x, y + 1) is not None:
+                    c.set(x, y + 1, ramp[4])
+                break
+    for x in range(w):                                   # and a shadow under it
+        for y in range(h - 1, -1, -1):
+            if c.get(x, y) is not None:
+                c.set(x, y, ramp[1])
+                break
+    return c

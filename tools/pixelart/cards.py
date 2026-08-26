@@ -24,9 +24,13 @@ outline still separates from the card behind it.
 from . import palette as P
 from .canvas import Canvas, hash2, value_noise
 
-# Board cards: what a played creature looks like lying on the battlefield.
-BOARD_W, BOARD_H = 118, 146
-PLACE_W, PLACE_H = 92, 100
+# Board cards: the permanent battlefield piece. Big enough that art, cost,
+# attack, health and element all read at rest, with rules left to hover.
+BOARD_W, BOARD_H = 168, 224
+BOARD_NAME_Y, BOARD_NAME_H = 4, 22
+BOARD_ART_Y, BOARD_ART_H = 28, 152
+BOARD_FOOT_Y = 182
+PLACE_W, PLACE_H = 104, 138
 # Hand cards must fit inside main_v2's HAND_H row, or the frame is clipped and
 # the element footer and stat badges fall off the bottom of the screen.
 HAND_W, HAND_H = 148, 158
@@ -117,8 +121,9 @@ def plate(element, w=BOARD_W, h=BOARD_H, art_rect=None):
     c = Canvas(w, h)
     seed = 4200 + sum(ord(ch) for ch in element)
     c.rect(0, 0, w, h, P.IRON[1])
-    ax, ay, aw, ah = art_rect if art_rect else (4, 4, w - 8, h - 26)
+    ax, ay, aw, ah = art_rect if art_rect else (4, BOARD_ART_Y, w - 8, BOARD_ART_H)
     art_backdrop(c, ax, ay, aw, ah, element, seed)
+    c.rect(ax, 4, aw, ay - 4, P.UI_DARK[2])                       # name ribbon bed
     c.rect(ax, ay + ah, aw, h - 4 - (ay + ah), P.UI_DARK[1])      # stat strip
     for x in range(ax, ax + aw):
         c.set(x, ay + ah, P.INK)
@@ -129,22 +134,43 @@ def plate(element, w=BOARD_W, h=BOARD_H, art_rect=None):
 
 
 def board_card(element, w=BOARD_W, h=BOARD_H):
-    """Frame overlay drawn on top of the live art, so the illustration sits
-    inside the card rather than on it. Transparent over the art window."""
-    s = SCHEME.get(element, SCHEME["neutral"])
-    accent = s["accent"][2]
+    """Frame overlay drawn on top of the live art.
+
+    Everything the player needs at rest gets its own recessed region: a name
+    ribbon, a large art window, and a footer the stat badges hang off. Rules
+    text is deliberately absent — it belongs on hover, not printed on a piece
+    that has to stay readable eight-to-a-screen.
+    """
+    sc = SCHEME.get(element, SCHEME["neutral"])
+    accent = sc["accent"][2]
     c = Canvas(w, h)
     _trim(c, 0, 0, w, h, accent)
     _corner_brackets(c, w, h, accent)
-    ax, ay, aw, ah = 4, 4, w - 8, h - 26
-    # Inner shadow at the top of the window: the illustration sits *in* a recess.
-    for x in range(ax, ax + aw):
-        c.set(x, ay, P.INK)
-    for j in range(ay, ay + ah):
-        c.set(ax, j, P.INK)
-        c.set(ax + aw - 1, j, P.INK)
-    c.hline(ax, ax + aw - 1, ay + ah - 1, P.INK)
-    _ornament(c, element, w - 12, 10, flip=True)
+
+    # Name ribbon.
+    c.rect(4, BOARD_NAME_Y, w - 8, BOARD_NAME_H, P.UI_DARK[2])
+    for x in range(4, w - 4):
+        c.set(x, BOARD_NAME_Y, P.UI_DARK[4])
+        c.set(x, BOARD_NAME_Y + BOARD_NAME_H - 1, P.INK)
+
+    # Art window rim — transparent inside so live art shows through.
+    for x in range(4, w - 4):
+        c.set(x, BOARD_ART_Y, P.INK)
+        c.set(x, BOARD_ART_Y + BOARD_ART_H - 1, P.INK)
+    for j in range(BOARD_ART_Y, BOARD_ART_Y + BOARD_ART_H):
+        c.set(4, j, P.INK)
+        c.set(w - 5, j, P.INK)
+
+    # Footer the badges hang off.
+    c.rect(4, BOARD_FOOT_Y, w - 8, h - BOARD_FOOT_Y - 4, P.UI_DARK[1])
+    for x in range(4, w - 4):
+        c.set(x, BOARD_FOOT_Y, P.INK)
+        c.set(x, BOARD_FOOT_Y + 1, P.UI_DARK[3])
+    for x in range(8, w - 8):
+        if x % 2 == 0:
+            c.set(x, h - 7, accent)
+            c.set(x, h - 8, accent)
+    _ornament(c, element, w - 14, 15, flip=True)
     return c
 
 

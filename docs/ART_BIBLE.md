@@ -79,6 +79,42 @@ Consequences worth remembering, all learned by looking at the running game:
   across both elements, a thin accent line for identity, badges overlapping the
   edge, and the illustration gets the rest.
 
+## Direction correction — 2026-08-26 (third): card-first
+
+Thomas judged the previous pass as still mixing two presentation styles — a
+tactics game with cards attached. The binding rules now:
+
+**The card is the permanent battlefield piece.** A played creature is a card
+lying on the board, big enough that art, name, cost, attack, health and status
+all read at rest. Rules text belongs on hover, not printed on a piece that has
+to stay legible eight-to-a-screen.
+
+**Creatures animate out of their card, not instead of it.** The card anticipates
+and glows, the creature climbs out over its own frame, travels, hits, and drops
+back in. Reach, arc and projectile come from `data/creature_motion.json`, so a
+Sproutling hops, a Petal Deer charges the whole distance, a flier swoops, and a
+dragon never leaves home — it rears over its card and the breath crosses the
+board instead. Motion is presentation only and never touches the simulation.
+
+**Land is the world under the cards.** A Realm card transforms *its own lane* —
+vines crawl outward, flowers pop, props grow in — rather than tinting a whole
+half. Lane patches are wider than a lane, so neighbouring lands of the same
+element overlap into one region while a lone one still looks hand-torn.
+Selecting a card lights the land it can legally be played on; no boxes.
+
+**Homes frame, they do not compete.** Sanctuaries and Commanders moved to a left
+rail, Hearts, Aether and decks to a right rail. The two card rows now take
+almost the whole height and the clash between them is a seam, not a strip.
+
+Things that only failed in the running game:
+
+- A gold number on a gold gem is invisible: the power badge shipped blank.
+  Light sockets take ink, dark sockets take parchment.
+- `draw_texture_rect_region` with a negative width does not mirror a sprite, it
+  displaces it. `draw_texture_rect` with a negative width does mirror.
+- Flipping on the sign of a 20px horizontal drift mirrored every creature for no
+  reason, because lanes face each other almost straight on.
+
 ## Master style
 - 2D pixel art only for the playable world.
 - Top-down / slight storybook perspective, roughly 3/4 overhead. Never side-view battle sprites.

@@ -610,9 +610,22 @@ func _on_event(event: Dictionary) -> void:
             var lane9 := int(event["lane"])
             var freed := int(event["freed_lane"])
             var unit2: Dictionary = event["unit"]
+            # The stage draws the two source cards converging, so it needs to
+            # know which creature was in each lane before they merged. Read the
+            # units the event carries — by the time this runs the engine has
+            # already put the fused creature in lane_a, so looking the lanes up
+            # returns the result twice instead of the two sources.
+            var sources := {}
+            var source_units: Array = event.get("sources", [])
+            var source_lanes := [lane9, freed]
+            for i in range(mini(source_units.size(), source_lanes.size())):
+                var was = source_units[i]
+                if was is Dictionary and was.has("card_id"):
+                    sources[str(int(source_lanes[i]))] = String(was["card_id"])
             var delay6 := _schedule(1.5, 0.95)
             _later(delay6, func() -> void:
                 stage.play("fusion", {"side": side9, "lane": lane9, "freed_lane": freed,
+                    "cards": sources,
                     "colour": stage.card_colour(String(unit2["card_id"])),
                     "name": String(event.get("name", "")),
                     "element": String(db.get_card(String(unit2["card_id"])).get("elements", ["life"])[0])}, 1.5))
@@ -636,11 +649,17 @@ func _play_attack(side: int, lane: int, attacker: Dictionary, kind: String, targ
     var dur := 0.9 if kind == "attack" else 1.05
     var delay := _schedule(dur, 0.95)
     _later(delay, func() -> void:
+        var atk_els: Array = db.get_card(card_id).get("elements", [])
         stage.play(kind, {
             "side": side, "lane": lane, "uid": int(attacker["uid"]), "style": style,
             "target_side": target_side, "heart": kind == "heart_attack",
             "reach": float(data.get("reach", 0.6)), "arc": float(data.get("arc", 0.0)),
             "weight": float(data.get("impact_shake", 0.6)),
+            # The stage picks the creature's motion and its impact effect from
+            # these, so a dragon's breath differs from a deer's charge.
+            "card_id": card_id,
+            "projectile": String(data.get("projectile", "")),
+            "element": String(atk_els[0]) if not atk_els.is_empty() else "",
             "colour": stage.card_colour(card_id),
         }, dur))
     # The defender recoils and the number appears only after the blow lands.

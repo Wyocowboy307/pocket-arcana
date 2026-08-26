@@ -232,6 +232,40 @@ def flame_cone():
     return c
 
 
+def bloom_cone():
+    """A Life breath weapon: a cone of leaves, petals and spores.
+
+    Life needed its own version of the dragon beat — reusing the vine gave a
+    Garden Dragon a thin whip where a Blazewing Drake got a wall of fire.
+    """
+    c, w, h = _strip(72, 48)
+    for fi in range(FRAMES):
+        ox = fi * w
+        t = fi / float(FRAMES - 1)
+        reach = int(8 + t * (w - 14))
+        cy = h // 2
+        for x in range(reach):
+            u = x / float(max(reach, 1))
+            spread = int(2 + u * 17)
+            for j in range(-spread, spread + 1):
+                edge = abs(j) / float(max(spread, 1))
+                if hash2(x, j + fi * 7, 251) < 0.30 + edge * 0.5:
+                    continue
+                tone = P.SPORE[3] if u < 0.18 else (P.LEAF[4] if edge < 0.42 else
+                                                    (P.LEAF[3] if edge < 0.76 else P.LEAF[1]))
+                c.set(ox + x, cy + j, tone)
+        for i in range(9):                       # petals riding the gust
+            px = reach - int(hash2(i, fi, 257) * 26)
+            py = cy + int((hash2(i, fi, 263) - 0.5) * 32)
+            petal = [P.BLOOM[2], P.CREAM[2], P.SPORE[3]][i % 3]
+            c.set(ox + px, py, petal)
+            c.set(ox + px + 1, py, petal)
+        for i in range(5):
+            c.set(ox + reach - int(hash2(i, fi, 269) * 12),
+                  cy + int((hash2(i, fi, 271) - 0.5) * 34), P.SPORE[3])
+    return c
+
+
 def smoke_puff():
     c, w, h = _strip(40, 44)
     for fi in range(FRAMES):
@@ -377,6 +411,7 @@ LIBRARY = {
     "vine_growth": vine_growth, "flower_pop": flower_pop,
     "rune_life": lambda: rune("life"), "summon_portal_life": lambda: summon_portal("life"),
     "sparks_life": lambda: impact_sparks("life"),
+    "bloom_cone": bloom_cone,
     "ember_burst": ember_burst, "fire_bolt": fire_bolt, "flame_cone": flame_cone,
     "smoke_puff": smoke_puff,
     "rune_fire": lambda: rune("fire"), "summon_portal_fire": lambda: summon_portal("fire"),

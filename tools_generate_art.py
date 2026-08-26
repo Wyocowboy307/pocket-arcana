@@ -23,7 +23,7 @@ PROMPTS = ROOT / "data/art_prompts_vertical_slice.json"
 LEDGER = ROOT / "data/art_generation_log.json"
 CANDIDATES = ROOT / ".art_candidates"          # gitignored working set
 # Sprites are objects on a transparent field; terrain fills its tile.
-OPAQUE_KINDS = {"terrain", "sanctuary"}
+OPAQUE_KINDS = {"terrain"}
 
 
 def key():

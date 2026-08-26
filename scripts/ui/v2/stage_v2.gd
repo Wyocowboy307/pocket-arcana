@@ -11,12 +11,15 @@ extends Control
 signal lane_clicked(side: int, index: int)
 signal sanctuary_clicked(side: int)
 signal lane_hovered(side: int, index: int)
+## Fired at the exact beat a sound should play. Nothing listens yet; wiring audio
+## later means connecting this rather than hunting through the animation code.
+signal cue(name: String, strength: float)
 
 const LANE_W := 196.0
-const LANE_H := 136.0
+const LANE_H := 126.0
 const LANE_GAP := 12.0
-const SANCTUARY_H := 62.0
-const FRONT_GAP := 28.0
+const SANCTUARY_H := 84.0
+const FRONT_GAP := 24.0
 
 var engine: MatchV2
 var art: ArtRegistry
@@ -179,6 +182,7 @@ func card_colour(card_id: String) -> Color:
 
 func _tick_act(act: Dictionary, _delta: float) -> void:
     var kind := String(act["kind"])
+    if _at(act, "cue_start", 0.0): cue.emit(kind + "_start", 1.0)
     match kind:
         "land_build":
             var at: Vector2 = lane_rect(int(act["side"]), int(act["lane"])).get_center()
@@ -186,6 +190,7 @@ func _tick_act(act: Dictionary, _delta: float) -> void:
             if _at(act, "seed", 0.18):
                 burst(at, colour, 10, "spark", 0.7)
             if _at(act, "spread", 0.45):
+                cue.emit("land_grow", 1.0)
                 burst(at, colour, 18, "leaf" if String(act["element"]) == "life" else "ember", 1.1)
                 shake(0.25)
             if _at(act, "aether", 0.82):
@@ -195,6 +200,7 @@ func _tick_act(act: Dictionary, _delta: float) -> void:
             if _at(act, "portal", 0.22):
                 burst(at2, Color(act["colour"]), 12, "spark", 0.8)
             if _at(act, "pop", 0.55):
+                cue.emit("summon", 1.0)
                 burst(at2, Color(act["colour"]), 14,
                     "leaf" if String(act.get("element", "")) == "life" else "ember", 1.0)
                 shake(0.3)
@@ -203,6 +209,7 @@ func _tick_act(act: Dictionary, _delta: float) -> void:
             if _at(act, "found", 0.20): burst(at3, Color(act["colour"]), 8, "spark", 0.5)
             if _at(act, "rise", 0.60): shake(0.28)
             if _at(act, "click", 0.86):
+                cue.emit("place_done", 1.0)
                 burst(at3, Color(act["colour"]), 10, "spark", 0.7)
         "spell":
             if _at(act, "impact", 0.62):
@@ -211,12 +218,14 @@ func _tick_act(act: Dictionary, _delta: float) -> void:
                 hitstop(0.05)
         "attack":
             if _at(act, "impact", 0.52):
+                cue.emit("hit", float(act.get("weight", 0.6)))
                 var target: Vector2 = creature_anchor(int(act["target_side"]), int(act["lane"]))
                 burst(target, Color(act["colour"]), 16, "spark", 1.2)
                 shake(float(act.get("weight", 0.6)))
                 hitstop(0.06)
         "heart_attack":
             if _at(act, "impact", 0.58):
+                cue.emit("heart_hit", 1.5)
                 burst(sanctuary_rect(int(act["target_side"])).get_center(), ArcanaTheme.HEART, 24, "spark", 1.6)
                 play("heart_shock", {"side": int(act["target_side"])}, 0.5)
                 shake(1.2)
@@ -231,6 +240,7 @@ func _tick_act(act: Dictionary, _delta: float) -> void:
                 burst(at4, ArcanaTheme.GOLD, 22, "spark", 1.2)
                 hitstop(0.06)
             if _at(act, "slam", 0.78):
+                cue.emit("fusion_slam", 1.6)
                 burst(at4, Color(act["colour"]), 26,
                     "leaf" if String(act.get("element", "")) == "life" else "ember", 1.6)
                 shake(1.3)
@@ -307,6 +317,8 @@ func _draw_lane(side: int, index: int, f: Font) -> void:
             draw_circle(pip - Vector2(2, 2), 2.0, Color(1, 1, 1, 0.4))
 
     if l["place"] != null: _draw_place(side, index, l["place"], f)
+    if l["place"] != null and l["creature"] != null:
+        _draw_support_link(side, index, l["place"], f)
     if l["creature"] != null: _draw_creature(side, index, l["creature"], f)
 
     # Targeting language.
@@ -358,6 +370,23 @@ func _draw_place(side: int, index: int, place: Dictionary, f: Font) -> void:
         var sc: float = min(56.0 / src.x, 56.0 / src.y)
         var drawn := src * sc * Vector2(1.0, clampf((build - 0.15) / 0.85, 0.05, 1.0))
         draw_texture_rect(tex, Rect2(at + Vector2(-drawn.x * 0.5, 16.0 - drawn.y), drawn), false)
+
+## A living thread from the building to the creature it supports, so "what does
+## this building actually affect" never has to be guessed.
+func _draw_support_link(side: int, index: int, place: Dictionary, f: Font) -> void:
+    var a := place_anchor(side, index) + Vector2(0, 4)
+    var b := creature_anchor(side, index) + Vector2(0, 10)
+    var colour := card_colour(String(place["card_id"]))
+    var flow: float = fmod(_pulse * 1.4, 1.0)
+    for i in range(7):
+        var k: float = float(i) / 6.0
+        var at: Vector2 = a.lerp(b, k)
+        at.y -= sin(k * PI) * 12.0
+        var near: float = absf(fmod(k - flow + 1.0, 1.0))
+        var glow: float = 0.22 + 0.55 * pow(1.0 - min(near, 1.0 - near) * 2.0, 3.0)
+        draw_circle(at, 2.6, Color(colour, glow))
+    # A soft aura under the creature it is helping.
+    draw_circle(b + Vector2(0, 14), 24.0, Color(colour, 0.07 + 0.04 * sin(_pulse * TAU)))
 
 func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
     var at := creature_anchor(side, index)
@@ -461,71 +490,142 @@ func _draw_front_line(f: Font) -> void:
         if open:
             draw_line(Vector2(cx, y - 12.0), Vector2(cx, y + 12.0), Color(tint, 0.25 + 0.25 * wave), 2.0)
 
+## A home base, not a status bar: the shrine, the Commander standing at it, a
+## Heart crystal you can watch drain, and element decoration filling the band.
 func _draw_sanctuary(side: int, f: Font) -> void:
     var r := sanctuary_rect(side)
     var p: Dictionary = engine.players[side]
+    var element := String(p["element"])
     var colour: Color = ArcanaTheme.owner_color(side)
+    var accent: Color = ArcanaTheme.color_for_element(element)
     var breathe: float = 0.5 + 0.5 * sin(_pulse * TAU + side * PI)
 
     var hurt := 0.0
     for act in _acts:
         if String(act["kind"]) == "heart_shock" and int(act.get("side", -1)) == side:
             hurt = 1.0 - clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0)
-    var offset := Vector2(sin(hurt * 40.0) * 6.0 * hurt, 0)
+    var offset := Vector2(sin(hurt * 46.0) * 7.0 * hurt, sin(hurt * 31.0) * 3.0 * hurt)
+    var base := Rect2(r.position + offset, r.size)
 
-    draw_style_box(ArcanaTheme.panel_box(
-        Color(colour.darkened(0.68).lerp(ArcanaTheme.HEART, hurt * 0.4), 0.95),
-        Color(colour, 0.7 + 0.3 * breathe), 12, 2), Rect2(r.position + offset, r.size))
+    # Ground of the base, tinted by element and flushed red when the Heart is hit.
+    var ground: Color = accent.darkened(0.74).lerp(ArcanaTheme.HEART, hurt * 0.45)
+    draw_style_box(ArcanaTheme.panel_box(ground, Color(accent, 0.55 + 0.35 * breathe), 14, 2), base)
+    _draw_sanctuary_decor(base, element, accent, breathe)
 
-    var tex: Texture2D = art.sanctuary(String(p["element"])) if art != null else null
+    # The shrine itself.
+    var shrine_w := 0.0
+    var tex: Texture2D = art.sanctuary(element) if art != null else null
     if tex != null:
         var src := Vector2(tex.get_width(), tex.get_height())
-        var sc: float = (r.size.y - 8.0) / src.y
+        var sc: float = (base.size.y - 10.0) / src.y
         var drawn := src * sc
-        draw_texture_rect(tex, Rect2(r.position + offset + Vector2(8, 4), drawn), false)
+        draw_circle(base.position + Vector2(10 + drawn.x * 0.5, base.size.y - 12.0),
+            drawn.x * 0.30, Color(0, 0, 0, 0.24))
+        draw_texture_rect(tex, Rect2(base.position + Vector2(10, base.size.y - drawn.y - 4.0), drawn), false)
+        shrine_w = drawn.x + 16.0
+        # A shrine glows with its own magic.
+        draw_circle(base.position + Vector2(10 + drawn.x * 0.5, 5 + drawn.y * 0.5),
+            drawn.y * 0.55, Color(accent, 0.06 + 0.05 * breathe))
 
-    var cmd: Dictionary = engine.db.get_commander(String(p["commander_id"]))
+    # Commander standing at their base.
+    var ax: float = base.position.x + maxf(shrine_w, 12.0)
     var avatar: Texture2D = art.commander_board(String(p["commander_id"])) if art != null else null
-    var ax: float = r.position.x + 84.0 + offset.x
     if avatar != null:
         var asrc := Vector2(avatar.get_width(), avatar.get_height())
-        var asc: float = (r.size.y - 6.0) / asrc.y
+        var asc: float = (base.size.y - 6.0) / asrc.y
         var adr := asrc * asc
         var lift := 0.0
         for act in _acts:
             if String(act["kind"]) == "commander" and int(act.get("side", -1)) == side:
-                lift = sin(clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0) * PI) * 12.0
-        draw_texture_rect(avatar, Rect2(Vector2(ax, r.position.y + 3.0 - lift), adr), false)
-        ax += adr.x + 8.0
-    draw_string(f, Vector2(ax, r.get_center().y - 6.0), String(cmd.get("name", "Commander")),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 14, colour)
+                lift = sin(clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0) * PI) * 14.0
+        draw_circle(Vector2(ax + adr.x * 0.5, base.position.y + base.size.y - 12.0),
+            adr.x * 0.24, Color(0, 0, 0, 0.24))
+        draw_texture_rect(avatar, Rect2(Vector2(ax, base.position.y + 3.0 - lift), adr), false)
+        ax += adr.x + 10.0
 
-    # Heart bar: the only win condition in V2, so it is the loudest number here.
-    var bar := Rect2(ax, r.get_center().y + 2.0, 190.0, 16.0)
-    draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.9), Color(ArcanaTheme.HEART, 0.5), 8, 1), bar)
-    var frac: float = clampf(float(p["heart"]) / float(MatchV2.HEART_START), 0.0, 1.0)
-    if frac > 0.0:
-        draw_style_box(ArcanaTheme.panel_box(Color(ArcanaTheme.HEART, 0.85), Color(0, 0, 0, 0), 8, 0),
-            Rect2(bar.position + Vector2(1, 1), Vector2((bar.size.x - 2) * frac, bar.size.y - 2)))
-    draw_string(f, Vector2(bar.position.x + 7, bar.position.y + 13), "♥ %d" % int(p["heart"]),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.TEXT)
+    var cmd: Dictionary = engine.db.get_commander(String(p["commander_id"]))
+    draw_string(f, Vector2(ax, base.position.y + 20.0), String(cmd.get("name", "Commander")),
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 15, colour)
 
-    # Aether pips, and how many Realm cards are left to build.
-    var px: float = bar.position.x + bar.size.x + 14.0
+    # Heart crystal: the whole match is about this number, so it is a thing, not a bar.
+    var heart := int(p["heart"])
+    var frac: float = clampf(float(heart) / float(MatchV2.HEART_START), 0.0, 1.0)
+    var hc := Vector2(ax + 26.0, base.position.y + base.size.y * 0.62)
+    var pulse: float = 1.0 + 0.06 * sin(_pulse * TAU * (2.4 if frac < 0.35 else 1.2))
+    var rad: float = 22.0 * pulse
+    for i in range(4):
+        var t := float(i) / 4.0
+        draw_circle(hc, rad * (1.35 - t * 0.3), Color(ArcanaTheme.HEART, 0.06 + 0.05 * breathe))
+    var facets := PackedVector2Array([
+        hc + Vector2(0, -rad), hc + Vector2(rad * 0.78, 0),
+        hc + Vector2(0, rad), hc + Vector2(-rad * 0.78, 0)])
+    draw_colored_polygon(facets, Color(0.10, 0.04, 0.08, 0.95))
+    # The crystal fills from the bottom as a readable "how much is left".
+    var fill_top: float = hc.y + rad - 2.0 * rad * frac
+    var filled := PackedVector2Array()
+    for i in range(facets.size()):
+        var a: Vector2 = facets[i]
+        var b: Vector2 = facets[(i + 1) % facets.size()]
+        if a.y >= fill_top: filled.append(a)
+        if (a.y < fill_top) != (b.y < fill_top):
+            var k: float = (fill_top - a.y) / (b.y - a.y)
+            filled.append(a.lerp(b, k))
+    if filled.size() >= 3:
+        draw_colored_polygon(filled, Color(ArcanaTheme.HEART, 0.9))
+    draw_polyline(PackedVector2Array([facets[0], facets[1], facets[2], facets[3], facets[0]]),
+        Color(ArcanaTheme.HEART, 0.95), 2.0)
+    var hw: float = f.get_string_size(str(heart), HORIZONTAL_ALIGNMENT_LEFT, -1, 20).x
+    draw_string(f, Vector2(hc.x - hw * 0.5, hc.y + 7.0), str(heart),
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 20, ArcanaTheme.TEXT)
+
+    # Aether orbs, then the small counts.
+    var px: float = hc.x + 46.0
+    var py: float = base.position.y + base.size.y * 0.42
     for i in range(int(p["max_aether"])):
-        draw_circle(Vector2(px + i * 13.0, r.get_center().y - 6.0), 5.0,
-            ArcanaTheme.AETHER if i < int(p["aether"]) else ArcanaTheme.PANEL_EDGE)
-    draw_string(f, Vector2(px, r.get_center().y + 15.0),
-        "%d/%d Aether · %d Realm · %d cards" % [int(p["aether"]), int(p["max_aether"]),
+        var lit: bool = i < int(p["aether"])
+        var at := Vector2(px + i * 17.0, py)
+        if lit:
+            draw_circle(at, 10.0, Color(ArcanaTheme.AETHER, 0.18))
+            draw_circle(at, 6.0, ArcanaTheme.AETHER)
+            draw_circle(at - Vector2(2, 2), 2.0, Color(1, 1, 1, 0.5))
+        else:
+            draw_arc(at, 6.0, 0, TAU, 16, Color(ArcanaTheme.PANEL_EDGE, 0.9), 2.0)
+    draw_string(f, Vector2(px, py + 22.0),
+        "%d/%d Aether · %d Realm cards · %d in hand" % [int(p["aether"]), int(p["max_aether"]),
             int(p["realm_stack"]), p["hand"].size()],
         HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT_DIM)
 
-    # Deck corner, so card draw has somewhere to come from.
+    # Deck, so drawing has a visible source.
     var deck := deck_anchor(side)
-    draw_style_box(ArcanaTheme.panel_box(ArcanaTheme.PANEL.lightened(0.05),
-        Color(colour, 0.6), 4, 1), Rect2(deck - Vector2(15, 21), Vector2(30, 42)))
+    for i in range(3):
+        draw_style_box(ArcanaTheme.panel_box(ArcanaTheme.PANEL.darkened(0.1 * float(i)),
+            Color(colour, 0.55), 4, 1),
+            Rect2(deck - Vector2(16, 24) + Vector2(float(i) * 1.5, float(i) * 1.5), Vector2(32, 46)))
     draw_string(f, deck - Vector2(9, -4), str(p["deck"].size()),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.TEXT_DIM)
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.TEXT)
+
+## Element motifs so a base is unmistakably Life or Fire.
+func _draw_sanctuary_decor(base: Rect2, element: String, accent: Color, breathe: float) -> void:
+    var n := 10
+    for i in range(n):
+        var fx: float = float(i) / float(n)
+        var x: float = base.position.x + 8.0 + fx * (base.size.x - 16.0)
+        if element == "life":
+            # Vine arcs along the top edge with leaves hanging off them.
+            var h: float = 10.0 + 7.0 * sin(fx * 9.0 + _pulse * 1.2)
+            draw_arc(Vector2(x, base.position.y), h, PI * 0.15, PI * 0.85, 10,
+                Color(accent, 0.32), 2.0)
+            draw_circle(Vector2(x + 4.0, base.position.y + h * 0.8), 3.0, Color(accent, 0.45))
+            if i % 3 == 0:
+                draw_circle(Vector2(x, base.position.y + base.size.y - 6.0), 2.5,
+                    Color("#f2c7dd").lerp(accent, 0.3))
+        else:
+            # Cracks glowing along the floor, with embers drifting up off them.
+            var y0: float = base.position.y + base.size.y - 4.0
+            var lift: float = 6.0 + 10.0 * fmod(fx * 3.7 + _pulse, 1.0)
+            draw_line(Vector2(x, y0), Vector2(x + 6.0, y0 - 9.0), Color(accent, 0.30), 2.0)
+            draw_circle(Vector2(x + 3.0, y0 - lift), 2.0,
+                Color("#ffb066", 0.55 * (1.0 - lift / 18.0) + 0.15 * breathe))
 
 ## Where an attacker travels: out to the front line, never onto rival land.
 func _attack_transform(act: Dictionary) -> Dictionary:
@@ -586,6 +686,11 @@ func _draw_acts(f: Font) -> void:
                     HORIZONTAL_ALIGNMENT_CENTER, 36.0, 20, Color(col, 1.0 - t * t))
 
 func _draw_card_travel(act: Dictionary, t: float, f: Font) -> void:
+    if String(act["kind"]) == "draw" and t < 0.16:
+        # Deck pulse before the card lifts.
+        var deck: Vector2 = act["from"]
+        var k: float = t / 0.16
+        draw_arc(deck, 26.0 + 22.0 * k, 0, TAU, 24, Color(act["colour"], 0.7 * (1.0 - k)), 3.0)
     var eased: float = 1.0 - pow(1.0 - t, 2.6)
     var at: Vector2 = Vector2(act["from"]).lerp(Vector2(act["to"]), eased)
     at.y -= sin(eased * PI) * 40.0
@@ -599,9 +704,13 @@ func _draw_card_travel(act: Dictionary, t: float, f: Font) -> void:
     else:
         draw_style_box(ArcanaTheme.panel_box(ArcanaTheme.PANEL.lightened(0.1), colour, 6, 2), rect)
         if w > 30.0:
-            draw_string(f, rect.position + Vector2(5, 18),
+            draw_string(f, rect.position + Vector2(5, 16),
                 ArcanaTheme.fit(String(act.get("label", "")), 10, rect.size.x - 10),
                 HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT)
+            var role := String(act.get("role", ""))
+            if role != "":
+                draw_string(f, rect.position + Vector2(5, 30),
+                    role.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(act["colour"]))
 
 ## Life sends roots and vines outward; Fire cracks and chars the ground.
 func _draw_land_growth(act: Dictionary, t: float) -> void:

@@ -165,3 +165,41 @@ queue if it falls more than about a beat behind the player, which is the
 Anchors for attacks, spells and fusion are now resolved when drawing rather than
 when the event fired; capturing them at event time put a whole fusion in the
 wrong lane after a layout change.
+
+### V2 presentation pass
+
+Sanctuaries were the weakest thing on screen — plain horizontal bands that read
+as UI headers. They are now home bases: the shrine standing on its own footing,
+the Commander beside it with a contact shadow, a faceted Heart crystal that
+drains from the bottom as a shape rather than a bar, glowing Aether orbs, a
+stacked deck, and element decoration filling the band (vine arcs and hanging
+leaves for Life, glowing floor cracks with drifting embers for Fire).
+
+The Sanctuary art was regenerated as a transparent object rather than an opaque
+96x64 tile; as a tile it rendered as a pale plate, which is exactly the "debug
+plate" the card-language doc rules out.
+
+Other fixes in this pass:
+- Card draw is a real event: the deck pulses, a card back rises and arcs to the
+  hand, flips mid-flight and announces its type, and the hand is held from
+  rebuilding until it lands so the card visibly arrives instead of blinking in.
+- A Place now shows a living thread of motes running to the creature it supports,
+  plus a soft aura under that creature, so "what does this building affect" is
+  answered without a tooltip.
+- Every card carries a role glyph as well as its ribbon, and hovering lifts,
+  scales and tilts the card toward its side of the fan.
+- `StageV2.cue(name, strength)` fires at each impact beat. Nothing listens yet;
+  wiring audio later means connecting one signal rather than hunting through the
+  animation code.
+- The tutorial is staged rather than reactive: it teaches Sanctuary, Land,
+  Summon, Attack, Place, Spell, Heart and Fusion in order, and only advances a
+  step once the player has actually done that thing (marked from committed
+  events, not guessed from board state).
+
+Two presentation bugs found by watching frames rather than reading code:
+- The fusion "name reveal" I thought was misplaced turned out to be a second,
+  redundant banner drawn over the rival's lanes. The in-place reveal on the new
+  creature was correct all along; the banner is gone and announcements now sit
+  on the front line.
+- The Commander contact shadow was sized from the sprite width and spilled out
+  of the Sanctuary band into the lane row.

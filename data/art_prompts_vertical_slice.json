@@ -318,10 +318,10 @@
     "path": "assets/art/board/sanctuaries/sanctuary_fire.png",
     "size": [
       96,
-      64
+      96
     ],
     "phase": "B",
-    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Top-down magical home tile: miniature forge shrine with small chimney, ember glow and hanging iron charm; open center for Heart overlay. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Leave the centre open — a Heart number and an attack-target highlight are drawn on top. Exactly 96x64 pixels, opaque, fills the tile. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, orange-red with hot cream and yellow cores and charcoal accents. Single magical home structure: small forge shrine with a stone chimney, ember glow in its mouth and a hanging iron charm, standing alone as a single object. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. One centred object with nothing behind it. Exactly 96x96 pixels, fully transparent background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
   },
   {
     "id": "sanctuary_life",
@@ -330,10 +330,10 @@
     "path": "assets/art/board/sanctuaries/sanctuary_life.png",
     "size": [
       96,
-      64
+      96
     ],
     "phase": "B",
-    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Top-down magical home tile: root shrine, heart-shaped leaves, small warm lantern; open center for Heart overlay. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. Leave the centre open — a Heart number and an attack-target highlight are drawn on top. Exactly 96x64 pixels, opaque, fills the tile. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
+    "prompt": "Pocket Arcana pixel art. Cute magical storybook fantasy, chunky readable silhouette, clean pixel clusters, 1px dark coloured outline (not pure black), single light source from the upper left, limited harmonious palette, crisp hard pixel edges, spring green with warm cream and petal accents. Single magical home structure: small living shrine of woven roots and heart-shaped leaves with a warm lantern, standing alone as a single object. View: top-down with a slight 3/4 overhead board perspective, never a side-view battle sprite. One centred object with nothing behind it. Exactly 96x96 pixels, fully transparent background. no text, no letters, no numbers, no watermark, no frame, no border, no anti-aliasing, no smooth vector edges, no gradients, no 3D render, no painterly texture, no photorealism, no drop shadow."
   },
   {
     "id": "ashbloom",

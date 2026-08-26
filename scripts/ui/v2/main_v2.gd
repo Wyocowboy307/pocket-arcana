@@ -10,7 +10,7 @@ extends Control
 
 const HUMAN := 0
 const RIVAL := 1
-const HAND_H := 232.0
+const HAND_H := 226.0
 
 var db := ContentDatabase.new()
 var engine := MatchV2.new()
@@ -43,6 +43,7 @@ var tutorial_active := true
 var _hand_signature := ""
 var _cards: Array = []
 var _stage_free_at := 0.0            # scheduler cursor, in seconds
+var _drawing := 0                    # cards still in flight from the deck
 
 func _ready() -> void:
     if not db.load_all():
@@ -180,8 +181,8 @@ func _build_coach() -> void:
 
     banner = Label.new()
     banner.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-    banner.offset_top = 190.0
-    banner.add_theme_font_size_override("font_size", 30)
+    banner.offset_top = 248.0
+    banner.add_theme_font_size_override("font_size", 26)
     banner.add_theme_color_override("font_color", ArcanaTheme.GOLD)
     banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
     banner.modulate.a = 0.0
@@ -257,6 +258,7 @@ func _refresh() -> void:
 
 func _refresh_hand(my_turn: bool) -> void:
     var hand: Array = engine.players[HUMAN]["hand"]
+    if _drawing > 0: return          # the incoming card is still flying
     var signature := "%s|%s|%d|%s|%s" % [str(hand), str(my_turn),
         int(engine.players[HUMAN]["aether"]), selected_card, str(engine.players[HUMAN]["played_card"])]
     if signature == _hand_signature: return
@@ -298,8 +300,17 @@ func _layout_hand() -> void:
 
 func _lift(view: CardV2, on: bool) -> void:
     view.hovered = on
-    view.scale = Vector2.ONE * (1.28 if on else 1.0)
     view.z_index = 40 if on else _cards.find(view)
+    var tween := create_tween().set_parallel(true)
+    tween.tween_property(view, "scale", Vector2.ONE * (1.30 if on else 1.0), 0.10)
+    # A small tilt keeps the raised card feeling physical rather than scaled.
+    var index := _cards.find(view)
+    var lean: float = 0.0
+    if on and _cards.size() > 1:
+        lean = (float(index) / float(_cards.size() - 1) - 0.5) * 0.10
+    tween.tween_property(view, "rotation", lean, 0.10)
+    tween.tween_property(view, "position:y",
+        hand_row.size.y - CardV2.SIZE.y - (26.0 if on else 8.0), 0.10)
     view.queue_redraw()
 
 func _refresh_highlights() -> void:
@@ -489,18 +500,36 @@ func _later(delay: float, fn: Callable) -> void:
 func _on_event(event: Dictionary) -> void:
     if stage == null: return
     var kind := String(event.get("type", ""))
+    # The coach only advances on things the player actually did.
+    if int(event.get("player", event.get("side", -1))) == HUMAN:
+        match kind:
+            "land_built": _mark_taught("land")
+            "creature_summoned": _mark_taught("summon")
+            "place_built": _mark_taught("place")
+            "spell_cast": _mark_taught("spell")
+            "heart_attack": _mark_taught("heart"); _mark_taught("attack")
+            "creature_clash": _mark_taught("attack")
+            "fusion": _mark_taught("fusion")
     match kind:
         "card_drawn":
             if int(event.get("player", -1)) != HUMAN: return
-            var delay := _schedule(0.45, 0.5)
+            var delay := _schedule(0.55, 0.55)
             var card_id := String(event.get("card_id", ""))
+            # Hold the hand until the card actually arrives, so it visibly
+            # appears rather than blinking into existence.
+            _drawing += 1
             _later(delay, func() -> void:
                 stage.play("draw", {
                     "from": stage.deck_anchor(HUMAN),
-                    "to": Vector2(stage.size.x * 0.5, stage.size.y + 40.0),
+                    "to": Vector2(stage.size.x * 0.5, stage.size.y - 24.0),
                     "colour": stage.card_colour(card_id),
                     "label": String(db.get_card(card_id).get("name", "")),
-                }, 0.45))
+                    "role": engine.card_role(card_id),
+                }, 0.55))
+            _later(delay + 0.5, func() -> void:
+                _drawing = maxi(0, _drawing - 1)
+                _hand_signature = ""
+                _refresh())
         "land_built":
             var side := int(event["player"])
             var lane := int(event["lane"])
@@ -579,7 +608,6 @@ func _on_event(event: Dictionary) -> void:
             var unit2: Dictionary = event["unit"]
             var delay6 := _schedule(1.5, 0.95)
             _later(delay6, func() -> void:
-                _show_banner(String(event.get("name", "Fusion")), 1.0)
                 stage.play("fusion", {"side": side9, "lane": lane9, "freed_lane": freed,
                     "colour": stage.card_colour(String(unit2["card_id"])),
                     "name": String(event.get("name", "")),
@@ -667,34 +695,61 @@ func _run_ai() -> void:
 # docs/V2_TUTORIAL.md: teach one obvious action, then immediately show why it
 # mattered. The coach never blocks input; it only names the next idea.
 
+## One concept at a time, in the order docs/V2_TUTORIAL.md sets out. Each step
+## names the next idea and says how it is satisfied; the coach advances only when
+## the player has actually done that thing, so nothing is taught out of order.
 const TUTORIAL := [
-    "Land gives you Aether and a home for your creatures.",
-    "Pick a card. Only the land it can live on will light up.",
-    "Creatures stay on your land and fight across their lane.",
-    "Build another Realm to raise your Aether.",
-    "A Place supports the creature living on that land.",
-    "No creature blocking a lane? That attack hits the Heart.",
-    "Two matching creatures can COMBINE into something stronger.",
+    {"id": "sanctuary", "text": "This is your Sanctuary. Its Heart is what the rival is trying to break."},
+    {"id": "land", "text": "Land gives you Aether and a home for creatures. Press BUILD REALM."},
+    {"id": "summon", "text": "Pick a creature. Only the land it says PLAY ON will light up."},
+    {"id": "attack", "text": "Creatures fight across their own lane. Click yours, then the lane opposite."},
+    {"id": "place", "text": "A PLACE is a building. It supports the creature standing on its land."},
+    {"id": "spell", "text": "A SPELL resolves at once on whatever it says TARGET."},
+    {"id": "heart", "text": "No creature blocking a lane? That attack goes straight to the Heart."},
+    {"id": "fusion", "text": "Two matching creatures can COMBINE into something stronger."},
+    {"id": "done", "text": "That is the whole game: build land, summon, attack, break the Heart."},
 ]
 
+## Which steps the player has already demonstrated.
+var _taught: Dictionary = {}
+
+func _mark_taught(id: String) -> void:
+    if _taught.has(id): return
+    _taught[id] = true
+    _advance_tutorial()
+
 func _advance_tutorial() -> void:
-    if not tutorial_active: return
+    if not tutorial_active:
+        coach_panel.visible = false
+        return
     var mine: Dictionary = engine.players[HUMAN]
-    var step := 0
-    if engine.built_lands(HUMAN) >= 1: step = 1
-    var has_creature := false
+    # Derive what has been demonstrated, so the coach never claims a step the
+    # player has not actually performed.
+    if engine.built_lands(HUMAN) >= 2: _taught["land"] = true
     for i in range(MatchV2.LANES):
-        if engine.lane(HUMAN, i)["creature"] != null: has_creature = true
-    if has_creature: step = 2
-    if engine.built_lands(HUMAN) >= 2: step = 3
-    for i in range(MatchV2.LANES):
-        if engine.lane(HUMAN, i)["place"] != null: step = 4
-    if int(mine["heart"]) < MatchV2.HEART_START or int(engine.players[RIVAL]["heart"]) < MatchV2.HEART_START:
-        step = 5
-    if not engine.available_fusions(HUMAN).is_empty(): step = 6
-    tutorial_step = step
-    coach_label.text = TUTORIAL[step]
-    coach_panel.visible = true
+        if engine.lane(HUMAN, i)["creature"] != null: _taught["summon"] = true
+        if engine.lane(HUMAN, i)["place"] != null: _taught["place"] = true
+    if int(engine.players[RIVAL]["heart"]) < MatchV2.HEART_START: _taught["heart"] = true
+    if engine.turn >= 2: _taught["sanctuary"] = true
+
+    for step in TUTORIAL:
+        var id := String(step["id"])
+        if id == "fusion" and engine.available_fusions(HUMAN).is_empty(): continue
+        if id == "done": continue
+        if _taught.has(id): continue
+        coach_label.text = String(step["text"])
+        coach_panel.visible = true
+        tutorial_step = TUTORIAL.find(step)
+        return
+    # Everything demonstrated: say so once, then get out of the way.
+    if not _taught.has("done"):
+        _taught["done"] = true
+        coach_label.text = String(TUTORIAL[TUTORIAL.size() - 1]["text"])
+        coach_panel.visible = true
+        get_tree().create_timer(6.0).timeout.connect(func() -> void:
+            if coach_panel != null: coach_panel.visible = false)
+    else:
+        coach_panel.visible = false
 
 func _on_match_finished(winner: int) -> void:
     await get_tree().create_timer(maxf(0.6, _stage_free_at - _now())).timeout

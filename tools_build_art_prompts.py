@@ -140,10 +140,9 @@ def build():
             "id": s["id"], "kind": "sanctuary", "element": element,
             "path": s["path"], "size": s["size"], "phase": "B",
             "prompt": (f"{BASE}, {el(element,'palette')}. "
-                       f"Top-down magical home tile: {s['description']}. "
-                       f"View: {WORLD_VIEW}. Leave the centre open — a Heart number and an "
-                       f"attack-target highlight are drawn on top. "
-                       f"Exactly {s['size'][0]}x{s['size'][1]} pixels, opaque, fills the tile. {NEGATIVE}."),
+                       f"Single magical home structure: {s['description']}. "
+                       f"View: {WORLD_VIEW}. One centred object with nothing behind it. "
+                       f"Exactly {s['size'][0]}x{s['size'][1]} pixels, fully transparent background. {NEGATIVE}."),
         })
 
     for sp in MANIFEST["spell_visuals"]:

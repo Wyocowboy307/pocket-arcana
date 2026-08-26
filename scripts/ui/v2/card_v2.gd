@@ -11,6 +11,10 @@ signal card_clicked(card_id: String)
 signal card_hovered(card_id: String)
 
 const SIZE := Vector2(156, 214)
+## A distinct glyph per role, so type reads before any text does.
+const ROLE_GLYPH := {
+    "Realm": "▰", "Creature": "❖", "Place": "⌂", "Spell": "✦",
+}
 const RIBBON := {
     "Realm": Color("#8bd0a0"), "Creature": Color("#e6d9a8"),
     "Place": Color("#c9b79a"), "Spell": Color("#d3b6e8"),
@@ -95,7 +99,8 @@ func _draw() -> void:
     var band := Rect2(6, 38, size.x - 12, 19)
     draw_style_box(ArcanaTheme.panel_box(Color(ribbon, 0.30 if playable else 0.12),
         Color(ribbon, 0.85 if playable else 0.3), 3, 1), band)
-    var label := role.to_upper()
+    var glyph := String(ROLE_GLYPH.get(role, "•"))
+    var label := "%s  %s" % [glyph, role.to_upper()]
     var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
     draw_string(f, Vector2(band.get_center().x - lw * 0.5, band.position.y + 14), label,
         HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ribbon if playable else ArcanaTheme.TEXT_FAINT)

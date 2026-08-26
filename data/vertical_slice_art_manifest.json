@@ -371,18 +371,18 @@
       "path": "assets/art/board/sanctuaries/sanctuary_life.png",
       "size": [
         96,
-        64
+        96
       ],
-      "description": "root shrine, heart-shaped leaves, small warm lantern; open center for Heart overlay"
+      "description": "small living shrine of woven roots and heart-shaped leaves with a warm lantern, standing alone as a single object"
     },
     {
       "id": "sanctuary_fire",
       "path": "assets/art/board/sanctuaries/sanctuary_fire.png",
       "size": [
         96,
-        64
+        96
       ],
-      "description": "miniature forge shrine with small chimney, ember glow and hanging iron charm; open center for Heart overlay"
+      "description": "small forge shrine with a stone chimney, ember glow in its mouth and a hanging iron charm, standing alone as a single object"
     }
   ],
   "ui": [

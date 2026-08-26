@@ -439,40 +439,40 @@
       "credits_used": 24
     },
     "sanctuary_fire": {
-      "asset_id": "4bebb0e3-b78b-4c77-b4bf-3edf1b046b3a",
+      "asset_id": "7d82c686-9eb9-4dfb-890c-207cb1c5c094",
       "candidate_ids": [
-        "4bebb0e3-b78b-4c77-b4bf-3edf1b046b3a",
-        "fddf0018-cdeb-49da-98be-6ee4d996cdac"
+        "7d82c686-9eb9-4dfb-890c-207cb1c5c094",
+        "f4760e03-ced5-46d3-9b84-97e4e5106503"
       ],
       "path": "assets/art/board/sanctuaries/sanctuary_fire.png",
       "picked": 0,
       "size": [
         96,
-        64
+        96
       ],
       "source_size": [
-        72,
-        72
+        56,
+        56
       ],
       "kind": "sanctuary",
       "element": "fire",
       "credits_used": 24
     },
     "sanctuary_life": {
-      "asset_id": "b4eb3bbf-44de-4eb9-b452-c05d086b32e4",
+      "asset_id": "a4e5213a-3a0a-47a8-90bc-f073aac6812e",
       "candidate_ids": [
-        "b4eb3bbf-44de-4eb9-b452-c05d086b32e4",
-        "59649a01-0c86-4799-97bf-9546c1da4d9f"
+        "a4e5213a-3a0a-47a8-90bc-f073aac6812e",
+        "ab96ec02-efe3-44bf-aa6d-a63f36e2af4b"
       ],
       "path": "assets/art/board/sanctuaries/sanctuary_life.png",
       "picked": 0,
       "size": [
         96,
-        64
+        96
       ],
       "source_size": [
-        72,
-        72
+        62,
+        62
       ],
       "kind": "sanctuary",
       "element": "life",

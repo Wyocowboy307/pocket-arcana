@@ -13,7 +13,10 @@
 - Start match with 8 cards.
 - Chapter 2: draw 3. Chapter 3: draw 2.
 - Cards left in hand carry into the next Chapter. This is why passing matters.
-- Both players Pass → score the Chapter.
+- When your rival Passes, you get **one last turn**, then the Chapter scores.
+  Without that bound the player who passed first handed the other free turns
+  forever, and since Shaping costs no cards those turns were pure permanent
+  Realm Score — which made passing first strictly bad.
 - Realm Score is deliberately simple in the graybox: creature Power + landmark Presence + 1 per shaped/special tile you control.
 - Terrain and landmarks persist. Creatures retreat/clear between Chapters in v1.
 

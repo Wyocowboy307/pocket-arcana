@@ -244,10 +244,23 @@ func _pass_value(engine, player: int) -> float:
     var margin: int = int(preview["my_score"]) - int(preview["rival_score"])
     var value := 0.5
     if difficulty == Difficulty.GENTLE: return 0.35
-    if bool(preview["rival_passed"]) and margin > 0:
-        value += 2.5 + min(margin, 6) * 0.45  # already winning: bank the cards
-    elif margin > 3:
-        value += 1.2
+    var last_chapter: bool = engine.chapter >= MatchEngine.MAX_CHAPTERS
+    var rival_passed: bool = bool(preview["rival_passed"])
+    # Hand size is public information — the scoreboard shows it to the player too.
+    var rival_cards: int = engine.players[1 - player]["hand"].size()
+    # Roughly what the rival could still add, including their one last turn.
+    var rival_threat: float = 0.0 if rival_passed else float(rival_cards) * 1.6 + 4.0
+
+    if margin > 0 and rival_passed:
+        # The rival is out and we are ahead: anything more is spent for nothing.
+        value += 60.0
+    elif not last_chapter and float(margin) > rival_threat:
+        # The Chapter is already safe. Winning by one with cards in hand beats
+        # winning by fifteen with none (DESIGN_DECISIONS #4) — those cards are
+        # next Chapter's draws.
+        value += 60.0
+    elif margin > 0 and not last_chapter:
+        value += 1.4 + min(margin, 8) * 0.5
     if difficulty == Difficulty.SHARP:
         value += 0.4
     return value

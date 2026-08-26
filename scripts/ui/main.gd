@@ -193,7 +193,7 @@ func _build_side_panel() -> Control:
     cm.add_child(cv)
     coach_panel.add_child(cm)
     coach_title = _label("", 12, ArcanaTheme.GOLD)
-    coach_body = _rich_fixed(26)
+    coach_body = _rich_fixed(20)
     cv.add_child(coach_title); cv.add_child(coach_body)
     side.add_child(coach_panel)
 
@@ -205,7 +205,7 @@ func _build_side_panel() -> Control:
     dm.add_child(dv)
     detail.add_child(dm)
     detail_title = _label("Take your turn", 13, ArcanaTheme.GOLD)
-    detail_body = _rich_fixed(76)
+    detail_body = _rich_fixed(90)
     detail_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
     detail_body.scroll_active = true
     dv.add_child(detail_title); dv.add_child(detail_body)
@@ -229,7 +229,7 @@ func _build_side_panel() -> Control:
     lm.add_child(lv)
     log_panel.add_child(lm)
     lv.add_child(_label("RECENT EVENTS", 10, ArcanaTheme.TEXT_FAINT))
-    log_label = _rich_fixed(60)
+    log_label = _rich_fixed(48)
     lv.add_child(log_label)
     side.add_child(log_panel)
 
@@ -269,7 +269,8 @@ func _build_help_panel(_parent: Control) -> void:
     text.add_theme_font_size_override("bold_font_size", 13)
     var lines := "[b]Goal.[/b] Win two Chapters, break the rival Heart, or reach 10 Wonder.\n"
     lines += "[b]Your turn.[/b] Do exactly one thing: play a card, Shape a tile, move or fight with one creature, use your Command, or Pass.\n"
-    lines += "[b]Shape.[/b] Shaping turns a tile beside your realm into your element. Your realm's terrain is what lets you cast cards.\n\n"
+    lines += "[b]Shape.[/b] Shaping turns a tile beside your realm into your element. Your realm's terrain is what lets you cast cards.\n"
+    lines += "[b]Passing.[/b] When your rival Passes you get one last turn, then the Chapter scores. Cards you did not spend stay in your hand for the next Chapter.\n\n"
     for kw in db.keywords:
         lines += "[b]%s[/b] — %s\n" % [String(kw.get("name", "")), String(kw.get("plain", ""))]
     text.text = lines
@@ -428,7 +429,7 @@ func _refresh() -> void:
     cancel_button.disabled = mode == ""
 
     var lines: Array[String] = []
-    var start: int = maxi(0, engine.event_log.size() - 4)
+    var start: int = maxi(0, engine.event_log.size() - 3)
     for i in range(start, engine.event_log.size()):
         var colour := ArcanaTheme.TEXT_DIM if i < engine.event_log.size() - 1 else ArcanaTheme.TEXT
         lines.append("[color=#%s]%s[/color]" % [colour.to_html(false), engine.event_log[i]])
@@ -550,7 +551,7 @@ func _refresh_coach() -> void:
         if tutorial_done.has(String(step.get("id", ""))): done += 1
     if done >= steps.size():
         coach_title.text = "LEARNING THE GAME  ·  all done"
-        coach_body.text = "[i]You have used every action in the game. The rest is strategy.[/i]"
+        coach_body.text = "[i]Every action used. The rest is strategy.[/i]"
         return
     for step in steps:
         var id := String(step.get("id", ""))
@@ -566,7 +567,7 @@ func _clear_selection() -> void:
     selected_unit_pos = Vector2i(-1, -1); pending_primary = Vector2i(-1, -1)
     var cmd: Dictionary = db.get_commander(String(engine.players[HUMAN]["commander_id"]))
     detail_title.text = "Take your turn"
-    detail_body.text = ("Click a card, a Shape element, or one of your creatures.\n\n" +
+    detail_body.text = ("Click a card, a Shape element, or a creature.\n\n" +
         "[b]%s[/b]\n[i]%s[/i]\n%s") % [
         String(cmd.get("name", "Commander")), String(cmd.get("passive_text", "")), String(cmd.get("command_text", ""))]
     _hand_signature = ""

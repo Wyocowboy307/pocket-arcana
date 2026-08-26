@@ -21,6 +21,13 @@ const AETHER_CAP := 10
 ## rival Sanctuary farms the Heart every turn for free and Heart-rush dominates
 ## every other plan. Playtest knob — see docs/IMPLEMENTATION_NOTES.md.
 const SANCTUARY_WARD := 2
+## When your rival passes, you get this many final turns and then the Chapter
+## scores. Without a bound, whoever passed first handed the other player free
+## turns forever — and because Shaping costs no cards, those turns were pure
+## permanent Realm Score. That made passing first strictly bad, so nobody ever
+## passed holding cards and DESIGN_DECISIONS #4 could not happen.
+## Playtest knob — see docs/IMPLEMENTATION_NOTES.md.
+const FINAL_TURNS_AFTER_PASS := 1
 
 var db: ContentDatabase
 var board := BoardModel.new()
@@ -72,7 +79,7 @@ func _make_player(deck_def: Dictionary) -> Dictionary:
         "commander_id": String(deck_def.get("commander_id", "")),
         "deck_name": String(deck_def.get("label", deck_def.get("name", "Deck"))),
         "passed": false, "commander_used": false, "turns_taken": 0,
-        "max_aether": 3, "aether": 3, "bonus_aether": 0, "chapter_flags": {},
+        "max_aether": 3, "aether": 3, "bonus_aether": 0, "chapter_flags": {}, "solo_turns": 0,
     }
 
 func _shuffle_deck(deck: Array) -> void:
@@ -101,6 +108,7 @@ func _start_chapter(draw_between: bool = true) -> void:
         pl["commander_used"] = false
         pl["chapter_flags"] = {}
         pl["turns_taken"] = 0
+        pl["solo_turns"] = 0
         pl["bonus_aether"] = 0
         pl["max_aether"] = min(AETHER_CAP, 3 + chapter)
         pl["aether"] = pl["max_aether"]
@@ -268,6 +276,9 @@ func pass_preview(player: int) -> Dictionary:
         outcome = "You lose this Chapter."
     else:
         outcome = "Tied — no Seal for anyone."
+    var turns_word := "turn" if FINAL_TURNS_AFTER_PASS == 1 else "turns"
+    if not rival_passed:
+        outcome += " Rival gets %d last %s." % [FINAL_TURNS_AFTER_PASS, turns_word]
     return {
         "my_score": my_total, "rival_score": their_total,
         "my_breakdown": mine, "rival_breakdown": theirs,
@@ -486,7 +497,18 @@ func _can_act(player: int) -> bool:
 func _finish_action(player: int) -> void:
     players[player]["turns_taken"] = int(players[player]["turns_taken"]) + 1
     var other := 1 - player
-    current_player = player if bool(players[other]["passed"]) else other
+    if bool(players[other]["passed"]):
+        # The rival is out of this Chapter, so this is a bounded last word.
+        players[player]["solo_turns"] = int(players[player]["solo_turns"]) + 1
+        if int(players[player]["solo_turns"]) >= FINAL_TURNS_AFTER_PASS:
+            players[player]["passed"] = true
+            _log("P%d takes the last turn of the Chapter." % (player + 1))
+            state_changed.emit()
+            _resolve_chapter()
+            return
+        current_player = player
+    else:
+        current_player = other
     _begin_turn(current_player)
     state_changed.emit()
 

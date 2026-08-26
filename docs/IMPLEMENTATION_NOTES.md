@@ -84,6 +84,42 @@ gets a legal destination, and the UI turns that refusal into a second click.
 `legal_push_targets()` never allows a creature to be pushed into a Sanctuary.
 Only Tailwind uses this today, and it is outside the Life/Fire slice.
 
+### Passing was strictly bad — the second flagged rules change
+DESIGN_DECISIONS #4 says winning a Chapter by one point with cards left is often
+better than winning by fifteen with an empty hand. That could not happen. By the
+letter of MATCH_RULES a player who has passed is skipped, so the other player kept
+taking turns until they chose to stop. Telemetry over 120 matches:
+
+    8.22 free actions after the rival passed, 4.22 of them Shapes
+
+Shaping costs no cards and permanently claims a tile, so those free turns were pure
+Realm Score that persisted into every later Chapter. Passing first was strictly
+punished, so nobody ever passed holding cards.
+
+`MatchEngine.FINAL_TURNS_AFTER_PASS = 1` gives the remaining player one last turn
+and then scores the Chapter. A/B over 120 matches each:
+
+    free actions after a pass   8.22 -> 2.18
+    cards held when a Chapter scores  2.76 -> 3.48
+    Life / Fire                 65 / 35  ->  50.8 / 49.2
+
+The free-Shape loophole was quietly favouring the slower deck, so bounding it also
+closed the residual balance gap without touching a single card number. At 250 matches per
+seating the matchup now sits at Life 53.6% / Fire 46.4% (54.4 / 45.6 reversed),
+and matches reach Chapter 2.72 on average, so the best-of-three actually happens.
+
+Like the Ward, this is a playtest decision rather than something the design docs
+specified, and it is one constant.
+
+Side effect worth knowing: Chapters are now much shorter (59 actions per match,
+down from 88), so creatures rarely have time to walk across the board and grind a
+Heart to zero. Heart strikes fell from 4.5 per match to about 1, and Fire now wins
+more of its matches on Seals than by Heart break. Fire is still roughly ten times
+more likely than Life to win by Heart, so the identities still read, but the split
+is softer than it was. Retuning `SANCTUARY_WARD` no longer moves this much (Ward 1
+vs 2 changed Fire's Heart wins by 3 matches in 150) — the Chapter length is the
+binding constraint now, so that is the knob to reach for.
+
 ### Still open
 - The other six starter Commanders still share the "+1 Aether" passive.
-- `data/tutorial_steps.json` is not wired into the UI.
+- Roughly 10% of matches are decided by the blunt "Final tiebreak" rule.

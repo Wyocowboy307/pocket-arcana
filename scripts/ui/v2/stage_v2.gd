@@ -31,11 +31,10 @@ const RAIL_W := 150.0                 # left/right rails: homes, Hearts, decks
 const EDGE_PAD := 8.0
 const ROW_H := 232.0                  # a combat row — nearly all of the height
 const CLASH_H := 68.0                 # a seam where they meet, not a strip
-const CARD_W := 168.0                 # a played creature card, readable at rest
+const CARD_W := 168.0                 # a travelling card in flight (draw/play)
 const CARD_H := 224.0
-const PLACE_W := 104.0                # a Place, supporting from the lane's edge
-const PLACE_H := 138.0
-const CARD_NUDGE := 26.0              # creature shifts right so the Place is readable
+const PLACE_W := 104.0                # a Place building's ground footprint
+const PLACE_H := 130.0
 
 var engine: MatchV2
 var art: ArtRegistry
@@ -184,25 +183,48 @@ func lane_rect(side: int, index: int) -> Rect2:
 	var y: float = o.y if side == 1 else o.y + ROW_H + CLASH_H
 	return Rect2(x, y, lw, ROW_H)
 
-## Where a played creature card actually lies.
-func card_rect(side: int, index: int) -> Rect2:
-	var r := lane_rect(side, index)
-	var c := r.get_center()
-	# Sits right of the lane's centre so a Place can stand beside it rather than
-	# behind it. A half-hidden support card is a card the player cannot read.
-	return Rect2(Vector2(c.x - CARD_W * 0.5 + CARD_NUDGE, c.y - CARD_H * 0.5).round(),
-		Vector2(CARD_W, CARD_H))
+## Where a piece's feet stand on its plot. The card frame is gone from the
+## board (direction lock M3): the creature IS the piece.
+func creature_stand(side: int, index: int) -> Vector2:
+	var p := plot_rect(side, index)
+	var nudge := 0.0
+	if engine != null and not engine.players.is_empty() \
+			and engine.lane(side, index)["place"] != null:
+		nudge = 18.0
+	return Vector2(p.get_center().x + nudge, p.position.y + p.size.y - 12.0)
 
-## A Place tucks behind its lane, toward that player's own sanctuary, so both
-## cards stay readable and the support relationship is visible.
+## Size classes are real: a 48px sprite is a critter, a 96px sprite is a
+## monument. The scale keeps their authored mass ratio instead of fitting
+## everything into one window.
+func creature_scale(card_id: String) -> float:
+	var h: float = float(art.source_size(card_id).y) if art != null else 64.0
+	if h <= 48.0: return 1.7
+	if h <= 64.0: return 1.85
+	return 2.0
+
+## The rect a standing creature's body occupies on screen.
+func creature_body(side: int, index: int, card_id: String) -> Rect2:
+	var src := Vector2(art.source_size(card_id)) if art != null else Vector2(64, 64)
+	var s := src * creature_scale(card_id)
+	var feet := creature_stand(side, index)
+	return Rect2(feet - Vector2(s.x * 0.5, s.y - 6.0), s)
+
+## Kept under its old name — a dozen callers only ever wanted "where is the
+## piece in this lane". With a creature standing there it is the body; empty,
+## it is a modest zone round the stand point (card flights land there).
+func card_rect(side: int, index: int) -> Rect2:
+	if engine != null and not engine.players.is_empty():
+		var l: Dictionary = engine.lane(side, index)
+		if l["creature"] != null:
+			return creature_body(side, index, String(l["creature"]["card_id"]))
+	var p := plot_rect(side, index)
+	return Rect2(p.get_center() - Vector2(52.0, 64.0), Vector2(104.0, 128.0))
+
+## A Place stands at the back-left of its plot; the creature holds the front.
 func place_rect(side: int, index: int) -> Rect2:
-	var lane := lane_rect(side, index)
-	var cr := card_rect(side, index)
-	# Sits in the lane's own margin and a little toward that player's home, so it
-	# reads as supporting the creature in front of it without hiding either card.
-	var toward_home: float = 14.0 if side == 0 else -14.0
-	return Rect2(Vector2(lane.position.x + 2.0,
-		cr.get_center().y - PLACE_H * 0.5 + toward_home).round(), Vector2(PLACE_W, PLACE_H))
+	var p := plot_rect(side, index)
+	return Rect2(Vector2(p.position.x + 10.0, p.position.y + 2.0).round(),
+		Vector2(PLACE_W, PLACE_H))
 
 ## The home now lives on the left rail, framing the board rather than sitting
 ## across the top or bottom of it.
@@ -213,7 +235,8 @@ func creature_anchor(side: int, index: int) -> Vector2:
 	return card_rect(side, index).get_center()
 
 func place_anchor(side: int, index: int) -> Vector2:
-	return place_rect(side, index).get_center()
+	var r := place_rect(side, index)
+	return Vector2(r.get_center().x, r.position.y + r.size.y - 24.0)
 
 ## Where the two sides actually meet.
 func clash_centre(index: int) -> Vector2:
@@ -360,7 +383,7 @@ func _tick_act(act: Dictionary) -> void:
 			var summon_el := String(act.get("element", "life"))
 			if _at(act, "portal", 0.22):
 				effect("summon_portal_%s" % summon_el,
-					at2 + Vector2(0.0, CARD_H * 0.42), 0.55, 2.0)
+					creature_stand(int(act["side"]), int(act["lane"])), 0.55, 2.0)
 				burst(at2, Color(act["colour"]), 12, "spark", 0.8)
 			if _at(act, "pop", 0.55):
 				effect("leaf_burst" if summon_el == "life" else "ember_burst", at2, 0.42, 1.7)
@@ -753,7 +776,14 @@ func _draw_realm_dressing(side: int) -> void:
 			grow = clampf(float(act["t"]) / float(act["dur"]) / 0.88, 0.0, 1.0)
 		var mix: Array = GROVE_PROP_MIX if life else CINDER_PROP_MIX
 		var plot := plot_rect(side, index)
-		var card := card_rect(side, index)
+		var lane_state: Dictionary = engine.lane(side, index)
+		# Keep the piece's ground clear: the standing creature's body if one is
+		# here, otherwise a modest arrival zone round the stand point.
+		var clear := Rect2(creature_stand(side, index) - Vector2(48.0, 84.0), Vector2(96.0, 100.0))
+		if lane_state["creature"] != null:
+			clear = card_rect(side, index).grow(6.0)
+		var place_zone := place_rect(side, index).grow(4.0) if lane_state["place"] != null \
+			else Rect2(-999.0, -999.0, 0.0, 0.0)
 		var placed: Array = []
 		for n in range(14):
 			var seed_value := side * 733 + index * 131 + n
@@ -762,8 +792,7 @@ func _draw_realm_dressing(side: int) -> void:
 			# Props stand ON the plot's top surface; feet stay inside the slab.
 			var at := Vector2(plot.position.x + 8.0 + _vhash(seed_value, 7) * (plot.size.x - 16.0),
 				plot.position.y + 14.0 + _vhash(seed_value, 11) * (plot.size.y - 16.0))
-			# Never behind the card the player is trying to read.
-			if card.grow(4.0).has_point(at): continue
+			if clear.has_point(at) or place_zone.has_point(at): continue
 			placed.append({"at": at, "seed": seed_value})
 		placed.sort_custom(func(a, b): return float(a["at"].y) < float(b["at"].y))
 		for entry in placed:
@@ -991,47 +1020,34 @@ func _draw_deck(side: int, p: Dictionary, element: String, f: Font) -> void:
 	draw_string(f, Vector2(deck.x - lw * 0.5, deck.y + h * 0.5 + 14.0), label,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
 
-## A Place: a built thing, laid on the board as its own smaller card behind the
-## lane it supports.
+## A Place: a real building standing at the back of its plot — never a second
+## card. Construction still climbs through its authored stages.
 func _draw_place(side: int, index: int, place: Dictionary) -> void:
 	var r := place_rect(side, index)
 	var card_id := String(place["card_id"])
-	var element := String(engine.players[side]["element"])
 	var act := _find_act("place_build", side, index)
 	var build := 1.0
 	if not act.is_empty(): build = clampf(float(act["t"]) / float(act["dur"]) / 0.88, 0.0, 1.0)
 	if build <= 0.02: return
-
-	# Construction: the card rises out of its own foundation.
 	var eased: float = 1.0 - pow(1.0 - build, 3.0)
-	var shown := Rect2(r.position + Vector2(0.0, r.size.y * (1.0 - eased)),
-		Vector2(r.size.x, r.size.y * eased))
-	_card_shadow(Rect2(r.position, r.size), 0.55 * eased)
 
-	var frame: Texture2D = art.frame("place_frame:%s" % element) if art != null else null
-	if frame == null:
-		draw_style_box(ArcanaTheme.panel_box(card_colour(card_id).darkened(0.55),
-			card_colour(card_id), 8, 2), shown)
-		return
-	var fw := float(frame.get_width())
-	var fh := float(frame.get_height())
-	var src := Rect2(0.0, fh * (1.0 - eased), fw, fh * eased)
-	draw_texture_rect_region(frame, shown, src, Color.WHITE, false)
-
-	# The building itself, inside the card's window, going up as the card lands:
 	# footing -> lower storey -> most of it -> finished.
 	var stage_index: int = 3
 	if eased < 0.30: stage_index = 0
 	elif eased < 0.58: stage_index = 1
 	elif eased < 0.86: stage_index = 2
 	var tex: Texture2D = art.landmark_stage(card_id, stage_index) if art != null else null
-	if tex != null and eased > 0.08:
-		var ts := Vector2(tex.get_width(), tex.get_height())
-		var win := Rect2(r.position + Vector2(4.0, 4.0), Vector2(r.size.x - 8.0, r.size.y - 22.0))
-		var sc: float = minf(win.size.x / ts.x, win.size.y / ts.y)
-		var drawn := ts * sc
-		var dest := Rect2((win.get_center() - drawn * 0.5).round(), drawn)
-		draw_texture_rect(tex, dest, false)
+	var feet := Vector2(r.get_center().x, r.position.y + r.size.y)
+	if tex == null:
+		draw_style_box(ArcanaTheme.panel_box(card_colour(card_id).darkened(0.55),
+			card_colour(card_id), 8, 2), r)
+		return
+	var ts := Vector2(tex.get_width(), tex.get_height())
+	var sc: float = minf(r.size.x / ts.x, r.size.y / ts.y)
+	var drawn := ts * sc
+	_ellipse_shadow(Vector2(feet.x, feet.y - 5.0), drawn.x * 0.44, 10.0, 0.30 * eased)
+	draw_texture_rect(tex, Rect2(Vector2(feet.x - drawn.x * 0.5,
+		feet.y - drawn.y).round(), drawn.round()), false)
 
 	if eased >= 0.99:
 		# A finished Place shows what it is doing to its lane.
@@ -1039,33 +1055,43 @@ func _draw_place(side: int, index: int, place: Dictionary) -> void:
 		if glow != null:
 			var gs := Vector2(glow.get_width(), glow.get_height())
 			var breathe: float = 0.45 + 0.30 * sin(_pulse * TAU + float(index) * 0.8)
-			draw_texture_rect(glow, Rect2((Vector2(r.get_center().x,
-				r.position.y + r.size.y + 4.0) - gs * 0.5).round(), gs), false,
-				Color(1, 1, 1, breathe))
-		var f2 := ArcanaTheme.font()
-		var label := ArcanaTheme.fit(String(place.get("name", "")), 9, r.size.x - 30.0)
-		if label != "":
-			var tw: float = f2.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 9).x
-			draw_string(f2, Vector2(r.get_center().x - tw * 0.5 + 6.0,
-				r.position.y + r.size.y - 6.0),
-				label, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, ArcanaTheme.TEXT_DIM)
-		_gem_art("presence", Vector2(r.position.x - 5.0, r.position.y + r.size.y - 20.0),
+			draw_texture_rect(glow, Rect2((Vector2(feet.x, feet.y + 2.0) - gs * 0.5).round(),
+				gs), false, Color(1, 1, 1, breathe))
+		_token("presence", Vector2(feet.x + drawn.x * 0.5 - 8.0, feet.y - 16.0),
 			str(int(place.get("presence", 1))), ArcanaTheme.font())
 
-## A played creature.
+## A flat elliptical contact shadow: what keeps a standing piece ON the world.
+func _ellipse_shadow(at: Vector2, rx: float, ry: float, alpha: float) -> void:
+	if alpha <= 0.0: return
+	var pts := PackedVector2Array()
+	for i in range(20):
+		var a := TAU * float(i) / 20.0
+		pts.append(at + Vector2(cos(a) * rx, sin(a) * ry))
+	draw_colored_polygon(pts, Color(0.03, 0.02, 0.04, alpha))
+
+## A chunky bevelled stat chip with a live numeral (tools/pixelart/ui_kit.py).
+func _token(kind: String, at: Vector2, text: String, f: Font, alert := false) -> void:
+	var tex: Texture2D = art.frame("token:%s" % kind) if art != null else null
+	var s := 44.0
+	if tex != null:
+		draw_texture_rect(tex, Rect2((at - Vector2(s, s) * 0.5).round(), Vector2(s, s)),
+			false, Color(1.0, 0.80, 0.80) if alert else Color.WHITE)
+	else:
+		draw_circle(at, s * 0.42, Color(0.1, 0.09, 0.12))
+	var tw: float = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
+	draw_string(f, Vector2(at.x - tw * 0.5, at.y + 6.0), text,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, 17, Color(0.09, 0.07, 0.06))
+
+## A played creature: a living piece standing on its land.
 ##
-## The card is the piece and it stays put. The creature lives inside its frame
-## and only comes out to act: during an attack the card anticipates and glows
-## while the creature itself climbs out over the frame, travels, hits, and drops
-## back in. Everything that leaves the frame is collected into `_emergent` and
-## drawn after every card, so a lunging creature is never painted over by the
-## card next door.
+## No frame, no window — the sprite stands at its plot's front edge with a
+## contact shadow, chunky stat chips at its feet, and posture that tells its
+## state: ready pieces breathe, resting pieces settle and dim. During an attack
+## the piece itself leaves home (collected into `_emergent` so it draws over
+## every other piece), travels, hits, and returns.
 func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
-	var base := card_rect(side, index)
-	var home := base.get_center()
 	var card_id := String(unit["card_id"])
 	var colour := card_colour(card_id)
-	var element := String(engine.players[side]["element"])
 	var offset := Vector2.ZERO
 	var squash := Vector2.ONE
 	var glow := 0.0
@@ -1101,7 +1127,7 @@ func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
 			offset += _defend_offset(act, side, index)
 			glow = maxf(glow, 0.25)
 		elif String(act["kind"]) == "recoil" and int(act.get("uid", -1)) == int(unit["uid"]):
-			# The defender's card takes the hit: shove, then a rattling shake.
+			# The defender takes the hit: shove, then a rattling shake.
 			var rt: float = clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0)
 			offset += Vector2(act["push"]) * sin(rt * PI) * 22.0
 			offset += Vector2(sin(rt * 58.0), 0.0) * (1.0 - rt) * 6.0
@@ -1110,82 +1136,77 @@ func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
 
 	if scale <= 0.001: return
 	var hovered: bool = side == hover_side and index == hover_lane
-	if hovered: offset += Vector2(0.0, -8.0)
-
-	var drawn_size := base.size * squash * scale
-	var r := Rect2((home + offset - drawn_size * 0.5).round(), drawn_size.round())
-
-	_card_shadow(r, 0.7 * scale)
-	if glow > 0.0:
-		draw_rect(r.grow(5.0 + 7.0 * glow), Color(colour, 0.26 * glow))
-
-	var plate: Texture2D = art.frame("board_plate:%s" % element) if art != null else null
-	var frame: Texture2D = art.frame("board_frame:%s" % element) if art != null else null
 	var ready: bool = bool(unit.get("ready", true))
+	var acting: bool = not beat.is_empty()
+
+	if hovered: offset += Vector2(0.0, -6.0)
+	if not ready and not acting:
+		# Settled low, a shade dimmer: asleep until its next turn.
+		offset += Vector2(0.0, 4.0)
+		squash *= Vector2(1.05, 0.93)
+	elif ready and not acting:
+		# Alive and willing: a slow breath.
+		offset.y += sin(_pulse * TAU + float(index) * 1.3 + float(side) * 2.1) * 1.5
+
 	var tint := Color(1, 1, 1, 1)
-	if side == 0 and not ready: tint = Color(0.68, 0.68, 0.74, 1.0)
+	if not ready: tint = Color(0.66, 0.66, 0.72, 1.0)
 	if glow > 0.4: tint = Color(1.0, 0.88 + 0.12 * (1.0 - glow), 0.88, 1.0)
 	if dim_others and not highlights.has("%d,%d" % [side, index]):
 		tint = Color(tint.r * 0.55, tint.g * 0.55, tint.b * 0.6, 1.0)
 
-	if plate == null:
-		draw_style_box(ArcanaTheme.panel_box(colour.darkened(0.5), colour, 10, 2), r)
-	else:
-		draw_texture_rect(plate, r, false, tint)
-
-	# The creature. Inside the frame at rest; handed to the emergent pass while
-	# it is out acting, so it can be drawn over every card on the board.
 	var tex: Texture2D = art.creature(card_id) if art != null else null
-	var window := _card_window(r, scale)
+	var stand := creature_stand(side, index)
+	var feet := stand + offset
 	var out: float = float(beat.get("out", 0.0)) if not beat.is_empty() else 0.0
-	if tex != null:
-		var ts := Vector2(tex.get_width(), tex.get_height())
-		var tier: float = clampf(ts.y / 96.0, 0.68, 1.0)
-		var fit: float = minf(window.size.x / ts.x, window.size.y / ts.y) * tier
-		if out <= 0.001:
-			var drawn := ts * fit
-			draw_texture_rect(tex, Rect2((window.get_center() - drawn * 0.5).round(),
-				drawn.round()), false, tint)
-		else:
-			_emergent.append({"tex": tex, "at": Vector2(beat["at"]), "fit": fit,
-				"scale": float(beat["scale"]), "squash": Vector2(beat["squash"]),
-				"flip": bool(beat["flip"]), "glow": float(beat["glow"]),
-				"colour": colour, "ground": float(beat["ground"])})
 
-	if frame != null:
-		draw_texture_rect(frame, r, false, tint)
+	if tex == null:
+		# Graybox standee while art is missing.
+		var box := Rect2(feet - Vector2(44.0, 96.0), Vector2(88.0, 96.0))
+		draw_style_box(ArcanaTheme.panel_box(colour.darkened(0.5), colour, 10, 2), box)
+		return
 
-	_draw_card_face(r, scale, unit, side, ready, f, tint)
+	var k3: float = creature_scale(card_id) * scale
+	var ts := Vector2(tex.get_width(), tex.get_height())
+	var drawn := ts * k3 * squash
+	if out <= 0.001:
+		# Grounding: shadow, then a soft pool of its element light so even a
+		# soot-dark Fire body never sinks into its own scorched land.
+		_ellipse_shadow(Vector2(feet.x, feet.y + 2.0), drawn.x * 0.36, 9.0, 0.32 * scale)
+		draw_circle(Vector2(feet.x, feet.y - drawn.y * 0.30),
+			drawn.x * 0.52, Color(colour, 0.07 + 0.10 * glow))
+		var dest := Rect2(Vector2(feet.x - drawn.x * 0.5, feet.y - drawn.y + 6.0).round(),
+			drawn.round())
+		draw_texture_rect(tex, dest, false, tint)
+	else:
+		_emergent.append({"tex": tex, "at": Vector2(beat["at"]), "fit": creature_scale(card_id),
+			"scale": float(beat["scale"]), "squash": Vector2(beat["squash"]),
+			"flip": bool(beat["flip"]), "glow": float(beat["glow"]),
+			"colour": colour, "ground": float(beat["ground"])})
 
-## The art window inside a board card, matching tools/pixelart/cards.py.
-func _card_window(r: Rect2, scale: float) -> Rect2:
-	var k: float = r.size.y / CARD_H
-	return Rect2(r.position.x + 5.0 * (r.size.x / CARD_W), r.position.y + 29.0 * k,
-		r.size.x - 10.0 * (r.size.x / CARD_W), 150.0 * k)
+	# The numbers it wears: power and health chips at its feet.
+	if out <= 0.2 and scale >= 0.95:
+		var chip_off: float = minf(drawn.x * 0.5, 46.0)
+		var chip_y: float = feet.y - 2.0
+		_token("power", Vector2(feet.x - chip_off, chip_y), str(int(unit["power"])), f)
+		_token("health", Vector2(feet.x + chip_off, chip_y), str(int(unit["health"])), f,
+			int(unit["health"]) < int(unit["max_health"]))
+		if not ready:
+			var moon: Texture2D = art.frame("chip:resting") if art != null else null
+			if moon != null:
+				var breathe2: float = 0.65 + 0.25 * sin(_pulse * TAU)
+				var ms := Vector2(30.0, 30.0)
+				draw_texture_rect(moon, Rect2((Vector2(feet.x + drawn.x * 0.30,
+					feet.y - drawn.y - 4.0) - ms * 0.5).round(), ms), false,
+					Color(1, 1, 1, breathe2))
 
-## Name, cost, attack, health and status — everything readable at rest.
-func _draw_card_face(r: Rect2, scale: float, unit: Dictionary, side: int,
-		ready: bool, f: Font, tint: Color) -> void:
-	if scale < 0.6: return
-	var k: float = r.size.y / CARD_H
-	var name := ArcanaTheme.fit(String(unit["name"]), 13, r.size.x - 16.0)
-	var nw: float = f.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-	draw_string(f, Vector2(r.get_center().x - nw * 0.5, r.position.y + 20.0 * k), name,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ArcanaTheme.TEXT)
-
-	var foot_y: float = r.position.y + 186.0 * k
-	_gem_art("power", Vector2(r.position.x - 6.0, foot_y), str(int(unit["power"])), f)
-	_gem_art("health", Vector2(r.position.x + r.size.x - 24.0, foot_y),
-		str(int(unit["health"])), f, int(unit["health"]) < int(unit["max_health"]))
-
-	# Status the player must see without hovering.
-	if side == 0 and not ready:
-		var label := "RESTING"
-		var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x
-		draw_rect(Rect2(r.get_center().x - lw * 0.5 - 6.0, foot_y + 4.0, lw + 12.0, 15.0),
-			Color(ArcanaTheme.BG, 0.82))
-		draw_string(f, Vector2(r.get_center().x - lw * 0.5, foot_y + 15.0), label,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT_FAINT)
+	# Name on approach, not as permanent chrome: a small plaque over its head.
+	if hovered and out <= 0.001:
+		var cname := ArcanaTheme.fit(String(unit["name"]), 13, 150.0)
+		var nw: float = f.get_string_size(cname, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+		var plq := Rect2(feet.x - nw * 0.5 - 10.0, feet.y - drawn.y - 28.0, nw + 20.0, 22.0)
+		draw_style_box(ArcanaTheme.panel_box(Color(0.07, 0.06, 0.09, 0.92), colour, 6, 1), plq)
+		draw_string(f, Vector2(plq.position.x + 10.0, plq.position.y + 16.0), cname,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ArcanaTheme.TEXT)
 
 ## Where a creature is, and what its card is doing, part-way through an attack.
 ##
@@ -1233,13 +1254,13 @@ func _attack_beat(act: Dictionary, side: int, index: int, card_id: String) -> Di
 		var eased: float = 1.0 - pow(1.0 - k2, 2.2)
 		card_glow = 0.8 - 0.4 * k2
 		out = 1.0
-		scale = 1.18 + 0.16 * eased
+		scale = 1.06 + 0.12 * eased
 		if stationary:
 			# Rears up over its own card and holds — the dragon's beat. It never
 			# crosses the board; the breath does that for it.
 			var rise: float = -1.0 if side == 0 else 1.0
 			at = home + Vector2(0.0, rise * 146.0 * eased)
-			scale = 1.3 + 0.75 * eased
+			scale = 1.12 + 0.22 * eased
 			ground = eased
 		else:
 			at = home + toward * reach * eased
@@ -1256,11 +1277,11 @@ func _attack_beat(act: Dictionary, side: int, index: int, card_id: String) -> Di
 		var back: float = 1.0 - (1.0 - pow(1.0 - k3, 2.0))
 		card_glow = 0.4 * (1.0 - k3)
 		out = 1.0 - k3 * 0.8
-		scale = 1.0 + 0.34 * back
+		scale = 1.0 + 0.16 * back
 		if stationary:
 			var rise2: float = -1.0 if side == 0 else 1.0
 			at = home + Vector2(0.0, rise2 * 146.0 * back)
-			scale = 1.3 + 0.75 * back
+			scale = 1.12 + 0.22 * back
 			ground = back
 		else:
 			at = home + toward * reach * back
@@ -1371,11 +1392,15 @@ func _draw_targeting(f: Font) -> void:
 		draw_arc(sr.get_center(), sr.size.x * 0.42, 0, TAU, 40, Color(ArcanaTheme.GOLD, 0.95), 3.0)
 	for pair in fusion_pairs:
 		var r3 := card_rect(0, int(pair))
-		# On the card's shoulder, not across its name ribbon.
-		var c := Vector2(r3.position.x + r3.size.x - 6.0, r3.position.y - 4.0)
-		draw_circle(c, 13.0, Color(ArcanaTheme.BG, 0.85))
-		draw_arc(c, 13.0, _pulse * TAU, _pulse * TAU + PI * 1.5, 20, ArcanaTheme.GOLD, 2.5)
-		draw_string(f, c - Vector2(6, -6), "∞", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, ArcanaTheme.GOLD)
+		var c := Vector2(r3.get_center().x, r3.position.y - 12.0 - 3.0 * sin(_pulse * TAU))
+		var chip: Texture2D = art.frame("chip:fuse_link") if art != null else null
+		if chip != null:
+			var cs := Vector2(40.0, 40.0)
+			draw_texture_rect(chip, Rect2((c - cs * 0.5).round(), cs), false,
+				Color(1, 1, 1, 0.85 + 0.15 * sin(_pulse * TAU)))
+		else:
+			draw_circle(c, 13.0, Color(ArcanaTheme.BG, 0.85))
+			draw_arc(c, 13.0, _pulse * TAU, _pulse * TAU + PI * 1.5, 20, ArcanaTheme.GOLD, 2.5)
 
 # --- effect drawing ---------------------------------------------------------
 
@@ -1508,38 +1533,34 @@ func _draw_death(act: Dictionary, t: float) -> void:
 			Color(colour, 1.0 - k))
 	draw_arc(at, 26.0 * (1.0 + k), 0, TAU, 24, Color(colour, 0.5 * (1.0 - k)), 2.0)
 
-## Fusion, done with the cards themselves.
+## Fusion: the signature spectacle, staged on the board itself.
 ##
-## Two compatible cards lift off the battlefield, drift toward each other while
-## ribbons wind between them, collapse into a single point of light, and the
-## fused card slams down. The creature bursting out of the new frame is the
-## summon beat that follows, so this only has to sell the collapse.
+## The two source CREATURES (never card frames) lift off their plots and are
+## pulled into a midpoint while ribbons wind between them; they collapse into
+## a core of light; the result slams down as a black silhouette that floods
+## with colour. The result creature's overshoot pop is _draw_creature's fusion
+## branch — this act sells convergence, collapse and reveal.
 func _draw_fusion(act: Dictionary, t: float, f: Font) -> void:
 	var side := int(act["side"])
 	var lane_a := int(act["lane"])
 	var lane_b := int(act["freed_lane"])
-	var a := card_rect(side, lane_a)
-	var b := card_rect(side, lane_b)
-	var target := card_rect(side, lane_a)
+	var a := creature_stand(side, lane_a)
+	var b := creature_stand(side, lane_b)
+	var target := creature_anchor(side, lane_a)
 	var colour: Color = act["colour"]
-	var element := String(engine.players[side]["element"])
-	var plate: Texture2D = art.frame("board_plate:%s" % element) if art != null else null
-	var frame: Texture2D = art.frame("board_frame:%s" % element) if art != null else null
 
 	if t < 0.84:
-		draw_rect(Rect2(Vector2.ZERO, size), Color(0, 0, 0, 0.40 * clampf(t / 0.18, 0.0, 1.0)))
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0, 0, 0, 0.45 * clampf(t / 0.18, 0.0, 1.0)))
 
 	if t < 0.62:
-		# Lift and converge. The cards are the thing moving, not a pair of orbs.
+		# Lift and converge: the creatures themselves are pulled together.
 		var k: float = t / 0.62
 		var eased: float = k * k * (3.0 - 2.0 * k)
-		var mid := a.get_center().lerp(b.get_center(), 0.5)
-		mid.y -= 30.0 * sin(eased * PI * 0.9)
-		var pa := a.get_center().lerp(mid, eased)
-		var pb := b.get_center().lerp(mid, eased)
-		var shrink: float = 1.0 - 0.30 * eased
+		var mid := a.lerp(b, 0.5) + Vector2(0.0, -46.0 * sin(eased * PI * 0.9) - 30.0)
+		var pa := a.lerp(mid, eased)
+		var pb := b.lerp(mid, eased)
 		var spin: float = eased * TAU * 1.2
-		# Ribbons winding between the two cards.
+		# Ribbons winding between the two.
 		for i in range(14):
 			var u: float = float(i) / 14.0
 			var p0 := pa.lerp(pb, u)
@@ -1547,49 +1568,59 @@ func _draw_fusion(act: Dictionary, t: float, f: Font) -> void:
 			var wob: float = sin(u * PI * 3.0 + spin) * 26.0 * (1.0 - eased * 0.5)
 			draw_line(p0 + Vector2(0.0, wob), p1 + Vector2(0.0, wob * 0.8),
 				Color(colour, 0.30 + 0.55 * sin((u + t) * PI * 3.0)), 3.0)
-		for pair in [[pa, lane_a], [pb, lane_b]]:
+		var source: Dictionary = act.get("cards", {})
+		for pair in [[pa, lane_a, a], [pb, lane_b, b]]:
 			var at: Vector2 = pair[0]
 			var lane_i: int = int(pair[1])
-			var drawn := a.size * shrink
-			var r := Rect2((at - drawn * 0.5).round(), drawn.round())
-			draw_rect(r.grow(6.0), Color(colour, 0.30 * eased))
-			if plate != null: draw_texture_rect(plate, r, false)
-			# Whose cards these are has to stay legible right up to the collapse.
-			var source: Dictionary = act.get("cards", {})
+			var from: Vector2 = pair[2]
 			var cid := String(source.get(str(lane_i), ""))
 			var tex: Texture2D = art.creature(cid) if (art != null and cid != "") else null
-			if tex != null:
-				var ts := Vector2(tex.get_width(), tex.get_height())
-				var win := _card_window(r, shrink)
-				var fit: float = minf(win.size.x / ts.x, win.size.y / ts.y) * clampf(ts.y / 96.0, 0.68, 1.0)
-				var cd := ts * fit
-				draw_texture_rect(tex, Rect2((win.get_center() - cd * 0.5).round(), cd.round()), false)
-			if frame != null: draw_texture_rect(frame, r, false)
+			if tex == null:
+				draw_circle(at, 26.0, Color(colour, 0.8))
+				continue
+			var ts := Vector2(tex.get_width(), tex.get_height())
+			var toward := (mid - from).normalized()
+			# Stretch along the pull, squash across it: taffy into the ritual.
+			var stretch: float = 1.0 + 0.55 * eased
+			var drawn := ts * creature_scale(cid) * (1.0 - 0.22 * eased)
+			drawn = Vector2(drawn.x / sqrt(stretch), drawn.y * stretch) \
+				if absf(toward.y) > absf(toward.x) \
+				else Vector2(drawn.x * stretch, drawn.y / sqrt(stretch))
+			draw_circle(at, drawn.x * 0.45, Color(colour, 0.16 * eased))
+			draw_texture_rect(tex, Rect2((at - drawn * 0.5).round(), drawn.round()), false,
+				Color(1.0 + eased * 0.4, 1.0 + eased * 0.4, 1.0 + eased * 0.4, 1.0))
 		draw_circle(mid, 8.0 + 54.0 * eased * eased, Color(1, 1, 1, 0.20 + 0.65 * eased * eased))
 	elif t < 0.78:
 		# Collapse into light.
 		var k2: float = (t - 0.62) / 0.16
-		var c := target.get_center()
-		draw_circle(c, 66.0 * (1.0 - k2) + 22.0, Color(1, 1, 1, 0.88 * (1.0 - k2)))
-		draw_arc(c, 44.0 + 130.0 * k2, 0, TAU, 44, Color(colour, 1.0 - k2), 5.0)
+		draw_circle(target, 66.0 * (1.0 - k2) + 22.0, Color(1, 1, 1, 0.88 * (1.0 - k2)))
+		draw_arc(target, 44.0 + 130.0 * k2, 0, TAU, 44, Color(colour, 1.0 - k2), 5.0)
 	else:
-		# The fused card slams down.
+		# Reveal: the new creature lands as a silhouette and floods with colour;
+		# a shockwave rolls across the board.
 		var k3: float = (t - 0.78) / 0.22
-		var drop: float = (1.0 - k3) * (1.0 - k3) * 70.0
-		var over: float = 1.0 + 0.22 * (1.0 - k3)
-		var drawn2 := target.size * Vector2(over, 1.0 / over)
-		var r2 := Rect2((target.get_center() - drawn2 * 0.5 - Vector2(0.0, drop)).round(),
-			drawn2.round())
-		draw_rect(r2.grow(8.0 * (1.0 - k3)), Color(ArcanaTheme.GOLD, 0.55 * (1.0 - k3)))
-		if plate != null: draw_texture_rect(plate, r2, false)
-		if frame != null: draw_texture_rect(frame, r2, false)
-		draw_arc(target.get_center(), 34.0 + 100.0 * k3, 0, TAU, 36,
-			Color(ArcanaTheme.GOLD, 0.8 * (1.0 - k3)), 4.0)
-		var name := String(act.get("name", ""))
-		var w: float = f.get_string_size(name, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x
-		draw_string(f, Vector2(target.get_center().x - w * 0.5,
-			target.position.y - 18.0 - 10.0 * k3), name,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(ArcanaTheme.GOLD, 1.0 - k3 * k3))
+		var unit = engine.lane(side, lane_a)["creature"]
+		if unit != null and k3 < 0.4 and art != null:
+			var tex2: Texture2D = art.creature(String(unit["card_id"]))
+			if tex2 != null:
+				var ts2 := Vector2(tex2.get_width(), tex2.get_height())
+				var d2 := ts2 * creature_scale(String(unit["card_id"])) * (1.15 - 0.15 * k3 / 0.4)
+				var feet := creature_stand(side, lane_a)
+				var sil: float = clampf(1.0 - k3 / 0.4, 0.0, 1.0)
+				draw_texture_rect(tex2, Rect2(Vector2(feet.x - d2.x * 0.5,
+					feet.y - d2.y + 6.0).round(), d2.round()), false,
+					Color(1.0 - sil * 0.94, 1.0 - sil * 0.96, 1.0 - sil * 0.95, 1.0))
+		draw_arc(target, 34.0 + 260.0 * k3, 0, TAU, 48,
+			Color(ArcanaTheme.GOLD, 0.8 * (1.0 - k3)), 6.0 * (1.0 - k3) + 1.0)
+		draw_arc(target, 20.0 + 190.0 * k3, 0, TAU, 48, Color(colour, 0.5 * (1.0 - k3)), 3.0)
+		var fname := String(act.get("name", ""))
+		var w: float = f.get_string_size(fname, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x
+		var ny: float = creature_stand(side, lane_a).y - 150.0 - 10.0 * k3
+		if fname != "":
+			draw_rect(Rect2(target.x - w * 0.5 - 12.0, ny - 20.0, w + 24.0, 30.0),
+				Color(0.07, 0.06, 0.09, 0.85 * (1.0 - k3 * k3)))
+			draw_string(f, Vector2(target.x - w * 0.5, ny + 2.0), fname,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(ArcanaTheme.GOLD, 1.0 - k3 * k3))
 
 func _draw_particles() -> void:
 	for pt in _particles:

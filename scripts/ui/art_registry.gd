@@ -256,6 +256,11 @@ func _load_card_frames() -> void:
                 "%s/hand_frame_%s_%s.png" % [UI_DIR, element, role])
     for kind in ["cost", "power", "health", "presence", "attack"]:
         card_art_frames["gem:%s" % kind] = _texture("%s/gem_%s.png" % [UI_DIR, kind])
+    # Board tokens: the chunky bevelled chips pieces wear (tools/pixelart/ui_kit.py).
+    for kind in ["cost", "power", "health", "presence"]:
+        card_art_frames["token:%s" % kind] = _texture("%s/token_%s.png" % [UI_DIR, kind])
+    for chip in ["resting", "fuse_link"]:
+        card_art_frames["chip:%s" % chip] = _texture("%s/chip_%s.png" % [UI_DIR, chip])
 
 ## The shared Life/Fire effect library. Each entry is one horizontal strip of
 ## frames; the stage plays a window across it.

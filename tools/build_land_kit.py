@@ -11,7 +11,7 @@ import argparse, json, os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
 from PIL import Image
-from pixelart import land, props, table, palette as P
+from pixelart import land, props, table, ui_kit, palette as P
 from pixelart.canvas import Canvas
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,6 +69,17 @@ def build_table():
     return written
 
 
+def build_tokens():
+    """Board tokens (pixelart/ui_kit.py): the numbers pieces wear."""
+    ui_dir = os.path.join(ROOT, "assets/art/ui")
+    written = []
+    for kind in ("power", "health", "presence", "cost"):
+        written.append(ui_kit.stat_token(kind).save(f"{ui_dir}/token_{kind}.png"))
+    written.append(ui_kit.moon_chip().save(f"{ui_dir}/chip_resting.png"))
+    written.append(ui_kit.link_rune().save(f"{ui_dir}/chip_fuse_link.png"))
+    return written
+
+
 def contact_sheet(paths, out, cols=14, cell=52, bg=(24, 22, 28)):
     rows = (len(paths) + cols - 1) // cols
     sheet = Image.new("RGBA", (cols * cell, rows * cell), bg + (255,))
@@ -103,7 +114,8 @@ def main():
     lp = build_land()
     pp = build_props()
     tp = build_table()
-    print(f"land tiles: {len(lp)}   props: {len(pp)}   table: {len(tp)}")
+    kp = build_tokens()
+    print(f"land tiles: {len(lp)}   props: {len(pp)}   table: {len(tp)}   tokens: {len(kp)}")
 
     manifest = {"tile": land.TILE, "field": land.FIELD, "rim": land.RIM,
                 "rim_variants": RIM_VARIANTS, "face_h": land.FACE_H,

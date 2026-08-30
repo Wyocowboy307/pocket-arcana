@@ -349,7 +349,7 @@ func test_art_registry_loads_the_manifest() -> void:
     var registry := ArtRegistry.new()
     _ok(registry.load_manifest(), "art manifest parses")
     _ok(registry.is_loaded(), "registry reports loaded")
-    _eq(registry.creature_paths.size(), 18, "18 slice creatures are mapped")
+    _eq(registry.creature_paths.size(), 19, "19 slice creatures are mapped (incl. the Ashbloom Fox)")
     _eq(registry.terrain_paths.size(), 4, "4 terrains are mapped")
     _eq(registry.sanctuary_paths.size(), 2, "2 sanctuaries are mapped")
     _ok(registry.commander_board_paths.has("cmd_mossy_mae"), "Mossy Mae has a board avatar path")

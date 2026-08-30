@@ -839,7 +839,7 @@ func _draw_realm_dressing(side: int) -> void:
 		# The lane's anchor landmark: one strange monument at the back corner,
 		# opposite the Place, so every world has something to remember it by.
 		var anchor_el := "life" if life else "fire"
-		var anchor_v := (side * 5 + index * 3) % 3
+		var anchor_v := (side * 2 + index) % 3   # index*3 % 3 was always 0
 		var anchor_tex: Texture2D = art.anchor(anchor_el, anchor_v)
 		var anchor_zone := Rect2(-999.0, -999.0, 0.0, 0.0)
 		if anchor_tex != null and grow > 0.5:

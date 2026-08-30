@@ -1442,10 +1442,27 @@ func _draw_targeting(f: Font) -> void:
 			draw_texture_rect(gtex, Rect2(Vector2(gfeet.x - gts.x * 0.5,
 				gfeet.y - gts.y + 6.0).round(), gts.round()), false,
 				Color(1.0, 1.0, 1.0, 0.42 + 0.10 * sin(_pulse * TAU)))
-	for pair in fusion_pairs:
-		var r3 := card_rect(0, int(pair))
-		var c := Vector2(r3.get_center().x, r3.position.y - 12.0 - 3.0 * sin(_pulse * TAU))
+	# Fusion availability is world language: a golden thread of runes arcs
+	# between the two creatures that can combine, with the link chip riding
+	# its crest. fusion_pairs arrives flat: [a, b, a2, b2, ...].
+	var pi_i := 0
+	while pi_i + 1 < fusion_pairs.size():
+		var ra := card_rect(0, int(fusion_pairs[pi_i]))
+		var rb := card_rect(0, int(fusion_pairs[pi_i + 1]))
+		pi_i += 2
+		var pa := Vector2(ra.get_center().x, ra.position.y - 6.0)
+		var pb := Vector2(rb.get_center().x, rb.position.y - 6.0)
+		var apex := pa.lerp(pb, 0.5) + Vector2(0.0, -34.0)
+		var flow: float = fmod(_pulse, 1.0)
+		for i in range(11):
+			var u: float = (float(i) + flow) / 11.0
+			if u > 1.0: u -= 1.0
+			# Quadratic arc between the two heads.
+			var q := pa.lerp(apex, u).lerp(apex.lerp(pb, u), u)
+			draw_circle(q, 2.5 + sin(u * PI) * 1.5,
+				Color(ArcanaTheme.GOLD, 0.35 + 0.45 * sin(u * PI)))
 		var chip: Texture2D = art.frame("chip:fuse_link") if art != null else null
+		var c := apex + Vector2(0.0, -3.0 * sin(_pulse * TAU))
 		if chip != null:
 			var cs := Vector2(40.0, 40.0)
 			draw_texture_rect(chip, Rect2((c - cs * 0.5).round(), cs), false,

@@ -68,6 +68,69 @@ JOBS = {
                   "coal bed, an iron cooking pot on a hook, hanging pans and chilli strings, a "
                   "stack of firewood. " + STYLE,
     },
+    # --- 2026-08-30 art pass: the fusion showcase, spells and portraits ----
+    "dual_ashbloom_fox": {
+        "size": (64, 64), "kind": "creature", "element": "dual",
+        "dest": "assets/art/board/creatures/dual/dual_ashbloom_fox.png",
+        "prompt": "Pocket Arcana pixel art game asset. A strange mischievous fox creature born "
+                  "of fire and flowers fused together: left half charred soot-black fur with "
+                  "tiny live embers and one glowing orange eye, right half mossy green fur "
+                  "blooming with pink flowers and one bright leaf-green eye, a wide crooked "
+                  "grin full of mismatched teeth, two tails — one tipped with flame, one a "
+                  "flowering vine. Standing three-quarter view, big head, short legs, strong "
+                  "silhouette. " + STYLE,
+    },
+    "life_rebloom": {
+        "size": (256, 160), "kind": "spell", "element": "life",
+        "dest": "assets/art/cards/life/life_rebloom.png",
+        "prompt": "Pocket Arcana pixel art spell illustration, landscape scene. A burnt black "
+                  "tree stump in a scorched clearing bursting back to life: fat pink and cream "
+                  "flowers snapping open, bright green shoots spiralling out of the char, "
+                  "petals mid-air, one thick shaft of warm light. Bold shapes, big readable "
+                  "flowers, no tiny detail. " + STYLE,
+    },
+    "life_wild_flourish": {
+        "size": (256, 160), "kind": "spell", "element": "life",
+        "dest": "assets/art/cards/life/life_wild_flourish.png",
+        "prompt": "Pocket Arcana pixel art spell illustration, landscape scene. An explosion "
+                  "of oversized plant growth: giant curling vines, fat mushrooms and huge "
+                  "leaves erupting upward and outward from one point in the ground, comically "
+                  "too big, flinging soil and petals. Bold silhouettes, playful energy. " + STYLE,
+    },
+    "fire_scorch_mark": {
+        "size": (256, 160), "kind": "spell", "element": "fire",
+        "dest": "assets/art/cards/fire/fire_scorch_mark.png",
+        "prompt": "Pocket Arcana pixel art spell illustration, landscape scene. A huge burning "
+                  "claw mark being seared into dark ground: three glowing molten gouges with "
+                  "cracked black edges, embers spraying up, small flames licking the rims. "
+                  "Bold graphic composition, the claw mark fills the frame. " + STYLE,
+    },
+    "fire_wildfire_waltz": {
+        "size": (256, 160), "kind": "spell", "element": "fire",
+        "dest": "assets/art/cards/fire/fire_wildfire_waltz.png",
+        "prompt": "Pocket Arcana pixel art spell illustration, landscape scene. Two ribbons of "
+                  "living flame dancing together in a spiral like waltzing partners, trailing "
+                  "sparks in curved arcs over scorched ground, one taller flame dipping the "
+                  "smaller one. Playful, mischievous fire with character, not an explosion. " + STYLE,
+    },
+    "cmd_mossy_mae_portrait": {
+        "size": (256, 256), "kind": "portrait", "element": "life",
+        "dest": "assets/art/commanders/cmd_mossy_mae_portrait.png",
+        "prompt": "Pocket Arcana pixel art character portrait, chest-up. A tiny kind old "
+                  "grandmother druid with a huge mossy hood shaped like a mushroom cap, warm "
+                  "smiling eyes, a gnarled staff sprouting live flowers, leaf-green cloak with "
+                  "cream trim, a fat glowing snail perched on her shoulder. Bold friendly "
+                  "shapes, big silhouette. " + STYLE,
+    },
+    "cmd_poppy_cinder_portrait": {
+        "size": (256, 256), "kind": "portrait", "element": "fire",
+        "dest": "assets/art/commanders/cmd_poppy_cinder_portrait.png",
+        "prompt": "Pocket Arcana pixel art character portrait, chest-up. A fierce gleeful "
+                  "young blacksmith girl with wild flame-orange hair that IS partly fire, "
+                  "soot-smudged cheeks, oversized leather gloves, a small hammer over her "
+                  "shoulder, a little flame imp peeking from her apron pocket. Bold friendly "
+                  "shapes, big silhouette. " + STYLE,
+    },
     "fire_blacksmith_nook_built": {
         "size": (96, 96), "kind": "landmark", "element": "fire",
         "prompt": "Pocket Arcana pixel art game asset. A small finished blacksmith nook, slight "
@@ -151,7 +214,7 @@ def main():
         src = CANDIDATES / name / f"{int(idx)}.png"
         if not src.is_file():
             sys.exit(f"no candidate {idx} for {name}")
-        dest = ROOT / args.out / f"{name}.png"
+        dest = ROOT / job.get("dest", f"{args.out}/{name}.png")
         dest.parent.mkdir(parents=True, exist_ok=True)
         conform(src.read_bytes(), job["size"]).save(dest)
         print(f"  promoted {name} candidate {idx} -> {dest.relative_to(ROOT)}")

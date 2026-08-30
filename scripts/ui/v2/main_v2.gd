@@ -494,9 +494,10 @@ func _begin_attack(index: int) -> void:
         return
     mode = "attack"; selected_lane = index
     var open := engine.lane_is_open(HUMAN, index)
-    _show_context("Attack lane %d" % (index + 1),
-        "No creature blocking — this hits the rival Heart.\n\n[color=#%s]Click the lane opposite to strike.[/color]" % ArcanaTheme.GOLD.to_html(false)
-        if open else "A rival creature is blocking this lane.\n\n[color=#%s]Click it to fight.[/color]" % ArcanaTheme.GOLD.to_html(false))
+    # World language, dark ink on parchment — no developer vocabulary.
+    _show_context("The way is open!" if open else "Battle!",
+        "Nothing stands in the way — this strike hits the rival Heart.\n\n[color=#6b4a12]Click the glowing ground to strike.[/color]"
+        if open else "A rival creature holds the way.\n\n[color=#6b4a12]Click it to fight.[/color]")
     _refresh()
 
 func _on_sanctuary_clicked(side: int) -> void:

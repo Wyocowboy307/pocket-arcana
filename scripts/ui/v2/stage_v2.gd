@@ -1835,6 +1835,11 @@ func _draw_fusion(act: Dictionary, t: float, f: Font) -> void:
 		var pa := a.lerp(mid, eased)
 		var pb := b.lerp(mid, eased)
 		var spin: float = eased * TAU * 1.2
+		# The gathering core sits BEHIND the two creatures — they stay readable
+		# right up to the collapse, which is the whole drama of the beat.
+		draw_circle(mid, 8.0 + 54.0 * eased * eased,
+			Color(colour.lerp(Color(1, 1, 1), 0.45), 0.16 + 0.42 * eased * eased))
+		draw_circle(mid, 4.0 + 18.0 * eased * eased, Color(1, 1, 1, 0.35 * eased))
 		# Ribbons winding between the two.
 		for i in range(14):
 			var u: float = float(i) / 14.0
@@ -1864,7 +1869,6 @@ func _draw_fusion(act: Dictionary, t: float, f: Font) -> void:
 			draw_circle(at, drawn.x * 0.45, Color(colour, 0.16 * eased))
 			draw_texture_rect(tex, Rect2((at - drawn * 0.5).round(), drawn.round()), false,
 				Color(1.0 + eased * 0.4, 1.0 + eased * 0.4, 1.0 + eased * 0.4, 1.0))
-		draw_circle(mid, 8.0 + 54.0 * eased * eased, Color(1, 1, 1, 0.20 + 0.65 * eased * eased))
 	elif t < 0.78:
 		# Collapse into light.
 		var k2: float = (t - 0.62) / 0.16

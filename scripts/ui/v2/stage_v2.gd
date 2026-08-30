@@ -38,6 +38,7 @@ const PLACE_H := 130.0
 
 var engine: MatchV2
 var art: ArtRegistry
+var realm := RealmVisualSystem.new()  # sim state -> living environment
 var highlights: Dictionary = {}      # "side,lane" -> "legal" | "attack"
 var dim_others := false
 var hover_side := -1
@@ -61,6 +62,7 @@ func _ready() -> void:
 	# Ground patches and framing scenery deliberately overhang the play area;
 	# without this they spill over the hand row below.
 	clip_contents = true
+	realm.stage = self
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	set_process(true)
@@ -292,6 +294,7 @@ func play(kind: String, payload: Dictionary, duration: float) -> void:
 	act["dur"] = duration
 	act["fired"] = {}
 	_acts.append(act)
+	realm.on_act(kind, act)
 
 func shake(strength: float) -> void:
 	_shake = clampf(_shake + strength, 0.0, 1.6)
@@ -553,15 +556,18 @@ func _draw_ground() -> void:
 
 	_draw_clash_seam()
 
-	# Sockets for every lane, so the empty board still shows its structure.
+	# Empty positions are seed-points — faint rune rings where a world could
+	# grow — never sockets. The grid belongs to the simulation, not the eye.
 	for side in range(2):
 		for i in range(MatchV2.LANES):
 			if String(engine.lane(side, i)["land"]) == "":
-				_draw_socket(side, i)
+				realm.draw_seedpoint(side, i)
 
 	# Built land: merged runs of same-element neighbours, back row first.
 	for side in [1, 0]:
 		_draw_land_runs(side)
+
+	realm.draw_fusion_sites()
 
 	for mark_entry in _decals:
 		var tex2: Texture2D = art.clash("decal_%s" % String(mark_entry["kind"]), int(mark_entry["v"]))
@@ -612,19 +618,6 @@ func _poly_textured(poly: PackedVector2Array, tex: Texture2D, tint: Color, v_anc
 	for _p in poly: cols.append(tint)
 	draw_polygon(poly, cols, uvs, tex)
 
-## An empty lane: a carved recess waiting for a Realm card.
-func _draw_socket(side: int, index: int) -> void:
-	var r := plot_rect(side, index)
-	var poly := _rounded_poly(r, PLOT_RADIUS, true, true)
-	var cols := PackedColorArray()
-	for _p in poly: cols.append(Color(0.0, 0.0, 0.02, 0.16))
-	draw_polygon(poly, cols)
-	poly.append(poly[0])
-	draw_polyline(poly, Color(0.07, 0.07, 0.11, 0.9), 2.0)
-	var inner := _rounded_poly(r.grow(-4.0), PLOT_RADIUS - 3.0, true, true)
-	inner.append(inner[0])
-	draw_polyline(inner, Color(ArcanaTheme.PANEL_EDGE, 0.28), 1.5)
-
 ## A lane is still "building" until its slab has visibly landed — after that
 ## it merges with its neighbours even while the bloom effects finish on top.
 func _land_building(side: int, index: int) -> bool:
@@ -666,7 +659,7 @@ func _draw_plot_run(side: int, first: int, last: int, terrain: String) -> void:
 	top.position.y += lift
 	var alpha: float = clampf(eased * 1.5, 0.0, 1.0)
 
-	_draw_slab(top, terrain, alpha)
+	_draw_slab(top, terrain, alpha, side * 977 + first * 131 + last * 17)
 
 	# Faint carved grooves at internal lane boundaries, so a merged slab still
 	# counts as lanes at a glance.
@@ -753,12 +746,24 @@ func _draw_row_zones() -> void:
 			var pulse: float = 0.5 + 0.5 * sin(_pulse * TAU)
 			var r := plot_rect(side, i)
 			var built: bool = String(engine.lane(side, i)["land"]) != ""
-			var poly := _rounded_poly(r, PLOT_RADIUS, true, true)
-			var cols := PackedColorArray()
-			for _p in poly: cols.append(Color(tint, (0.14 if built else 0.10) + 0.06 * pulse))
-			draw_polygon(poly, cols)
-			poly.append(poly[0])
-			draw_polyline(poly, Color(tint, 0.55 + 0.35 * pulse), 3.0)
+			if built:
+				var poly := realm.organic_poly(r, PLOT_RADIUS, side * 733 + i * 149)
+				var cols := PackedColorArray()
+				for _p in poly: cols.append(Color(tint, 0.14 + 0.06 * pulse))
+				draw_polygon(poly, cols)
+				poly.append(poly[0])
+				draw_polyline(poly, Color(tint, 0.55 + 0.35 * pulse), 3.0)
+			else:
+				# The sleeping seed-point wakes: light pools on the ground and
+				# the rune ring blooms. No rectangle, ever.
+				var c := Vector2(r.get_center().x, r.position.y + r.size.y * 0.58)
+				for g in range(5):
+					var ga := TAU * float(g) / 5.0 + float(i) * 1.3
+					draw_circle(c + Vector2(cos(ga), sin(ga) * 0.6) * 22.0,
+						34.0, Color(tint, 0.05 + 0.02 * pulse))
+				draw_circle(c, 40.0, Color(tint, 0.07 + 0.04 * pulse))
+				draw_arc(c, 26.0 + 3.0 * pulse, 0, TAU, 28, Color(tint, 0.85), 2.5)
+				draw_arc(c, 34.0 + 5.0 * pulse, 0, TAU, 32, Color(tint, 0.35), 1.5)
 			# An open way to the Heart shows its whole consequence: a dotted
 			# trail runs from the lit lane to the rival crystal, which pulses.
 			if attack and engine.lane(side, i)["creature"] == null:
@@ -921,7 +926,7 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 	var slab := Rect2(r.position.x + 2.0,
 		(r.position.y + 14.0) if side == 1 else (r.position.y + r.size.y - 252.0),
 		r.size.x - 6.0, 196.0)
-	_draw_slab(slab, terrain, 1.0)
+	_draw_slab(slab, terrain, 1.0, 4000 + side * 313)
 
 	var centre_x: float = slab.get_center().x + nudge.x
 	var base_y: float = slab.position.y + slab.size.y - 10.0
@@ -967,20 +972,25 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 			HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
 
 ## One slab, drawn anywhere: ink silhouette, banded-earth face, calm top, rim.
-func _draw_slab(top: Rect2, terrain: String, alpha: float) -> void:
+## The silhouette is organic — a deterministic hand-torn wobble per seed — so
+## built land reads as a piece of world, never a rounded rectangle.
+func _draw_slab(top: Rect2, terrain: String, alpha: float, seed_v := 0) -> void:
 	var whole := Rect2(top.position, Vector2(top.size.x, top.size.y + PLOT_FACE_H))
-	var sil := _rounded_poly(whole.grow(2.0), PLOT_RADIUS + 2.0, true, true)
+	var centre := whole.get_center()
+	var sil := realm.organic_poly(whole.grow(2.0), PLOT_RADIUS + 2.0, seed_v, 5.0, centre)
 	var ink_cols := PackedColorArray()
 	for _p in sil: ink_cols.append(Color(0.09, 0.067, 0.059, alpha))
 	draw_polygon(sil, ink_cols)
-	var face_rect := Rect2(top.position.x, top.position.y + top.size.y - 1.0,
-		top.size.x, PLOT_FACE_H + 1.0)
-	var face_poly := _rounded_poly(face_rect, PLOT_RADIUS - 2.0, true, true)
+	# The face overlaps up under the field so the shared wobble never opens a
+	# seam between the two textures.
+	var face_rect := Rect2(top.position.x, top.position.y + top.size.y - 8.0,
+		top.size.x, PLOT_FACE_H + 8.0)
+	var face_poly := realm.organic_poly(face_rect, PLOT_RADIUS - 2.0, seed_v, 5.0, centre)
 	_poly_textured(face_poly, art.land_face(terrain, 0), Color(1, 1, 1, alpha),
-		face_rect.position.y)
-	var top_poly := _rounded_poly(top, PLOT_RADIUS, true, true)
+		top.position.y + top.size.y - 1.0)
+	var top_poly := realm.organic_poly(top, PLOT_RADIUS, seed_v, 5.0, centre)
 	_poly_textured(top_poly, art.land_field(terrain), Color(1, 1, 1, alpha))
-	var rim := _rounded_poly(top.grow(-1.0), PLOT_RADIUS - 1.0, true, true)
+	var rim := realm.organic_poly(top.grow(-1.0), PLOT_RADIUS - 1.0, seed_v, 5.0, centre)
 	rim.append(rim[0])
 	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
 	draw_polyline(rim, Color(lit, 0.30 * alpha), 2.0)
@@ -993,7 +1003,7 @@ func _draw_status_rail(side: int, f: Font) -> void:
 	var shelf := Rect2(slot.position.x + 4.0,
 		(slot.position.y + 12.0) if side == 1 else (slot.position.y + slot.size.y - 262.0),
 		slot.size.x - 8.0, 206.0)
-	_draw_slab(shelf, "neutral", 0.9)
+	_draw_slab(shelf, "neutral", 0.9, 5000 + side * 401)
 	_draw_deck(side, p, String(p["element"]), f)
 	_draw_aether(p, rail_row(side, "aether"))
 	_draw_realm_stack(side, p, rail_row(side, "realm"), f)

@@ -23,8 +23,10 @@ func _ready() -> void:
         elif arg.begins_with("--beat="): beat = float(arg.trim_prefix("--beat="))
         elif arg.begins_with("--hold="): hold_kind = arg.trim_prefix("--hold=")
     main = load("res://scenes/v2/main_v2.tscn").instantiate()
+    main.ai_busy = true               # the rival never takes its opening turn
     add_child(main)
     await _settle(28)
+    await _flush_opening()
     await _run()
     if beat >= 0.0:
         await _hold_beat()
@@ -87,9 +89,21 @@ func _act_kinds(stage) -> Array:
 func _engine() -> MatchV2:
     return main.engine
 
+## Let the opening ceremony (initial draws, the starting land grant) play out
+## fully, so a scenario capture starts from a settled board instead of
+## mid-flourish. Beats are fire-and-forget timers, so this waits them out.
+func _flush_opening() -> void:
+    for _i in range(900):
+        await get_tree().process_frame
+        if main._stage_free_at <= main._now() and main.stage._acts.is_empty() \
+                and main.stage._effects.is_empty():
+            break
+
 ## Stop the rival acting so a scenario can hold a deliberate state.
 func _freeze() -> void:
     main.ai_busy = true
+    main.stage._acts = []
+    main.stage._effects = []
 
 ## Hide the tutorial coach. It sits over the top of the board, which means the
 ## rival's Sanctuary is never visible in a review capture while it is up.

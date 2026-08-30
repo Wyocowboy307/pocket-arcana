@@ -27,7 +27,7 @@ signal cue(name: String, strength: float)
 ## screen, the clash between them is a deliberate seam rather than a region, and
 ## the Sanctuaries and Commanders moved out to side rails where they frame the
 ## battlefield instead of competing with it for space.
-const RAIL_W := 150.0                 # left/right rails: homes, Hearts, decks
+const RAIL_W := 168.0                 # left/right rails: homes and components
 const EDGE_PAD := 8.0
 const ROW_H := 232.0                  # a combat row — nearly all of the height
 const CLASH_H := 68.0                 # a seam where they meet, not a strip
@@ -251,7 +251,7 @@ func front_line_y() -> float:
 ## when each was positioned from its own end of the slot.
 func rail_row(side: int, which: String) -> Vector2:
 	var r := rail_slot(false, side)
-	var offsets := {"heart": 0.80, "aether": 0.56, "deck": 0.26}
+	var offsets := {"deck": 0.24, "aether": 0.50, "realm": 0.70}
 	var u: float = float(offsets.get(which, 0.5))
 	if side == 1: u = 1.0 - u
 	return Vector2(r.get_center().x, r.position.y + r.size.y * u)
@@ -619,6 +619,13 @@ func _draw_socket(side: int, index: int) -> void:
 	inner.append(inner[0])
 	draw_polyline(inner, Color(ArcanaTheme.PANEL_EDGE, 0.28), 1.5)
 
+## A lane is still "building" until its slab has visibly landed — after that
+## it merges with its neighbours even while the bloom effects finish on top.
+func _land_building(side: int, index: int) -> bool:
+	var act := _find_act("land_build", side, index)
+	if act.is_empty(): return false
+	return float(act["t"]) / float(act["dur"]) / 0.72 < 1.0
+
 ## Built lanes drawn as merged runs: [1,1,0,1] grove becomes two slabs.
 func _draw_land_runs(side: int) -> void:
 	var i := 0
@@ -630,8 +637,8 @@ func _draw_land_runs(side: int) -> void:
 		var j := i
 		while j + 1 < MatchV2.LANES \
 				and String(engine.lane(side, j + 1)["land"]) == terrain \
-				and _find_act("land_build", side, j + 1).is_empty() \
-				and _find_act("land_build", side, i).is_empty():
+				and not _land_building(side, j + 1) \
+				and not _land_building(side, i):
 			j += 1
 		_draw_plot_run(side, i, j, terrain)
 		i = j + 1
@@ -653,29 +660,11 @@ func _draw_plot_run(side: int, first: int, last: int, terrain: String) -> void:
 	top.position.y += lift
 	var alpha: float = clampf(eased * 1.5, 0.0, 1.0)
 
-	var whole := Rect2(top.position, Vector2(top.size.x, top.size.y + PLOT_FACE_H))
-	var sil := _rounded_poly(whole.grow(2.0), PLOT_RADIUS + 2.0, true, true)
-	var ink_cols := PackedColorArray()
-	for _p in sil: ink_cols.append(Color(0.09, 0.067, 0.059, alpha))
-	draw_polygon(sil, ink_cols)
-
-	var face_rect := Rect2(top.position.x, top.position.y + top.size.y - 1.0,
-		top.size.x, PLOT_FACE_H + 1.0)
-	var face_poly := _rounded_poly(face_rect, PLOT_RADIUS - 2.0, true, true)
-	_poly_textured(face_poly, art.land_face(terrain, 0), Color(1, 1, 1, alpha),
-		face_rect.position.y)
-
-	var top_poly := _rounded_poly(top, PLOT_RADIUS, true, true)
-	_poly_textured(top_poly, art.land_field(terrain), Color(1, 1, 1, alpha))
-
-	# Lit top rim, one pixel in from the ink.
-	var rim := _rounded_poly(top.grow(-1.0), PLOT_RADIUS - 1.0, true, true)
-	rim.append(rim[0])
-	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
-	draw_polyline(rim, Color(lit, 0.30 * alpha), 2.0)
+	_draw_slab(top, terrain, alpha)
 
 	# Faint carved grooves at internal lane boundaries, so a merged slab still
 	# counts as lanes at a glance.
+	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
 	for k in range(first + 1, last + 1):
 		var gx: float = lane_rect(side, k).position.x
 		draw_line(Vector2(gx, top.position.y + 8.0), Vector2(gx, top.position.y + top.size.y - 6.0),
@@ -856,8 +845,8 @@ func _framing() -> Array:
 		{"kind": "branch", "v": 1, "at": Vector2(size.x - 200.0, -26.0), "scale": 1.2, "alpha": 0.9},
 		{"kind": "roots", "v": 0, "at": Vector2(-24.0, size.y - 74.0), "scale": 1.2, "alpha": 0.95},
 		{"kind": "roots", "v": 1, "at": Vector2(size.x - 150.0, size.y - 78.0), "scale": 1.2, "alpha": 0.95},
-		{"kind": "rock", "v": 0, "at": Vector2(-40.0, front_line_y() - 110.0), "scale": 1.0, "alpha": 0.85},
-		{"kind": "rock", "v": 1, "at": Vector2(size.x - 84.0, front_line_y() - 30.0), "scale": 1.0, "alpha": 0.85},
+		# The rock pieces are gone: against the slate table they collapsed into
+		# black boxes that read as rendering errors beside the home slabs.
 	]
 
 ## Gradient quads rather than a texture: a vignette is lighting, and drawing it
@@ -883,17 +872,14 @@ func _draw_vignette() -> void:
 		var cols := PackedColorArray(q[1])
 		draw_polygon(q[0], cols)
 
-## A built home place behind the realm, not a status bar.
-## A player's home, framing the board from the left rail.
-##
-## It used to sit in a band across the top and bottom of the battlefield, where
-## it took a third of the height and competed with the cards. On the rail it
-## still reads as a real place standing on the same ground, but the cards get
-## the screen.
+## A player's home: the Sanctuary standing on its own element slab, with the
+## Heart crystal set into the slab beside it. One home, one Heart, one place
+## on screen — the rail diamonds are gone.
 func _draw_sanctuary(side: int, f: Font) -> void:
 	var r := sanctuary_rect(side)
 	var p: Dictionary = engine.players[side]
 	var element := String(p["element"])
+	var terrain := String(p["terrain"])
 	var accent: Color = ArcanaTheme.color_for_element(element)
 	var breathe: float = 0.5 + 0.5 * sin(_pulse * TAU + side * PI)
 
@@ -903,69 +889,97 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 			hurt = 1.0 - clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0)
 	var nudge := Vector2(sin(hurt * 46.0) * 6.0 * hurt, sin(hurt * 31.0) * 3.0 * hurt)
 
-	# The home's own ground, so the rail is part of the world and not a panel.
-	var patch: Texture2D = art.ground_patch(_element_ground(side), side * 7 + 3) if art != null else null
-	if patch != null:
-		var ps := Vector2(patch.get_width(), patch.get_height()) * 1.15
-		draw_texture_rect(patch, Rect2((r.get_center() - ps * 0.5 + Vector2(-14.0, 0.0)).round(), ps), false)
+	# The home slab: same construction as a lane plot, so the home reads as the
+	# realm's first and oldest piece of world.
+	var slab := Rect2(r.position.x + 2.0,
+		(r.position.y + 14.0) if side == 1 else (r.position.y + r.size.y - 252.0),
+		r.size.x - 6.0, 196.0)
+	_draw_slab(slab, terrain, 1.0)
 
-	var centre_x: float = r.get_center().x + nudge.x
-	var base_y: float = r.position.y + r.size.y * 0.62
+	var centre_x: float = slab.get_center().x + nudge.x
+	var base_y: float = slab.position.y + slab.size.y - 10.0
 
 	var tex: Texture2D = art.sanctuary(element) if art != null else null
 	if tex != null:
-		var src := Vector2(tex.get_width(), tex.get_height())
-		var sc: float = minf((r.size.x + 26.0) / src.x, (r.size.y * 0.60) / src.y)
-		var drawn := src * sc
-		draw_circle(Vector2(centre_x, base_y - 2.0), drawn.x * 0.34, Color(0.03, 0.02, 0.04, 0.34))
+		var srcs := Vector2(tex.get_width(), tex.get_height())
+		var sc: float = (slab.size.x + 30.0) / srcs.x
+		var drawn := srcs * sc
+		_ellipse_shadow(Vector2(centre_x, base_y - 6.0), drawn.x * 0.34, 10.0, 0.30)
 		draw_circle(Vector2(centre_x, base_y - drawn.y * 0.45), drawn.y * 0.55,
-			Color(accent, 0.07 + 0.05 * breathe))
+			Color(accent, 0.06 + 0.05 * breathe))
 		draw_texture_rect(tex, Rect2(Vector2(centre_x - drawn.x * 0.5,
-			base_y - drawn.y + nudge.y).round(), drawn), false,
+			base_y - drawn.y + nudge.y).round(), drawn.round()), false,
 			Color(1, 1, 1, 1).lerp(Color(1.0, 0.6, 0.65, 1.0), hurt * 0.5))
+
+	# The Heart, physically part of the home.
+	_draw_heart(side, Vector2(slab.position.x + slab.size.x - 26.0,
+		slab.position.y + slab.size.y - 24.0) + nudge, p, f, breathe, hurt)
 
 	# Commander in front of their own home, still full personality.
 	var avatar: Texture2D = art.commander_board(String(p["commander_id"])) if art != null else null
 	if avatar != null:
 		var asrc := Vector2(avatar.get_width(), avatar.get_height())
-		var asc: float = minf(76.0 / asrc.x, 76.0 / asrc.y)
-		var adr := asrc * asc
+		var adr := asrc * 1.15
 		var lift := 0.0
 		for act2 in _acts:
 			if String(act2["kind"]) == "commander" and int(act2.get("side", -1)) == side:
 				lift = sin(clampf(float(act2["t"]) / float(act2["dur"]), 0.0, 1.0) * PI) * 14.0
-		var ax: float = centre_x - 34.0
-		var ay: float = base_y + 44.0
-		draw_circle(Vector2(ax, ay - 2.0), adr.x * 0.30, Color(0.03, 0.02, 0.04, 0.30))
-		draw_texture_rect(avatar, Rect2(Vector2(ax - adr.x * 0.5, ay - adr.y - lift).round(), adr), false)
-		var cname := ArcanaTheme.fit(String(p.get("commander_name", "")), 10, r.size.x - 8.0)
-		if cname != "":
-			var cw: float = f.get_string_size(cname, HORIZONTAL_ALIGNMENT_LEFT, -1, 10).x
-			draw_string(f, Vector2(r.get_center().x - cw * 0.5, ay + 16.0), cname,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ArcanaTheme.TEXT_DIM)
+		var ax: float = slab.position.x + 34.0
+		var ay: float = base_y + 4.0
+		_ellipse_shadow(Vector2(ax, ay - 2.0), adr.x * 0.32, 8.0, 0.28)
+		draw_texture_rect(avatar, Rect2(Vector2(ax - adr.x * 0.5, ay - adr.y - lift).round(),
+			adr.round()), false)
+	var cname := ArcanaTheme.fit(String(p.get("commander_name", "")), 11, r.size.x - 12.0)
+	if cname != "":
+		var cw: float = f.get_string_size(cname, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+		var ny: float = slab.position.y + slab.size.y + PLOT_FACE_H + \
+			(14.0 if side == 0 else 2.0)
+		draw_rect(Rect2(centre_x - cw * 0.5 - 7.0, ny - 12.0, cw + 14.0, 17.0),
+			Color(0.07, 0.06, 0.09, 0.72))
+		draw_string(f, Vector2(centre_x - cw * 0.5, ny), cname,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
 
-## The right rail: Heart, Aether and deck. Everything the player checks between
-## decisions, out of the battlefield's way.
+## One slab, drawn anywhere: ink silhouette, banded-earth face, calm top, rim.
+func _draw_slab(top: Rect2, terrain: String, alpha: float) -> void:
+	var whole := Rect2(top.position, Vector2(top.size.x, top.size.y + PLOT_FACE_H))
+	var sil := _rounded_poly(whole.grow(2.0), PLOT_RADIUS + 2.0, true, true)
+	var ink_cols := PackedColorArray()
+	for _p in sil: ink_cols.append(Color(0.09, 0.067, 0.059, alpha))
+	draw_polygon(sil, ink_cols)
+	var face_rect := Rect2(top.position.x, top.position.y + top.size.y - 1.0,
+		top.size.x, PLOT_FACE_H + 1.0)
+	var face_poly := _rounded_poly(face_rect, PLOT_RADIUS - 2.0, true, true)
+	_poly_textured(face_poly, art.land_face(terrain, 0), Color(1, 1, 1, alpha),
+		face_rect.position.y)
+	var top_poly := _rounded_poly(top, PLOT_RADIUS, true, true)
+	_poly_textured(top_poly, art.land_field(terrain), Color(1, 1, 1, alpha))
+	var rim := _rounded_poly(top.grow(-1.0), PLOT_RADIUS - 1.0, true, true)
+	rim.append(rim[0])
+	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
+	draw_polyline(rim, Color(lit, 0.30 * alpha), 2.0)
+
+## The right rail: a stone plinth holding deck, aether and the Realm Stack —
+## physical components on a shelf, not numbers floating on the table.
 func _draw_status_rail(side: int, f: Font) -> void:
 	var p: Dictionary = engine.players[side]
-	var breathe: float = 0.5 + 0.5 * sin(_pulse * TAU + side * PI)
-	var hurt := 0.0
-	for act in _acts:
-		if String(act["kind"]) == "heart_shock" and int(act.get("side", -1)) == side:
-			hurt = 1.0 - clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0)
-	_draw_heart(side, rail_row(side, "heart"), p, f, breathe, hurt)
-	_draw_aether(p, rail_row(side, "aether"))
+	var slot := rail_slot(false, side)
+	var shelf := Rect2(slot.position.x + 4.0,
+		(slot.position.y + 12.0) if side == 1 else (slot.position.y + slot.size.y - 262.0),
+		slot.size.x - 8.0, 206.0)
+	_draw_slab(shelf, "neutral", 0.9)
 	_draw_deck(side, p, String(p["element"]), f)
+	_draw_aether(p, rail_row(side, "aether"))
+	_draw_realm_stack(side, p, rail_row(side, "realm"), f)
 
-## The Heart: a physical crystal, filling and emptying.
+## The Heart: a faceted crystal set into the home slab, cracking as it empties.
 func _draw_heart(side: int, at: Vector2, p: Dictionary, f: Font,
 		breathe: float, hurt: float) -> void:
 	var heart := int(p["heart"])
 	var frac: float = clampf(float(heart) / float(MatchV2.HEART_START), 0.0, 1.0)
-	var rad: float = 30.0 * (1.0 + 0.05 * sin(_pulse * TAU * (2.4 if frac < 0.35 else 1.2)))
+	var rad: float = 24.0 * (1.0 + 0.05 * sin(_pulse * TAU * (2.4 if frac < 0.35 else 1.2)))
 	if hurt > 0.0:
 		draw_circle(at, rad * (2.0 + hurt), Color(ArcanaTheme.HEART, 0.22 * hurt))
-	draw_circle(at, rad * 1.55, Color(ArcanaTheme.HEART, 0.08 + 0.06 * breathe))
+	draw_circle(at, rad * 1.45, Color(ArcanaTheme.HEART, 0.10 + 0.08 * breathe))
 	var facets := PackedVector2Array([at + Vector2(0, -rad), at + Vector2(rad * 0.76, 0),
 		at + Vector2(0, rad), at + Vector2(-rad * 0.76, 0)])
 	draw_colored_polygon(facets, Color(0.08, 0.03, 0.06, 0.96))
@@ -982,24 +996,68 @@ func _draw_heart(side: int, at: Vector2, p: Dictionary, f: Font,
 		Color(0.06, 0.04, 0.05, 0.95), 3.0)
 	draw_polyline(PackedVector2Array([facets[0], facets[1], facets[2], facets[3], facets[0]]),
 		Color(ArcanaTheme.HEART, 0.95), 1.5)
-	var hw: float = f.get_string_size(str(heart), HORIZONTAL_ALIGNMENT_LEFT, -1, 21).x
-	draw_string(f, Vector2(at.x - hw * 0.5, at.y + 7.0), str(heart),
-		HORIZONTAL_ALIGNMENT_LEFT, -1, 21, ArcanaTheme.TEXT)
+	# A wounded Heart shows it: cracks spread as it empties.
+	if frac < 0.55:
+		draw_polyline(PackedVector2Array([at + Vector2(-6.0, -rad * 0.5),
+			at + Vector2(2.0, -rad * 0.1), at + Vector2(-3.0, rad * 0.35)]),
+			Color(0.06, 0.02, 0.04, 0.85), 1.5)
+	if frac < 0.30:
+		draw_polyline(PackedVector2Array([at + Vector2(rad * 0.4, -rad * 0.2),
+			at + Vector2(rad * 0.1, rad * 0.2), at + Vector2(rad * 0.35, rad * 0.55)]),
+			Color(0.06, 0.02, 0.04, 0.85), 1.5)
+	# The number on a stone plaque under the crystal, always full-contrast.
+	var plq := Rect2(at.x - 18.0, at.y + rad + 2.0, 36.0, 20.0)
+	draw_style_box(ArcanaTheme.panel_box(Color(0.16, 0.15, 0.13, 0.96),
+		Color(0.34, 0.31, 0.27), 5, 1), plq)
+	var hw: float = f.get_string_size(str(heart), HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+	draw_string(f, Vector2(at.x - hw * 0.5, plq.position.y + 15.0), str(heart),
+		HORIZONTAL_ALIGNMENT_LEFT, -1, 15, ArcanaTheme.TEXT)
 
+## Aether as physical crystals on the shelf: spent orbs go dark, never absent.
 func _draw_aether(p: Dictionary, at: Vector2) -> void:
 	var total := int(p["max_aether"])
 	var per_row := 5
 	for i in range(total):
 		var col := i % per_row
 		var row := i / per_row
-		var o := Vector2(at.x - float(mini(total, per_row) - 1) * 8.0 + float(col) * 16.0,
-			at.y + float(row) * 16.0)
+		var o := Vector2(at.x - float(mini(total, per_row) - 1) * 10.0 + float(col) * 20.0,
+			at.y + float(row) * 20.0)
 		if i < int(p["aether"]):
-			draw_circle(o, 8.0, Color(ArcanaTheme.AETHER, 0.22))
-			draw_circle(o, 5.0, ArcanaTheme.AETHER)
-			draw_circle(o - Vector2(1.4, 1.4), 2.0, Color(1, 1, 1, 0.7))
+			draw_circle(o, 9.5, Color(0.09, 0.067, 0.059))
+			draw_circle(o, 8.0, Color(ArcanaTheme.AETHER, 0.4))
+			draw_circle(o, 6.0, ArcanaTheme.AETHER)
+			draw_circle(o - Vector2(2.0, 2.0), 2.2, Color(1, 1, 1, 0.75))
 		else:
-			draw_arc(o, 5.0, 0, TAU, 14, Color(ArcanaTheme.PANEL_EDGE, 0.9), 2.0)
+			draw_circle(o, 8.0, Color(0.05, 0.05, 0.09, 0.85))
+			draw_arc(o, 8.0, 0, TAU, 16, Color(ArcanaTheme.PANEL_EDGE, 0.8), 1.5)
+
+## The Realm Stack: a physical pile of unbuilt land slabs, with its count.
+func _draw_realm_stack(side: int, p: Dictionary, at: Vector2, f: Font) -> void:
+	var count := int(p.get("realm_stack", 0))
+	var terrain := String(p["terrain"])
+	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
+	var field: Texture2D = art.land_field(terrain) if art != null else null
+	var w := 58.0
+	var h := 15.0
+	var layers: int = maxi(count, 0)
+	for i in range(layers):
+		var rr := Rect2(at.x - w * 0.5 + float(i % 2) * 2.0,
+			at.y + 12.0 - float(i) * 9.0, w, h)
+		var poly := _rounded_poly(rr.grow(1.5), 6.0, true, true)
+		var cols := PackedColorArray()
+		for _pt in poly: cols.append(Color(0.09, 0.067, 0.059))
+		draw_polygon(poly, cols)
+		var inner := _rounded_poly(rr, 5.0, true, true)
+		_poly_textured(inner, field, Color(1, 1, 1, 1), rr.position.y)
+		if field == null:
+			var cols2 := PackedColorArray()
+			for _pt2 in inner: cols2.append(Color(lit, 0.6))
+			draw_polygon(inner, cols2)
+	if count > 0:
+		var label := str(count)
+		var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		draw_string(f, Vector2(at.x - lw * 0.5, at.y + 40.0), label,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 12, ArcanaTheme.TEXT_DIM)
 
 ## A real stack of cards, so drawing has a visible source.
 func _draw_deck(side: int, p: Dictionary, element: String, f: Font) -> void:
@@ -1017,8 +1075,10 @@ func _draw_deck(side: int, p: Dictionary, element: String, f: Font) -> void:
 			ArcanaTheme.color_for_element(element), 4, 1), dest)
 	var label := str(count)
 	var lw: float = f.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-	draw_string(f, Vector2(deck.x - lw * 0.5, deck.y + h * 0.5 + 14.0), label,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT_DIM)
+	draw_rect(Rect2(deck.x - lw * 0.5 - 5.0, deck.y + h * 0.5 + 4.0, lw + 10.0, 15.0),
+		Color(0.07, 0.06, 0.09, 0.72))
+	draw_string(f, Vector2(deck.x - lw * 0.5, deck.y + h * 0.5 + 16.0), label,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, 11, ArcanaTheme.TEXT)
 
 ## A Place: a real building standing at the back of its plot — never a second
 ## card. Construction still climbs through its authored stages.

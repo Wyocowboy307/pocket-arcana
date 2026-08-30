@@ -54,3 +54,15 @@
 - `./run_smoke_test.sh` — AI-vs-AI match completes
 - `Godot --scene res://scenes/dev/balance.tscn -- --matches=200` — Life 54.5% / Fire 45.5%
   (reversed seating: Life 55.5% / Fire 44.5%, so turn order is worth about a point)
+
+## V2 art + UI production pass (2026-08-30)
+- [x] four-lens audit of V2 at HEAD; direction locked (docs/V2_ART_PASS_TRIAGE.md)
+- [x] the arcane table: sockets, elevated merging land slabs, rune channel
+- [x] de-carded battlefield: creatures stand on the world with stat chips
+- [x] Hearts embedded in sanctuary slabs; rails became component shelves
+- [x] parchment hand cards, wooden tray, carved buttons, one parchment prose material
+- [x] action pass: element-true spells, Heart-strike travel, ghost placement preview
+- [x] fusion: board-scale ceremony + rune-thread availability language
+- [x] original art: Ashbloom Fox, 4 spell illustrations, 2 commander portraits (38/38)
+- [x] victory/defeat overlay with the winner's portrait; final capture set committed
+- [x] ./tools_verify.sh — ALL CHECKS PASSED

@@ -4,6 +4,13 @@ Paths and sizes are authoritative in `data/vertical_slice_art_manifest.json`.
 Generation prompts are built from that manifest plus `docs/ART_BIBLE.md` by
 `tools_build_art_prompts.py`, which writes `data/art_prompts_vertical_slice.json`.
 
+The 2026-08-30 art pass added three deterministic kits (see the ART_BIBLE
+addendum for the visual language they implement):
+
+    python3 tools/build_land_kit.py    # board/table, board/land, props, ui tokens
+    python3 tools/build_card_kit.py    # ui hand frames, card backs, buttons, tray, parchment
+    python3 tools/generate_hero_art.py # SpriteCook hero pieces (candidates + promote)
+
 Never hand-edit the prompt file — change the manifest or the style rules in the
 builder and regenerate, so the style lock cannot drift between assets.
 

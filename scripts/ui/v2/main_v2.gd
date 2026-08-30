@@ -218,11 +218,11 @@ func _build_coach() -> void:
     coach_panel.offset_bottom = 254.0
     coach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
     var m := MarginContainer.new()
-    for s in ["left", "right"]: m.add_theme_constant_override("margin_" + s, 20)
-    for s in ["top", "bottom"]: m.add_theme_constant_override("margin_" + s, 6)
+    for s in ["left", "right"]: m.add_theme_constant_override("margin_" + s, 14)
+    for s in ["top", "bottom"]: m.add_theme_constant_override("margin_" + s, 5)
     coach_panel.add_child(m)
     coach_label = Label.new()
-    coach_label.add_theme_font_size_override("font_size", 14)
+    coach_label.add_theme_font_size_override("font_size", 13)
     coach_label.add_theme_color_override("font_color", Color(0.18, 0.14, 0.10))
     m.add_child(coach_label)
     add_child(coach_panel)
@@ -821,6 +821,23 @@ func _mark_taught(id: String) -> void:
     _taught[id] = true
     _advance_tutorial()
 
+## The coach teaches, then gets out of the way: each step shows once, holds
+## for a few seconds, and fades until the next step earns the screen.
+var _coach_fade: Tween = null
+var _coach_text := ""
+
+func _show_coach_step(text: String) -> void:
+    if text == _coach_text: return
+    _coach_text = text
+    coach_label.text = text
+    coach_panel.visible = true
+    coach_panel.modulate.a = 1.0
+    if _coach_fade != null: _coach_fade.kill()
+    _coach_fade = create_tween()
+    _coach_fade.tween_interval(7.0)
+    _coach_fade.tween_property(coach_panel, "modulate:a", 0.0, 0.8)
+    _coach_fade.tween_callback(func() -> void: coach_panel.visible = false)
+
 func _advance_tutorial() -> void:
     if not tutorial_active:
         coach_panel.visible = false
@@ -840,17 +857,13 @@ func _advance_tutorial() -> void:
         if id == "fusion" and engine.available_fusions(HUMAN).is_empty(): continue
         if id == "done": continue
         if _taught.has(id): continue
-        coach_label.text = String(step["text"])
-        coach_panel.visible = true
+        _show_coach_step(String(step["text"]))
         tutorial_step = TUTORIAL.find(step)
         return
     # Everything demonstrated: say so once, then get out of the way.
     if not _taught.has("done"):
         _taught["done"] = true
-        coach_label.text = String(TUTORIAL[TUTORIAL.size() - 1]["text"])
-        coach_panel.visible = true
-        get_tree().create_timer(6.0).timeout.connect(func() -> void:
-            if coach_panel != null: coach_panel.visible = false)
+        _show_coach_step(String(TUTORIAL[TUTORIAL.size() - 1]["text"]))
     else:
         coach_panel.visible = false
 
@@ -874,6 +887,8 @@ func _restart() -> void:
     overlay.get_meta("dimmer").visible = false
     overlay_open = false
     _stage_free_at = _now()
+    _coach_text = ""
+    stage.realm.reset()          # a fresh match starts with an unmarked world
     engine.setup(db, "starter_life", "starter_fire", randi_range(0, 1 << 30))
     _clear()
     _advance_tutorial()

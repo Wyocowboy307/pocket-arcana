@@ -101,6 +101,7 @@ func _process(delta: float) -> void:
 		if float(act["t"]) < float(act["dur"]): live.append(act)
 	_acts = live
 	_tick_effects(delta)
+	_tick_motes(delta)
 	var alive: Array = []
 	for pt in _particles:
 		pt["t"] = float(pt["t"]) + delta
@@ -110,6 +111,33 @@ func _process(delta: float) -> void:
 		alive.append(pt)
 	_particles = alive
 	queue_redraw()
+
+## The world sheds gentle life: embers off Fire bodies, petals off Life ones.
+var _mote_clock := 0.0
+
+func _tick_motes(delta: float) -> void:
+	if engine == null or engine.players.is_empty() or not realm.micro_enabled: return
+	_mote_clock -= delta
+	if _mote_clock > 0.0: return
+	_mote_clock = 0.55
+	for side in range(2):
+		var fire := String(engine.players[side]["element"]) == "fire"
+		for i in range(MatchV2.LANES):
+			var unit = engine.lane(side, i)["creature"]
+			if unit == null: continue
+			if _vhash(int(unit["uid"]) * 31 + int(Time.get_ticks_msec() / 550.0), 5) > 0.22:
+				continue
+			var body := card_rect(side, i)
+			var at := Vector2(body.position.x + _vhash(int(unit["uid"]), 7) * body.size.x,
+				body.position.y + body.size.y * 0.35)
+			if fire:
+				_particles.append({"pos": at, "vel": Vector2(randf() * 8.0 - 4.0, -22.0),
+					"gravity": -14.0, "t": 0.0, "life": 0.9,
+					"colour": Color("ff8c1a"), "size": 2.0, "style": "ember"})
+			else:
+				_particles.append({"pos": at, "vel": Vector2(randf() * 12.0 - 6.0, 6.0),
+					"gravity": 6.0, "t": 0.0, "life": 1.3,
+					"colour": Color("e88fa6"), "size": 2.0, "style": "leaf"})
 
 func _tick_effects(delta: float) -> void:
 	var keep: Array = []
@@ -1312,12 +1340,44 @@ func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
 	var acting: bool = not beat.is_empty()
 
 	if hovered: offset += Vector2(0.0, -6.0)
+	var idle_lift := 0.0
 	if not ready and not acting:
-		# Settled low, a shade dimmer: asleep until its next turn.
+		# Settled low, a shade dimmer: asleep until its next turn — with the
+		# slow deep breathing of something genuinely sleeping.
 		offset += Vector2(0.0, 4.0)
 		squash *= Vector2(1.05, 0.93)
-	elif ready and not acting:
-		# Alive and willing: a slow breath.
+		if realm.micro_enabled:
+			var sleep: float = sin(float(Time.get_ticks_msec()) * 0.0019 + float(unit["uid"]) * 1.7)
+			squash *= Vector2(1.0 + 0.008 * sleep, 1.0 - 0.010 * sleep)
+	elif not acting and realm.micro_enabled:
+		# Idle personality by archetype: hoppers fidget, heavies breathe slow,
+		# fliers float, dragons sway. No two neighbours move in step.
+		var tt: float = float(Time.get_ticks_msec()) * 0.001
+		var phase: float = float(unit["uid"]) * 1.618
+		var idle_style := String(motion_style(card_id).get("name", "lunge"))
+		match idle_style:
+			"hop":
+				offset.y += sin(tt * TAU * 1.3 + phase) * 1.0
+				var cyc: float = fmod(tt * 0.31 + phase * 0.13, 1.0)
+				if cyc < 0.14:
+					idle_lift = absf(sin(cyc / 0.14 * TAU)) * 4.0
+					offset.y -= idle_lift
+			"slam":
+				var hb: float = sin(tt * TAU * 0.42 + phase)
+				squash *= Vector2(1.0 + 0.016 * hb, 1.0 - 0.018 * hb)
+				offset.x += sin(tt * TAU * 0.21 + phase) * 0.7
+			"swoop":
+				idle_lift = 2.0 + sin(tt * TAU * 0.55 + phase) * 2.6
+				offset.y -= idle_lift
+			"breath":
+				var db: float = sin(tt * TAU * 0.36 + phase)
+				squash *= Vector2(1.0 + 0.012 * db, 1.0 - 0.014 * db)
+				offset.x += sin(tt * TAU * 0.17 + phase) * 1.1
+			_:
+				offset.y += sin(tt * TAU * 0.8 + phase) * 1.2
+				var jolt: float = fmod(tt * 0.37 + phase * 0.29, 1.0)
+				if jolt < 0.05: offset.x += 1.0
+	elif not acting:
 		offset.y += sin(_pulse * TAU + float(index) * 1.3 + float(side) * 2.1) * 1.5
 
 	var tint := Color(1, 1, 1, 1)
@@ -1342,10 +1402,18 @@ func _draw_creature(side: int, index: int, unit: Dictionary, f: Font) -> void:
 	var drawn := ts * k3 * squash
 	if out <= 0.001:
 		# Grounding: shadow, then a soft pool of its element light so even a
-		# soot-dark Fire body never sinks into its own scorched land.
-		_ellipse_shadow(Vector2(feet.x, feet.y + 2.0), drawn.x * 0.36, 9.0, 0.32 * scale)
+		# soot-dark Fire body never sinks into its own scorched land. The
+		# shadow breathes with the body — smaller and fainter as it lifts.
+		var ground_feet := stand + Vector2(offset.x, 0.0)
+		_ellipse_shadow(Vector2(ground_feet.x, stand.y + 2.0),
+			drawn.x * (0.36 - idle_lift * 0.012), 9.0,
+			(0.32 - idle_lift * 0.03) * scale)
+		var flick := 0.0
+		if realm.micro_enabled and String(engine.players[side]["element"]) == "fire":
+			flick = 0.03 + 0.03 * sin(float(Time.get_ticks_msec()) * 0.011 + float(unit["uid"]) * 2.3) \
+				+ 0.02 * sin(float(Time.get_ticks_msec()) * 0.037 + float(unit["uid"]))
 		draw_circle(Vector2(feet.x, feet.y - drawn.y * 0.30),
-			drawn.x * 0.52, Color(colour, 0.07 + 0.10 * glow))
+			drawn.x * 0.52, Color(colour, 0.07 + 0.10 * glow + flick))
 		var dest := Rect2(Vector2(feet.x - drawn.x * 0.5, feet.y - drawn.y + 6.0).round(),
 			drawn.round())
 		draw_texture_rect(tex, dest, false, tint)

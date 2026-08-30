@@ -605,9 +605,11 @@ func _on_event(event: Dictionary) -> void:
             var side3 := int(event["player"])
             var lane3 := int(event["lane"])
             var cid2 := String(event["card_id"])
+            var els2: Array = db.get_card(cid2).get("elements", [])
             var delay4 := _schedule(0.85)
             _later(delay4, func() -> void:
                 stage.play("place_build", {"side": side3, "lane": lane3,
+                    "element": String(els2[0]) if not els2.is_empty() else "life",
                     "colour": stage.card_colour(cid2)}, 0.85))
         "spell_cast":
             var caster := int(event["player"])
@@ -616,9 +618,12 @@ func _on_event(event: Dictionary) -> void:
             var cid3 := String(event["card_id"])
             var from := stage.sanctuary_rect(caster).get_center()
             var to := stage.creature_anchor(side4, lane4) if lane4 >= 0 else stage.sanctuary_rect(engine.opponent(caster)).get_center()
+            var els3: Array = db.get_card(cid3).get("elements", [])
             var delay5 := _schedule(0.75)
             _later(delay5, func() -> void:
-                stage.play("spell", {"from": from, "to": to, "colour": stage.card_colour(cid3)}, 0.75))
+                stage.play("spell", {"from": from, "to": to,
+                    "element": String(els3[0]) if not els3.is_empty() else "life",
+                    "colour": stage.card_colour(cid3)}, 0.75))
         "creature_clash":
             var side5 := int(event["player"])
             var lane5 := int(event["lane"])
@@ -637,8 +642,11 @@ func _on_event(event: Dictionary) -> void:
             var lane7 := int(event["lane"])
             var unit: Dictionary = event["unit"]
             var at := stage.creature_anchor(side7, lane7)
+            var dels: Array = db.get_card(String(unit["card_id"])).get("elements", [])
             _later(maxf(0.0, _stage_free_at - _now()) + 0.10, func() -> void:
-                stage.play("death", {"at": at, "colour": stage.card_colour(String(unit["card_id"]))}, 0.6))
+                stage.play("death", {"at": at,
+                    "element": String(dels[0]) if not dels.is_empty() else "life",
+                    "colour": stage.card_colour(String(unit["card_id"]))}, 0.6))
         "unit_damaged":
             var s8 := int(event["side"]); var l8 := int(event["lane"])
             var amount := int(event["amount"])

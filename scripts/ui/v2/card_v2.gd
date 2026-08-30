@@ -193,9 +193,3 @@ func _sigil(f: Font, win: Rect2, accent: Color, icon: String) -> void:
     draw_string(f, Vector2(c.x - w * 0.5, c.y + 10), icon, HORIZONTAL_ALIGNMENT_LEFT, -1, 28,
         Color(accent, 0.95))
 
-func _gem(f: Font, centre: Vector2, text: String, colour: Color) -> void:
-    draw_circle(centre, 13.0, Color(0.05, 0.05, 0.08, 0.92))
-    draw_arc(centre, 13.0, 0, TAU, 22, Color(colour, 0.9), 2.0)
-    var w: float = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
-    draw_string(f, Vector2(centre.x - w * 0.5, centre.y + 6), text,
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 15, colour)

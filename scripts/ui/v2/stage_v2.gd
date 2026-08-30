@@ -84,9 +84,6 @@ func motion_style(card_id: String) -> Dictionary:
 	var out: Dictionary = style.duplicate() if style is Dictionary else {}
 	out["name"] = name
 	return out
-	mouse_filter = Control.MOUSE_FILTER_STOP
-	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	set_process(true)
 
 func _process(delta: float) -> void:
 	_pulse = fmod(_pulse + delta, 1.0)
@@ -451,13 +448,15 @@ func _tick_act(act: Dictionary) -> void:
 				effect("hit_flash", sanctuary_rect(int(act["target_side"])).get_center(), 0.36, 2.0)
 				cue.emit("heart_hit", 1.5)
 				burst(sanctuary_rect(int(act["target_side"])).get_center(), ArcanaTheme.HEART, 26, "spark", 1.7)
-				play("heart_shock", {"side": int(act["target_side"])}, 0.55)
 				shake(1.25); hitstop(0.09)
 		"death":
 			if _at(act, "burst", 0.28):
 				var death_at: Vector2 = act["at"]
 				effect("smoke_puff", death_at, 0.55, 1.6)
 				burst(act["at"], Color(act["colour"]), 14, "spark", 0.8)
+				# What falls stays fallen: a wilt of flowers or a scorch mark.
+				scar(death_at + Vector2(0.0, 18.0),
+					"scorch" if String(act.get("element", "")) == "fire" else "growth")
 		"fusion":
 			var at4: Vector2 = creature_anchor(int(act["side"]), int(act["lane"]))
 			if _at(act, "lift", 0.12): shake(0.2)
@@ -1414,13 +1413,6 @@ func _gem_art(kind: String, at: Vector2, text: String, f: Font, alert := false) 
 	draw_string(f, Vector2(at.x + size_v * 0.5 - tw * 0.5, at.y + size_v * 0.5 + 5.0), text,
 		HORIZONTAL_ALIGNMENT_LEFT, -1, 13, ink)
 
-func _gem(f: Font, centre: Vector2, text: String, colour: Color) -> void:
-	draw_circle(centre, 11.0, Color(0.05, 0.05, 0.08, 0.92))
-	draw_arc(centre, 11.0, 0, TAU, 18, Color(colour, 0.9), 2.0)
-	var w: float = f.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-	draw_string(f, Vector2(centre.x - w * 0.5, centre.y + 5), text,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, 13, colour)
-
 ## The attacker leaves its land, meets in the clash space, and returns.
 func _defend_offset(act: Dictionary, side: int, index: int) -> Vector2:
 	var t: float = clampf(float(act["t"]) / float(act["dur"]), 0.0, 1.0)
@@ -1430,26 +1422,26 @@ func _defend_offset(act: Dictionary, side: int, index: int) -> Vector2:
 	return step * sin(clampf(t / 0.6, 0.0, 1.0) * PI)
 
 func _draw_targeting(f: Font) -> void:
-	var wave: float = 0.5 + 0.5 * sin(_pulse * TAU)
+	# Legal/attack lanes are lit by _draw_row_zones — the plot itself glows.
+	# This pass adds only the dim, the selected piece, previews and chips.
 	if dim_others:
 		draw_rect(Rect2(Vector2.ZERO, size), Color(0.02, 0.02, 0.05, 0.52))
-	for key in highlights:
-		var parts: PackedStringArray = String(key).split(",")
-		var side := int(parts[0])
-		var index := int(parts[1])
-		var r2 := lane_rect(side, index)
-		var glow: Color = ArcanaTheme.LEGAL if String(highlights[key]) == "legal" else ArcanaTheme.ATTACK
-		# A pool of light on the ground rather than an outlined slot.
-		var c := r2.get_center()
-		# Lift the dim back off the legal ground, then pool light on it.
-		for ring in range(7):
-			var t := float(ring) / 7.0
-			draw_circle(c, r2.size.x * (0.46 - t * 0.06),
-				Color(glow, (0.055 + 0.045 * wave) * (1.0 - t * 0.6)))
-		draw_arc(c, r2.size.x * 0.42, 0, TAU, 44, Color(glow, 0.6 + 0.3 * wave), 2.5)
 	if selected_lane >= 0:
-		var sr := lane_rect(0, selected_lane)
-		draw_arc(sr.get_center(), sr.size.x * 0.42, 0, TAU, 40, Color(ArcanaTheme.GOLD, 0.95), 3.0)
+		var poly := _rounded_poly(plot_rect(0, selected_lane), PLOT_RADIUS, true, true)
+		poly.append(poly[0])
+		draw_polyline(poly, Color(ArcanaTheme.GOLD, 0.95), 3.0)
+	# Placement preview: the selected creature stands as a ghost on the legal
+	# lane under the cursor — playing a card reads as placing a piece.
+	if ghost_card != "" and hover_side == 0 and hover_lane >= 0 \
+			and String(highlights.get("0,%d" % hover_lane, "")) == "legal":
+		var gtex: Texture2D = art.creature(ghost_card) if art != null else null
+		if gtex != null:
+			var gts := Vector2(gtex.get_width(), gtex.get_height()) * creature_scale(ghost_card)
+			var gfeet := creature_stand(0, hover_lane)
+			_ellipse_shadow(gfeet + Vector2(0.0, 2.0), gts.x * 0.30, 8.0, 0.16)
+			draw_texture_rect(gtex, Rect2(Vector2(gfeet.x - gts.x * 0.5,
+				gfeet.y - gts.y + 6.0).round(), gts.round()), false,
+				Color(1.0, 1.0, 1.0, 0.42 + 0.10 * sin(_pulse * TAU)))
 	for pair in fusion_pairs:
 		var r3 := card_rect(0, int(pair))
 		var c := Vector2(r3.get_center().x, r3.position.y - 12.0 - 3.0 * sin(_pulse * TAU))
@@ -1538,7 +1530,8 @@ func _draw_land_growth(act: Dictionary, t: float) -> void:
 
 func _draw_spell_travel(act: Dictionary, t: float) -> void:
 	var colour: Color = act["colour"]
-	var a: Vector2 = sanctuary_rect(int(act["side"])).get_center()
+	var a: Vector2 = act["from"] if act.has("from") \
+		else sanctuary_rect(int(act.get("side", 0))).get_center()
 	var b: Vector2 = _spell_target(act)
 	if t < 0.18:
 		draw_circle(a, 10.0 + 26.0 * (t / 0.18), Color(colour, 0.35))
@@ -1557,6 +1550,22 @@ func _draw_spell_travel(act: Dictionary, t: float) -> void:
 ## Ranged attacks physically cross the clash space.
 func _draw_attack_projectile(act: Dictionary, t: float) -> void:
 	var style := String(act.get("style", "lunge"))
+	if bool(act.get("heart", false)) and style not in ["breath", "cast"]:
+		# A melee Heart strike: the blow lands at the open lane, and its energy
+		# races on across the table into the Sanctuary crystal.
+		if t >= 0.44 and t <= 0.72:
+			var hk: float = (t - 0.44) / 0.28
+			var ha := clash_centre(int(act["lane"]))
+			var hb: Vector2 = sanctuary_rect(int(act["target_side"])).get_center()
+			var head: Vector2 = ha.lerp(hb, hk)
+			for i in range(6):
+				var trail: float = maxf(0.0, hk - 0.07 * float(i))
+				var tp: Vector2 = ha.lerp(hb, trail)
+				draw_circle(tp, 10.0 - float(i) * 1.2,
+					Color(ArcanaTheme.HEART, 0.55 * (1.0 - float(i) / 6.0)))
+			draw_circle(head, 11.0, Color(ArcanaTheme.HEART, 0.9))
+			draw_circle(head, 5.0, Color(1, 1, 1, 0.85))
+		return
 	if style not in ["breath", "cast"]: return
 	if t < 0.30 or t > 0.62: return
 	var k: float = clampf((t - 0.30) / 0.32, 0.0, 1.0)

@@ -263,6 +263,11 @@ func _build_overlay() -> void:
     overlay_title.add_theme_font_size_override("font_size", 26)
     overlay_title.add_theme_color_override("font_color", Color(0.42, 0.29, 0.07))
     overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    var portrait := TextureRect.new()
+    portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+    portrait.custom_minimum_size = Vector2(0, 170)
+    portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+    overlay.set_meta("portrait", portrait)
     overlay_body = RichTextLabel.new()
     overlay_body.bbcode_enabled = true
     overlay_body.fit_content = true
@@ -274,7 +279,8 @@ func _build_overlay() -> void:
     again.custom_minimum_size = Vector2(0, 40)
     again.pressed.connect(_restart)
     _style_button(again, "gold")
-    v.add_child(overlay_title); v.add_child(overlay_body); v.add_child(again)
+    v.add_child(overlay_title); v.add_child(portrait)
+    v.add_child(overlay_body); v.add_child(again)
     overlay.set_meta("dimmer", dimmer)
 
 # --- refresh ----------------------------------------------------------------
@@ -841,8 +847,12 @@ func _on_match_finished(winner: int) -> void:
     stage.hitstop(0.2)
     stage.shake(1.4)
     overlay_title.text = "YOU WIN" if winner == HUMAN else "THE RIVAL WINS"
-    overlay_body.text = "[b]%s[/b]\n\nHearts: you %d, rival %d.\nTurn %d." % [
-        engine.win_reason, int(engine.players[0]["heart"]), int(engine.players[1]["heart"]), engine.turn]
+    var portrait: TextureRect = overlay.get_meta("portrait")
+    portrait.texture = art.commander_portrait(String(engine.players[winner]["commander_id"]))
+    portrait.visible = portrait.texture != null
+    overlay_body.text = "[b]%s[/b]\n\n%s stands victorious.\nHearts: you %d, rival %d. Turn %d." % [
+        engine.win_reason, String(engine.players[winner].get("commander_name", "The Commander")),
+        int(engine.players[0]["heart"]), int(engine.players[1]["heart"]), engine.turn]
     overlay.get_meta("dimmer").visible = true
     overlay_open = true
 

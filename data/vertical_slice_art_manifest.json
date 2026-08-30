@@ -240,6 +240,14 @@
       ],
       "path": "assets/art/board/creatures/fire/fire_rax_the_laughing_inferno.png",
       "silhouette": "legendary grinning inferno beast/dragon with huge flame crest; distinct from Commander Poppy"
+    },
+    {
+      "card_id": "dual_ashbloom_fox",
+      "path": "assets/art/board/creatures/dual/dual_ashbloom_fox.png",
+      "size": [
+        64,
+        64
+      ]
     }
   ],
   "landmarks": [

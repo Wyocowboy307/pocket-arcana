@@ -329,5 +329,14 @@ func _run() -> void:
             _place(1, 1, "fire_ashcat")
             main.call("_clear")
             main.call("_begin_attack", 3)
+        "v2_victory":
+            # The winner's portrait takes the frame.
+            _hide_coach()
+            e.players[1]["heart"] = 0
+            main.call("_on_match_finished", 0)
+        "v2_defeat":
+            _hide_coach()
+            e.players[0]["heart"] = 0
+            main.call("_on_match_finished", 1)
         _:
             push_error("unknown v2 scenario: " + scenario)

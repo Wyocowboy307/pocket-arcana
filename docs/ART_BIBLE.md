@@ -358,3 +358,46 @@ Generated source/export assets belong under:
 - `assets/art/fx/`
 
 Keep AI prompts associated with card IDs. Never overwrite an approved master without a commit that explicitly says the style/master changed.
+
+---
+
+## Addendum — the Table, the Plots, the Pieces (locked 2026-08-30)
+
+The V2 battlefield language, proven by the master mock
+(`docs/screenshots/direction/master_mock.png`) and shipped by the art pass
+(final captures in `docs/screenshots/v2_art_pass/`):
+
+- **The table.** The unbuilt board is a calm arcane slate (palette `TABLE`
+  ramp, `tools/pixelart/table.py`) with a carved socket per lane and an
+  inlaid rune channel across the clash line. No central light pool; vignette
+  stays under ~30%. Calm is the rule: the field murmurs, pieces speak.
+- **The plots.** A Realm card drops an elevated slab into its socket: calm
+  elemental top (fields generated whole-canvas in `tools/pixelart/land.py`),
+  a 26px banded-earth face with baked ink, full ink silhouette, lit rim.
+  Same-element neighbours merge the moment their slab lands; grooves keep
+  lanes countable. Grove tops run a step darker than creature greens.
+- **The pieces.** No card frames on the board, ever. A creature is its
+  sprite standing at the plot's front edge with a contact shadow, an element
+  light pool, and bevelled power/health chips (`tools/pixelart/ui_kit.py`).
+  Size classes are honoured 1:1 (48/64/96px sources at 1.7/1.85/2.0). Ready
+  pieces breathe; resting pieces settle, dim and wear a moon chip. Names are
+  hover plaques. Places are buildings at the plot's rear-left.
+- **The homes.** Each Sanctuary stands on its own element slab with the
+  Heart crystal set beside it — the only Heart that player has. Damage
+  cracks the crystal in place; the number sits on a stone plaque below.
+- **The components.** Hand cards are parchment (`tools/pixelart/cards.py`,
+  156x196, mostly art, ink on light bands). Buttons are carved (gold END
+  TURN, stone utility, studded gold COMBINE talisman). Prose lives on one
+  parchment material. Aether is crystal orbs that go dark when spent; the
+  Realm Stack is a physical pile of slabs.
+- **Availability is world language.** Legal lanes light their own plot; a
+  selected creature ghosts onto the hovered lane; fusable creatures are
+  joined by a golden rune thread with the link chip riding it.
+
+Regeneration is deterministic and total:
+
+    python3 tools/build_land_kit.py     # table, land, props, tokens
+    python3 tools/build_card_kit.py     # hand frames, backs, buttons, tray, parchment
+    python3 tools/generate_hero_art.py --list   # SpriteCook hero pieces
+
+then re-import (`Godot --headless --path . --import`).

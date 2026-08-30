@@ -928,7 +928,8 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 		_ellipse_shadow(Vector2(ax, ay - 2.0), adr.x * 0.32, 8.0, 0.28)
 		draw_texture_rect(avatar, Rect2(Vector2(ax - adr.x * 0.5, ay - adr.y - lift).round(),
 			adr.round()), false)
-	var cname := ArcanaTheme.fit(String(p.get("commander_name", "")), 11, r.size.x - 12.0)
+	var cname := ArcanaTheme.fit(String(engine.db.get_commander(
+		String(p["commander_id"])).get("name", "")), 11, r.size.x - 12.0)
 	if cname != "":
 		var cw: float = f.get_string_size(cname, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
 		var ny: float = slab.position.y + slab.size.y + PLOT_FACE_H + \

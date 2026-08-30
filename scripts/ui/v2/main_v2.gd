@@ -244,6 +244,8 @@ func _build_overlay() -> void:
     dimmer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
     dimmer.mouse_filter = Control.MOUSE_FILTER_STOP
     dimmer.visible = false
+    # Hovered hand cards raise their z_index; the end of the match outranks them.
+    dimmer.z_index = 60
     add_child(dimmer)
     var centre := CenterContainer.new()
     centre.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -850,8 +852,10 @@ func _on_match_finished(winner: int) -> void:
     var portrait: TextureRect = overlay.get_meta("portrait")
     portrait.texture = art.commander_portrait(String(engine.players[winner]["commander_id"]))
     portrait.visible = portrait.texture != null
+    var champion := String(db.get_commander(
+        String(engine.players[winner]["commander_id"])).get("name", "The Commander"))
     overlay_body.text = "[b]%s[/b]\n\n%s stands victorious.\nHearts: you %d, rival %d. Turn %d." % [
-        engine.win_reason, String(engine.players[winner].get("commander_name", "The Commander")),
+        engine.win_reason, champion,
         int(engine.players[0]["heart"]), int(engine.players[1]["heart"]), engine.turn]
     overlay.get_meta("dimmer").visible = true
     overlay_open = true

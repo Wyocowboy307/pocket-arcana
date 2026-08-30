@@ -97,11 +97,15 @@ def link_rune():
                 c.set(x, y, P.GOLD[1])
             if abs(x - cx) + abs(y - cy) <= s // 2 - 4:
                 c.set(x, y, P.GOLD[2])
-    # twin dots joined by a bar: two-become-one
-    for dx in (-3, 3):
-        c.set(cx + dx, cy, P.GOLD[4]); c.set(cx + dx, cy - 1, P.GOLD[4])
-        c.set(cx + dx, cy + 1, P.GOLD[3])
-    c.set(cx - 1, cy, P.GOLD[4]); c.set(cx, cy, P.GOLD[4]); c.set(cx + 1, cy, P.GOLD[4])
+    # two interlocking rings: two-become-one (a dots-and-bar glyph read as
+    # a floating "-1" badge in review)
+    import math
+    for dcx in (-2.5, 2.5):
+        for a in range(20):
+            ang = a / 20.0 * 6.28318
+            x = int(cx + dcx + math.cos(ang) * 3.6)
+            y = int(cy + math.sin(ang) * 3.6)
+            c.set(x, y, P.GOLD[4])
     return c
 
 

@@ -184,6 +184,12 @@ def conform(raw, target):
     bbox = im.getbbox()
     if bbox:
         im = im.crop(bbox)
+    # Integer upscale is grid-safe (every pixel doubles evenly); only the
+    # fractional kind wrecks the grid. A tiny generation should still fill
+    # its authored canvas.
+    k = min(tw // max(1, im.width), th // max(1, im.height))
+    if k > 1:
+        im = im.resize((im.width * k, im.height * k), Image.NEAREST)
     if im.width > tw or im.height > th:
         sc = min(tw / im.width, th / im.height)
         im = im.resize((max(1, round(im.width * sc)), max(1, round(im.height * sc))), Image.NEAREST)

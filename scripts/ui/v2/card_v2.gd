@@ -130,13 +130,12 @@ func _draw() -> void:
     draw_string(f, Vector2(size.x * 0.5 - lw * 0.5, ROLE_Y + 11.0), label,
         HORIZONTAL_ALIGNMENT_LEFT, -1, 10, INK)
 
-    # PLAY ON always; rules on approach. Indented clear of the corner tokens.
-    draw_string(f, Vector2(30.0, FOOT_Y + 12.0),
-        ArcanaTheme.fit(placement, 10, size.x - 60.0),
-        HORIZONTAL_ALIGNMENT_LEFT, -1, 10, INK)
-    if hovered or selected:
-        draw_multiline_string(f, Vector2(30.0, RULES_Y + 10.0), String(card.get("rules", "")),
-            HORIZONTAL_ALIGNMENT_LEFT, size.x - 60.0, 9, 2, INK_SOFT)
+    # PLAY ON always, larger and centred; full rules live in the tooltip —
+    # a clipped strip over the art read as a debug overlay in review.
+    var pw2: float = f.get_string_size(placement, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+    draw_string(f, Vector2(size.x * 0.5 - pw2 * 0.5, FOOT_Y + 13.0),
+        ArcanaTheme.fit(placement, 11, size.x - 60.0),
+        HORIZONTAL_ALIGNMENT_LEFT, -1, 11, INK)
 
     # Element crest, top-right.
     var crest := Vector2(size.x - 16.0, 15.0)

@@ -104,6 +104,7 @@ func _freeze() -> void:
     main.ai_busy = true
     main.stage._acts = []
     main.stage._effects = []
+    _hide_coach()
 
 ## Hide the tutorial coach. It sits over the top of the board, which means the
 ## rival's Sanctuary is never visible in a review capture while it is up.

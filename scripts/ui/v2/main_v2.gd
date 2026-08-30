@@ -210,12 +210,12 @@ func _parchment_box() -> StyleBox:
 func _build_coach() -> void:
     coach_panel = PanelContainer.new()
     coach_panel.add_theme_stylebox_override("panel", _parchment_box())
-    # The coach speaks from beside the hand, never over the battlefield.
-    coach_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-    coach_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+    # The coach speaks from the clash channel — the one band of the board
+    # that never holds a piece, a plot or a stat chip.
+    coach_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
     coach_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-    coach_panel.offset_top = -HAND_H - 14.0
-    coach_panel.offset_bottom = -HAND_H - 14.0
+    coach_panel.offset_top = 254.0
+    coach_panel.offset_bottom = 254.0
     coach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
     var m := MarginContainer.new()
     for s in ["left", "right"]: m.add_theme_constant_override("margin_" + s, 20)
@@ -273,7 +273,8 @@ func _build_overlay() -> void:
     overlay_body = RichTextLabel.new()
     overlay_body.bbcode_enabled = true
     overlay_body.fit_content = true
-    overlay_body.custom_minimum_size = Vector2(0, 90)
+    overlay_body.custom_minimum_size = Vector2(0, 70)
+    overlay_body.add_theme_constant_override("line_separation", 4)
     overlay_body.add_theme_font_size_override("normal_font_size", 14)
     overlay_body.add_theme_color_override("default_color", Color(0.24, 0.19, 0.15))
     var again := Button.new()
@@ -304,7 +305,11 @@ func _refresh() -> void:
         fuse_button.text = "COMBINE: %s (%d)" % [String(r.get("name", "")), int(r.get("cost", 0))]
     commander_button.visible = my_turn and engine.commander_block_reason(HUMAN) == ""
     var realm_button: Button = get_meta("realm_button")
-    realm_button.visible = my_turn and int(mine["realm_stack"]) > 0 and not bool(mine["played_card"])
+    var has_socket := false
+    for i in range(MatchV2.LANES):
+        if String(engine.lane(HUMAN, i)["land"]) == "": has_socket = true
+    realm_button.visible = my_turn and int(mine["realm_stack"]) > 0 \
+        and not bool(mine["played_card"]) and has_socket
     realm_button.text = "BUILD REALM (%d)" % int(mine["realm_stack"])
 
     # Linked runes on any pair that can combine.
@@ -395,10 +400,15 @@ func _refresh_highlights() -> void:
                 if String(engine.lane(HUMAN, i)["land"]) == "":
                     stage.highlights["%d,%d" % [HUMAN, i]] = "legal"
         "attack":
-            for i in engine.legal_attacks(HUMAN):
-                stage.highlights["%d,%d" % [HUMAN, i]] = "legal"
             if selected_lane >= 0:
+                # One grammar: gold outline = your chosen attacker, heart glow =
+                # where the blow lands. The green can-act wash confused review.
                 stage.highlights["%d,%d" % [RIVAL, selected_lane]] = "attack"
+                stage.dim_others = true
+                stage.highlights["%d,%d" % [HUMAN, selected_lane]] = "legal"
+            else:
+                for i in engine.legal_attacks(HUMAN):
+                    stage.highlights["%d,%d" % [HUMAN, i]] = "legal"
         _:
             stage.ghost_card = ""      # nothing highlighted during normal play
 
@@ -854,7 +864,7 @@ func _on_match_finished(winner: int) -> void:
     portrait.visible = portrait.texture != null
     var champion := String(db.get_commander(
         String(engine.players[winner]["commander_id"])).get("name", "The Commander"))
-    overlay_body.text = "[b]%s[/b]\n\n%s stands victorious.\nHearts: you %d, rival %d. Turn %d." % [
+    overlay_body.text = "[center][b]%s[/b]\n%s stands victorious.\n[color=#6b5a40]Hearts %d–%d · turn %d[/color][/center]" % [
         engine.win_reason, champion,
         int(engine.players[0]["heart"]), int(engine.players[1]["heart"]), engine.turn]
     overlay.get_meta("dimmer").visible = true

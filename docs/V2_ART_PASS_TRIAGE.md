@@ -135,3 +135,24 @@ Approved via master mock (`docs/screenshots/direction/master_mock.png`):
 - The simulation is untouched: this pass edits presentation only
   (`scripts/ui/v2/*`, `tools/pixelart/*`, assets, and the two payload bugs in
   `main_v2.gd` which are view-layer data).
+
+## Status after the pass (2026-08-30, end of session)
+
+Milestones A–H landed; `./tools_verify.sh` ALL CHECKS PASSED; final captures
+in `docs/screenshots/v2_art_pass/`. An adversarial four-lens review of the
+finished captures was run and its blockers fixed: end-overlay z-order, the
+coach relocated to the clash channel (and hidden in captures), the on-card
+rules strip removed, open-lane attacks now trail dots to the pulsing rival
+Heart, one selection grammar in attack mode, the fusion link redrawn as
+interlocking rings between body centres (it read as a stuck "-1" badge),
+BUILD REALM hides with no empty socket, big creatures no longer strip their
+plot's props, integer-upscale conform (fixes the tiny Poppy portrait), and
+merged-slab grooves strong enough to count lanes.
+
+Known remaining polish (deliberately deferred):
+- land-build/summon spokes are still thin hairlines — wants a chunky pixel
+  burst pass in the FX library
+- the mid-lunge attacker keeps its idle pose — wants lean/stretch frames
+- fusion collapse could silhouette its sources harder inside the core
+- a numeral aether readout near the hand (dots on the shelf carry it today)
+- hand-card names use the theme font — a bitmap pixel face would sit better

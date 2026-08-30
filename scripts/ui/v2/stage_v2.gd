@@ -228,6 +228,13 @@ func place_rect(side: int, index: int) -> Rect2:
 func sanctuary_rect(side: int) -> Rect2:
 	return rail_slot(true, side)
 
+## Where a player's Heart crystal sits on their home slab.
+func heart_anchor(side: int) -> Vector2:
+	var r := sanctuary_rect(side)
+	var slab_y: float = (r.position.y + 14.0) if side == 1 \
+		else (r.position.y + r.size.y - 252.0)
+	return Vector2(r.position.x + 2.0 + r.size.x - 6.0 - 26.0, slab_y + 196.0 - 24.0)
+
 func creature_anchor(side: int, index: int) -> Vector2:
 	return card_rect(side, index).get_center()
 
@@ -666,11 +673,16 @@ func _draw_plot_run(side: int, first: int, last: int, terrain: String) -> void:
 	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
 	for k in range(first + 1, last + 1):
 		var gx: float = lane_rect(side, k).position.x
-		draw_line(Vector2(gx, top.position.y + 8.0), Vector2(gx, top.position.y + top.size.y - 6.0),
-			Color(0.09, 0.067, 0.059, 0.22 * alpha), 2.0)
-		draw_line(Vector2(gx + 2.0, top.position.y + 8.0),
-			Vector2(gx + 2.0, top.position.y + top.size.y - 6.0),
-			Color(lit, 0.10 * alpha), 1.0)
+		draw_line(Vector2(gx, top.position.y + 6.0), Vector2(gx, top.position.y + top.size.y - 4.0),
+			Color(0.09, 0.067, 0.059, 0.42 * alpha), 2.0)
+		draw_line(Vector2(gx + 2.0, top.position.y + 6.0),
+			Vector2(gx + 2.0, top.position.y + top.size.y - 4.0),
+			Color(lit, 0.20 * alpha), 1.0)
+		# small carved notches where the groove meets the rims
+		draw_rect(Rect2(gx - 3.0, top.position.y + 1.0, 8.0, 5.0),
+			Color(0.09, 0.067, 0.059, 0.55 * alpha))
+		draw_rect(Rect2(gx - 3.0, top.position.y + top.size.y - 6.0, 8.0, 5.0),
+			Color(0.09, 0.067, 0.059, 0.55 * alpha))
 
 const LAND_RIM_LIGHT := {
 	"grove": Color("a8cf8a"), "cinder": Color("f65600"),
@@ -747,6 +759,18 @@ func _draw_row_zones() -> void:
 			draw_polygon(poly, cols)
 			poly.append(poly[0])
 			draw_polyline(poly, Color(tint, 0.55 + 0.35 * pulse), 3.0)
+			# An open way to the Heart shows its whole consequence: a dotted
+			# trail runs from the lit lane to the rival crystal, which pulses.
+			if attack and engine.lane(side, i)["creature"] == null:
+				var ha := Vector2(r.get_center().x, r.position.y + r.size.y * 0.4)
+				var hb := heart_anchor(side)
+				for k in range(9):
+					var u: float = (float(k) + fmod(_pulse * 2.0, 1.0)) / 9.0
+					if u > 1.0: u -= 1.0
+					var q := ha.lerp(hb, u) + Vector2(0.0, -30.0 * sin(u * PI))
+					draw_circle(q, 3.0, Color(ArcanaTheme.HEART, 0.35 + 0.35 * sin(u * PI)))
+				draw_arc(hb, 30.0 + 6.0 * pulse, 0, TAU, 28,
+					Color(ArcanaTheme.HEART, 0.65), 2.5)
 
 ## Props growing out of built land: the roots, vines, flowers and embers that
 ## make a Realm card's transformation visible. Kept clear of the card itself.
@@ -769,7 +793,11 @@ func _draw_realm_dressing(side: int) -> void:
 		# here, otherwise a modest arrival zone round the stand point.
 		var clear := Rect2(creature_stand(side, index) - Vector2(48.0, 84.0), Vector2(96.0, 100.0))
 		if lane_state["creature"] != null:
-			clear = card_rect(side, index).grow(6.0)
+			# Only the piece's footing needs to stay clear — excluding the whole
+			# body rect stripped every prop off a large creature's plot.
+			var body := card_rect(side, index)
+			clear = Rect2(body.get_center().x - minf(body.size.x, 116.0) * 0.5,
+				body.position.y + body.size.y - 96.0, minf(body.size.x, 116.0), 104.0)
 		var place_zone := place_rect(side, index).grow(4.0) if lane_state["place"] != null \
 			else Rect2(-999.0, -999.0, 0.0, 0.0)
 		var placed: Array = []
@@ -779,7 +807,7 @@ func _draw_realm_dressing(side: int) -> void:
 			if u > grow: continue
 			# Props stand ON the plot's top surface; feet stay inside the slab.
 			var at := Vector2(plot.position.x + 8.0 + _vhash(seed_value, 7) * (plot.size.x - 16.0),
-				plot.position.y + 14.0 + _vhash(seed_value, 11) * (plot.size.y - 16.0))
+				plot.position.y + 30.0 + _vhash(seed_value, 11) * (plot.size.y - 32.0))
 			if clear.has_point(at) or place_zone.has_point(at): continue
 			placed.append({"at": at, "seed": seed_value})
 		placed.sort_custom(func(a, b): return float(a["at"].y) < float(b["at"].y))
@@ -911,8 +939,7 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 			Color(1, 1, 1, 1).lerp(Color(1.0, 0.6, 0.65, 1.0), hurt * 0.5))
 
 	# The Heart, physically part of the home.
-	_draw_heart(side, Vector2(slab.position.x + slab.size.x - 26.0,
-		slab.position.y + slab.size.y - 24.0) + nudge, p, f, breathe, hurt)
+	_draw_heart(side, heart_anchor(side) + nudge, p, f, breathe, hurt)
 
 	# Commander in front of their own home, still full personality.
 	var avatar: Texture2D = art.commander_board(String(p["commander_id"])) if art != null else null
@@ -932,8 +959,8 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 		String(p["commander_id"])).get("name", "")), 11, r.size.x - 12.0)
 	if cname != "":
 		var cw: float = f.get_string_size(cname, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-		var ny: float = slab.position.y + slab.size.y + PLOT_FACE_H + \
-			(14.0 if side == 0 else 2.0)
+		var ny: float = (slab.position.y - 8.0) if side == 0 \
+			else (slab.position.y + slab.size.y + PLOT_FACE_H + 2.0)
 		draw_rect(Rect2(centre_x - cw * 0.5 - 7.0, ny - 12.0, cw + 14.0, 17.0),
 			Color(0.07, 0.06, 0.09, 0.72))
 		draw_string(f, Vector2(centre_x - cw * 0.5, ny), cname,
@@ -982,7 +1009,7 @@ func _draw_heart(side: int, at: Vector2, p: Dictionary, f: Font,
 	draw_circle(at, rad * 1.45, Color(ArcanaTheme.HEART, 0.10 + 0.08 * breathe))
 	var facets := PackedVector2Array([at + Vector2(0, -rad), at + Vector2(rad * 0.76, 0),
 		at + Vector2(0, rad), at + Vector2(-rad * 0.76, 0)])
-	draw_colored_polygon(facets, Color(0.08, 0.03, 0.06, 0.96))
+	draw_colored_polygon(facets, Color(0.24, 0.09, 0.15, 0.96))
 	var fill_top: float = at.y + rad - 2.0 * rad * frac
 	var filled := PackedVector2Array()
 	for i in range(facets.size()):
@@ -1451,9 +1478,9 @@ func _draw_targeting(f: Font) -> void:
 		var ra := card_rect(0, int(fusion_pairs[pi_i]))
 		var rb := card_rect(0, int(fusion_pairs[pi_i + 1]))
 		pi_i += 2
-		var pa := Vector2(ra.get_center().x, ra.position.y - 6.0)
-		var pb := Vector2(rb.get_center().x, rb.position.y - 6.0)
-		var apex := pa.lerp(pb, 0.5) + Vector2(0.0, -34.0)
+		var pa := ra.get_center()
+		var pb := rb.get_center()
+		var apex := pa.lerp(pb, 0.5) + Vector2(0.0, -minf(ra.size.y, rb.size.y) * 0.5 - 18.0)
 		var flow: float = fmod(_pulse, 1.0)
 		for i in range(11):
 			var u: float = (float(i) + flow) / 11.0
@@ -1555,6 +1582,9 @@ func _draw_spell_travel(act: Dictionary, t: float) -> void:
 		draw_circle(a, 10.0 + 26.0 * (t / 0.18), Color(colour, 0.35))
 		return
 	var k: float = clampf((t - 0.18) / 0.44, 0.0, 1.0)
+	# The destination is marked for the whole flight, so cause and impact
+	# connect even in a single frozen frame.
+	draw_arc(b, 26.0 + 5.0 * sin(_pulse * TAU), 0, TAU, 28, Color(colour, 0.75), 2.5)
 	for i in range(6):
 		var trail: float = maxf(0.0, k - 0.06 * float(i))
 		var tp: Vector2 = a.lerp(b, trail)

@@ -29,6 +29,7 @@
     "flower",
     "glowplant",
     "grass",
+    "log",
     "mushroom",
     "root",
     "stone",
@@ -36,6 +37,7 @@
     "vine"
   ],
   "cinder_props": [
+    "bones",
     "brazier",
     "burnt_tree",
     "crack",

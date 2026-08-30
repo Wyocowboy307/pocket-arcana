@@ -778,9 +778,11 @@ func _draw_row_zones() -> void:
 					Color(ArcanaTheme.HEART, 0.65), 2.5)
 
 ## Props growing out of built land: the roots, vines, flowers and embers that
-## make a Realm card's transformation visible. Kept clear of the card itself.
+## make a Realm card's transformation visible. The world develops: older land
+## grows more, each lane keeps one strange anchor landmark, and a built Place
+## visibly settles into its ground with a worn path and its own influence.
 func _draw_realm_dressing(side: int) -> void:
-	if art == null: return
+	if art == null or not realm.dressing_enabled: return
 	for index in range(MatchV2.LANES):
 		var terrain := String(engine.lane(side, index)["land"])
 		if terrain == "": continue
@@ -805,15 +807,36 @@ func _draw_realm_dressing(side: int) -> void:
 				body.position.y + body.size.y - 96.0, minf(body.size.x, 116.0), 104.0)
 		var place_zone := place_rect(side, index).grow(4.0) if lane_state["place"] != null \
 			else Rect2(-999.0, -999.0, 0.0, 0.0)
+
+		# The lane's anchor landmark: one strange monument at the back corner,
+		# opposite the Place, so every world has something to remember it by.
+		var anchor_el := "life" if life else "fire"
+		var anchor_v := (side * 5 + index * 3) % 3
+		var anchor_tex: Texture2D = art.anchor(anchor_el, anchor_v)
+		var anchor_zone := Rect2(-999.0, -999.0, 0.0, 0.0)
+		if anchor_tex != null and grow > 0.5:
+			var aw := float(anchor_tex.get_width())
+			var ah := float(anchor_tex.get_height())
+			var afoot := Vector2(plot.position.x + plot.size.x - aw * 0.5 - 12.0,
+				plot.position.y + ah - 14.0)
+			anchor_zone = Rect2(afoot.x - aw * 0.5 - 4.0, afoot.y - ah - 4.0, aw + 8.0, ah + 8.0)
+			_ellipse_shadow(Vector2(afoot.x, afoot.y - 2.0), aw * 0.36, 7.0, 0.26)
+			draw_texture_rect(anchor_tex, Rect2(Vector2(afoot.x - aw * 0.5,
+				afoot.y - ah).round(), Vector2(aw, ah)), false,
+				Color(1, 1, 1, clampf((grow - 0.5) * 2.5, 0.0, 1.0)))
+
+		# Older land grows more: the prop budget rises with the lane's age.
+		var budget: int = 9 + realm.land_age(side, index) * 2
 		var placed: Array = []
-		for n in range(14):
+		for n in range(budget):
 			var seed_value := side * 733 + index * 131 + n
 			var u := _vhash(seed_value, 3)
 			if u > grow: continue
 			# Props stand ON the plot's top surface; feet stay inside the slab.
 			var at := Vector2(plot.position.x + 8.0 + _vhash(seed_value, 7) * (plot.size.x - 16.0),
 				plot.position.y + 30.0 + _vhash(seed_value, 11) * (plot.size.y - 32.0))
-			if clear.has_point(at) or place_zone.has_point(at): continue
+			if clear.has_point(at) or place_zone.has_point(at) or anchor_zone.has_point(at):
+				continue
 			placed.append({"at": at, "seed": seed_value})
 		placed.sort_custom(func(a, b): return float(a["at"].y) < float(b["at"].y))
 		for entry in placed:
@@ -827,10 +850,37 @@ func _draw_realm_dressing(side: int) -> void:
 			draw_rect(Rect2(at2.x - w * 0.30, at2.y - 2.0, w * 0.60, 3.0), Color(0.05, 0.05, 0.04, 0.30))
 			draw_texture_rect(tex, Rect2(Vector2(at2.x - w * 0.5, at2.y - h).round(), Vector2(w, h)), false)
 
+		# A built Place settles into its ground: a worn path to the creature's
+		# stand, a pool of its light, and its own influence growing round it.
+		if lane_state["place"] != null:
+			var pr := place_rect(side, index)
+			var pfoot := Vector2(pr.get_center().x, pr.position.y + pr.size.y - 6.0)
+			var stand := creature_stand(side, index)
+			draw_circle(pfoot + Vector2(0.0, -14.0), 34.0,
+				Color(element_colour("life" if life else "fire"), 0.05))
+			for k in range(6):
+				var u2: float = (float(k) + 0.5) / 6.0
+				var q := pfoot.lerp(Vector2(stand.x - 14.0, stand.y - 4.0), u2)
+				q.x += (_vhash(index * 31 + k, 57) - 0.5) * 6.0
+				var wsz: float = 5.0 - absf(u2 - 0.5) * 3.0
+				draw_circle(q, wsz, Color(0.20, 0.16, 0.12, 0.38) if life \
+					else Color(0.12, 0.09, 0.08, 0.44))
+			for k2 in range(2):
+				var inf_kind := ("glowplant" if k2 == 0 else "flower") if life \
+					else ("embers" if k2 == 0 else "brazier")
+				var itex: Texture2D = art.prop(element, inf_kind, index * 7 + k2)
+				if itex == null: continue
+				var iat := Vector2(pr.position.x + pr.size.x + 4.0 + float(k2) * 14.0,
+					pr.position.y + pr.size.y - 20.0 + float(k2) * 16.0)
+				var iw := float(itex.get_width())
+				var ih := float(itex.get_height())
+				draw_texture_rect(itex, Rect2(Vector2(iat.x - iw * 0.5,
+					iat.y - ih).round(), Vector2(iw, ih)), false)
+
 const GROVE_PROP_MIX := ["grass", "grass", "flower", "flower", "mushroom", "mushroom",
-	"stone", "root", "glowplant", "detail", "vine", "tree"]
+	"stone", "root", "glowplant", "detail", "vine", "tree", "log"]
 const CINDER_PROP_MIX := ["crack", "crack", "embers", "embers", "rock", "rock",
-	"scorched", "scorched", "debris", "vent", "brazier", "burnt_tree"]
+	"scorched", "scorched", "debris", "vent", "brazier", "burnt_tree", "bones"]
 
 ## Tile a wrapping texture across a rect with continuous UVs, so neighbouring
 ## regions on the same row line up instead of each restarting the pattern.
@@ -931,6 +981,29 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 	var centre_x: float = slab.get_center().x + nudge.x
 	var base_y: float = slab.position.y + slab.size.y - 10.0
 
+	# The home suffers with its Heart: cracks spread across the slab, soot
+	# and wilt gather, and at low health the whole place dims and smoulders.
+	var frac: float = clampf(float(int(p["heart"])) / float(MatchV2.HEART_START), 0.0, 1.0)
+	if frac < 0.62:
+		draw_polyline(PackedVector2Array([
+			Vector2(slab.position.x + 18.0, slab.position.y + slab.size.y - 8.0),
+			Vector2(slab.position.x + 34.0, slab.position.y + slab.size.y * 0.62),
+			Vector2(slab.position.x + 26.0, slab.position.y + slab.size.y * 0.40)]),
+			Color(0.07, 0.05, 0.05, 0.7), 2.0)
+	if frac < 0.34:
+		draw_polyline(PackedVector2Array([
+			Vector2(slab.position.x + slab.size.x - 20.0, slab.position.y + slab.size.y - 6.0),
+			Vector2(slab.position.x + slab.size.x - 40.0, slab.position.y + slab.size.y * 0.55),
+			Vector2(slab.position.x + slab.size.x - 28.0, slab.position.y + slab.size.y * 0.30)]),
+			Color(0.07, 0.05, 0.05, 0.7), 2.0)
+		draw_circle(Vector2(slab.position.x + 30.0, slab.position.y + 26.0), 9.0,
+			Color(0.06, 0.05, 0.05, 0.35))
+		# a slow smoulder rising off the wounded home
+		var wisp: float = fmod(_pulse * 0.5 + float(side) * 0.37, 1.0)
+		draw_circle(Vector2(centre_x + 20.0 + sin(wisp * TAU) * 6.0,
+			base_y - 60.0 - wisp * 46.0), 5.0 * (1.0 - wisp) + 2.0,
+			Color(0.25, 0.22, 0.22, 0.30 * (1.0 - wisp)))
+
 	var tex: Texture2D = art.sanctuary(element) if art != null else null
 	if tex != null:
 		var srcs := Vector2(tex.get_width(), tex.get_height())
@@ -938,10 +1011,12 @@ func _draw_sanctuary(side: int, f: Font) -> void:
 		var drawn := srcs * sc
 		_ellipse_shadow(Vector2(centre_x, base_y - 6.0), drawn.x * 0.34, 10.0, 0.30)
 		draw_circle(Vector2(centre_x, base_y - drawn.y * 0.45), drawn.y * 0.55,
-			Color(accent, 0.06 + 0.05 * breathe))
+			Color(accent, (0.06 + 0.05 * breathe) * (0.4 + 0.6 * frac)))
+		var wear: Color = Color(1, 1, 1, 1).lerp(Color(0.78, 0.72, 0.74, 1.0),
+			(1.0 - frac) * 0.5)
 		draw_texture_rect(tex, Rect2(Vector2(centre_x - drawn.x * 0.5,
 			base_y - drawn.y + nudge.y).round(), drawn.round()), false,
-			Color(1, 1, 1, 1).lerp(Color(1.0, 0.6, 0.65, 1.0), hurt * 0.5))
+			wear.lerp(Color(1.0, 0.6, 0.65, 1.0), hurt * 0.5))
 
 	# The Heart, physically part of the home.
 	_draw_heart(side, heart_anchor(side) + nudge, p, f, breathe, hurt)

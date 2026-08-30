@@ -446,13 +446,63 @@ def cinder_scorched(v=0):
     c.hline(6, 16, 21, P.CHAR[2])
     return _finish(c)
 
+def grove_log(v=0):
+    """A fallen mossy log — the forest floor remembers its elders."""
+    c = Canvas(30, 16)
+    s = 260 + v * 13
+    # trunk lying at a slight diagonal
+    for x in range(3, 27):
+        t = (x - 3) / 24.0
+        y = 9 + int(t * 2) + (1 if _rand(s, x) > 0.8 else 0)
+        c.set(x, y - 2, P.WOOD[4])
+        c.set(x, y - 1, P.WOOD[3])
+        c.set(x, y, P.WOOD[2])
+        c.set(x, y + 1, P.WOOD[1])
+    # cut face at the near end: rings
+    for k in range(4):
+        c.set(4, 7 + k, P.WOOD[3] if k % 2 else P.WOOD[5 - 1])
+    c.set(3, 8, P.WOOD[1]); c.set(3, 9, P.WOOD[1])
+    # moss cap and a shelf mushroom
+    for i in range(5):
+        mx = 8 + int(_rand(s + 3, i, 0, 16)); my = 6 + int(_rand(s + 5, i, 0, 2))
+        c.set(mx, my, P.GROVE[4]); c.set(mx + 1, my, P.GROVE[3])
+    c.set(20, 6, P.BLOOM[1]); c.set(21, 6, P.BLOOM[2]); c.set(20, 5, P.BLOOM[2])
+    return _finish(c)
+
+
+def cinder_bones(v=0):
+    """Charred remnants — a rib arc and a weathered skull-stone. Strange, not
+    grim: the Cinder realm keeps its trophies."""
+    c = Canvas(26, 18)
+    s = 470 + v * 11
+    bone = P.CREAM[1]
+    lit = P.CREAM[2]
+    # three rib arcs
+    for i in range(3):
+        bx = 4 + i * 6 + int(_rand(s, i, 0, 2))
+        h = 8 + int(_rand(s + 1, i, 0, 4))
+        for k in range(h):
+            t = k / float(h)
+            px = bx + int(3.0 * t * t)
+            c.set(px, 15 - k, bone if t < 0.7 else lit)
+            if k == 0: c.set(px, 15, P.CHAR[1])
+    # a round skull-ish stone half-sunk beside them
+    c.blob(20, 12, 4, bone, 0.2, s + 7, 5)
+    c.set(19, 11, P.CHAR[1]); c.set(21, 11, P.CHAR[1])   # eye pits
+    c.set(20, 14, P.CHAR[2])
+    # scorch at the base, one live ember
+    c.rect(3, 15, 20, 2, P.CHAR[1])
+    c.set(9 + v * 2, 14, P.EMBER[2])
+    return _finish(c)
+
+
 GROVE_PROPS = {
     "tree": grove_tree, "root": grove_root, "vine": grove_vine, "flower": grove_flower,
     "mushroom": grove_mushroom, "grass": grove_grass, "stone": grove_stone,
-    "glowplant": grove_glowplant, "detail": grove_detail,
+    "glowplant": grove_glowplant, "detail": grove_detail, "log": grove_log,
 }
 CINDER_PROPS = {
     "burnt_tree": cinder_burnt_tree, "rock": cinder_rock, "debris": cinder_debris,
     "crack": cinder_crack, "embers": cinder_embers, "vent": cinder_vent,
-    "brazier": cinder_brazier, "scorched": cinder_scorched,
+    "brazier": cinder_brazier, "scorched": cinder_scorched, "bones": cinder_bones,
 }

@@ -68,6 +68,55 @@ JOBS = {
                   "coal bed, an iron cooking pot on a hook, hanging pans and chilli strings, a "
                   "stack of firewood. " + STYLE,
     },
+    # --- living-board pass: anchor landmarks, one strange monument per lane --
+    "life_anchor_0": {
+        "size": (64, 88), "kind": "anchor", "element": "life",
+        "dest": "assets/art/board/anchors/life_anchor_0.png",
+        "prompt": "Pocket Arcana pixel art game asset. A strange towering spirit-mushroom "
+                  "tree landmark: one thick crooked stalk, a huge tilted spotted cap, a "
+                  "sleepy face-like knot in the stalk, tiny glowing spores drifting, small "
+                  "ferns at the base. Weird and charming, strong silhouette. " + STYLE,
+    },
+    "life_anchor_1": {
+        "size": (64, 88), "kind": "anchor", "element": "life",
+        "dest": "assets/art/board/anchors/life_anchor_1.png",
+        "prompt": "Pocket Arcana pixel art game asset. A mossy ancient standing stone "
+                  "landmark, slightly leaning, carved with glowing green runes, flowering "
+                  "vines wrapped round it, two fat mushrooms at its foot. Weird and "
+                  "charming, strong silhouette. " + STYLE,
+    },
+    "life_anchor_2": {
+        "size": (64, 88), "kind": "anchor", "element": "life",
+        "dest": "assets/art/board/anchors/life_anchor_2.png",
+        "prompt": "Pocket Arcana pixel art game asset. A giant curled fern-spiral sapling "
+                  "landmark with a small wooden wind-chime and one hanging paper lantern, "
+                  "oversized dew drops, clover at the base. Weird and charming, strong "
+                  "silhouette. " + STYLE,
+    },
+    "fire_anchor_0": {
+        "size": (64, 88), "kind": "anchor", "element": "fire",
+        "dest": "assets/art/board/anchors/fire_anchor_0.png",
+        "prompt": "Pocket Arcana pixel art game asset. A charred obsidian obelisk landmark, "
+                  "cracked and slightly crooked, molten orange runes glowing in the cracks, "
+                  "a wisp of smoke at the tip, coals scattered at the base. Weird and "
+                  "menacing-charming, strong silhouette. " + STYLE,
+    },
+    "fire_anchor_1": {
+        "size": (64, 88), "kind": "anchor", "element": "fire",
+        "dest": "assets/art/board/anchors/fire_anchor_1.png",
+        "prompt": "Pocket Arcana pixel art game asset. A jagged magma-fang rock landmark: a "
+                  "curved black stone tooth with glowing lava seams, tiny flames licking a "
+                  "notch near the top, cracked scorched ground at the base. Weird and "
+                  "menacing-charming, strong silhouette. " + STYLE,
+    },
+    "fire_anchor_2": {
+        "size": (64, 88), "kind": "anchor", "element": "fire",
+        "dest": "assets/art/board/anchors/fire_anchor_2.png",
+        "prompt": "Pocket Arcana pixel art game asset. A crooked iron brazier-totem "
+                  "landmark: three stacked iron bowls on a bent pole, each holding glowing "
+                  "coals, hanging metal charms, one small flame imp face peeking over the "
+                  "top bowl's rim. Weird and charming, strong silhouette. " + STYLE,
+    },
     # --- 2026-08-30 art pass: the fusion showcase, spells and portraits ----
     "dual_ashbloom_fox": {
         "size": (64, 64), "kind": "creature", "element": "dual",

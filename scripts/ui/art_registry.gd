@@ -79,6 +79,7 @@ func load_manifest() -> bool:
     for entry in manifest.get("ui", []):
         ui_paths[String(entry.get("id", ""))] = _res(entry.get("path", ""))
     _load_land_kit()
+    _load_table_kit()
     _load_clash_kit()
     _load_ground_kit()
     _load_card_frames()
@@ -140,6 +141,26 @@ func _load_land_kit() -> void:
                 props["%s:%s" % [element2, name]] = set
                 names.append(name)
         prop_names[element2] = names
+
+## The arcane table: the calm surface the battlefield is built on
+## (tools/pixelart/table.py). Loaded straight off disk like the land kit.
+const TABLE_DIR := "res://assets/art/board/table"
+
+var table_art: Dictionary = {}          # "field:0" / "channel" / "medallion:2"
+
+func _load_table_kit() -> void:
+    table_art.clear()
+    for v in range(2):
+        table_art["field:%d" % v] = _texture("%s/field_%d.png" % [TABLE_DIR, v])
+    table_art["channel"] = _texture("%s/channel.png" % TABLE_DIR)
+    for v in range(4):
+        table_art["medallion:%d" % v] = _texture("%s/medallion_%d.png" % [TABLE_DIR, v])
+
+func table(key: String) -> Texture2D:
+    return table_art.get(key, null)
+
+func has_table() -> bool:
+    return table_art.get("field:0", null) != null
 
 # --- lookups ----------------------------------------------------------------
 

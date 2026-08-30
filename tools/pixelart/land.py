@@ -55,103 +55,76 @@ def _speck(c, seed, colour, density, pattern="dot"):
 # --- grove -----------------------------------------------------------------
 
 
+def _calm(c, ramp4, seed, cells=(15, 6), third=0.86):
+    """The 2026-08-30 ground language: large flat value cells within a narrow
+    ramp, no per-pixel speckle. The old 3-5% speck passes are what made every
+    capture read as camouflage noise; calm surfaces are the fix, and props and
+    creatures carry the detail budget instead."""
+    big, small = cells
+    for y in range(c.h):
+        for x in range(c.w):
+            n = value_noise(x, y, big, seed)
+            m = value_noise(x, y, small, seed + 7)
+            i = 1
+            if n < 0.40: i = 0
+            elif n > 0.68: i = 2
+            if m > third and i == 2: i = 3
+            c.set(x, y, ramp4[i])
+
+
 def grove_fill(variant=0):
-    """Lush grove floor. Ground is backdrop: tonal patches carry the interest,
-    and the bright cues (blooms, glow) stay sparse so creatures still win the
-    contrast fight, per docs/ART_BIBLE.md."""
+    """Grove floor: mossy flats a step darker than the creature greens, so a
+    Sproutling never sinks into its own land. Accents stay countable."""
     c = Canvas(TILE, TILE, wrap=True)
     seed = 1400 + variant * 37
-    _patchwork(c, P.GROVE, seed, cells=(10, 5), lo=1, mid=3, hi=6)
-
-    for i in range(3):                       # moss pools give depth, no gradient
+    _calm(c, [P.GROVE[1], P.GROVE[2], P.GROVE[3], P.GROVE[4]], seed)
+    for i in range(2):                       # moss pools, tone-on-tone
         cx = int(hash2(i, variant, seed) * TILE)
         cy = int(hash2(i, variant, seed + 9) * TILE)
         c.blob(cx, cy, 4 + hash2(i, variant, seed + 3) * 3, P.GROVE[2], 0.45, seed + i, 4)
-    for i in range(2):                       # lit clearings, upper-left light
-        cx = int(hash2(i + 7, variant, seed + 11) * TILE)
-        cy = int(hash2(i + 7, variant, seed + 13) * TILE)
-        c.blob(cx, cy, 3 + hash2(i, variant, seed + 5) * 3, P.GROVE[5], 0.40, seed + 30 + i, 4)
-
-    _speck(c, seed + 41, P.GROVE[1], 0.045, "tick")        # low-contrast grass
-    _speck(c, seed + 43, P.GROVE[5], 0.035, "dot")
-    _speck(c, seed + 45, P.LEAF[2], 0.020, "tick")
-
-    # Root traces only on two of the four variants, and low contrast — as a bold
-    # dark bar they read as a plank and give the tiling away instantly.
-    if variant % 2 == 0:
-        ry = int(hash2(variant, 5, seed + 23) * TILE)
-        run, x = 0, 0
-        while x < TILE:
-            if hash2(x, variant, seed + 27) > 0.34:        # broken, not continuous
-                yy = ry + int(2.0 * (value_noise(x, 0, 13, seed + 29) - 0.5) * 2)
-                c.set(x, yy, P.GROVE[2])
-                c.set(x, yy + 1, P.WOOD[1] if run % 3 else P.GROVE[1])
-                run += 1
-            x += 1
-
-    for i in range(2):                       # a couple of blooms, no more
-        fx = int(hash2(i, variant, seed + 17) * TILE)
-        fy = int(hash2(i, variant, seed + 19) * TILE)
-        petal = [P.BLOOM[1], P.CREAM[1]][i % 2]
-        c.set(fx, fy, petal); c.set(fx + 1, fy, petal)
+    if variant % 2 == 0:                     # one bloom on half the tiles
+        fx = int(hash2(0, variant, seed + 17) * TILE)
+        fy = int(hash2(0, variant, seed + 19) * TILE)
+        petal = [P.BLOOM[1], P.CREAM[1]][variant % 2]
+        c.set(fx, fy, petal); c.set(fx + 1, fy, petal); c.set(fx, fy + 1, P.LEAF[1])
     return c
 
 
 def cinder_fill(variant=0):
-    """Scorched forge-ground: char crust and ash drifts. Cracks are rare and
-    dim here — a bright seam on every tile turned the field into orange
-    lightning and beat the creatures for contrast."""
+    """Scorched forge-ground: warm dark crust, embers sparse but genuinely
+    hot. The board must read black-with-fire, never mud — this is what makes
+    the rival half feel owned before a single creature lands."""
     c = Canvas(TILE, TILE, wrap=True)
     seed = 2400 + variant * 41
-    _patchwork(c, P.CINDER, seed, cells=(9, 4), lo=1, mid=3, hi=6)
-
-    for i in range(3):                       # char pools
-        cx = int(hash2(i, variant, seed) * TILE)
-        cy = int(hash2(i, variant, seed + 9) * TILE)
-        c.blob(cx, cy, 4 + hash2(i, variant, seed + 3) * 3, P.CHAR[1], 0.50, seed + i, 4)
-    for i in range(3):                       # ash drifts catching the light
-        cx = int(hash2(i + 5, variant, seed + 11) * TILE)
-        cy = int(hash2(i + 5, variant, seed + 13) * TILE)
-        c.blob(cx, cy, 3 + hash2(i, variant, seed + 5) * 3, P.CINDER[5], 0.42, seed + 30 + i, 4)
-    for i in range(2):                       # cracked crust plates
-        cx = int(hash2(i + 11, variant, seed + 15) * TILE)
-        cy = int(hash2(i + 11, variant, seed + 17) * TILE)
-        c.blob(cx, cy, 5 + hash2(i, variant, seed + 7) * 3, P.CINDER[2], 0.46, seed + 50 + i, 5)
-
-    # One short, banked seam on a single variant in four.
-    if variant == 1:
+    _calm(c, [P.CINDER[2], P.CINDER[3], P.CINDER[4], P.CINDER[5]], seed)
+    if variant % 2 == 0:                     # one char pool on half the tiles
+        cx = int(hash2(0, variant, seed) * TILE)
+        cy = int(hash2(0, variant, seed + 9) * TILE)
+        c.blob(cx, cy, 4 + hash2(0, variant, seed + 3) * 3, P.CHAR[1], 0.50, seed, 4)
+    # Live ember seam on half the tiles: short, hot, countable.
+    if variant % 2 == 1:
         x = int(hash2(0, variant, seed + 31) * TILE)
         y = int(hash2(1, variant, seed + 33) * TILE)
-        for step in range(9):
-            c.set(x, y, P.EMBER[1])
-            c.set(x, y + 1, P.CHAR[0])
-            c.set(x, y - 1, P.CHAR[0])
-            if 2 < step < 7:
-                c.set(x, y, P.EMBER[2])
+        for step in range(7):
+            c.set(x, y + 1, P.CHAR[0]); c.set(x, y - 1, P.CHAR[0])
+            c.set(x, y, P.EMBER[2] if 1 < step < 6 else P.EMBER[1])
             x += 1
             y += 1 if hash2(step, 0, seed + 43) > 0.70 else 0
-
-    _speck(c, seed + 51, P.CHAR[0], 0.055, "dot")
-    _speck(c, seed + 57, P.CINDER[5], 0.030, "dot")
-    _speck(c, seed + 59, P.CINDER[1], 0.030, "dot")
-    if variant % 2 == 0:                     # a very few live embers
-        for i in range(2):
-            c.set(int(hash2(i, variant, seed + 61) * TILE),
-                  int(hash2(i, variant, seed + 63) * TILE), P.EMBER[1])
+    for i in range(2):                       # lone hot motes
+        c.set(int(hash2(i, variant, seed + 61) * TILE),
+              int(hash2(i, variant, seed + 63) * TILE), P.EMBER[3])
     return c
 
 def ash_fill(variant=0):
     """Ashbloom: blackened soil that has started to flower again."""
     c = Canvas(TILE, TILE, wrap=True)
     seed = 3400 + variant * 29
-    _patchwork(c, P.CINDER, seed, cells=(10, 5), lo=1, mid=2, hi=5)
-    for i in range(3):
+    _calm(c, [P.CINDER[1], P.CINDER[2], P.CINDER[3], P.CINDER[4]], seed)
+    for i in range(2):
         cx = int(hash2(i, variant, seed + 7) * TILE)
         cy = int(hash2(i, variant, seed + 11) * TILE)
         c.blob(cx, cy, 5 + hash2(i, variant, seed) * 3, P.GROVE[2], 0.50, seed + i, 5)
-    _speck(c, seed + 61, P.LEAF[3], 0.045, "tick")
-    _speck(c, seed + 63, P.EMBER[3], 0.016, "dot")
-    for i in range(5):
+    for i in range(3):
         fx = int(hash2(i, variant, seed + 17) * TILE)
         fy = int(hash2(i, variant, seed + 19) * TILE)
         petal = [P.BLOOM[2], P.SPORE[2], P.CREAM[2]][i % 3]
@@ -160,16 +133,16 @@ def ash_fill(variant=0):
 
 
 def neutral_fill(variant=0):
-    """Untamed ground: the board before anyone has built on it."""
+    """Untamed ground: worn stone, calm — used for rail dressing and the
+    clash-channel surrounds rather than the whole board (the board itself is
+    now the arcane table, tools/pixelart/table.py)."""
     c = Canvas(TILE, TILE, wrap=True)
     seed = 4400 + variant * 23
-    _patchwork(c, P.STONE, seed, cells=(11, 5), lo=1, mid=3, hi=6)
-    for i in range(3):
+    _calm(c, [P.STONE[1], P.STONE[2], P.STONE[3], P.STONE[4]], seed)
+    for i in range(2):
         cx = int(hash2(i, variant, seed) * TILE)
         cy = int(hash2(i, variant, seed + 9) * TILE)
         c.blob(cx, cy, 4 + hash2(i, variant, seed + 3) * 3, P.DUST[1], 0.45, seed + i, 5)
-    _speck(c, seed + 71, P.DUST[2], 0.045, "tick")
-    _speck(c, seed + 73, P.STONE[1], 0.030, "dot")
     return c
 
 
@@ -193,74 +166,70 @@ LIT   = {"grove": P.GROVE[6], "cinder": P.CINDER[6], "ashbloom": P.CINDER[5], "n
 # realm. A single 128px field repeats seven times across a realm instead of
 # twenty-nine, and the props scattered on top break up what is left.
 
-def field(element):
-    """A 128x128 seamless ground field.
+_CALM_RAMPS = {
+    "grove":    lambda: [P.GROVE[1], P.GROVE[2], P.GROVE[3], P.GROVE[4]],
+    "cinder":   lambda: [P.CINDER[2], P.CINDER[3], P.CINDER[4], P.CINDER[5]],
+    "ashbloom": lambda: [P.CINDER[1], P.CINDER[2], P.CINDER[3], P.CINDER[4]],
+    "neutral":  lambda: [P.STONE[1], P.STONE[2], P.STONE[3], P.STONE[4]],
+}
 
-    Order matters. The join pass has to be modest and mid-toned — a heavy blob
-    pass painted straight over the grass, moss and crack detail and left both
-    elements reading as camouflage. So: tile, cross the joins gently, then lay
-    the fine detail back over the top where it survives.
+def field(element):
+    """A 192x192 seamless ground field.
+
+    The calm pattern is generated across the WHOLE canvas rather than pasted
+    from 32px fills — per-tile generation put a 32px period into the value
+    cells, and the repeat read instantly on the big merged slabs.
     """
     c = Canvas(FIELD, FIELD, wrap=True)
-    builder = FILLS[element]
-    for ty in range(FIELD // TILE):
-        for tx in range(FIELD // TILE):
-            c.paste(builder((tx * 3 + ty * 5) % 4), tx * TILE, ty * TILE)
+    seed = 900 + sum(ord(ch) for ch in element)
+    _calm(c, _CALM_RAMPS[element](), seed, cells=(52, 17))
 
     ramp = CREST[element]
-    seed = 900 + sum(ord(ch) for ch in element)
-
-    # 1. Cross the internal 32px joins so no feature stops dead on a boundary.
-    #    Mid-tones only, and sized to bridge a join rather than repaint the tile.
-    for i in range(14):
+    # Cross-canvas mid-tone pools, so the surface has regions rather than grain.
+    for i in range(10):
         cx = int(hash2(i, 0, seed) * FIELD)
         cy = int(hash2(i, 1, seed + 3) * FIELD)
         r = 4 + hash2(i, 2, seed + 7) * 5
-        c.blob(cx, cy, r, ramp[2 if i % 2 else 4], 0.44, seed + i * 11, 6)
-    for i in range(6):
-        cx = int(hash2(i, 4, seed + 13) * FIELD)
-        cy = int(hash2(i, 5, seed + 17) * FIELD)
-        c.blob(cx, cy, 5 + hash2(i, 6, seed + 19) * 4, ramp[1], 0.40, seed + 200 + i, 6)
+        c.blob(cx, cy, r, ramp[2 if i % 2 else 3], 0.44, seed + i * 11, 6)
 
-    # 2. Fine detail, applied across the whole field so it reads continuous.
+    # A handful of countable features — never a speck wash. The calm-ground
+    # rule (docs/V2_ART_PASS_TRIAGE.md) is that detail lives in props and
+    # creatures; the field only murmurs.
     _field_detail(c, element, seed)
+    if element == "cinder":
+        # The live ember seams moved up from the 32px fills: a few per field.
+        for i in range(4):
+            x = int(hash2(i, 20, seed + 81) * FIELD)
+            y = int(hash2(i, 21, seed + 83) * FIELD)
+            for step in range(7):
+                c.set(x, y + 1, P.CHAR[0]); c.set(x, y - 1, P.CHAR[0])
+                c.set(x, y, P.EMBER[2] if 1 < step < 6 else P.EMBER[1])
+                x += 1
+                y += 1 if hash2(step, i, seed + 87) > 0.70 else 0
     return c
 
 
 def _field_detail(c, element, seed):
     """The pass that decides whether ground reads as a place or as a texture."""
     if element in ("grove", "ashbloom"):
-        _speck(c, seed + 41, P.GROVE[1], 0.050, "tick")
-        _speck(c, seed + 43, P.GROVE[5], 0.038, "dot")
-        _speck(c, seed + 45, P.LEAF[2], 0.022, "tick")
-        for i in range(9):                       # clover / leaf litter clumps
+        for i in range(5):                       # clover clumps, tone-on-tone
             cx = int(hash2(i, 7, seed + 23) * FIELD)
             cy = int(hash2(i, 8, seed + 29) * FIELD)
-            for k in range(5):
+            for k in range(4):
                 dx = int(hash2(k, i, seed + 31) * 7) - 3
                 dy = int(hash2(k, i, seed + 37) * 7) - 3
                 c.set(cx + dx, cy + dy, P.LEAF[1 + k % 2])
-        for i in range(7):                       # blooms, sparse
+        for i in range(4):                       # blooms, sparse and countable
             fx = int(hash2(i, 9, seed + 17) * FIELD)
             fy = int(hash2(i, 10, seed + 19) * FIELD)
             petal = [P.BLOOM[1], P.CREAM[1], P.BERRY[1]][i % 3]
             c.set(fx, fy, petal); c.set(fx + 1, fy, petal); c.set(fx, fy + 1, P.LEAF[1])
-        for i in range(5):                       # short root traces
-            rx = int(hash2(i, 11, seed + 47) * FIELD)
-            ry = int(hash2(i, 12, seed + 53) * FIELD)
-            for k in range(6 + int(hash2(i, 13, seed + 59) * 8)):
-                yy = ry + int(1.6 * (value_noise(rx + k, 0, 11, seed + 61) - 0.5) * 2)
-                c.set(rx + k, yy, P.GROVE[1])
-                c.set(rx + k, yy + 1, P.WOOD[1])
     else:
-        _speck(c, seed + 51, P.CHAR[0], 0.055, "dot")
-        _speck(c, seed + 57, P.CINDER[5], 0.032, "dot")
-        _speck(c, seed + 59, P.CINDER[1], 0.034, "dot")
-        for i in range(10):                      # cracked crust plates
+        for i in range(6):                       # crust plates
             cx = int(hash2(i, 7, seed + 23) * FIELD)
             cy = int(hash2(i, 8, seed + 29) * FIELD)
             c.blob(cx, cy, 3 + hash2(i, 9, seed + 31) * 4, P.CHAR[1], 0.46, seed + 300 + i, 5)
-        for i in range(4):                       # dim seams, never bright
+        for i in range(3):                       # dim seams, never bright
             x = int(hash2(i, 10, seed + 31) * FIELD)
             y = int(hash2(i, 11, seed + 33) * FIELD)
             for step in range(7 + int(hash2(i, 12, seed + 39) * 6)):
@@ -268,7 +237,7 @@ def _field_detail(c, element, seed):
                 if 1 < step < 6: c.set(x, y, P.EMBER[1])
                 x += 1
                 y += 1 if hash2(step, i, seed + 43) > 0.74 else 0
-        for i in range(4):                       # a very few live embers
+        for i in range(3):                       # a very few live embers
             c.set(int(hash2(i, 13, seed + 61) * FIELD),
                   int(hash2(i, 14, seed + 63) * FIELD), P.EMBER[2])
 
@@ -360,22 +329,58 @@ def rim_corner(element, corner_name, variant=0):
 
 # --- thickness and seams ---------------------------------------------------
 
+FACE_H = 26
+
 def face(element, variant=0):
-    """The side face under the south rim: the slab's visible thickness. Without
-    it the region reads as a sticker lying on the backdrop."""
-    c = Canvas(TILE, 14)
-    ramp = CREST[element]
+    """The plot's visible thickness: a tall earth face under the top surface.
+
+    26px, not the old 14 — the direction lock makes land a chunky elevated
+    diorama slab, and the thickness is most of what sells it. The bottom two
+    rows are baked INK so a tiled run carries the slab's outline with it.
+    """
+    c = Canvas(TILE, FACE_H, wrap=True)
     seed = 8100 + variant * 11
+    if element == "grove":
+        body, deep, tick = P.WOOD[2], P.WOOD[1], P.WOOD[3]
+        lip = P.GROVE[5]
+    elif element == "ashbloom":
+        body, deep, tick = P.CHAR[2], P.CHAR[1], P.CINDER[4]
+        lip = P.CINDER[5]
+    elif element == "cinder":
+        body, deep, tick = P.CHAR[2], P.CHAR[0], P.CINDER[3]
+        lip = P.EMBER[1]
+    else:
+        body, deep, tick = P.STONE[2], P.STONE[1], P.STONE[3]
+        lip = P.STONE[5]
+    # Flat banded earth, not a dither gradient — an ordered dither over 24px
+    # reads as polka dots at this scale.
     for x in range(TILE):
-        depth = 10 + int(value_noise(x, 0, 9, seed) * 4)
-        for y in range(depth):
-            t = y / float(max(depth - 1, 1))
-            c.dither(x, y, ramp[2], ramp[1], 1.0 - t * 0.8)
-        c.set(x, 0, ramp[3])
-        if element in ("cinder", "ashbloom") and hash2(x, 0, seed + 5) > 0.84:
-            c.set(x, 2, P.EMBER[1]); c.set(x, 3, P.CHAR[1])
-        if element == "grove" and hash2(x, 0, seed + 7) > 0.86:
-            c.set(x, 1, P.WOOD[2]); c.set(x, 2, P.WOOD[1])
+        c.set(x, 0, lip)                       # lit lip where top meets face
+        band1 = 9 + int(value_noise(x, 0, 11, seed) * 4)
+        band2 = 17 + int(value_noise(x, 0, 7, seed + 3) * 4)
+        for y in range(1, FACE_H - 2):
+            c.set(x, y, body if y < band1 else (deep if y >= band2 else
+                  (body if (x + y) % 5 else deep)))
+        c.set(x, FACE_H - 2, P.INK)
+        c.set(x, FACE_H - 1, P.INK)
+    # strata: short horizontal ticks, like pressed earth layers
+    for k in range(7):
+        x0 = int(hash2(k, variant, seed) * TILE)
+        y0 = 4 + int(hash2(k, variant, seed + 3) * (FACE_H - 12))
+        ln = 3 + int(hash2(k, variant, seed + 5) * 5)
+        for i in range(ln):
+            c.set((x0 + i) % TILE, y0, tick if k % 2 else deep)
+    # element flavour: roots trailing down a grove face, ember cracks in cinder
+    if element == "grove":
+        for k in range(3):
+            x0 = int(hash2(k, variant, seed + 7) * TILE)
+            for y in range(2, 8 + int(hash2(k, variant, seed + 9) * 8)):
+                c.set(x0, y, P.WOOD[1])
+    elif element in ("cinder", "ashbloom"):
+        for k in range(2):
+            x0 = int(hash2(k, variant, seed + 7) * TILE)
+            for y in range(3, 9):
+                c.set(x0, y, P.EMBER[1] if y < 6 else P.CHAR[0])
     return c
 
 

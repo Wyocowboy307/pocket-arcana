@@ -498,27 +498,41 @@ func _draw() -> void:
 
 # --- the ground -------------------------------------------------------------
 
-## Wild ground everywhere, then the land each Realm card has actually built.
+## The arcane table, with a carved socket per lane and the chunky elevated
+## plots that Realm cards drop into them.
 ##
-## Unbuilt board is neutral scrub. A Realm card transforms *its own lane*, and
-## because a lane patch is wider than a lane, two neighbouring Groves overlap
-## into one continuous region while a lone one still looks hand-torn.
+## Direction lock (docs/V2_ART_PASS_TRIAGE.md): the unbuilt board is a calm
+## slate game table — the world only exists where a player has built it, which
+## is what makes building feel like building.
+const PLOT_RADIUS := 14.0
+const PLOT_FACE_H := 26.0
+const PLOT_INSET_X := 7.0             # breathing room between neighbouring plots
+const PLOT_TOP_GAP := 10.0            # from the lane's far edge
+const PLOT_CLASH_GAP := 26.0          # from the clash channel
+
 func _draw_ground() -> void:
-	if art == null or not art.has_land_kit("neutral"):
+	if art == null or not art.has_table():
 		draw_rect(Rect2(Vector2.ZERO, size), ArcanaTheme.BG)
 		return
 
-	_tile_field(art.land_field("neutral"), Rect2(Vector2.ZERO, size))
-	_scatter_patches("neutral", Rect2(0.0, 0.0, size.x, size.y), 14)
+	_tile_field(art.table("field:0"), Rect2(Vector2.ZERO, size))
 
-	# Built land, back row first so the near row overlaps it.
-	for side in [1, 0]:
-		for i in range(MatchV2.LANES):
-			var terrain := String(engine.lane(side, i)["land"])
-			if terrain == "": continue
-			_draw_lane_land(side, i, terrain)
+	# A whisper of ownership: the rival's half runs warm, yours runs green.
+	var mid := front_line_y()
+	draw_rect(Rect2(0.0, 0.0, size.x, mid), Color(0.95, 0.45, 0.20, 0.030))
+	draw_rect(Rect2(0.0, mid, size.x, size.y - mid), Color(0.40, 0.90, 0.50, 0.025))
 
 	_draw_clash_seam()
+
+	# Sockets for every lane, so the empty board still shows its structure.
+	for side in range(2):
+		for i in range(MatchV2.LANES):
+			if String(engine.lane(side, i)["land"]) == "":
+				_draw_socket(side, i)
+
+	# Built land: merged runs of same-element neighbours, back row first.
+	for side in [1, 0]:
+		_draw_land_runs(side)
 
 	for mark_entry in _decals:
 		var tex2: Texture2D = art.clash("decal_%s" % String(mark_entry["kind"]), int(mark_entry["v"]))
@@ -526,53 +540,149 @@ func _draw_ground() -> void:
 		var ds := Vector2(tex2.get_width(), tex2.get_height())
 		draw_texture_rect(tex2, Rect2((Vector2(mark_entry["at"]) - ds * 0.5).round(), ds), false)
 
-## One Realm's land, growing out of the point it was played.
-func _draw_lane_land(side: int, index: int, terrain: String) -> void:
+## The top surface of a lane's plot (the face hangs below it).
+func plot_rect(side: int, index: int) -> Rect2:
+	var lane := lane_rect(side, index)
+	var top: float = lane.position.y + (PLOT_TOP_GAP if side == 1 else PLOT_CLASH_GAP)
+	var h: float = lane.size.y - PLOT_TOP_GAP - PLOT_CLASH_GAP - PLOT_FACE_H
+	return Rect2(lane.position.x + PLOT_INSET_X, top, lane.size.x - PLOT_INSET_X * 2.0, h)
+
+## A rounded-rect polygon. Corners can be squared off per edge so merged plots
+## share a continuous silhouette.
+func _rounded_poly(r: Rect2, rad: float, round_left: bool, round_right: bool) -> PackedVector2Array:
+	var pts := PackedVector2Array()
+	var segs := 5
+	var corners := [
+		[Vector2(r.position.x + r.size.x, r.position.y), round_right, PI * 1.5],   # ne
+		[Vector2(r.position.x + r.size.x, r.position.y + r.size.y), round_right, 0.0],  # se
+		[Vector2(r.position.x, r.position.y + r.size.y), round_left, PI * 0.5],    # sw
+		[Vector2(r.position.x, r.position.y), round_left, PI],                     # nw
+	]
+	for c in corners:
+		var at: Vector2 = c[0]
+		if not bool(c[1]):
+			pts.append(at)
+			continue
+		var centre := at + Vector2(-rad if at.x > r.get_center().x else rad,
+			-rad if at.y > r.get_center().y else rad)
+		var start: float = float(c[2])
+		for s in range(segs + 1):
+			var a: float = start + (PI * 0.5) * float(s) / float(segs)
+			pts.append(centre + Vector2(cos(a), sin(a)) * rad)
+	return pts
+
+## Fill a polygon with a texture in continuous world UVs, so neighbouring
+## plots of the same element read as one piece of ground.
+func _poly_textured(poly: PackedVector2Array, tex: Texture2D, tint: Color, v_anchor := 0.0) -> void:
+	if tex == null or poly.size() < 3: return
+	var ts := Vector2(tex.get_width(), tex.get_height())
+	var uvs := PackedVector2Array()
+	for p in poly:
+		uvs.append(Vector2(p.x / ts.x, (p.y - v_anchor) / ts.y))
+	var cols := PackedColorArray()
+	for _p in poly: cols.append(tint)
+	draw_polygon(poly, cols, uvs, tex)
+
+## An empty lane: a carved recess waiting for a Realm card.
+func _draw_socket(side: int, index: int) -> void:
+	var r := plot_rect(side, index)
+	var poly := _rounded_poly(r, PLOT_RADIUS, true, true)
+	var cols := PackedColorArray()
+	for _p in poly: cols.append(Color(0.0, 0.0, 0.02, 0.16))
+	draw_polygon(poly, cols)
+	poly.append(poly[0])
+	draw_polyline(poly, Color(0.07, 0.07, 0.11, 0.9), 2.0)
+	var inner := _rounded_poly(r.grow(-4.0), PLOT_RADIUS - 3.0, true, true)
+	inner.append(inner[0])
+	draw_polyline(inner, Color(ArcanaTheme.PANEL_EDGE, 0.28), 1.5)
+
+## Built lanes drawn as merged runs: [1,1,0,1] grove becomes two slabs.
+func _draw_land_runs(side: int) -> void:
+	var i := 0
+	while i < MatchV2.LANES:
+		var terrain := String(engine.lane(side, i)["land"])
+		if terrain == "":
+			i += 1
+			continue
+		var j := i
+		while j + 1 < MatchV2.LANES \
+				and String(engine.lane(side, j + 1)["land"]) == terrain \
+				and _find_act("land_build", side, j + 1).is_empty() \
+				and _find_act("land_build", side, i).is_empty():
+			j += 1
+		_draw_plot_run(side, i, j, terrain)
+		i = j + 1
+
+## One slab: ink silhouette, earth face, top surface, lit rim.
+func _draw_plot_run(side: int, first: int, last: int, terrain: String) -> void:
 	var grow := 1.0
-	var act := _find_act("land_build", side, index)
+	var act := _find_act("land_build", side, first)
 	if not act.is_empty():
 		grow = clampf(float(act["t"]) / float(act["dur"]) / 0.72, 0.0, 1.0)
 	if grow <= 0.02: return
-	var tex: Texture2D = art.lane_ground(terrain, side * 3 + index)
-	if tex == null: return
-	var lane := lane_rect(side, index)
-	var full := Vector2(tex.get_width(), tex.get_height())
-	# Spreads outward from the centre of the lane as the land takes hold.
 	var eased: float = 1.0 - pow(1.0 - grow, 3.0)
-	var drawn := full * (0.55 + 0.45 * eased)
-	var centre := lane.get_center()
-	draw_texture_rect(tex, Rect2((centre - drawn * 0.5).round(), drawn.round()), false,
-		Color(1, 1, 1, clampf(eased * 1.6, 0.0, 1.0)))
 
-## Where the two sides meet: a worn seam, deliberately narrow.
+	var a := plot_rect(side, first)
+	var b := plot_rect(side, last)
+	var top := Rect2(a.position, Vector2(b.position.x + b.size.x - a.position.x, a.size.y))
+	# The slab drops in from above and lands as one piece.
+	var lift: float = (1.0 - eased) * -26.0
+	top.position.y += lift
+	var alpha: float = clampf(eased * 1.5, 0.0, 1.0)
+
+	var whole := Rect2(top.position, Vector2(top.size.x, top.size.y + PLOT_FACE_H))
+	var sil := _rounded_poly(whole.grow(2.0), PLOT_RADIUS + 2.0, true, true)
+	var ink_cols := PackedColorArray()
+	for _p in sil: ink_cols.append(Color(0.09, 0.067, 0.059, alpha))
+	draw_polygon(sil, ink_cols)
+
+	var face_rect := Rect2(top.position.x, top.position.y + top.size.y - 1.0,
+		top.size.x, PLOT_FACE_H + 1.0)
+	var face_poly := _rounded_poly(face_rect, PLOT_RADIUS - 2.0, true, true)
+	_poly_textured(face_poly, art.land_face(terrain, 0), Color(1, 1, 1, alpha),
+		face_rect.position.y)
+
+	var top_poly := _rounded_poly(top, PLOT_RADIUS, true, true)
+	_poly_textured(top_poly, art.land_field(terrain), Color(1, 1, 1, alpha))
+
+	# Lit top rim, one pixel in from the ink.
+	var rim := _rounded_poly(top.grow(-1.0), PLOT_RADIUS - 1.0, true, true)
+	rim.append(rim[0])
+	var lit: Color = LAND_RIM_LIGHT.get(terrain, Color(1, 1, 1))
+	draw_polyline(rim, Color(lit, 0.30 * alpha), 2.0)
+
+	# Faint carved grooves at internal lane boundaries, so a merged slab still
+	# counts as lanes at a glance.
+	for k in range(first + 1, last + 1):
+		var gx: float = lane_rect(side, k).position.x
+		draw_line(Vector2(gx, top.position.y + 8.0), Vector2(gx, top.position.y + top.size.y - 6.0),
+			Color(0.09, 0.067, 0.059, 0.22 * alpha), 2.0)
+		draw_line(Vector2(gx + 2.0, top.position.y + 8.0),
+			Vector2(gx + 2.0, top.position.y + top.size.y - 6.0),
+			Color(lit, 0.10 * alpha), 1.0)
+
+const LAND_RIM_LIGHT := {
+	"grove": Color("a8cf8a"), "cinder": Color("f65600"),
+	"ashbloom": Color("e88fa6"), "neutral": Color("8f8474"),
+}
+
+## Where the two sides meet: an inlaid channel with a rune medallion per lane.
 func _draw_clash_seam() -> void:
 	var o := _origin()
-	var band := Rect2(o.x - 30.0, o.y + ROW_H - 6.0, _field_width() + 60.0, CLASH_H + 12.0)
-	var path: Texture2D = art.ground("row_path:neutral")
-	if path != null:
-		var pw := float(path.get_width())
-		var ph := float(path.get_height())
-		var x := band.position.x
-		while x < band.position.x + band.size.x:
-			var seg: float = minf(pw, band.position.x + band.size.x - x)
-			draw_texture_rect_region(path,
-				Rect2(Vector2(x, band.get_center().y - ph * 0.5).round(), Vector2(seg, ph)),
-				Rect2(0, 0, seg, ph), Color.WHITE, false)
-			x += seg
-	for i in range(5):
-		var crack: Texture2D = art.clash("crack", i % 3)
-		if crack == null: break
-		var cs := Vector2(crack.get_width(), crack.get_height())
-		draw_texture_rect(crack, Rect2(Vector2(
-			band.position.x + _vhash(i, 811) * (band.size.x - cs.x),
-			band.get_center().y - cs.y * 0.5 + (_vhash(i, 823) - 0.5) * 26.0).round(), cs), false)
-	for i in range(10):
-		var rub: Texture2D = art.clash("rubble", i % 3)
-		if rub == null: break
-		var rs := Vector2(rub.get_width(), rub.get_height())
-		draw_texture_rect(rub, Rect2(Vector2(
-			band.position.x + _vhash(i, 857) * (band.size.x - rs.x),
-			band.get_center().y - rs.y * 0.5 + (_vhash(i, 863) - 0.5) * 34.0).round(), rs), false)
+	var band := Rect2(o.x - 20.0, o.y + ROW_H + 6.0, _field_width() + 40.0, CLASH_H - 12.0)
+	var poly := _rounded_poly(band, 12.0, true, true)
+	_poly_textured(poly, art.table("channel"), Color(1, 1, 1, 1), band.position.y)
+	if art.table("channel") == null:
+		var cols := PackedColorArray()
+		for _p in poly: cols.append(Color(0.0, 0.0, 0.02, 0.30))
+		draw_polygon(poly, cols)
+	poly.append(poly[0])
+	draw_polyline(poly, Color(0.06, 0.06, 0.10, 0.9), 2.0)
+	for i in range(MatchV2.LANES):
+		var med: Texture2D = art.table("medallion:%d" % i)
+		if med == null: continue
+		var ms := Vector2(med.get_width(), med.get_height())
+		draw_texture_rect(med, Rect2((clash_centre(i) - ms * 0.5).round(), ms), false)
 
 ## Which ground a player's half reads as. Used for rail dressing and row paths.
 func _element_ground(side: int) -> String:
@@ -606,28 +716,26 @@ func sum_chars(text: String) -> int:
 	for i in range(text.length()): total += text.unicode_at(i)
 	return total
 
-## Highlighting a legal lane. No box: the land itself lights up, which is what
-## "selecting Sproutling makes valid Grove areas glow" should look like.
+## Highlighting a legal lane: the plot (or its empty socket) itself lights up —
+## the world illuminates, no debug rectangles.
 func _draw_row_zones() -> void:
 	if art == null: return
 	for side in range(2):
 		for i in range(MatchV2.LANES):
 			var key := "%d,%d" % [side, i]
 			if not highlights.has(key): continue
-			var lane := lane_rect(side, i)
 			var attack: bool = String(highlights[key]) == "attack"
 			var tint: Color = ArcanaTheme.HEART if attack \
 				else ArcanaTheme.color_for_element(String(engine.players[side]["element"]))
-			var pulse: float = 0.30 + 0.22 * sin(_pulse * TAU)
-			var mark: Texture2D = art.clash("lane_mark", i)
-			if mark != null:
-				var ms := Vector2(lane.size.x * 0.94, lane.size.y * 0.80)
-				draw_texture_rect(mark, Rect2((lane.get_center() - ms * 0.5).round(), ms),
-					false, Color(tint, pulse))
-			# A bright contact line on the ground, so the legal lane reads instantly.
-			var foot := lane.position.y + lane.size.y - 12.0 if side == 0 else lane.position.y + 12.0
-			draw_rect(Rect2(lane.position.x + 14.0, foot, lane.size.x - 28.0, 3.0),
-				Color(tint, 0.55 + 0.35 * sin(_pulse * TAU)))
+			var pulse: float = 0.5 + 0.5 * sin(_pulse * TAU)
+			var r := plot_rect(side, i)
+			var built: bool = String(engine.lane(side, i)["land"]) != ""
+			var poly := _rounded_poly(r, PLOT_RADIUS, true, true)
+			var cols := PackedColorArray()
+			for _p in poly: cols.append(Color(tint, (0.14 if built else 0.10) + 0.06 * pulse))
+			draw_polygon(poly, cols)
+			poly.append(poly[0])
+			draw_polyline(poly, Color(tint, 0.55 + 0.35 * pulse), 3.0)
 
 ## Props growing out of built land: the roots, vines, flowers and embers that
 ## make a Realm card's transformation visible. Kept clear of the card itself.
@@ -644,15 +752,16 @@ func _draw_realm_dressing(side: int) -> void:
 		if not act.is_empty():
 			grow = clampf(float(act["t"]) / float(act["dur"]) / 0.88, 0.0, 1.0)
 		var mix: Array = GROVE_PROP_MIX if life else CINDER_PROP_MIX
-		var lane := lane_rect(side, index)
+		var plot := plot_rect(side, index)
 		var card := card_rect(side, index)
 		var placed: Array = []
 		for n in range(14):
 			var seed_value := side * 733 + index * 131 + n
 			var u := _vhash(seed_value, 3)
 			if u > grow: continue
-			var at := Vector2(lane.position.x + 6.0 + _vhash(seed_value, 7) * (lane.size.x - 12.0),
-				lane.position.y + 10.0 + _vhash(seed_value, 11) * (lane.size.y - 20.0))
+			# Props stand ON the plot's top surface; feet stay inside the slab.
+			var at := Vector2(plot.position.x + 8.0 + _vhash(seed_value, 7) * (plot.size.x - 16.0),
+				plot.position.y + 14.0 + _vhash(seed_value, 11) * (plot.size.y - 16.0))
 			# Never behind the card the player is trying to read.
 			if card.grow(4.0).has_point(at): continue
 			placed.append({"at": at, "seed": seed_value})
@@ -694,19 +803,11 @@ func _tile_field(tex: Texture2D, r: Rect2) -> void:
 
 # --- atmosphere -------------------------------------------------------------
 
-## Depth, drawn last: a warm pool over the middle of the board, dark framing
-## scenery at the screen edges, and a vignette that pushes the corners back.
+## Depth, drawn last: dark framing scenery at the screen edges and a gentle
+## vignette. The old central light pool is gone — it fogged the whole board
+## khaki; local realm glows carry the atmosphere instead.
 func _draw_atmosphere() -> void:
 	if art == null: return
-	var pool: Texture2D = art.ground("light_pool")
-	if pool != null:
-		var pw: float = size.x * 1.5
-		var phh: float = size.y * 1.7
-		draw_texture_rect(pool, Rect2(Vector2(size.x * 0.5 - pw * 0.5, front_line_y() - phh * 0.5),
-			Vector2(pw, phh)), false)
-		draw_texture_rect(pool, Rect2(Vector2(size.x * 0.5 - pw * 0.35, front_line_y() - phh * 0.32),
-			Vector2(pw * 0.7, phh * 0.64)), false)
-
 	for entry in _framing():
 		var tex: Texture2D = art.ground("fg:%s:%d" % [String(entry["kind"]), int(entry["v"])])
 		if tex == null: continue
@@ -734,10 +835,10 @@ func _framing() -> Array:
 ## as four polygons costs nothing and always matches the window size.
 func _draw_vignette() -> void:
 	# Enough to push the corners back, not enough to grey out the battlefield.
-	var dark := Color(0.03, 0.02, 0.045, 0.52)
+	var dark := Color(0.03, 0.02, 0.045, 0.30)
 	var clear := Color(0.03, 0.02, 0.045, 0.0)
-	var depth: float = size.y * 0.20
-	var side_depth: float = size.x * 0.15
+	var depth: float = size.y * 0.13
+	var side_depth: float = size.x * 0.10
 	var quads := [
 		[PackedVector2Array([Vector2(0, 0), Vector2(size.x, 0),
 			Vector2(size.x, depth), Vector2(0, depth)]), [dark, dark, clear, clear]],

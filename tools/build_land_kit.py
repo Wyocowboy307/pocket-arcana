@@ -11,12 +11,13 @@ import argparse, json, os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
 from PIL import Image
-from pixelart import land, props, palette as P
+from pixelart import land, props, table, palette as P
 from pixelart.canvas import Canvas
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LAND_DIR = os.path.join(ROOT, "assets/art/board/land")
 PROP_DIR = os.path.join(ROOT, "assets/art/board/props")
+TABLE_DIR = os.path.join(ROOT, "assets/art/board/table")
 
 ELEMENTS = ["grove", "cinder", "ashbloom", "neutral"]
 EDGES = ["n", "s", "e", "w"]
@@ -49,10 +50,22 @@ def build_land():
 
 def build_props():
     written = []
-    for el, table in (("grove", props.GROVE_PROPS), ("cinder", props.CINDER_PROPS)):
-        for name, fn in table.items():
+    for el, prop_table in (("grove", props.GROVE_PROPS), ("cinder", props.CINDER_PROPS)):
+        for name, fn in prop_table.items():
             for v in range(3):
                 written.append(fn(v).save(f"{PROP_DIR}/{el}/{name}_{v}.png"))
+    return written
+
+
+def build_table():
+    """The arcane table the battlefield is built on (pixelart/table.py)."""
+    os.makedirs(TABLE_DIR, exist_ok=True)
+    written = []
+    for v in range(2):
+        written.append(table.table_field(v).save(f"{TABLE_DIR}/field_{v}.png"))
+    written.append(table.channel_field().save(f"{TABLE_DIR}/channel.png"))
+    for v in range(4):
+        written.append(table.medallion(v).save(f"{TABLE_DIR}/medallion_{v}.png"))
     return written
 
 
@@ -89,10 +102,12 @@ def main():
 
     lp = build_land()
     pp = build_props()
-    print(f"land tiles: {len(lp)}   props: {len(pp)}")
+    tp = build_table()
+    print(f"land tiles: {len(lp)}   props: {len(pp)}   table: {len(tp)}")
 
     manifest = {"tile": land.TILE, "field": land.FIELD, "rim": land.RIM,
-                "rim_variants": RIM_VARIANTS,
+                "rim_variants": RIM_VARIANTS, "face_h": land.FACE_H,
+                "table_fields": 2, "medallions": 4,
                 "elements": ELEMENTS, "edges": EDGES, "corners": CORNERS,
                 "grove_props": sorted(props.GROVE_PROPS), "cinder_props": sorted(props.CINDER_PROPS)}
     with open(os.path.join(ROOT, "data/land_kit_manifest.json"), "w") as f:

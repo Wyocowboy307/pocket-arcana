@@ -40,6 +40,14 @@ IRON   = [_hex(c) for c in ("1a1719", "2c282c", "463f44", "615762", "7d7280", "9
 STONE = [_hex(c) for c in ("1d1a17", "2e2a24", "433d34", "5a5247", "746a5c", "8f8474", "aa9e8c")]
 DUST  = [_hex(c) for c in ("3a342c", "544c40", "6f6555", "8a7f6b")]
 
+# --- the arcane table -------------------------------------------------------
+# The unbuilt battlefield surface (2026-08-30 direction lock, docs/
+# V2_ART_PASS_TRIAGE.md): a calm dark slate the built plots sit ON. Deliberately
+# low contrast — the table must never compete with land, creatures or cards.
+TABLE      = [_hex(c) for c in ("20222f", "252837", "2b2f40", "323748")]
+TABLE_LINE = _hex("343a52")            # carved sockets and lane guides
+TABLE_RUNE = _hex("404868")            # inlaid rune medallions
+
 # --- UI --------------------------------------------------------------------
 UI_DARK  = [_hex(c) for c in ("120f14", "1c1820", "2a242f", "3a3341", "4d4455")]
 UI_EDGE  = [_hex(c) for c in ("6a5f74", "8a7c96", "b0a2bc")]

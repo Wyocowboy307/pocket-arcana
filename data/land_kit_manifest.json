@@ -3,6 +3,9 @@
   "field": 192,
   "rim": 18,
   "rim_variants": 3,
+  "face_h": 26,
+  "table_fields": 2,
+  "medallions": 4,
   "elements": [
     "grove",
     "cinder",

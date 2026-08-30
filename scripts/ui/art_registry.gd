@@ -261,6 +261,13 @@ func _load_card_frames() -> void:
         card_art_frames["token:%s" % kind] = _texture("%s/token_%s.png" % [UI_DIR, kind])
     for chip in ["resting", "fuse_link"]:
         card_art_frames["chip:%s" % chip] = _texture("%s/chip_%s.png" % [UI_DIR, chip])
+    # Component chrome: carved buttons, the wooden hand tray, parchment panels.
+    for kind in ["gold", "stone", "talisman"]:
+        for state in ["normal", "hover", "pressed", "disabled"]:
+            card_art_frames["btn:%s:%s" % [kind, state]] = _texture(
+                "%s/btn_%s_%s.png" % [UI_DIR, kind, state])
+    card_art_frames["tray"] = _texture("%s/tray_wood.png" % UI_DIR)
+    card_art_frames["panel:parchment"] = _texture("%s/panel_parchment.png" % UI_DIR)
 
 ## The shared Life/Fire effect library. Each entry is one horizontal strip of
 ## frames; the stage plays a window across it.

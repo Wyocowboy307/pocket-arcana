@@ -103,3 +103,115 @@ def link_rune():
         c.set(cx + dx, cy + 1, P.GOLD[3])
     c.set(cx - 1, cy, P.GOLD[4]); c.set(cx, cy, P.GOLD[4]); c.set(cx + 1, cy, P.GOLD[4])
     return c
+
+
+# --- component chrome -------------------------------------------------------
+
+def _bevel_box(c, w, h, fill, hi, lo, edge=None):
+    for y in range(h):
+        for x in range(w):
+            c.set(x, y, fill)
+    for x in range(2, w - 2):
+        c.set(x, 2, hi); c.set(x, 3, hi)
+        c.set(x, h - 3, lo); c.set(x, h - 4, lo)
+    for y in range(2, h - 2):
+        c.set(2, y, hi)
+        c.set(w - 3, y, lo)
+    c.frame(0, 0, w, h, P.INK)
+    c.frame(1, 1, w - 2, h - 2, P.INK)
+    if edge is not None:
+        c.frame(3, 3, w - 6, h - 6, edge)
+    # chamfered corners
+    for cx, cy, dx, dy in ((0, 0, 1, 1), (w - 1, 0, -1, 1),
+                           (0, h - 1, 1, -1), (w - 1, h - 1, -1, -1)):
+        for k in range(3):
+            c.set(cx + dx * k, cy, P.INK); c.set(cx, cy + dy * k, P.INK)
+
+
+def button(kind, state):
+    """A chunky carved button, 9-patched by the UI (10px margins).
+
+    kinds: gold (END TURN), stone (utility), talisman (COMBINE — the marquee).
+    states: normal, hover, pressed, disabled."""
+    w, h = 72, 48
+    c = Canvas(w, h)
+    if kind == "gold":
+        fill, hi, lo = P.GOLD[2], P.GOLD[3], P.GOLD[1]
+    elif kind == "talisman":
+        fill, hi, lo = P.GOLD[3], P.GOLD[4], P.GOLD[2]
+    else:
+        fill, hi, lo = P.STONE[3], P.STONE[4], P.STONE[2]
+    edge = None
+    if state == "hover":
+        fill = tuple(min(255, v + 18) for v in fill)
+        edge = P.CREAM[3] if kind != "stone" else P.STONE[5]
+    elif state == "pressed":
+        fill, hi, lo = lo, lo, lo
+    elif state == "disabled":
+        g = (58, 55, 60)
+        fill, hi, lo = g, tuple(min(255, v + 10) for v in g), tuple(max(0, v - 8) for v in g)
+    _bevel_box(c, w, h, fill, hi, lo, edge)
+    if kind == "talisman" and state not in ("disabled",):
+        # rune studs: this button is a magical object, not a rectangle
+        for x in (8, w - 9):
+            for y in (8, h - 9):
+                c.set(x, y, P.CREAM[3]); c.set(x + 1, y, P.CREAM[3])
+                c.set(x, y + 1, P.CREAM[3]); c.set(x + 1, y + 1, P.GOLD[4])
+    return c
+
+
+def tray(w=192, h=172):
+    """The wooden hand tray the cards rest on. Tiles horizontally."""
+    c = Canvas(w, h, wrap=True)
+    for y in range(h):
+        for x in range(w):
+            c.set(x, y, P.WOOD[2])
+    # plank rows
+    for py in range(10, h, 34):
+        for x in range(w):
+            c.set(x, py, P.WOOD[1])
+            if (x + py) % 47 == 0:
+                c.set(x, py + 1, P.WOOD[1])
+    # vertical plank joints, offset per row
+    row = 0
+    for py in range(10, h - 1, 34):
+        off = (row * 61) % w
+        for j in range(off, off + 1):
+            for y in range(py, min(py + 34, h)):
+                c.set(j % w, y, P.WOOD[1])
+        row += 1
+    # wood grain flecks
+    for i in range(int(w * h * 0.004)):
+        gx = int(hash2(i, 0, 77) * w)
+        gy = int(hash2(i, 1, 79) * h)
+        c.set(gx, gy, P.WOOD[3])
+    # lit top lip + ink top edge: the tray's front edge against the table
+    for x in range(w):
+        c.set(x, 0, P.INK); c.set(x, 1, P.INK)
+        c.set(x, 2, P.WOOD[4]); c.set(x, 3, P.WOOD[3])
+    return c
+
+
+def parchment(w=96, h=72):
+    """A parchment panel for tooltips, coaching and overlays. 9-patch, 12px."""
+    c = Canvas(w, h)
+    for y in range(h):
+        for x in range(w):
+            c.set(x, y, P.CREAM[2])
+    for x in range(2, w - 2):
+        c.set(x, 2, P.CREAM[3])
+        c.set(x, h - 3, P.CREAM[1])
+    for i in range(int(w * h * 0.006)):
+        gx = int(hash2(i, 0, 81) * w)
+        gy = int(hash2(i, 1, 83) * h)
+        c.set(gx, gy, P.CREAM[1])
+    c.frame(0, 0, w, h, P.INK)
+    c.frame(1, 1, w - 2, h - 2, P.INK)
+    # torn corner nicks
+    for cx, cy, dx, dy in ((0, 0, 1, 1), (w - 1, 0, -1, 1),
+                           (0, h - 1, 1, -1), (w - 1, h - 1, -1, -1)):
+        for k in range(4):
+            c.set(cx + dx * k, cy, P.INK); c.set(cx, cy + dy * k, P.INK)
+        c.set(cx + dx * 2, cy + dy * 2, P.INK)
+        c.set(cx + dx * 3, cy + dy * 3, P.CREAM[1])
+    return c

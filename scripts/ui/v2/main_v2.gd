@@ -83,6 +83,14 @@ func _build_ui() -> void:
     stage.sanctuary_clicked.connect(_on_sanctuary_clicked)
     add_child(stage)
 
+    var tray := TextureRect.new()
+    tray.texture = art.frame("tray")
+    tray.stretch_mode = TextureRect.STRETCH_TILE
+    tray.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+    tray.offset_top = -HAND_H - 6.0
+    tray.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    if tray.texture != null: add_child(tray)
+
     hand_row = Control.new()
     hand_row.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
     hand_row.offset_top = -HAND_H
@@ -105,6 +113,7 @@ func _build_controls() -> void:
     end_turn_button.offset_left = -238.0; end_turn_button.offset_right = -18.0
     end_turn_button.offset_top = -74.0; end_turn_button.offset_bottom = -22.0
     end_turn_button.pressed.connect(_do_end_turn)
+    _style_button(end_turn_button, "gold")
     add_child(end_turn_button)
 
     fuse_button = Button.new()
@@ -114,6 +123,7 @@ func _build_controls() -> void:
     fuse_button.offset_left = -238.0; fuse_button.offset_right = -18.0
     fuse_button.offset_top = -132.0; fuse_button.offset_bottom = -84.0
     fuse_button.pressed.connect(_do_fuse)
+    _style_button(fuse_button, "talisman")
     add_child(fuse_button)
 
     commander_button = Button.new()
@@ -123,6 +133,7 @@ func _build_controls() -> void:
     commander_button.offset_left = -238.0; commander_button.offset_right = -18.0
     commander_button.offset_top = -190.0; commander_button.offset_bottom = -142.0
     commander_button.pressed.connect(_do_commander)
+    _style_button(commander_button, "stone")
     add_child(commander_button)
 
     var realm := Button.new()
@@ -132,14 +143,34 @@ func _build_controls() -> void:
     realm.offset_left = 16.0; realm.offset_right = 138.0
     realm.offset_top = -190.0; realm.offset_bottom = -142.0
     realm.pressed.connect(_choose_realm)
+    _style_button(realm, "stone")
     add_child(realm)
     realm.set_meta("role", "realm")
     set_meta("realm_button", realm)
 
+## Dress a Button as a carved component (tools/pixelart/ui_kit.py). Falls
+## back to the default theme when the chrome is missing.
+const INK := Color(0.09, 0.067, 0.059)
+const CREAM_TEXT := Color(0.93, 0.87, 0.70)
+
+func _style_button(btn: Button, kind: String) -> void:
+    if art.frame("btn:%s:normal" % kind) == null: return
+    for state in ["normal", "hover", "pressed", "disabled"]:
+        var sb := StyleBoxTexture.new()
+        sb.texture = art.frame("btn:%s:%s" % [kind, state])
+        for side in ["left", "right", "top", "bottom"]:
+            sb.set("texture_margin_%s" % side, 10.0)
+            sb.set("content_margin_%s" % side, 10.0 if side in ["left", "right"] else 6.0)
+        btn.add_theme_stylebox_override(state, sb)
+    btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+    var txt: Color = INK if kind != "stone" else CREAM_TEXT
+    for which in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
+        btn.add_theme_color_override(which, txt)
+    btn.add_theme_color_override("font_disabled_color", Color(0.62, 0.60, 0.58))
+
 func _build_context() -> void:
     context_panel = PanelContainer.new()
-    context_panel.add_theme_stylebox_override("panel",
-        ArcanaTheme.panel_box(Color(ArcanaTheme.PANEL, 0.95), ArcanaTheme.PANEL_EDGE, 10, 1))
+    context_panel.add_theme_stylebox_override("panel", _parchment_box())
     context_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
     context_panel.offset_left = -282.0; context_panel.offset_right = -14.0
     context_panel.offset_top = 104.0; context_panel.offset_bottom = 104.0
@@ -152,7 +183,7 @@ func _build_context() -> void:
     context_panel.add_child(m)
     context_title = Label.new()
     context_title.add_theme_font_size_override("font_size", 14)
-    context_title.add_theme_color_override("font_color", ArcanaTheme.GOLD)
+    context_title.add_theme_color_override("font_color", Color(0.42, 0.29, 0.07))
     context_body = RichTextLabel.new()
     context_body.bbcode_enabled = true
     context_body.fit_content = true
@@ -160,16 +191,31 @@ func _build_context() -> void:
     context_body.custom_minimum_size = Vector2(0, 30)
     for k in ["normal_font_size", "bold_font_size", "italics_font_size"]:
         context_body.add_theme_font_size_override(k, 12)
-    context_body.add_theme_color_override("default_color", ArcanaTheme.TEXT_DIM)
+    context_body.add_theme_color_override("default_color", Color(0.24, 0.19, 0.15))
     v.add_child(context_title); v.add_child(context_body)
     add_child(context_panel)
 
+## Parchment panelling: one material for every scrap of prose on screen.
+func _parchment_box() -> StyleBox:
+    var tex: Texture2D = art.frame("panel:parchment")
+    if tex == null:
+        return ArcanaTheme.panel_box(Color(0.85, 0.79, 0.62, 0.97), Color(0.09, 0.067, 0.059), 8, 2)
+    var sb := StyleBoxTexture.new()
+    sb.texture = tex
+    for side in ["left", "right", "top", "bottom"]:
+        sb.set("texture_margin_%s" % side, 12.0)
+        sb.set("content_margin_%s" % side, 10.0)
+    return sb
+
 func _build_coach() -> void:
     coach_panel = PanelContainer.new()
-    coach_panel.add_theme_stylebox_override("panel",
-        ArcanaTheme.panel_box(Color(ArcanaTheme.BG, 0.92), ArcanaTheme.GOLD, 10, 2))
-    coach_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
-    coach_panel.offset_top = 4.0
+    coach_panel.add_theme_stylebox_override("panel", _parchment_box())
+    # The coach speaks from beside the hand, never over the battlefield.
+    coach_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+    coach_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+    coach_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+    coach_panel.offset_top = -HAND_H - 14.0
+    coach_panel.offset_bottom = -HAND_H - 14.0
     coach_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
     var m := MarginContainer.new()
     for s in ["left", "right"]: m.add_theme_constant_override("margin_" + s, 20)
@@ -177,7 +223,7 @@ func _build_coach() -> void:
     coach_panel.add_child(m)
     coach_label = Label.new()
     coach_label.add_theme_font_size_override("font_size", 14)
-    coach_label.add_theme_color_override("font_color", ArcanaTheme.TEXT)
+    coach_label.add_theme_color_override("font_color", Color(0.18, 0.14, 0.10))
     m.add_child(coach_label)
     add_child(coach_panel)
 
@@ -186,6 +232,8 @@ func _build_coach() -> void:
     banner.offset_top = 248.0
     banner.add_theme_font_size_override("font_size", 26)
     banner.add_theme_color_override("font_color", ArcanaTheme.GOLD)
+    banner.add_theme_color_override("font_outline_color", Color(0.09, 0.067, 0.059))
+    banner.add_theme_constant_override("outline_size", 8)
     banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
     banner.modulate.a = 0.0
     add_child(banner)
@@ -202,7 +250,7 @@ func _build_overlay() -> void:
     centre.mouse_filter = Control.MOUSE_FILTER_IGNORE
     dimmer.add_child(centre)
     overlay = PanelContainer.new()
-    overlay.add_theme_stylebox_override("panel", ArcanaTheme.panel_box(ArcanaTheme.PANEL, ArcanaTheme.GOLD, 12, 2))
+    overlay.add_theme_stylebox_override("panel", _parchment_box())
     overlay.custom_minimum_size = Vector2(520, 0)
     centre.add_child(overlay)
     var v := VBoxContainer.new()
@@ -213,17 +261,19 @@ func _build_overlay() -> void:
     overlay.add_child(m)
     overlay_title = Label.new()
     overlay_title.add_theme_font_size_override("font_size", 26)
-    overlay_title.add_theme_color_override("font_color", ArcanaTheme.GOLD)
+    overlay_title.add_theme_color_override("font_color", Color(0.42, 0.29, 0.07))
     overlay_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     overlay_body = RichTextLabel.new()
     overlay_body.bbcode_enabled = true
     overlay_body.fit_content = true
     overlay_body.custom_minimum_size = Vector2(0, 90)
     overlay_body.add_theme_font_size_override("normal_font_size", 14)
+    overlay_body.add_theme_color_override("default_color", Color(0.24, 0.19, 0.15))
     var again := Button.new()
     again.text = "Play again"
-    again.custom_minimum_size = Vector2(0, 34)
+    again.custom_minimum_size = Vector2(0, 40)
     again.pressed.connect(_restart)
+    _style_button(again, "gold")
     v.add_child(overlay_title); v.add_child(overlay_body); v.add_child(again)
     overlay.set_meta("dimmer", dimmer)
 
@@ -378,8 +428,8 @@ func _describe_card(card_id: String) -> void:
     lines.append(String(card.get("rules", "")))
     if role == "Creature":
         lines.append("[color=#%s]%d Attack[/color] · [color=#%s]%d Health[/color]" % [
-            Color("#ffd98a").to_html(false), int(card.get("power", 0)),
-            Color("#ffb3c4").to_html(false), int(card.get("health", 0))])
+            Color("#8a5f10").to_html(false), int(card.get("power", 0)),
+            Color("#a81a48").to_html(false), int(card.get("health", 0))])
     _show_context(String(card.get("name", "")), "\n".join(lines))
 
 func _show_context(title: String, body: String) -> void:

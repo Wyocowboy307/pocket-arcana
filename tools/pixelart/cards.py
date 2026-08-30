@@ -31,15 +31,22 @@ BOARD_NAME_Y, BOARD_NAME_H = 4, 22
 BOARD_ART_Y, BOARD_ART_H = 28, 152
 BOARD_FOOT_Y = 182
 PLACE_W, PLACE_H = 104, 138
-# Hand cards must fit inside main_v2's HAND_H row, or the frame is clipped and
-# the element footer and stat badges fall off the bottom of the screen.
-HAND_W, HAND_H = 148, 158
+# Hand cards (2026-08-30 direction lock): a warm parchment component the
+# player wants to hold, drawn larger than the old pewter frame and mostly ART.
+# main_v2 lays the hand out at REST_SCALE so the full card still fits its row.
+HAND_W, HAND_H = 156, 196
 # Regions, shared with scripts/ui/v2/card_v2.gd. If these move, move them there.
 NAME_Y, NAME_H = 5, 20
-ROLE_Y, ROLE_H = 27, 17
-ART_Y, ART_H = 46, 62
-FOOT_Y, FOOT_H = 110, 17
-RULES_Y = 129
+ROLE_Y, ROLE_H = 26, 14
+ART_Y, ART_H = 42, 116
+FOOT_Y, FOOT_H = 160, 16
+RULES_Y = 178
+
+# Role ribbon colours, mirrored in card_v2.gd's RIBBON map.
+ROLE_RIBBON = {
+    "realm": (110, 190, 130), "creature": (226, 178, 84),
+    "place": (172, 138, 96), "spell": (211, 182, 232),
+}
 
 SCHEME = {
     "life":    {"ramp": P.GROVE, "accent": P.LEAF,  "trim": P.WOOD,  "glow": P.SPORE},
@@ -234,58 +241,75 @@ def place_card(element):
 def hand_card(element, role="creature"):
     """The frame the player reads before committing.
 
-    Every region the renderer writes into is recessed here, so text always
-    lands on a dark plate and stays legible over any art: name ribbon, role
-    ribbon, art window, PLAY ON strip and rules panel.
+    Parchment, not pewter: a warm bright component with an ink outline, a
+    coloured role ribbon, and a big art window on an element backdrop. Name,
+    PLAY ON and rules land on light bands so ink text is always legible.
     """
     sc = SCHEME.get(element, SCHEME["neutral"])
     accent = sc["accent"][2]
+    ribbon = ROLE_RIBBON.get(role, ROLE_RIBBON["creature"])
     c = Canvas(HAND_W, HAND_H)
     seed = 4600 + sum(ord(ch) for ch in element + role)
-    c.rect(0, 0, HAND_W, HAND_H, P.UI_DARK[1])
 
-    def panel(y, h, tone):
-        c.rect(5, y, HAND_W - 10, h, tone)
-        for x in range(5, HAND_W - 5):
-            c.set(x, y, P.INK)
-            c.set(x, y + h - 1, P.UI_DARK[4])
-        for j in range(y, y + h):
-            c.set(5, j, P.INK)
-            c.set(HAND_W - 6, j, P.UI_DARK[3])
+    # Parchment body with chamfered ink corners.
+    c.rect(0, 0, HAND_W, HAND_H, P.CREAM[2])
+    for k in range(3):
+        for x in range(HAND_W):
+            c.set(x, k, P.CREAM[3] if k < 2 else P.CREAM[2])
+    for x in range(HAND_W):
+        c.set(x, HAND_H - 3, P.CREAM[1]); c.set(x, HAND_H - 2, P.CREAM[0])
+    for y in range(HAND_H):
+        c.set(1, y, P.CREAM[3]); c.set(HAND_W - 2, y, P.CREAM[1])
+    # grain flecks, sparse
+    for i in range(26):
+        gx = int(hash2(i, 0, seed) * HAND_W)
+        gy = int(hash2(i, 1, seed + 3) * HAND_H)
+        c.set(gx, gy, P.CREAM[1])
+    # ink outline + chamfer
+    c.frame(0, 0, HAND_W, HAND_H, P.INK)
+    c.frame(1, 1, HAND_W - 2, HAND_H - 2, P.INK)
+    for cx, cy, dx, dy in ((0, 0, 1, 1), (HAND_W - 1, 0, -1, 1),
+                           (0, HAND_H - 1, 1, -1), (HAND_W - 1, HAND_H - 1, -1, -1)):
+        for k in range(4):
+            c.set(cx + dx * k, cy, P.INK); c.set(cx, cy + dy * k, P.INK)
+        c.set(cx + dx * 2, cy + dy * 2, P.INK)
+    # element accent line just inside the ink, sides only
+    for y in range(3, HAND_H - 3):
+        c.set(2, y, sc["accent"][1]); c.set(HAND_W - 3, y, sc["accent"][1])
 
-    panel(NAME_Y, NAME_H, P.UI_DARK[2])
-    panel(ROLE_Y, ROLE_H, P.UI_DARK[0])
-    art_backdrop(c, 5, ART_Y, HAND_W - 10, ART_H, element, seed)
-    for x in range(5, HAND_W - 5):
-        c.set(x, ART_Y, P.INK)
-        c.set(x, ART_Y + ART_H - 1, P.INK)
-    for j in range(ART_Y, ART_Y + ART_H):
-        c.set(5, j, P.INK)
-        c.set(HAND_W - 6, j, P.INK)
-    panel(FOOT_Y, FOOT_H, P.UI_DARK[0])
-    c.rect(5, RULES_Y, HAND_W - 10, HAND_H - RULES_Y - 5, P.UI_DARK[1])
-    for x in range(5, HAND_W - 5):
-        c.set(x, RULES_Y, P.INK)
+    # Name band: slightly deeper parchment so the title zone reads.
+    c.rect(4, NAME_Y, HAND_W - 8, NAME_H, P.CREAM[3])
+    for x in range(4, HAND_W - 4):
+        c.set(x, NAME_Y + NAME_H - 1, P.CREAM[1])
 
-    _trim(c, 0, 0, HAND_W, HAND_H, accent)
-    _corner_brackets(c, HAND_W, HAND_H, accent)
+    # Role ribbon: the one saturated band, colour = type.
+    c.rect(4, ROLE_Y, HAND_W - 8, ROLE_H, ribbon)
+    dark = tuple(max(0, v - 70) for v in ribbon)
+    lite = tuple(min(255, v + 34) for v in ribbon)
+    for x in range(4, HAND_W - 4):
+        c.set(x, ROLE_Y, lite); c.set(x, ROLE_Y + ROLE_H - 1, dark)
 
-    # Role reads before any text does: each type carries its own edge treatment.
+    # The art window: element backdrop inside an ink frame.
+    art_backdrop(c, 4, ART_Y, HAND_W - 8, ART_H, element, seed)
+    c.frame(3, ART_Y - 1, HAND_W - 6, ART_H + 2, P.INK)
+
+    # PLAY ON strip and rules area: light bands for ink text.
+    c.rect(4, FOOT_Y, HAND_W - 8, FOOT_H, P.CREAM[3])
+    for x in range(4, HAND_W - 4):
+        c.set(x, FOOT_Y, P.CREAM[1])
+    # rules zone stays plain parchment; card_v2 writes into it on hover.
+
+    # Role silhouette cues, in ink so they read in grayscale.
     if role == "place":
-        for i in range(10):
-            c.set(8 + i, HAND_H - 8, P.IRON[3]); c.set(HAND_W - 9 - i, HAND_H - 8, P.IRON[3])
-        for i in range(4):
-            c.set(6, HAND_H - 9 - i, P.IRON[3]); c.set(HAND_W - 7, HAND_H - 9 - i, P.IRON[3])
+        for i in range(9):
+            c.set(8 + i, HAND_H - 6, P.INK); c.set(HAND_W - 9 - i, HAND_H - 6, P.INK)
     elif role == "spell":
-        for i in range(6):
-            c.set(10 + i, 3 + i, accent); c.set(HAND_W - 11 - i, 3 + i, accent)
-    elif role == "realm":
-        for x in range(10, HAND_W - 10, 5):
-            c.set(x, 3, P.GROVE[4] if element == "life" else P.CINDER[5])
-            c.set(x + 1, 3, P.GROVE[4] if element == "life" else P.CINDER[5])
-    else:
         for i in range(5):
-            c.set(HAND_W // 2 - 2 + i, 3, accent)
+            c.set(10 + i, 4 + i, P.INK); c.set(HAND_W - 11 - i, 4 + i, P.INK)
+    elif role == "realm":
+        for x in range(10, HAND_W - 10, 6):
+            c.set(x, HAND_H - 6, P.GROVE[3] if element == "life" else P.EMBER[1])
+            c.set(x + 1, HAND_H - 6, P.GROVE[3] if element == "life" else P.EMBER[1])
     return c
 
 

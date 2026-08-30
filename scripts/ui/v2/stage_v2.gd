@@ -1319,7 +1319,7 @@ func _attack_beat(act: Dictionary, side: int, index: int, card_id: String) -> Di
 			# Rears up over its own card and holds — the dragon's beat. It never
 			# crosses the board; the breath does that for it.
 			var rise: float = -1.0 if side == 0 else 1.0
-			at = home + Vector2(0.0, rise * 146.0 * eased)
+			at = home + Vector2(0.0, rise * 104.0 * eased)
 			scale = 1.12 + 0.22 * eased
 			ground = eased
 		else:
@@ -1340,7 +1340,7 @@ func _attack_beat(act: Dictionary, side: int, index: int, card_id: String) -> Di
 		scale = 1.0 + 0.16 * back
 		if stationary:
 			var rise2: float = -1.0 if side == 0 else 1.0
-			at = home + Vector2(0.0, rise2 * 146.0 * back)
+			at = home + Vector2(0.0, rise2 * 104.0 * back)
 			scale = 1.12 + 0.22 * back
 			ground = back
 		else:
@@ -1590,8 +1590,13 @@ func _draw_attack_projectile(act: Dictionary, t: float) -> void:
 	var a := creature_anchor(int(act["side"]), int(act["lane"]))
 	var b: Vector2 = sanctuary_rect(int(act["target_side"])).get_center() if bool(act.get("heart", false)) \
 		else creature_anchor(int(act["target_side"]), int(act["lane"]))
-	var at: Vector2 = a.lerp(b, k)
 	var colour: Color = act["colour"]
+	if style == "breath":
+		# The breath leaves the RISEN mouth: stationary attackers rear up
+		# during the beat (_attack_beat), and a beam drawn from the rest
+		# anchor read as firing backwards out of the dragon's feet.
+		a.y += -96.0 if int(act["side"]) == 0 else 96.0
+	var at: Vector2 = a.lerp(b, k)
 	if style == "breath":
 		var width: float = 18.0 + 46.0 * k
 		draw_line(a, at, Color(colour, 0.20), width)
